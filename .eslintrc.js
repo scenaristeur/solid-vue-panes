@@ -3,6 +3,10 @@ module.exports = {
   env: {
     node: true
   },
+  "globals": {
+    "solid": false,
+    "SolidFileClient": false
+  },
   'extends': [
     'plugin:vue/essential',
     'eslint:recommended'

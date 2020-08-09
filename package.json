@@ -6,11 +6,17 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "git": "npm run build && git add . && git commit -m",
+    "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "bootstrap": "^4.5.2",
+    "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
+    "git": "^0.1.5",
     "register-service-worker": "^1.7.1",
+    "solid-auth-client": "^2.5.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
