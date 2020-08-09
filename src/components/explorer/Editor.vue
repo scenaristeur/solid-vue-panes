@@ -1,17 +1,47 @@
 <template>
   <div class="editor">
 
-    File : {{ file }}<br>
+    <div>
+      <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+        <b-button-group size="sm" class="mr-1">
+          <b-button size="sm" @click="clean">New</b-button>
+          <b-button size="sm" disabled>Edit</b-button>
+          <b-button size="sm" disabled>Undo</b-button>
+        </b-button-group>
+        <b-dropdown size="sm" class="mr-1" right text="menu">
+          <b-dropdown-item size="sm">Item 1</b-dropdown-item>
+          <b-dropdown-item size="sm">Item 2</b-dropdown-item>
+          <b-dropdown-item size="sm">Item 3</b-dropdown-item>
+        </b-dropdown>
+        <b-button-group size="sm" class="mr-1">
+          <b-button size="sm" variant="warning" disabled @click="save">Save</b-button>
+            <b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>
+        <!--  <b-button size="sm">Cancel</b-button>-->
+        </b-button-group>
+      </b-button-toolbar>
+    </div>
+
+    <div>
+      <b-form-textarea
+      id="textarea"
+      v-model="text"
+      placeholder="Enter something..."
+      rows="3"
+      max-rows="15"
+      @change="change"
+      @input="input"
+
+      ></b-form-textarea>
+      <!--    disabled -->
+
+      <!--  <pre class="mt-3 mb-0">{{ file.content }}</pre>     File : {{ file }}<br>-->
+    </div>
+
 
   </div>
 </template>
 
 <script>
-//import store from "@/store";
-//import { fetchDocument } from 'tripledoc';
-//import { sioc, dct, foaf } from 'rdf-namespaces' //
-//const { namedNode } = require('@rdfjs/data-model');
-
 
 export default {
   //  store,
@@ -34,22 +64,31 @@ export default {
 
   },
   methods: {
-    selected(item){
-      console.log(item)
-      item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.openFile(item)
-      //  this.folder =  this.$store.state.solid.folder
+    clean(){
+      this.text=""
     },
-    openFile(item){
-      console.log("Open",item.url)
+    change(e){
+      console.log("change",e)
     },
-    goUp(){
-      console.log(this.folder)
-      this.$store.dispatch('solid/updateFolder', this.folder.parent)
-    }
-    /*  updateBrowser: async  function (){
-    this.folder = await this.fc.readFolder(this.storage)
-    console.log(this.folder)
-  }*/
+      input(e){
+          console.log("input",e)
+        }
+    /*    selected(item){
+    console.log(item)
+    item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.openFile(item)
+    //  this.folder =  this.$store.state.solid.folder
+  },
+  openFile(item){
+  console.log("Open",item.url)
+},
+goUp(){
+console.log(this.folder)
+this.$store.dispatch('solid/updateFolder', this.folder.parent)
+}*/
+/*  updateBrowser: async  function (){
+this.folder = await this.fc.readFolder(this.storage)
+console.log(this.folder)
+}*/
 },
 computed:{
   webId(){
@@ -63,20 +102,32 @@ computed:{
   },
   file(){
     return  this.$store.state.solid.file
-  }
+  },
+  text: {
+        get: function () {
+           return this.$store.state.solid.content
+        },
+        set: function (text) {
+           return this.$store.commit('solid/setContent', text)
+        }
+      }
+
 },
 watch: {
   // whenever question changes, this function will run
-  /*  webIb: async function (webId) {
-  this.storage =   await this.solid.data[webId].storage
-  console.log("Storage",`${this.storage}`)
-  this.updateBrowser()
-}*/
+/*  text: async function (text) {
+
+    console.log(text)
+
+  }*/
 },
 }
 </script>
 <style>
 .item {
   text-align: left;
+}
+#textarea {
+   height: 100%;
 }
 </style>

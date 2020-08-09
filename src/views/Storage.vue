@@ -1,7 +1,7 @@
 <template>
-  <div class="storage">
-    <Browser />
-    <Editor />
+  <div class="storage row">
+    <Browser class="col-md-6" />
+    <Editor class="col-md-6" />
   </div>
 </template>
 

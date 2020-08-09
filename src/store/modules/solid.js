@@ -8,14 +8,13 @@ console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
 // initial state
 const state = () => ({
-  all: [],
   webId : null,
-  logged: false,
   storage : "",
   folder: {},
   file: {},
-  chatPath : "",
-  messages : ["one", "two"]
+  content: ""
+  /*chatPath : "",
+  messages : ["one", "two"]*/
 })
 
 // getters
@@ -35,12 +34,12 @@ const actions = {
       context.commit('setWebId', null)
       context.commit('setStorage', null)
       context.commit('setFolder', null)
-
     }
   },
   async updateFolder (context, url) {
-    //  context.commit('setCurrentFolder', folder)
-    let folder = await fc.readFolder(url,  {links:"include_possible"})
+    let folder = await fc.readFolder(url)
+        context.commit('setFolder', folder)
+  /*  let folder = await fc.readFolder(url,  {links:"include_possible"})
     let acl = ""
     try{
       acl = await fc.readFile(folder.links.acl)
@@ -48,12 +47,14 @@ const actions = {
       console.log(e)
       acl = null
     }
-    folder.acl = acl
+    folder.acl = acl*/
     //    console.log("update", folder)
-    context.commit('setFolder', folder)
+
   },
   async updateFile (context, file) {
-    //  context.commit('setCurrentFolder', folder)
+    context.commit('setFile', file)
+    context.commit('setContent', await fc.readFile(file.url))
+  /*
     file.content = await fc.readFile(file.url, {links:"include_possible"})
     let acl = ""
     try{
@@ -62,13 +63,10 @@ const actions = {
     //  console.log(e)
       acl = null
     }
-    file.acl = acl
-    //  file.acl = await fc.readFile(file.links.acl)
-    //    console.log("update", folder)
-    context.commit('setFile', file)
-  },
+    file.acl = acl*/
+    },
 
-  send (context, message) {
+/*  send (context, message) {
     console.log("in action", message, context.state.chatPath)
     let date =  new Date()
     let d = date.getFullYear()+"-"+("0" + (date.getMonth() + 1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)
@@ -78,7 +76,7 @@ const actions = {
     console.log(path, context.state.webId)
     context.commit('send', message)
     //await solid[]
-  }
+  }*/
 
   /*  getAllProducts ({ commit }) {
   shop.getProducts(products => {
@@ -92,9 +90,21 @@ const mutations = {
   setWebId (state, webId) {
     state.webId = webId
   },
-  setLogged (state, logged) {
-    state.logged = logged
+  setStorage (state, st) {
+    state.storage = st
   },
+  setFolder (state, f) {
+  //  console.log(f)
+  //  console.log(f.links.meta)
+    state.folder = f
+  },
+  setFile (state, f) {
+    state.file = f
+  },
+  setContent (state, c) {
+    state.content = c
+  },
+/*
   setChatPath (state, path) {
     state.chatPath = path
   },
@@ -104,18 +114,8 @@ const mutations = {
     // eslint-disable-next-line
     console.log( "LDFLEX",solid)
 
-  },
-  setStorage (state, st) {
-    state.storage = st
-  },
-  setFolder (state, f) {
-    console.log(f)
-    console.log(f.links.meta)
-    state.folder = f
-  },
-  setFile (state, f) {
-    state.file = f
-  },
+  },*/
+
   /*  setProducts (state, products) {
   state.all = products
 },

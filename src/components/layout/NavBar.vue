@@ -10,7 +10,16 @@
 
           <!--  <b-nav-item  href="https://scenaristeur.github.io/spoggy-simple/?source=https://parle.solid.community/public/parle/" target="_blank">Viualization</b-nav-item>
         -->
-        <b-nav-item  to="/storage">Storage</b-nav-item>
+
+        <b-nav-item-dropdown right>
+          <template v-slot:button-content>
+            <b-nav-item  to="/storage">Storage</b-nav-item>
+          </template>
+            <b-dropdown-item to="/storage">Browser + Editor</b-dropdown-item>
+          <b-dropdown-item to="/browser">Browser</b-dropdown-item>
+          <b-dropdown-item to="/editor">Editor</b-dropdown-item>
+        </b-nav-item-dropdown>
+
         <b-nav-item  to="/profile">Profile</b-nav-item>
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
@@ -19,16 +28,15 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-form>
+      <!--  <b-nav-form>
           <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-        </b-nav-form>
+        </b-nav-form> -->
 
 
 
 
         <b-nav-item-dropdown right>
-
           <template v-slot:button-content>
             <em>Communication</em>
           </template>
