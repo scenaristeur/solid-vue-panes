@@ -30,16 +30,16 @@ export default {
   },
   created(){
     auth.trackSession(async session => {
-      console.log(session)
+    //  console.log(session)
       if (!session){
         this.webId = null
         console.log('The user is not logged in', this.webId)
-        this.$store.commit('solid/setWebId', this.webId)
+        this.$store.dispatch('solid/setWebId', this.webId)
         localStorage.removeItem("solid-auth-client");
       } else{
         this.webId = session.webId
         console.log(`The user is ${session.webId}`)
-        this.$store.commit('solid/setWebId', this.webId)
+        this.$store.dispatch('solid/setWebId', this.webId)
       }
     })
   },
