@@ -67,7 +67,7 @@ const actions = {
     },
     async writeFile(context, file){
       await fc.createFile(file.path+file.name, file.content, file.contentType).then((content) => {
-        console.log(content)
+        console.log(content.status)
     })
     .catch(err => console.error(`Error: ${err}`))
 

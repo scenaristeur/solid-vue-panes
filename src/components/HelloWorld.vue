@@ -2,10 +2,30 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
+      All you need to manage your Solid Pod in the pocket,<br>
+      Just install that app !
+      <!--  check out the
+      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.-->
     </p>
+
+    <h3>Working Panes</h3>
+    <ul>
+      <li>Login</li>
+      <li><router-link to="/storage">Storage (Browser + Editor)</router-link> </li>
+      <li><router-link to="/browser">Browser</router-link></li>
+      <li><router-link to="/editor">Editor</router-link></li>
+      <li><a to="/profile" target="_blank" rel="noopener">todo : Profile</a></li>
+      <li><a to="/communication" target="_blank" rel="noopener">todo : Communication (Chat + inbox)</a></li>
+
+    </ul>
+
+    <h3>Solid Libraries Used</h3>
+    <ul>
+      <li><a href="#" target="_blank" rel="noopener">solid-auth-client</a></li>
+      <li><a href="#" target="_blank" rel="noopener">solid-file-client</a></li>
+      <li><a href="#" target="_blank" rel="noopener">ldflex-query</a></li>
+      <li><a href="#" target="_blank" rel="noopener">tripledoc</a></li>
+    </ul>
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
