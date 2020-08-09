@@ -43,6 +43,7 @@ const actions = {
   async setWebId (context, webId) {
     //  console.log(webId)
     if ( webId != null ){
+      console.log("TODO : use profileMixin")
       context.commit('setWebId', webId)
       context.commit('setProgress', 1)
       let storage =  await solid.data[webId].storage
@@ -79,7 +80,7 @@ const actions = {
 
       context.commit('setAddress', {locality: await add.getString(vcard.locality)})
       context.commit('setProgress', 13)
-    //  console.log(profile)
+      //  console.log(profile)
       context.commit('setFriends', await  profile.getAllRefs(foaf.knows ))
       context.commit('setProgress', 14)
     }else{

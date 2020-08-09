@@ -3,11 +3,10 @@
     <h3>Friends</h3>
     {{ webId }}
 
-    <div v-if="webId != null" class="container row">
-
-      <Person v-for="f in friends" :key="f" :webId="f"  class="m-3" />
-
-      {{ friends }}
+    <div v-if="webId != null" class="container">
+      <b-card-group columns >
+        <Person v-for="f in friends" :key="f" :webId="f"  class="m-3" />
+      </b-card-group>
 
 
     </div>
