@@ -5,7 +5,10 @@
       v-if="folder.parent != 'https://'"
       class="item"
       @click="goUp()">
-      <b-icon-arrow-up></b-icon-arrow-up>
+      <b-icon-arrow-up></b-icon-arrow-up>   {{ folder.url }} <b-icon-upload></b-icon-upload>
+    </b-list-group-item>
+    <b-list-group-item v-else class="item">
+      {{ storage }} <b-icon-upload></b-icon-upload> 
     </b-list-group-item>
 
     <b-list-group-item

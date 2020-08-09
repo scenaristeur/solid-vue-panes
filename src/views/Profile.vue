@@ -1,16 +1,18 @@
 <template>
   <div class="profile">
-    <h1>This is an profile page</h1>
+    <General />
+    <Friends />
   </div>
 </template>
 
 <script>
 
-
+import General from '@/views/General.vue'
+import Friends from '@/views/Friends.vue'
 export default {
   name: 'Profile',
   components: {
-
+    General, Friends
   }
 }
 </script>
