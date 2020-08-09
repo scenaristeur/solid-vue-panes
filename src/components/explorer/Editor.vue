@@ -14,31 +14,61 @@
           <b-dropdown-item size="sm">Item 3</b-dropdown-item>
         </b-dropdown>
         <b-button-group size="sm" class="mr-1">
-          <b-button size="sm" variant="warning" disabled @click="save">Save</b-button>
-            <b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>
-        <!--  <b-button size="sm">Cancel</b-button>-->
-        </b-button-group>
-      </b-button-toolbar>
-    </div>
+          <b-button size="sm" variant="warning" v-b-modal.modal-1>Save</b-button>
+          <!--<b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>-->
+          <!--  <b-button size="sm">Cancel</b-button>-->
 
-    <div>
-      <b-form-textarea
-      id="textarea"
-      v-model="text"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="15"
-      @change="change"
-      @input="input"
+          <b-modal id="modal-1" title="Save" @show="fill" @ok="save">
+            <!-- <p class="my-4">Hello from modal!</p>-->
+            <b-form-group
+            label-cols-sm="3"
+            label="Path:"
+            label-align-sm="right"
+            label-for="path">
+            <b-form-input id="path" v-model="path"></b-form-input>
+          </b-form-group>
 
-      ></b-form-textarea>
-      <!--    disabled -->
+          <b-form-group
+          label-cols-sm="3"
+          label="Filename:"
+          label-align-sm="right"
+          label-for="name">
+          <b-form-input id="name" v-model="name"></b-form-input>
+        </b-form-group>
 
-      <!--  <pre class="mt-3 mb-0">{{ file.content }}</pre>     File : {{ file }}<br>-->
-    </div>
+        <b-form-group
+        label-cols-sm="3"
+        label="Mimetype:"
+        label-align-sm="right"
+        placeholder="text/plain ? text/turtle ? application/json ?"
+        label-for="type">
+        <b-form-input id="type" v-model="type"></b-form-input>
+      </b-form-group>
 
 
-  </div>
+    </b-modal>
+  </b-button-group>
+</b-button-toolbar>
+</div>
+
+<div>
+  <b-form-textarea
+  id="textarea"
+  v-model="text"
+  placeholder="Enter something..."
+  rows="3"
+  max-rows="15"
+  @change="change"
+  @input="input">
+</b-form-textarea>
+
+<!--  File : {{ file }}  disabled -->
+
+<!--  <pre class="mt-3 mb-0">{{ file.content }}</pre>     File : {{ file }}<br>-->
+</div>
+
+
+</div>
 </template>
 
 <script>
@@ -52,11 +82,17 @@ export default {
   },
   data: function () {
     return {
+      name: "",
+      type: "",
+      path: ""
       //  storage: "",
       //folder: {}
     }
   },
   async   created(){
+    this.name = "new_file.txt"
+    this.type = "text/plain"
+    this.path = this.storage
     //  this.solid= window.solid
     //  this.webId =
     //  this.fc = new SolidFileClient(auth)
@@ -66,13 +102,28 @@ export default {
   methods: {
     clean(){
       this.text=""
+      let f = {name: "new_file.txt", type: "text/plain", parent: this.folder.url || this.storage}
+      this.$store.commit('solid/setFile', f)
+      this.$store.commit('solid/setContent', "" )
     },
     change(e){
       console.log("change",e)
     },
-      input(e){
-          console.log("input",e)
-        }
+    input(e){
+      console.log("input",e)
+    },
+    fill(){
+      this.name = this.file.name
+      this.type = this.file.type
+      this.path = this.file.parent
+    },
+    save(){
+      console.log("text", this.text)
+      this.path =   this.path.endsWith("/") ? this.path : this.path+"/"
+      console.log('File',this.type, this.path, this.name)
+      let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
+      this.$store.dispatch('solid/writeFile', file)
+    }
     /*    selected(item){
     console.log(item)
     item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.openFile(item)
@@ -103,23 +154,24 @@ computed:{
   file(){
     return  this.$store.state.solid.file
   },
+
   text: {
-        get: function () {
-           return this.$store.state.solid.content
-        },
-        set: function (text) {
-           return this.$store.commit('solid/setContent', text)
-        }
-      }
+    get: function () {
+      return this.$store.state.solid.content
+    },
+    set: function (text) {
+      return this.$store.commit('solid/setContent', text)
+    }
+  },
 
 },
 watch: {
   // whenever question changes, this function will run
-/*  text: async function (text) {
+  /*  text: async function (text) {
 
-    console.log(text)
+  console.log(text)
 
-  }*/
+}*/
 },
 }
 </script>
@@ -128,6 +180,6 @@ watch: {
   text-align: left;
 }
 #textarea {
-   height: 100%;
+  height: 100%;
 }
 </style>

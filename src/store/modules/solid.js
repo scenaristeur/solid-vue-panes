@@ -65,6 +65,15 @@ const actions = {
     }
     file.acl = acl*/
     },
+    async writeFile(context, file){
+      await fc.createFile(file.path+file.name, file.content, file.contentType).then((content) => {
+        console.log(content)
+    })
+    .catch(err => console.error(`Error: ${err}`))
+
+
+        context.commit('setStorage', this.path)
+    }
 
 /*  send (context, message) {
     console.log("in action", message, context.state.chatPath)
