@@ -10,13 +10,11 @@
 
           <!--  <b-nav-item  href="https://scenaristeur.github.io/spoggy-simple/?source=https://parle.solid.community/public/parle/" target="_blank">Viualization</b-nav-item>
         -->
-        <b-nav-item  to="/chat">Chat</b-nav-item>
+        <b-nav-item  to="/storage">Storage</b-nav-item>
+        <b-nav-item  to="/profile">Profile</b-nav-item>
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-      </b-navbar-nav>
 
-      <b-navbar-nav>
 
-        <b-nav-item to="/about">About</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -26,11 +24,16 @@
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
         </b-nav-form>
 
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
+
+
+
+        <b-nav-item-dropdown right>
+
+          <template v-slot:button-content>
+            <em>Communication</em>
+          </template>
+          <b-dropdown-item to="/inbox">Inbox</b-dropdown-item>
+          <b-dropdown-item to="/chat">Chat</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <!-- Using 'button-content' slot -->
@@ -39,12 +42,24 @@
           <template v-slot:button-content>
             <em>User</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item to="/profile">Profile</b-dropdown-item>
           <b-dropdown-item href="#">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
+
+
         <b-nav-item ><SolidLogin /></b-nav-item>
+
+
         <b-nav-item  href="https://github.com/scenaristeur/solid-vue-panes/projects/1?add_cards_query=is%3Aopen" target="_blank">Contribute</b-nav-item>
 
+        <b-nav-item-dropdown text="Lang" right>
+          <b-dropdown-item href="#">EN</b-dropdown-item>
+          <b-dropdown-item href="#">ES</b-dropdown-item>
+          <b-dropdown-item href="#">RU</b-dropdown-item>
+          <b-dropdown-item href="#">FA</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <b-nav-item to="/about">About</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
