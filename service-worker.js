@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/solid-vue-panes/precache-manifest.5bf50c6cbe54b244825ef2d18fa31012.js"
+  "/solid-vue-panes/precache-manifest.82644c25165b397645d99fa86b18a44e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "solid-vue-panes"});
