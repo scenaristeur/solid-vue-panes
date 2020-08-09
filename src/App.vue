@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <NavBar />
+          <b-progress v-if=" progressValue < progressMax" :value="progressValue" :max="progressMax" show-progress animated></b-progress>
   <!--  <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -16,7 +17,10 @@ export default {
   name: 'App',
   components: {
     NavBar,
-
+  },
+  computed: {
+    progressValue(){return this.$store.state.solid.progressValue},
+    progressMax(){return this.$store.state.solid.progressMax},
   }
 }
 </script>

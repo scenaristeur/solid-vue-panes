@@ -3,7 +3,9 @@
     <h1>{{ msg }}</h1>
     <p>
       All you need to manage your Solid Pod in the pocket,<br>
-      Just install that app !
+
+      <SolidLogin class="m-3" v-if="webId == null" />
+
       <!--  check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.-->
     </p>
@@ -14,8 +16,8 @@
       <li><router-link to="/storage">Storage (Browser + Editor)</router-link> </li>
       <li><router-link to="/browser">Browser</router-link></li>
       <li><router-link to="/editor">Editor</router-link></li>
-      <li><a to="/profile" target="_blank" rel="noopener">todo : Profile</a></li>
-      <li><a to="/communication" target="_blank" rel="noopener">todo : Communication (Chat + inbox)</a></li>
+      <li><router-link to="/profile">in progress : Profile</router-link></li>
+      <li><router-link to="/communication">todo : Communication (Chat + inbox)</router-link></li>
 
     </ul>
 
@@ -59,7 +61,16 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  components: {
+    'SolidLogin': () => import('@/components/solid/SolidLogin')
+  },
+  computed:{
+    webId(){
+      return this.$store.state.solid.webId
+    }
   }
+
 }
 </script>
 

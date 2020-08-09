@@ -3,7 +3,7 @@ const solid= window.solid
 //  this.webId =
 import auth from 'solid-auth-client';
 import { fetchDocument } from 'tripledoc';
-import { vcard, /*sioc, dct, foaf*/ } from 'rdf-namespaces'
+import { vcard, foaf /*sioc, dct, foaf*/ } from 'rdf-namespaces'
 
 const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
@@ -26,7 +26,9 @@ const state = () => ({
   photo: "",
   address: {},
   note: "",
-  progressMax: 13,
+  friends : [],
+  // Progress
+  progressMax: 14,
   progressValue: 0,
 
   /*chatPath : "",
@@ -46,31 +48,23 @@ const actions = {
       let storage =  await solid.data[webId].storage
       context.commit('setStorage', `${storage}`)
       context.commit('setProgress', 2)
-      let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
-      context.commit('setFolder', folder)
+      //  let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
+      context.commit('setFolder', await fc.readFolder(`${storage}`))
       context.commit('setProgress', 3)
 
       let profileDoc = await fetchDocument(webId);
       context.commit('setProfileDoc', profileDoc)
       context.commit('setProgress', 4)
-      const profile = profileDoc.getSubject(webId);
-      let name = await  profile.getString(vcard.fn);
-      context.commit('setProgress', 5)
-      console.log("NAME", name)
-      context.commit('setName', name)
-      context.commit('setProgress', 6)
-      let org = await  profile.getString("http://www.w3.org/2006/vcard/ns#organization-name");
-      console.log("org", org)
-      context.commit('setOrganization', org)
-      context.commit('setProgress', 7)
-      let role = await  profile.getString(vcard.role);
-      console.log("role", role)
-      context.commit('setRole', role)
-      context.commit('setProgress', 8)
 
-      let bday = await  profile.getString(vcard.bday);
-      console.log("bday", bday)
-      context.commit('setBday', bday)
+      const profile = profileDoc.getSubject(webId);
+      context.commit('setProgress', 5)
+      context.commit('setName', await  profile.getString(vcard.fn))
+      context.commit('setProgress', 6)
+      context.commit('setOrganization', await  profile.getString("http://www.w3.org/2006/vcard/ns#organization-name"))
+      context.commit('setProgress', 7)
+      context.commit('setRole', await  profile.getString(vcard.role))
+      context.commit('setProgress', 8)
+      context.commit('setBday', await  profile.getString(vcard.bday))
       context.commit('setProgress', 9)
       context.commit('setGender', await  profile.getString(vcard.hasGender ))
       context.commit('setProgress', 10)
@@ -85,6 +79,9 @@ const actions = {
 
       context.commit('setAddress', {locality: await add.getString(vcard.locality)})
       context.commit('setProgress', 13)
+    //  console.log(profile)
+      context.commit('setFriends', await  profile.getAllRefs(foaf.knows ))
+      context.commit('setProgress', 14)
     }else{
       context.commit('setWebId', null)
       context.commit('setStorage', null)
@@ -197,6 +194,10 @@ const mutations = {
   },
   setProgress(state, n){
     state.progressValue = n
+  },
+  setFriends(state, f){
+    console.log("Friends", f)
+    state.friends = f
   }
 
   /*

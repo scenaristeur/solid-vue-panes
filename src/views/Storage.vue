@@ -25,8 +25,7 @@ export default {
   components: {
     'Browser': () => import('@/components/explorer/Browser'),
     'Editor': () => import('@/components/explorer/Editor'),
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
-
+    'SolidLogin': () => import('@/components/solid/SolidLogin')  
   },
   data: function () {
     return {

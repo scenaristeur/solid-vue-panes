@@ -4,7 +4,6 @@
 
     <div v-if="webId != null" class="container">
 
-      <b-progress v-if=" progressValue < progressMax" :value="progressValue" :max="progressMax" show-progress animated></b-progress>
       <h4>{{ webId }}</h4>
       <!--  {{ profileDoc }}
       {{ name }}
@@ -104,8 +103,6 @@ export default {
     photo(){return this.$store.state.solid.photo},
     address(){return this.$store.state.solid.address},
     note(){return this.$store.state.solid.note},
-    progressValue(){return this.$store.state.solid.progressValue},
-    progressMax(){return this.$store.state.solid.progressMax},
 
   }
 }
