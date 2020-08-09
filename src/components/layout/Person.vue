@@ -19,10 +19,23 @@
     <p v-if="profile.bday">Birthday: {{profile.bday}}</p>
     <p v-if="profile.note">Note: {{profile.note}}</p>
     <p v-if="profile.locality">Locality: {{profile.locality}}</p>
-    <p v-if="profile.friends">Friends: {{profile.friends.length}}</p>
+  
+     <div>
+       <b-button v-if="profile.friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{profile.friends.length}} friends</b-button>
+       <b-collapse id="collapse-1" class="mt-2">
+         <b-card>
+              <p v-for="f in profile.friends" :key="f" :webId="f"  class="card-text" >{{ f}}</p>
+          <!-- <p class="card-text">Collapse contents Here</p>
+           <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
+           <b-collapse id="collapse-1-inner" class="mt-2">
+             <b-card>Hello!</b-card>
+           </b-collapse> -->
+         </b-card>
+       </b-collapse>
+     </div>
 
 
-     <p v-for="f in profile.friends" :key="f" :webId="f"  class="m-3" >{{ f}}</p>
+
 
 
     <!--
@@ -45,7 +58,7 @@ export default {
   },
   mixins: [profileMixin],
   components: {
-    
+
   //  'Person': () => import('@/components/layout/Person')
   },
   data: function () {

@@ -18,6 +18,7 @@
       <li><router-link to="/editor">Editor</router-link></li>
       <li><router-link to="/profile">in progress : Profile</router-link></li>
       <li><router-link to="/communication">todo : Communication (Chat + inbox)</router-link></li>
+      <li><router-link to="/projets">todo : Projets ( tensions, organizations)</router-link></li>
 
     </ul>
 
