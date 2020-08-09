@@ -1,10 +1,7 @@
 <template>
   <div class="storage">
     <Browser />
-    <h1>This is an storage page</h1>
-    Folder : {{ folder }} <br>
-    Storage {{ storage }} <br>
-    webId {{ webId }} <br>
+    <Editor />
   </div>
 </template>
 
@@ -20,7 +17,8 @@ export default {
 
   name: 'Storage',
   components: {
-    'Browser': () => import('@/components/explorer/Browser')
+    'Browser': () => import('@/components/explorer/Browser'),
+    'Editor': () => import('@/components/explorer/Editor')
   },
   data: function () {
     return {

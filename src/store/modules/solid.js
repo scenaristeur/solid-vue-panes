@@ -12,7 +12,8 @@ const state = () => ({
   webId : null,
   logged: false,
   storage : "",
-  folder: "",
+  folder: {},
+  file: {},
   chatPath : "",
   messages : ["one", "two"]
 })
@@ -23,12 +24,12 @@ const getters = {}
 // actions
 const actions = {
   async setWebId (context, webId) {
-    console.log(webId)
+    //  console.log(webId)
     if ( webId != null ){
       context.commit('setWebId', webId)
       let storage =  await solid.data[webId].storage
       context.commit('setStorage', `${storage}`)
-      let folder = await fc.readFolder(`${storage}`)
+      let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
       context.commit('setFolder', folder)
     }else{
       context.commit('setWebId', null)
@@ -36,6 +37,35 @@ const actions = {
       context.commit('setFolder', null)
 
     }
+  },
+  async updateFolder (context, url) {
+    //  context.commit('setCurrentFolder', folder)
+    let folder = await fc.readFolder(url,  {links:"include_possible"})
+    let acl = ""
+    try{
+      acl = await fc.readFile(folder.links.acl)
+    }catch(e){
+      console.log(e)
+      acl = null
+    }
+    folder.acl = acl
+    //    console.log("update", folder)
+    context.commit('setFolder', folder)
+  },
+  async updateFile (context, file) {
+    //  context.commit('setCurrentFolder', folder)
+    file.content = await fc.readFile(file.url, {links:"include_possible"})
+    let acl = ""
+    try{
+      acl = await fc.readFile(file.links.acl)
+    }catch(e){
+    //  console.log(e)
+      acl = null
+    }
+    file.acl = acl
+    //  file.acl = await fc.readFile(file.links.acl)
+    //    console.log("update", folder)
+    context.commit('setFile', file)
   },
 
   send (context, message) {
@@ -80,7 +110,11 @@ const mutations = {
   },
   setFolder (state, f) {
     console.log(f)
+    console.log(f.links.meta)
     state.folder = f
+  },
+  setFile (state, f) {
+    state.file = f
   },
   /*  setProducts (state, products) {
   state.all = products
