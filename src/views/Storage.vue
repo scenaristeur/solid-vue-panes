@@ -1,7 +1,13 @@
 <template>
-  <div class="storage row">
-    <Browser class="col-md-6" />
-    <Editor class="col-md-6" />
+  <div class="storage">
+    <div v-if="webId != null" class="row">
+
+      <Browser class="col-md-6" />
+      <Editor class="col-md-6" />
+    </div>
+    <div v-else>
+      <SolidLogin />
+    </div>
   </div>
 </template>
 
@@ -18,7 +24,9 @@ export default {
   name: 'Storage',
   components: {
     'Browser': () => import('@/components/explorer/Browser'),
-    'Editor': () => import('@/components/explorer/Editor')
+    'Editor': () => import('@/components/explorer/Editor'),
+    'SolidLogin': () => import('@/components/solid/SolidLogin')
+
   },
   data: function () {
     return {

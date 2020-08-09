@@ -1,54 +1,55 @@
 <template>
   <div class="editor">
 
-    <div>
-      <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-        <b-button-group size="sm" class="mr-1">
-          <b-button size="sm" @click="clean">New</b-button>
-          <b-button size="sm" disabled>Edit</b-button>
-          <b-button size="sm" disabled>Undo</b-button>
-        </b-button-group>
-        <b-dropdown size="sm" class="mr-1" right text="menu">
-          <b-dropdown-item size="sm">Item 1</b-dropdown-item>
-          <b-dropdown-item size="sm">Item 2</b-dropdown-item>
-          <b-dropdown-item size="sm">Item 3</b-dropdown-item>
-        </b-dropdown>
-        <b-button-group size="sm" class="mr-1">
-          <b-button size="sm" variant="warning" v-b-modal.modal-1>Save</b-button>
-          <!--<b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>-->
-          <!--  <b-button size="sm">Cancel</b-button>-->
+    <div v-if="webId != null">
+      <div>
+        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+          <b-button-group size="sm" class="mr-1">
+            <b-button size="sm" @click="clean">New</b-button>
+            <b-button size="sm" disabled>Edit</b-button>
+            <b-button size="sm" disabled>Undo</b-button>
+          </b-button-group>
+          <b-dropdown size="sm" class="mr-1" right text="menu">
+            <b-dropdown-item size="sm">Item 1</b-dropdown-item>
+            <b-dropdown-item size="sm">Item 2</b-dropdown-item>
+            <b-dropdown-item size="sm">Item 3</b-dropdown-item>
+          </b-dropdown>
+          <b-button-group size="sm" class="mr-1">
+            <b-button size="sm" variant="warning" v-b-modal.modal-1>Save</b-button>
+            <!--<b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>-->
+            <!--  <b-button size="sm">Cancel</b-button>-->
 
-          <b-modal id="modal-1" title="Save" @show="fill" @ok="save">
-            <!-- <p class="my-4">Hello from modal!</p>-->
+            <b-modal id="modal-1" title="Save" @show="fill" @ok="save">
+              <!-- <p class="my-4">Hello from modal!</p>-->
+              <b-form-group
+              label-cols-sm="3"
+              label="Path:"
+              label-align-sm="right"
+              label-for="path">
+              <b-form-input id="path" v-model="path"></b-form-input>
+            </b-form-group>
+
             <b-form-group
             label-cols-sm="3"
-            label="Path:"
+            label="Filename:"
             label-align-sm="right"
-            label-for="path">
-            <b-form-input id="path" v-model="path"></b-form-input>
+            label-for="name">
+            <b-form-input id="name" v-model="name"></b-form-input>
           </b-form-group>
 
           <b-form-group
           label-cols-sm="3"
-          label="Filename:"
+          label="Mimetype:"
           label-align-sm="right"
-          label-for="name">
-          <b-form-input id="name" v-model="name"></b-form-input>
+          placeholder="text/plain ? text/turtle ? application/json ?"
+          label-for="type">
+          <b-form-input id="type" v-model="type"></b-form-input>
         </b-form-group>
 
-        <b-form-group
-        label-cols-sm="3"
-        label="Mimetype:"
-        label-align-sm="right"
-        placeholder="text/plain ? text/turtle ? application/json ?"
-        label-for="type">
-        <b-form-input id="type" v-model="type"></b-form-input>
-      </b-form-group>
 
-
-    </b-modal>
-  </b-button-group>
-</b-button-toolbar>
+      </b-modal>
+    </b-button-group>
+  </b-button-toolbar>
 </div>
 
 <div>
@@ -66,6 +67,10 @@
 
 <!--  <pre class="mt-3 mb-0">{{ file.content }}</pre>     File : {{ file }}<br>-->
 </div>
+</div>
+<div v-else>
+  <SolidLogin />
+</div>
 
 
 </div>
@@ -78,7 +83,7 @@ export default {
 
   name: 'Browser',
   components: {
-
+    'SolidLogin': () => import('@/components/solid/SolidLogin')
   },
   data: function () {
     return {

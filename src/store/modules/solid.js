@@ -59,9 +59,9 @@ const actions = {
       console.log("NAME", name)
       context.commit('setName', name)
       context.commit('setProgress', 6)
-      let org = await  profile.getString(vcard.organization-name);
+      let org = await  profile.getString("http://www.w3.org/2006/vcard/ns#organization-name");
       console.log("org", org)
-      context.commit('setOrganization', name)
+      context.commit('setOrganization', org)
       context.commit('setProgress', 7)
       let role = await  profile.getString(vcard.role);
       console.log("role", role)
@@ -72,13 +72,18 @@ const actions = {
       console.log("bday", bday)
       context.commit('setBday', bday)
       context.commit('setProgress', 9)
-      context.commit('setGender', await  profile.getString(vcard.gender))
+      context.commit('setGender', await  profile.getString(vcard.hasGender ))
       context.commit('setProgress', 10)
       context.commit('setPhoto', await  profile.getString(vcard.hasPhoto))
       context.commit('setProgress', 11)
       context.commit('setNote', await  profile.getString(vcard.note))
       context.commit('setProgress', 12)
-      context.commit('setAddress', await  profile.getString(vcard.role))
+      // TODO many possible address
+      let addressUrl = await  profile.getRef(vcard.hasAddress)
+      console.log("Address Node ",addressUrl)
+      let add = profileDoc.getSubject(addressUrl);
+
+      context.commit('setAddress', {locality: await add.getString(vcard.locality)})
       context.commit('setProgress', 13)
     }else{
       context.commit('setWebId', null)
@@ -170,7 +175,7 @@ const mutations = {
     state.name = n
   },
   setOrganization(state, o){
-    state.profileDoc = o
+    state.organization = o
   },
   setRole(state, r){
     state.role = r
