@@ -19,22 +19,22 @@
     <ul>
       <li><router-link to="/storage">Storage (Browser + Editor)</router-link> </li>
       <li><router-link to="/browser">Browser</router-link></li>
-      <li><router-link to="/editor">Editor</router-link></li>
+      <li><router-link to="/editor">Editor (must add other editor for other files, triples editor...)</router-link></li>
     </ul>
 
     <h3>Profile</h3>
     <ul>
       <li><router-link to="/profile">Profile (General + Friends)</router-link></li>
-      <li><router-link to="/general">General</router-link></li>
-      <li><router-link to="/friends">Friends</router-link></li>
+      <li><router-link to="/general">General (must add save change)</router-link></li>
+      <li><router-link to="/friends">Friends (viewok)</router-link></li>
     </ul>
 
     <h3>Communication</h3>
     <ul>
-      <li><router-link to="/communication">todo : Communication (Parle +Chat + inbox)</router-link></li>
-      <li><router-link to="/parle">todo: Parle</router-link> </li>
-      <li><router-link to="/chat">todo: Chat</router-link></li>
-      <li><router-link to="/inbox">todo: Inbox</router-link></li>
+      <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>
+      <li><router-link to="/parle">Parle : almost</router-link> </li>
+      <li><router-link to="/chat">Chat: started</router-link></li>
+      <li><router-link to="/inbox">Inbox : todo</router-link></li>
     </ul>
 
 

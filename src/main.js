@@ -15,6 +15,9 @@ Vue.use(IconsPlugin)
 let solid = window.solid
 console.log("SOLID",solid)
 
+import Chat from 'vue-beautiful-chat'
+Vue.use(Chat)
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
