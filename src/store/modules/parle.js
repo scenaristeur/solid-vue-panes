@@ -1,38 +1,14 @@
 //import shop from '../../api/shop'
-const solid= window.solid
-//  this.webId =
-import auth from 'solid-auth-client';
-import { fetchDocument } from 'tripledoc';
-import { vcard, foaf /*sioc, dct, foaf*/ } from 'rdf-namespaces'
 
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
 // initial state
 const state = () => ({
-  webId : null,
-  //Storage / Browser
-  storage : "",
-  folder: {},
-  file: {},
-  content: "",
-  //Profile
-  profileDoc: {},
-  name: "",
-  organization: "",
-  role: "",
-  bday: "",
-  gender: "",
-  photo: "",
-  address: {},
-  note: "",
-  friends : [],
-  // Progress
-  progressMax: 14,
-  progressValue: 0,
-
-  /*chatPath : "",
-  messages : ["one", "two"]*/
+  users: {"https://spoggy-test3.solid.community/profile/card#me": {pic:"boo"}},
+  root: "",
+  //  dataDate: "",
+  //  path: "",
+  fileUrl: "",
+  //  requests: [],
+    messages: []
 })
 
 // getters
@@ -40,187 +16,42 @@ const getters = {}
 
 // actions
 const actions = {
-  async setWebId (context, webId) {
-    //  console.log(webId)
-    if ( webId != null ){
-      console.log("TODO : use profileMixin")
-      context.commit('setWebId', webId)
-      context.commit('setProgress', 1)
-      let storage =  await solid.data[webId].storage
-      context.commit('setStorage', `${storage}`)
-      context.commit('setProgress', 2)
-      //  let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
-      context.commit('setFolder', await fc.readFolder(`${storage}`))
-      context.commit('setProgress', 3)
+  /*requestUpdate(state, url){
 
-      let profileDoc = await fetchDocument(webId);
-      context.commit('setProfileDoc', profileDoc)
-      context.commit('setProgress', 4)
-
-      const profile = profileDoc.getSubject(webId);
-      context.commit('setProgress', 5)
-      context.commit('setName', await  profile.getString(vcard.fn))
-      context.commit('setProgress', 6)
-      context.commit('setOrganization', await  profile.getString("http://www.w3.org/2006/vcard/ns#organization-name"))
-      context.commit('setProgress', 7)
-      context.commit('setRole', await  profile.getString(vcard.role))
-      context.commit('setProgress', 8)
-      context.commit('setBday', await  profile.getString(vcard.bday))
-      context.commit('setProgress', 9)
-      context.commit('setGender', await  profile.getString(vcard.hasGender ))
-      context.commit('setProgress', 10)
-      context.commit('setPhoto', await  profile.getString(vcard.hasPhoto))
-      context.commit('setProgress', 11)
-      context.commit('setNote', await  profile.getString(vcard.note))
-      context.commit('setProgress', 12)
-      // TODO many possible address
-      let addressUrl = await  profile.getRef(vcard.hasAddress)
-      console.log("Address Node ",addressUrl)
-      let add = profileDoc.getSubject(addressUrl);
-
-      context.commit('setAddress', {locality: await add.getString(vcard.locality)})
-      context.commit('setProgress', 13)
-      //  console.log(profile)
-      context.commit('setFriends', await  profile.getAllRefs(foaf.knows ))
-      context.commit('setProgress', 14)
-    }else{
-      context.commit('setWebId', null)
-      context.commit('setStorage', null)
-      context.commit('setFolder', null)
-    }
-  },
-  async updateFolder (context, url) {
-    let folder = await fc.readFolder(url)
-    context.commit('setFolder', folder)
-    /*  let folder = await fc.readFolder(url,  {links:"include_possible"})
-    let acl = ""
-    try{
-    acl = await fc.readFile(folder.links.acl)
-  }catch(e){
-  console.log(e)
-  acl = null
-}
-folder.acl = acl*/
-//    console.log("update", folder)
-
-},
-async updateFile (context, file) {
-  context.commit('setFile', file)
-  context.commit('setContent', await fc.readFile(file.url))
-  /*
-  file.content = await fc.readFile(file.url, {links:"include_possible"})
-  let acl = ""
-  try{
-  acl = await fc.readFile(file.links.acl)
-}catch(e){
-//  console.log(e)
-acl = null
-}
-file.acl = acl*/
-},
-async writeFile(context, file){
-  await fc.createFile(file.path+file.name, file.content, file.contentType).then((content) => {
-    console.log(content.status)
-  })
-  .catch(err => console.error(`Error: ${err}`))
-
-
-  context.commit('setStorage', this.path)
-}
-
-/*  send (context, message) {
-console.log("in action", message, context.state.chatPath)
-let date =  new Date()
-let d = date.getFullYear()+"-"+("0" + (date.getMonth() + 1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)
-console.log(d, context.state.webId)
-//  context.commit('send', message)
-let path = context.state.chatPath+d+".ttl"
-console.log(path, context.state.webId)
-context.commit('send', message)
-//await solid[]
-}*/
-
-/*  getAllProducts ({ commit }) {
-shop.getProducts(products => {
-commit('setProducts', products)
-})
+  //state.requests.push(url)
 }*/
 }
 
 // mutations
 const mutations = {
-  setWebId (state, webId) {
-    state.webId = webId
+  setUser(state, user){
+    console.log("User",user)
+    let webId = user.webId
+    let pic = user.pic
+    state.users[webId]= pic
   },
-  setStorage (state, st) {
-    state.storage = st
+  setFileUrl(state, fileUrl){
+    state.fileUrl = fileUrl
   },
-  setFolder (state, f) {
-    //  console.log(f)
-    //  console.log(f.links.meta)
-    state.folder = f
+  setRoot (state, root) {
+    console.log(root)
+    state.root = root
   },
-  setFile (state, f) {
-    state.file = f
+  setMessages(state,messages){
+  state.messages = messages
   },
-  setContent (state, c) {
-    state.content = c
-  },
-  setProfileDoc(state, p){
-    state.profileDoc = p
-  },
-  setName(state, n){
-    state.name = n
-  },
-  setOrganization(state, o){
-    state.organization = o
-  },
-  setRole(state, r){
-    state.role = r
-  },
-  setBday(state, b){
-    state.bday = b
-  },
-  setGender(state, g){
-    state.gender = g
-  },
-  setPhoto(state, p){
-    state.photo = p
-  },
-  setAddress(state, a){
-    state.address = a
-  },
-  setNote(state, n){
-    state.note = n
-  },
-  setProgress(state, n){
-    state.progressValue = n
-  },
-  setFriends(state, f){
-    console.log("Friends", f)
-    state.friends = f
-  }
-
   /*
-  setChatPath (state, path) {
-  state.chatPath = path
+  setPath(state, path){
+  state.path = path
 },
-send(state, message){
-state.messages.push(message)
-console.log(state.messages)
-// eslint-disable-next-line
-console.log( "LDFLEX",solid)
-
+setMessages(state,messages){
+state.messages = messages
+},
+setDataDate(state, date){
+state.dataDate = date
 },*/
 
-/*  setProducts (state, products) {
-state.all = products
-},
 
-decrementProductInventory (state, { id }) {
-const product = state.all.find(product => product.id === id)
-product.inventory--
-}*/
 }
 
 export default {

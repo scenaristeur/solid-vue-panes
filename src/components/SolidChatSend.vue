@@ -42,7 +42,7 @@ export default {
       // please refer to https://github.com/scenaristeur/shighl/blob/9b4b61d06d8a20f55de3f2aa580cbc5fb840d584/src/Shighl-chat.js#L214
       // and https://github.com/LDflex/LDflex/issues/53
       let webId= this.$store.state.solid.webId
-      let fileUrl = this.$store.state.chat.fileUrl
+      let fileUrl = this.$store.state.parle.fileUrl
       console.log(fileUrl)
       if (this.message.length > 0 && webId != null)    {
         console.log(this.message)

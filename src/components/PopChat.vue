@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ url }}
+    Chat url :  {{ url }}
     <beautiful-chat
     :participants="participants"
     :titleImageUrl="titleImageUrl"
@@ -35,7 +35,58 @@ import CloseIconSvg from '@/assets/close.svg'
 
 export default {
   name: 'app',
-  props: ['url'],
+  props: {
+    url: String
+  },
+  created(){
+    console.log("chat url:",this.url)
+  },
+  watch: {
+    url: function (url) {
+      if(url != null){
+        this.sendMessage("switched to "+url)
+        this.initChat(url)
+      }
+    }
+  },
+  methods: {
+    initChat(url){
+      console.log("url changed",url)
+
+
+    },
+    sendMessage (text) {
+      if (text.length > 0) {
+        this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
+        this.onMessageWasSent({ author: 'support', type: 'text', data: { text } })
+      }
+    },
+    onMessageWasSent (message) {
+      // called when the user sends a message
+      this.messageList = [ ...this.messageList, message ]
+    },
+    openChat () {
+      // called when the user clicks on the fab button to open the chat
+      this.isChatOpen = true
+      this.newMessagesCount = 0
+    },
+    closeChat () {
+      // called when the user clicks on the botton to close the chat
+      this.isChatOpen = false
+    },
+    handleScrollToTop () {
+      // called when the user scrolls message list to top
+      // leverage pagination for loading another page of messages
+    },
+    handleOnType () {
+      console.log('Emit typing event')
+    },
+    editMessage(message){
+      const m = this.messageList.find(m=>m.id === message.id);
+      m.isEdited = true;
+      m.data.text = message.data.text;
+    }
+  },
   data() {
     return {
       icons:{
@@ -74,7 +125,7 @@ export default {
         { type: 'text', author: `user1`, data: { text: `No.` } }
       ], // the list of the messages to show, can be paginated and adjusted dynamically
       newMessagesCount: 0,
-      isChatOpen: false, // to determine whether the chat window should be open or closed
+      isChatOpen: true, // to determine whether the chat window should be open or closed
       showTypingIndicator: '', // when set to a value matching the participant.id it shows the typing indicator for the specific user
       colors: {
         header: {
@@ -102,39 +153,6 @@ export default {
       }, // specifies the color scheme for the component
       alwaysScrollToBottom: false, // when set to true always scrolls the chat to the bottom when new events are in (new message, user starts typing...)
       messageStyling: true // enables *bold* /emph/ _underline_ and such (more info at github.com/mattezza/msgdown)
-    }
-  },
-  methods: {
-    sendMessage (text) {
-      if (text.length > 0) {
-        this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
-        this.onMessageWasSent({ author: 'support', type: 'text', data: { text } })
-      }
-    },
-    onMessageWasSent (message) {
-      // called when the user sends a message
-      this.messageList = [ ...this.messageList, message ]
-    },
-    openChat () {
-      // called when the user clicks on the fab button to open the chat
-      this.isChatOpen = true
-      this.newMessagesCount = 0
-    },
-    closeChat () {
-      // called when the user clicks on the botton to close the chat
-      this.isChatOpen = false
-    },
-    handleScrollToTop () {
-      // called when the user scrolls message list to top
-      // leverage pagination for loading another page of messages
-    },
-    handleOnType () {
-      console.log('Emit typing event')
-    },
-    editMessage(message){
-      const m = this.messageList.find(m=>m.id === message.id);
-      m.isEdited = true;
-      m.data.text = message.data.text;
     }
   }
 }

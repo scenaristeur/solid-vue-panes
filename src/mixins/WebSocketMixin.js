@@ -5,7 +5,7 @@ export default {
   },
   methods: {
     createWebSocket(){
-      let root = this.$store.state.chat.root
+      let root = this.$store.state.parle.root
       let withoutProtocol = root.split('//')[1]
       let sock = withoutProtocol.split('/')[0]+"/"
       let socket = new WebSocket('wss://'+sock, ['solid.0.1.0']);

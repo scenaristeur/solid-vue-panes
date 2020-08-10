@@ -30,20 +30,20 @@ export default {
 },
 computed:{
   root(){
-    return this.$store.state.chat.root
+    return this.$store.state.parle.root
   },
   path(){
-    return this.$store.state.chat.path
+    return this.$store.state.parle.path
   },
   fileUrl(){
-    return this.$store.state.chat.fileUrl
+    return this.$store.state.parle.fileUrl
   },
   items(){
     let items = []
     let fil = ""
     items.push ({text: "root", href:"/"})
-    //  console.log(this.$store.state.chat.fileUrl.split(this.root))
-    let withoutRoot=this.$store.state.chat.fileUrl.split(this.root)[1]
+    //  console.log(this.$store.state.parle.fileUrl.split(this.root))
+    let withoutRoot=this.$store.state.parle.fileUrl.split(this.root)[1]
     if (withoutRoot != undefined && withoutRoot.length > 1){
       let splittedUrl = withoutRoot.split("/")
       console.log(splittedUrl)

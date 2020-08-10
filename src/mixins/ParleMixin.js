@@ -1,5 +1,4 @@
-//import store from '@/store'
-//Common libs
+
 import auth from 'solid-auth-client';
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf, schema } from 'rdf-namespaces'
@@ -13,12 +12,12 @@ export default {
     async prepareToday(){
     //  let root = this.$store.state.chat.root
       let now = new Date()
-      this.$store.commit('chat/setDataDate', now)
+      this.$store.commit('parle/setDataDate', now)
       let filename = [now.getFullYear(), ("0" + (now.getMonth() + 1)).slice(-2), ("0" + now.getDate()).slice(-2)].join("-")+".ttl"
-      let fileUrl = this.$store.state.chat.root+filename
+      let fileUrl = this.$store.state.parle.root+filename
       console.log(fileUrl)
       await  this.create(fileUrl)
-      this.$store.commit('chat/setFileUrl', fileUrl)
+      this.$store.commit('parle/setFileUrl', fileUrl)
 
     },
     async create(fileUrl){
@@ -83,7 +82,7 @@ export default {
     //  console.log(triples)
     messages = triples.reverse()
     console.log("Messages",messages)
-    this.$store.commit('chat/setMessages',messages)
+    this.$store.commit('parle/setMessages',messages)
   },
   onlyUnique(value, index, self) {
     return self.indexOf(value) === index;

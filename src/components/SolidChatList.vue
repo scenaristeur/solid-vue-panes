@@ -77,9 +77,8 @@
 
 <script>
 import store from '@/store'
-import ChatMixin from '@/mixins/ChatMixin' // manage Chat functionnalities
 import WebSocketMixin from '@/mixins/WebSocketMixin' // manage WebSocket
-import BrowserMixin from '@/mixins/BrowserMixin' // Manage folders & files
+import ParleMixin from '@/mixins/ParleMixin' // Manage folders & files
 import { fetchDocument } from 'tripledoc';
 //import auth from 'solid-auth-client';
 import {/* sioc,*/ dct, foaf, schema } from 'rdf-namespaces'
@@ -90,7 +89,7 @@ export default {
   props: {
     msg: String
   },
-  mixins: [BrowserMixin,  ChatMixin, WebSocketMixin ],
+  mixins: [ParleMixin,  WebSocketMixin ],
   data: function () {
     return {
       date: "",
@@ -101,8 +100,8 @@ export default {
     let d = new Date()
     this.date = this.formatDate(d)
     this.max = this.date
-    this.path = this.$store.state.chat.root
-    console.log("ROOT FROM STORE", this.$store.state.chat.root)
+    this.path = this.$store.state.parle.root
+    console.log("ROOT FROM STORE", this.$store.state.parle.root)
     await this.createWebSocket()
 
 
@@ -125,7 +124,7 @@ export default {
   methods: {
     bascule(p){
       console.log("Part",p)
-      this.$store.commit('chat/setFileUrl', p)
+      this.$store.commit('parle/setFileUrl', p)
       this.path = p.substr(0, p.lastIndexOf("/") + 1)
       console.log(this.path)
       if (this.$store.state.websocket.socket != undefined){
@@ -151,12 +150,12 @@ export default {
         let parent_path = parent.substr(0, parent.lastIndexOf("/") + 1)
         let parent_messageId = parent.split("#").pop()
         console.log("Parent",parent_path,parent_messageId)
-        //  this.$store.commit('chat/setRoot', path+sub_channel)
+        //  this.$store.commit('parle/setRoot', path+sub_channel)
         let child_path = parent_path+sub_channel+"/"
         let child_filename = this.date+".ttl"
         let child_url = child_path+child_filename
         console.log("Child",child_path, child_filename)
-        this.$store.commit('chat/setFileUrl', child_url)
+        this.$store.commit('parle/setFileUrl', child_url)
         if (this.$store.state.websocket.socket != undefined){
           this.$store.state.websocket.socket.send('sub '+child_url);
         }
@@ -205,7 +204,7 @@ export default {
   computed: {
     file(){
       let f = this.path+this.date+".ttl"
-      this.$store.commit('chat/setFileUrl', f)
+      this.$store.commit('parle/setFileUrl', f)
       if (this.$store.state.websocket.socket != undefined  && this.$store.state.websocket.socket.readyState == 1){
         this.$store.state.websocket.socket.send('sub '+f);
       }
@@ -217,7 +216,7 @@ export default {
       return this.$store.state.solid.webId
     },
     messages(){
-      return this.$store.state.chat.messages
+      return this.$store.state.parle.messages
     }
   }
 }

@@ -1,14 +1,14 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a8fef74f3b2df226e13e",
-    "url": "/solid-vue-panes/css/about.82b241a5.css"
+    "revision": "2f3659547574c3b7cd4e",
+    "url": "/solid-vue-panes/css/about.dd951566.css"
   },
   {
-    "revision": "a37bcf53b31e346737d5",
+    "revision": "3a5ddd4a77a8d0190306",
     "url": "/solid-vue-panes/css/app.75ba8793.css"
   },
   {
-    "revision": "bb129b0d4bb982e26c70",
+    "revision": "31f1c46ca08bd99f681b",
     "url": "/solid-vue-panes/css/chunk-4f3111d0.9ed696dc.css"
   },
   {
@@ -44,20 +44,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "6302432f05c1c458b22d96e49500f3cf",
+    "revision": "86f1cc37272657254d4e61eb0818c790",
     "url": "/solid-vue-panes/index.html"
   },
   {
-    "revision": "a8fef74f3b2df226e13e",
-    "url": "/solid-vue-panes/js/about.bf1f10f7.js"
+    "revision": "2f3659547574c3b7cd4e",
+    "url": "/solid-vue-panes/js/about.f5c9c084.js"
   },
   {
-    "revision": "a37bcf53b31e346737d5",
-    "url": "/solid-vue-panes/js/app.dc74f4bc.js"
+    "revision": "3a5ddd4a77a8d0190306",
+    "url": "/solid-vue-panes/js/app.b1ffce2b.js"
   },
   {
-    "revision": "bb129b0d4bb982e26c70",
-    "url": "/solid-vue-panes/js/chunk-4f3111d0.6611156b.js"
+    "revision": "31f1c46ca08bd99f681b",
+    "url": "/solid-vue-panes/js/chunk-4f3111d0.0a0f500b.js"
   },
   {
     "revision": "94837910ffaeb2f458cd",
