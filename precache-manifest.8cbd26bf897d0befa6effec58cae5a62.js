@@ -1,15 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "25f2173ef548f8e1f7ae",
-    "url": "/solid-vue-panes/css/about.b9197403.css"
+    "revision": "7662dd6b70cee2c595d7",
+    "url": "/solid-vue-panes/css/about.cc12bfdd.css"
   },
   {
-    "revision": "57224c4fb17216ed14d9",
+    "revision": "eec5c17f96364db25aff",
     "url": "/solid-vue-panes/css/app.b780dfb8.css"
-  },
-  {
-    "revision": "31f1c46ca08bd99f681b",
-    "url": "/solid-vue-panes/css/chunk-4f3111d0.9ed696dc.css"
   },
   {
     "revision": "82202f93bff91f31e172",
@@ -24,40 +20,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/dist-popup/popup.html"
   },
   {
-    "revision": "6044d902f71179a79a344760d178a360",
-    "url": "/solid-vue-panes/img/close.6044d902.svg"
-  },
-  {
-    "revision": "d39bde12248677973650a221634f1017",
-    "url": "/solid-vue-panes/img/file.d39bde12.svg"
-  },
-  {
-    "revision": "a26ebdf90c76dac2de70b894d42252f4",
-    "url": "/solid-vue-panes/img/logo-no-bg.a26ebdf9.svg"
-  },
-  {
     "revision": "82b9c7a5a3f405032b1db71a25f67021",
     "url": "/solid-vue-panes/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "4cdad49207879d65047fc34b9574a52a",
+    "revision": "de68e37d7386f31fcfc1e872e6a93d42",
     "url": "/solid-vue-panes/index.html"
   },
   {
-    "revision": "25f2173ef548f8e1f7ae",
-    "url": "/solid-vue-panes/js/about.8f12b2f2.js"
+    "revision": "7662dd6b70cee2c595d7",
+    "url": "/solid-vue-panes/js/about.81a1a0eb.js"
   },
   {
-    "revision": "57224c4fb17216ed14d9",
-    "url": "/solid-vue-panes/js/app.21b95e40.js"
+    "revision": "eec5c17f96364db25aff",
+    "url": "/solid-vue-panes/js/app.984deb27.js"
   },
   {
-    "revision": "20d3a2f2996d98807477",
-    "url": "/solid-vue-panes/js/chunk-2d0cc665.35dafd05.js"
-  },
-  {
-    "revision": "31f1c46ca08bd99f681b",
-    "url": "/solid-vue-panes/js/chunk-4f3111d0.0a0f500b.js"
+    "revision": "618b5121aacb68d00c16",
+    "url": "/solid-vue-panes/js/chunk-2d0cc665.d7dc57ff.js"
   },
   {
     "revision": "82202f93bff91f31e172",
