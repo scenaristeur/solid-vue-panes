@@ -19,9 +19,19 @@
           <b-dropdown-item to="/browser">Browser</b-dropdown-item>
           <b-dropdown-item to="/editor">Editor</b-dropdown-item>
         </b-nav-item-dropdown>
-        
+
         <b-nav-item  to="/profile">Profile</b-nav-item>
         <b-nav-item  to="/friends">Friends</b-nav-item>
+
+        <b-nav-item-dropdown right>
+          <template v-slot:button-content>
+            <router-link class="nav-link" to="/communication"><em>Communication</em></router-link>
+          </template>
+          <b-dropdown-item to="/parle">Parle</b-dropdown-item>
+          <b-dropdown-item to="/chat">Chat</b-dropdown-item>
+          <b-dropdown-item to="/inbox">Inbox</b-dropdown-item>
+
+        </b-nav-item-dropdown>
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
 
@@ -36,15 +46,6 @@
 
 
 
-
-      <b-nav-item-dropdown right>
-        <template v-slot:button-content>
-          <em>Communication</em>
-        </template>
-        <b-dropdown-item to="/inbox">Inbox</b-dropdown-item>
-        <b-dropdown-item to="/chat">Chat</b-dropdown-item>
-      </b-nav-item-dropdown>
-
       <!-- Using 'button-content' slot -->
       <b-nav-item-dropdown right>
 
@@ -52,7 +53,9 @@
           <em>User</em>
         </template>
         <b-dropdown-item to="/profile">Profile</b-dropdown-item>
-        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item to="/general">Profile General</b-dropdown-item>
+            <b-dropdown-item to="/friends">Friends</b-dropdown-item>
+        <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
 
 

@@ -10,16 +10,33 @@
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.-->
     </p>
 
-    <h3>Working Panes</h3>
+    <h3>Auth</h3>
     <ul>
       <li>Login</li>
+    </ul>
+
+    <h3>Storage</h3>
+    <ul>
       <li><router-link to="/storage">Storage (Browser + Editor)</router-link> </li>
       <li><router-link to="/browser">Browser</router-link></li>
       <li><router-link to="/editor">Editor</router-link></li>
-      <li><router-link to="/profile">in progress : Profile</router-link></li>
-      <li><router-link to="/communication">todo : Communication (Chat + inbox)</router-link></li>
-      <li><router-link to="/projets">todo : Projets ( tensions, organizations)</router-link></li>
     </ul>
+
+    <h3>Profile</h3>
+    <ul>
+      <li><router-link to="/profile">Profile (General + Friends)</router-link></li>
+      <li><router-link to="/general">General</router-link></li>
+      <li><router-link to="/friends">Friends</router-link></li>
+    </ul>
+
+    <h3>Communication</h3>
+    <ul>
+      <li><router-link to="/communication">todo : Communication (Parle +Chat + inbox)</router-link></li>
+      <li><router-link to="/parle">todo: Parle</router-link> </li>
+      <li><router-link to="/chat">todo: Chat</router-link></li>
+      <li><router-link to="/inbox">todo: Inbox</router-link></li>
+    </ul>
+
 
     <h3>Solid Libraries Used</h3>
     <ul>
