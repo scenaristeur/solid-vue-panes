@@ -1,7 +1,7 @@
 <template>
   <div class="communication">
 
-    <Parle />
+    <Parle root="https://parle.solid.community/public/" />
     <Inbox />
     <Chat />
   </div>

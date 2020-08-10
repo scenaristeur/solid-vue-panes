@@ -30,12 +30,15 @@ export default {
     SolidChatList,
     BreadCrumb
   },
-  props: {
-    root: String,
-  },
+
   async  created() {
-      this.root == undefined ? this.root="https://parle.solid.community/public/" :""
-        await this.fixRoot(this.root)
+    //only for dev
+    this.root == undefined ? this.root = "https://parle.solid.community/public/" : ""
+    console.log("root",this.root)
+    !this.root.endsWith("/") ? this.root = this.root+"/" : "";
+    !this.root.endsWith("/parle/") ? this.root = this.root+"parle/" : "";
+    console.log("Root root",this.root)
+    this.$store.commit('chat/setRoot', this.root)
     console.log("ROOT FROM STORE", this.$store.state.chat.root)
 
   },

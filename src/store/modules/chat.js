@@ -8,7 +8,7 @@ const state = () => ({
   //  path: "",
   fileUrl: "",
   //  requests: [],
-  //  messages: []
+    messages: []
 })
 
 // getters
@@ -34,8 +34,13 @@ const mutations = {
     state.fileUrl = fileUrl
   },
   setRoot (state, root) {
+    console.log(root)
     state.root = root
-  },/*
+  },
+  setMessages(state,messages){
+  state.messages = messages
+  },
+  /*
   setPath(state, path){
   state.path = path
 },
