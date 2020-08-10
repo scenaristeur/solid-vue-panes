@@ -2,7 +2,8 @@
   <div class="chat">
     <h1>This is an chat page</h1>
      <b-form-select v-model="selected" :options="options"></b-form-select>
-    <PopChat :url="selected" />
+  <!--  <PopChat :url="selected" />-->
+        <SolidChatList :url="selected" />
   </div>
 </template>
 
@@ -12,7 +13,8 @@
 export default {
   name: 'Chat',
   components: {
-    'PopChat': () => import('@/components/PopChat')
+  //  'PopChat': () => import('@/components/PopChat'),
+      'SolidChatList': () => import('@/components/SolidChatList')
   },
   data() {
       return {
