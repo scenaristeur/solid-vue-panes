@@ -17,18 +17,34 @@
 </template>
 
 <script>
-import router from '@/router'
+import profileMixin from '@/mixins/profileMixin'
+
 
 export default {
-  router,
+
   name: 'Friends',
+  mixins: [profileMixin],
   components: {
     'SolidLogin': () => import('@/components/solid/SolidLogin'),
     'Person': () => import('@/components/layout/Person')
   },
+  data: function () {
+    return {
+      friends: []
+    }
+  },
+  async  created(){
+    let friends = this.$store.state.solid.friends
+    console.log("FRIENDS FROM STORE", friends)
+    //  console.log("WI",this.webId)
+
+
+    this.friends = await this.getFriends(this.webId)
+    console.log(this.friends)
+    this.$store.commit('solid/setFriends', this.friends)
+  },
   computed: {
     webId(){return this.$store.state.solid.webId},
-    friends(){return this.$store.state.solid.friends},
   },
   watch: {
     $route(to, from) {

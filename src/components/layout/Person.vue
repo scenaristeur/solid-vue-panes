@@ -7,8 +7,7 @@
     img-top
     tag="article"
     style="max-width: 20rem;"
-    class="mb-2"
-    >
+    class="mb-2">
     <b-card-text>
       <a v-bind:href="webId" target="_blank">{{ webId }}</a>
     </b-card-text>
@@ -20,36 +19,17 @@
     <p v-if="profile.note">Note: {{profile.note}}</p>
     <p v-if="profile.locality">Locality: {{profile.locality}}</p>
 
-     <div>
-       <b-button v-if="profile.friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{profile.friends.length}} friends</b-button>
-       <b-collapse id="collapse-1" class="mt-2" >
-         <b-card>
-
-              <p v-for="f in profile.friends" :key="f" :webId="f"  class="card-text">
-
-                {{ f}}
-                <router-link :to="{ name: 'FriendsW', params: { webId: f}}">{{f}}</router-link>
-              </p>
-          <!-- <p class="card-text">Collapse contents Here</p>
-           <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
-           <b-collapse id="collapse-1-inner" class="mt-2">
-             <b-card>Hello!</b-card>
-           </b-collapse> -->
-         </b-card>
-       </b-collapse>
-     </div>
-
-
-
-
-
-    <!--
-    <b-card-text>
-    Some quick example text to build on the card title and make up the bulk of the card's content.
-  </b-card-text>
-
-  <b-button href="#" variant="primary">Go somewhere</b-button>-->
-</b-card>
+    <div>
+      <b-button v-if="friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{friends.length}} friends</b-button>
+      <b-collapse id="collapse-1" class="mt-2" >
+        <b-card>
+          <p v-for="f in friends" :key="f" :webId="f"  class="card-text">
+            <router-link :to="{ name: 'ProfileW', params: { webId: f}}">{{f}}</router-link>
+          </p>
+        </b-card>
+      </b-collapse>
+    </div>
+  </b-card>
 </div>
 </template>
 
@@ -57,51 +37,20 @@
 import profileMixin from '@/mixins/profileMixin'
 
 export default {
-  name: 'NavBar',
+  name: 'Person',
   props: {
     webId: String
   },
   mixins: [profileMixin],
-  components: {
-
-  //  'Person': () => import('@/components/layout/Person')
-  },
   data: function () {
     return {
-      //  webId: null,
-      profile: {}
+      profile: {},
+      friends: []
     }
   },
   async  created(){
-    this.hello()
-    //  console.log("WI",this.webId)
     this.profile = await this.getProfile(this.webId)
-    //  console.log(this.profile)
+    this.friends = await this.getFriends(this.webId)
   },
-  methods: {
-    friendsOf(e) {
-      console.log(e)
-    //    '/friends?webId='+e.target.webId
-
-    }
-  }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-/*h3 {
-margin: 40px 0 0;
-}
-ul {
-list-style-type: none;
-padding: 0;
-}
-li {
-display: inline-block;
-margin: 0 10px;
-}
-a {
-color: #42b983;
-}*/
-</style>

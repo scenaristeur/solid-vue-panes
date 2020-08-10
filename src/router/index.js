@@ -42,9 +42,9 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '@/views/Friends.vue')
   },
-  { path: '/friends/:webId',
-  name: 'FriendsW',
-  component: () => import(/* webpackChunkName: "about" */ '@/views/Friends.vue')},
+  { path: '/profile/:webId',
+  name: 'ProfileW',
+  component: () => import(/* webpackChunkName: "about" */ '@/views/Profile.vue')},
   {
     path: '/storage',
     name: 'Storage',
