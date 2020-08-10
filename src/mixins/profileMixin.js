@@ -27,6 +27,14 @@ export default {
         profile.organization = await  p.getString("http://www.w3.org/2006/vcard/ns#organization-name")
         profile.role = await  p.getString(vcard.role)
         profile.friends = await  p.getAllRefs(foaf.knows )
+
+        let addressUrl = await  p.getRef(vcard.hasAddress)
+        console.log("Address Node ",addressUrl)
+        let add = profileDoc.getSubject(addressUrl);
+
+        profile.locality = await add.getString(vcard.locality)
+
+
         //  Does not work profile.photo = await p.getString(vcard.hasPhoto)
         let photo = await solid.data.[webId].vcard$hasPhoto
         profile.photo = `${photo}`
@@ -34,7 +42,7 @@ export default {
         /*  let friends = await solid.data.[webId].friends
 
         profile.friends = `${friends}`*/
-        console.log(profile)
+    //    console.log(profile)
         /*  profile.friends = await  profile.getAllRefs(foaf.knows )*/
       }catch(e){
         //  console.log(e)

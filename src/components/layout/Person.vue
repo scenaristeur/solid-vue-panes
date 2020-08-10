@@ -19,12 +19,17 @@
     <p v-if="profile.bday">Birthday: {{profile.bday}}</p>
     <p v-if="profile.note">Note: {{profile.note}}</p>
     <p v-if="profile.locality">Locality: {{profile.locality}}</p>
-  
+
      <div>
        <b-button v-if="profile.friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{profile.friends.length}} friends</b-button>
-       <b-collapse id="collapse-1" class="mt-2">
+       <b-collapse id="collapse-1" class="mt-2" >
          <b-card>
-              <p v-for="f in profile.friends" :key="f" :webId="f"  class="card-text" >{{ f}}</p>
+
+              <p v-for="f in profile.friends" :key="f" :webId="f"  class="card-text">
+
+                {{ f}}
+                <router-link :to="{ name: 'FriendsW', params: { webId: f}}">{{f}}</router-link>
+              </p>
           <!-- <p class="card-text">Collapse contents Here</p>
            <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button>
            <b-collapse id="collapse-1-inner" class="mt-2">
@@ -72,6 +77,13 @@ export default {
     //  console.log("WI",this.webId)
     this.profile = await this.getProfile(this.webId)
     //  console.log(this.profile)
+  },
+  methods: {
+    friendsOf(e) {
+      console.log(e)
+    //    '/friends?webId='+e.target.webId
+
+    }
   }
 }
 </script>

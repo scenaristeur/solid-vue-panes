@@ -17,9 +17,10 @@
 </template>
 
 <script>
-
+import router from '@/router'
 
 export default {
+  router,
   name: 'Friends',
   components: {
     'SolidLogin': () => import('@/components/solid/SolidLogin'),
@@ -28,6 +29,12 @@ export default {
   computed: {
     webId(){return this.$store.state.solid.webId},
     friends(){return this.$store.state.solid.friends},
+  },
+  watch: {
+    $route(to, from) {
+      console.log(to, from, this.$route)
+      // react to route changes...
+    }
   }
 }
 </script>
