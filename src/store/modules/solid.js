@@ -114,7 +114,6 @@ const mutations = {
     state.progressValue = n
   },
   setFriends(state, f){
-    console.log("Friends", f)
     state.friends = f
   }
 

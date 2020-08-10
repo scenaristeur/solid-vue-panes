@@ -40,7 +40,7 @@ export default {
 
 
     this.friends = await this.getFriends(this.webId)
-    console.log(this.friends)
+  //  console.log(this.friends)
     this.$store.commit('solid/setFriends', this.friends)
   },
   computed: {

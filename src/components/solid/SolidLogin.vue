@@ -6,31 +6,17 @@
 </template>
 
 <script>
-import store from "@/store";
-import { BButton } from "bootstrap-vue";
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 import auth from 'solid-auth-client';
 
 export default {
-  store,
   name: 'SolidLogin',
-  props: {
-    doc: [Boolean, String]
-  },
-  components: {
-    BButton,
-    //  auth
-  },
   data: function () {
     return {
-      webId: null,
-      storage: ""
+      webId: null
     }
   },
   created(){
     auth.trackSession(async session => {
-    //  console.log(session)
       if (!session){
         this.webId = null
         console.log('The user is not logged in', this.webId)
@@ -50,6 +36,7 @@ export default {
     },
     logout(){
       auth.logout()
+        localStorage.removeItem("solid-auth-client");
     },
     async popupLogin() {
       let session = await auth.currentSession();

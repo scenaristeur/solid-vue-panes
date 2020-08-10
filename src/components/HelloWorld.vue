@@ -12,7 +12,7 @@
 
     <h3>Auth</h3>
     <ul>
-      <li>Login</li>
+      <li>SoligLogin (example of code with the source <a href="https://github.com/scenaristeur/solid-vue-panes/blob/master/src/components/solid/SolidLogin.vue" target="_blank">SolidLogin.vue</a> )</li>
     </ul>
 
     <h3>Storage</h3>
