@@ -1,5 +1,5 @@
 <template>
-  <div class="message-list">
+  <div class="solid-chat-list">
     <!--
     <b-input-group prepend="Solid Chat url" class="mt-3">
     <b-form-input ref="new_url" placeholder="https://solidarity.inrupt.net/public/Solidarity" vamue="https://solidarity.inrupt.net/public/Solidarity"></b-form-input>
@@ -8,10 +8,7 @@
     <b-button variant="info" @click="change">Change</b-button>
   </b-input-group-append>
 </b-input-group>-->
-<div class="container mb-0">
-  <div class="spinner-border" v-if="busy" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
+<div class="container">
   <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" >
 
 
@@ -19,7 +16,7 @@
       <b-list-group-item v-for="m in data" :key="m.id">
         <div class="item">
           <div class="avatar"></div>
-            <div class="maker" text-variant='info'>
+          <div class="maker" text-variant='info'>
             {{m.maker.split('/').slice(2,3)[0]}}
           </div>
           <div class="content">
@@ -28,10 +25,12 @@
           <div class="created">
             {{m.created}}
           </div>
+
+        </div>
+
         <!--  <div class="row">
         {{m.id.split("#")[1]}}
       </div>-->
-    </div>
     </b-list-group-item>
 
   </b-list-group>
@@ -40,7 +39,9 @@
 </div>
 
 </div>
+
 <SolidChatSend />
+
 </div>
 
 </template>
@@ -101,7 +102,7 @@ export default {
   },
   methods: {
     initChat(url){
-      console.log("init : ",url)
+      console.log("INIT : ",url)
       this.today_messages = []
       this.old_messages = []
       this.messages = []
@@ -121,12 +122,21 @@ export default {
       let sock = withoutProtocol.split('/')[0]+"/"
       let socket = new WebSocket('wss://'+sock, ['solid.0.1.0']);
       socket.onopen = function() {
+
         socket.send('sub '+this.fileUrl);
+        console.log("subscribe", socket)
       }.bind(this)
       socket.onmessage = function(msg) {
         if (msg.data && msg.data.slice(0, 3) === 'pub') {
           // resource updated, refetch resource
-          this.updateMessages(msg.data.substring(4), "top")
+          console.log("WS MESSAGE")
+          if (!this.busy){
+            this.updateMessages(msg.data.substring(4), "top")
+            this.busy = false
+          }else{
+            console.log('so busy !!!')
+          }
+
         }
       }.bind(this)
       //  this.updateMessages(this.fileUrl, "botto")
@@ -147,7 +157,7 @@ export default {
         //  let messages = this.read(path)
         //this.data = this.data.concat(messages);
         this.date.setDate(this.date.getDate() -1)
-         this.updateMessages(path, "bottom")
+        await this.updateMessages(path, "bottom")
 
         //  this.data.push({ name: count++ , date:date});
 
@@ -164,6 +174,7 @@ export default {
     },
     async updateMessages(url, sens){
       //    console.log(url, sens)
+      this.busy = true
       try{
         const chatDoc = await fetchDocument(url);
         let  subjects = chatDoc.findSubjects();
@@ -199,19 +210,20 @@ export default {
 
 
         }
-        //  console.log("m",messages)
+        console.log("m",messages)
         if (sens == "top"){
-          this.today_messages = []
+          //    this.today_messages = []
           this.today_messages = messages
-          //  console.log("TODAY",this.today_messages)
+          console.log("TODAY",this.today_messages)
         }else{
           this.old_messages.push.apply(this.old_messages, messages)
-          //  console.log("OLD",this.old_messages)
+          console.log("OLD",this.old_messages)
         }
-        //console.log("TODAY",this.today_messages)
-        //console.log("OLD",this.old_messages)
-        this.data = []
+        console.log("TODAY",this.today_messages)
+        console.log("OLD",this.old_messages)
+        //  this.data = []
         this.data = this.today_messages.concat(this.old_messages)
+        console.log(this.data)
         //console.log("TODAY",this.today_messages)
         //console.log("OLD",this.old_messages)
         //console.log("DATA",this.data)
@@ -230,6 +242,7 @@ export default {
   }
 }
 </script>
+
 <style>
 .Asolid-chat-list{
   margin: 0;
