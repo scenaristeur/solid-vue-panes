@@ -128,7 +128,13 @@ export default {
         if (msg.data && msg.data.slice(0, 3) === 'pub') {
           // resource updated, refetch resource
           console.log("WS MESSAGE")
-          this.updateMessages(msg.data.substring(4), "top")
+          if (!this.busy){
+              this.updateMessages(msg.data.substring(4), "top")
+              this.busy = false
+          }else{
+            console.log('so busy !!!')
+          }
+
         }
       }.bind(this)
       //  this.updateMessages(this.fileUrl, "botto")
@@ -166,6 +172,7 @@ export default {
     },
     async updateMessages(url, sens){
       //    console.log(url, sens)
+      this.busy = true
       try{
         const chatDoc = await fetchDocument(url);
         let  subjects = chatDoc.findSubjects();
@@ -203,7 +210,7 @@ export default {
         }
         console.log("m",messages)
         if (sens == "top"){
-          this.today_messages = []
+      //    this.today_messages = []
           this.today_messages = messages
           console.log("TODAY",this.today_messages)
         }else{
@@ -212,7 +219,7 @@ export default {
         }
         console.log("TODAY",this.today_messages)
         console.log("OLD",this.old_messages)
-        this.data = []
+      //  this.data = []
         this.data = this.today_messages.concat(this.old_messages)
         console.log(this.data)
         //console.log("TODAY",this.today_messages)

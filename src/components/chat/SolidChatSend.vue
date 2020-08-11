@@ -20,7 +20,7 @@
 <script>
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces' //
-//const { namedNode } = require('@rdfjs/data-model');
+const { namedNode } = require('@rdfjs/data-model');
 import SolidLogin from '@/components/solid/SolidLogin.vue'
 import auth from 'solid-auth-client';
 let SolidFileClient = window.SolidFileClient
@@ -98,24 +98,27 @@ export default {
         await solid.data[msgUrl].sioc$content.add(this.message)*/
         console.log("WEBID",this.$store.state.solid.webId, this.fileUrl)
 
-        let index = "this"
-        let ind_prefix = root+"/index.ttl"
-        console.log(index)
+        //let index = "this"
+        //  let ind_prefix = "../../../index.ttl#" //" root+"/index.ttl#"
+        let index = root+"/index.ttl#this"
+        console.log("TODO : must integrate "+index+" in tripledoc or batch ldflex")
         let messUri = this.fileUrl+"#"+messageId
         console.log(messUri)
 
+
+        await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
+
+
         const chatDoc = await fetchDocument(this.fileUrl);
-        //    console.log(chatDoc)
         let subj =   chatDoc.addSubject({identifier:messageId})
         subj.addLiteral(sioc.content, this.message)
         subj.addLiteral(dct.created, date)
         subj.addNodeRef(foaf.maker, webId)
 
-        let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
-        indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())
+        /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
+        indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
 
         await chatDoc.save();
-
 
 
         //  await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
