@@ -14,20 +14,18 @@
 
     <b-list-group flush>
       <b-list-group-item v-for="m in data" :key="m.id">
-        <div class="item">
-          <div class="avatar"></div>
-          <span class="maker text-info">
+        <div class="row card-header small m-0">
+          <div class="col">
             {{m.maker.split('/').slice(2,3)[0]}}
-          </span>
-          <div class="content">
-            {{m.content}}
           </div>
-          <div class="created">
+
+          <div class="col-2">
             {{m.created}}
           </div>
-
         </div>
-
+        <div class="row m-4">
+          {{m.content}}
+        </div>
         <!--  <div class="row">
         {{m.id.split("#")[1]}}
       </div>-->
@@ -110,7 +108,7 @@ export default {
       this.stopped = false
 
       this.date  = new Date()
-    //  console.log(this.date)
+      console.log(this.date)
 
       this.root = url
       this.root.endsWith('/') ? this.root = this.root.slice(0, -1) : ""
@@ -129,10 +127,10 @@ export default {
       socket.onmessage = function(msg) {
         if (msg.data && msg.data.slice(0, 3) === 'pub') {
           // resource updated, refetch resource
-         console.log("WS MESSAGE")
+          console.log("WS MESSAGE")
           if (!this.busy){
-            this.updateMessages(msg.data.substring(4), "top")
-            this.busy = false
+              this.updateMessages(msg.data.substring(4), "top")
+              this.busy = false
           }else{
             console.log('so busy !!!')
           }
@@ -205,22 +203,25 @@ export default {
             //  console.log(t)
             //  triples.push(t)
             messages.unshift(t)
+
           }
+
+
         }
-      //  console.log("m",messages)
+        console.log("m",messages)
         if (sens == "top"){
-          //    this.today_messages = []
+      //    this.today_messages = []
           this.today_messages = messages
-        //  console.log("TODAY",this.today_messages)
+          console.log("TODAY",this.today_messages)
         }else{
           this.old_messages.push.apply(this.old_messages, messages)
-        //  console.log("OLD",this.old_messages)
+          console.log("OLD",this.old_messages)
         }
-      //  console.log("TODAY",this.today_messages)
-    //    console.log("OLD",this.old_messages)
-        //  this.data = []
+        console.log("TODAY",this.today_messages)
+        console.log("OLD",this.old_messages)
+      //  this.data = []
         this.data = this.today_messages.concat(this.old_messages)
-    //    console.log(this.data)
+        console.log(this.data)
         //console.log("TODAY",this.today_messages)
         //console.log("OLD",this.old_messages)
         //console.log("DATA",this.data)
@@ -239,59 +240,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.solid-chat-list{
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  min-width: 320px;
-  background: #fff;
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-  font-size: 14px;
-  line-height: 1.4285em;
-  color: rgba(0,0,0,.87);
-}
-.Bitem{
-  position: absolute;
-/*  left: 0px;
-  top: 0px; */
-  margin-left: 0px;
-  margin-top: 0px;
-/*  width: 722px; */
-/*  height: 574px; */
-  background-color: rgb(255, 255, 255);
-}
-.avatar{
-  position: absolute;
-left: 0px;
-top: 8px;
-width: 29px;
-height: 29px;
-background-image: url(no-avatar.png);
-background-size: contain;
-opacity: .3;
-}
-.maker{
- position: absolute;
-left: 35px;
-top: 4px;
-width: auto;
-height: auto;
-text-align: left;
-}
-.content{
-  position: relative;
-padding-left: 36px;
-padding-top: 23px;
-padding-bottom: 5px;
-width: 90%;
-height: auto;
-text-align: left;
-}
-.created{
-  color: #C5C5C5;
-    font-size: 13px;
-    font-weight: normal;
-}
-</style>
