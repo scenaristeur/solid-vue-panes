@@ -1,5 +1,5 @@
 <template>
-  <div class="chat container">
+  <div class="chat">
     <h1>Solid Chat</h1>
     <b-form-select v-model="selected" :options="options"></b-form-select>
 

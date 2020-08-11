@@ -1,5 +1,5 @@
 <template>
-  <div class="message-list">
+  <div class="solid-chat-list">
     <!--
     <b-input-group prepend="Solid Chat url" class="mt-3">
     <b-form-input ref="new_url" placeholder="https://solidarity.inrupt.net/public/Solidarity" vamue="https://solidarity.inrupt.net/public/Solidarity"></b-form-input>
@@ -8,7 +8,7 @@
     <b-button variant="info" @click="change">Change</b-button>
   </b-input-group-append>
 </b-input-group>-->
-<div>
+<div class="container">
   <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" >
 
 
@@ -37,7 +37,9 @@
 </div>
 
 </div>
+
 <SolidChatSend />
+
 </div>
 
 </template>
@@ -98,7 +100,7 @@ export default {
   },
   methods: {
     initChat(url){
-      console.log("init : ",url)
+      console.log("INIT : ",url)
       this.today_messages = []
       this.old_messages = []
       this.messages = []
@@ -118,11 +120,14 @@ export default {
       let sock = withoutProtocol.split('/')[0]+"/"
       let socket = new WebSocket('wss://'+sock, ['solid.0.1.0']);
       socket.onopen = function() {
+
         socket.send('sub '+this.fileUrl);
+        console.log("subscribe", socket)
       }.bind(this)
       socket.onmessage = function(msg) {
         if (msg.data && msg.data.slice(0, 3) === 'pub') {
           // resource updated, refetch resource
+          console.log("WS MESSAGE")
           this.updateMessages(msg.data.substring(4), "top")
         }
       }.bind(this)
@@ -196,19 +201,20 @@ export default {
 
 
         }
-        //  console.log("m",messages)
+        console.log("m",messages)
         if (sens == "top"){
           this.today_messages = []
           this.today_messages = messages
-          //  console.log("TODAY",this.today_messages)
+          console.log("TODAY",this.today_messages)
         }else{
           this.old_messages.push.apply(this.old_messages, messages)
-          //  console.log("OLD",this.old_messages)
+          console.log("OLD",this.old_messages)
         }
-        //console.log("TODAY",this.today_messages)
-        //console.log("OLD",this.old_messages)
+        console.log("TODAY",this.today_messages)
+        console.log("OLD",this.old_messages)
         this.data = []
         this.data = this.today_messages.concat(this.old_messages)
+        console.log(this.data)
         //console.log("TODAY",this.today_messages)
         //console.log("OLD",this.old_messages)
         //console.log("DATA",this.data)

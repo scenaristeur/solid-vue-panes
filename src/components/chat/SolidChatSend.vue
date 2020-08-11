@@ -20,7 +20,7 @@
 <script>
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces' //
-const { namedNode } = require('@rdfjs/data-model');
+//const { namedNode } = require('@rdfjs/data-model');
 import SolidLogin from '@/components/solid/SolidLogin.vue'
 import auth from 'solid-auth-client';
 let SolidFileClient = window.SolidFileClient
@@ -98,6 +98,11 @@ export default {
         await solid.data[msgUrl].sioc$content.add(this.message)*/
         console.log("WEBID",this.$store.state.solid.webId, this.fileUrl)
 
+        let index = "this"
+        let ind_prefix = root+"/index.ttl"
+        console.log(index)
+        let messUri = this.fileUrl+"#"+messageId
+        console.log(messUri)
 
         const chatDoc = await fetchDocument(this.fileUrl);
         //    console.log(chatDoc)
@@ -106,13 +111,14 @@ export default {
         subj.addLiteral(dct.created, date)
         subj.addNodeRef(foaf.maker, webId)
 
+        let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
+        indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())
+
         await chatDoc.save();
 
-        let index = root+"/index.ttl#this"
-        console.log(index)
-        let messUri = this.fileUrl+"#"+messageId
-        console.log(messUri)
-        await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
+
+
+        //  await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
         //    console.log(namedNode)
         //          await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(subj.asRef()))
 
@@ -144,5 +150,6 @@ export default {
   position: fixed;
   bottom:0;
   z-index: 999;
+  width: 100%;
 }
 </style>

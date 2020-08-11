@@ -30,9 +30,15 @@
           <b-dropdown-item to="/parle">Parle</b-dropdown-item>
           <b-dropdown-item to="/chat">Chat</b-dropdown-item>
           <b-dropdown-item to="/inbox">Inbox</b-dropdown-item>
-
         </b-nav-item-dropdown>
+        
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
+        <b-nav-item-dropdown right>
+          <template v-slot:button-content>
+            <router-link class="nav-link" to="/misc"><em>Misc</em></router-link>
+          </template>
+          <b-dropdown-item to="/offers">Offers</b-dropdown-item>
+        </b-nav-item-dropdown>
 
 
       </b-navbar-nav>
