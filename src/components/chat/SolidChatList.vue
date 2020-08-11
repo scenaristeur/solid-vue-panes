@@ -1,17 +1,21 @@
 <template>
   <div class="message-list">
-    <!--
-    <b-input-group prepend="Solid Chat url" class="mt-3">
-    <b-form-input ref="new_url" placeholder="https://solidarity.inrupt.net/public/Solidarity" vamue="https://solidarity.inrupt.net/public/Solidarity"></b-form-input>
-    <b-input-group-append>
 
-    <b-button variant="info" @click="change">Change</b-button>
-  </b-input-group-append>
-</b-input-group>-->
+  <b-alert
+    v-model="showTop"
+    class="position-fixed fixed-bottom rounded-0"
+    style="z-index: 2000; bottom:30px"
+    variant="info"
+
+    dismissible
+  >{{title}}
+  </b-alert>
+
+
 <div class="container mb-0">
   <div class="spinner-border" v-if="busy" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
+    <span class="sr-only">Loading...</span>
+  </div>
   <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" >
 
 
@@ -19,7 +23,7 @@
       <b-list-group-item v-for="m in data" :key="m.id">
         <div class="item">
           <div class="avatar"></div>
-            <div class="maker text-info">
+          <div class="maker text-info">
             {{m.maker.split('/').slice(2,3)[0]}}
           </div>
           <div class="content">
@@ -28,10 +32,10 @@
           <div class="created">
             {{m.created}}
           </div>
-        <!--  <div class="row">
-        {{m.id.split("#")[1]}}
-      </div>-->
-    </div>
+          <!--  <div class="row">
+          {{m.id.split("#")[1]}}
+        </div>-->
+      </div>
     </b-list-group-item>
 
   </b-list-group>
@@ -75,6 +79,8 @@ export default {
       old_messages: [],
       stopped : false,
       root :"",// "https://solidarity.inrupt.net/public/Solidarity", ChatTest
+        showTop: true,
+        title: "loading"
       //  mainProps: {  }
       //  mainProps: { blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }
     }
@@ -137,6 +143,7 @@ export default {
     },
     loadMore: async function() {
       this.busy = true;
+      this.showTop = true;
       //  console.log("Load")
       if (this.limite <= this.date ){
         //  let date =  this.date
@@ -147,7 +154,8 @@ export default {
         //  let messages = this.read(path)
         //this.data = this.data.concat(messages);
         this.date.setDate(this.date.getDate() -1)
-         this.updateMessages(path, "bottom")
+        this.title = "loading "+this.date.toLocaleDateString()
+        this.updateMessages(path, "bottom")
 
         //  this.data.push({ name: count++ , date:date});
 
@@ -160,11 +168,14 @@ export default {
         this.stopped = true
       }
       this.busy = false;
+  //    this.showTop = false
 
     },
     async updateMessages(url, sens){
       //    console.log(url, sens)
+          this.showTop = true
       try{
+
         const chatDoc = await fetchDocument(url);
         let  subjects = chatDoc.findSubjects();
         subjects = subjects.filter( this.onlyUnique )
@@ -176,7 +187,7 @@ export default {
         for  (let s of subjects) {
           //    console.log("Compare",s.asRef(), this.root+"/index.ttl#this")
           if (s.asRef() != this.root+"/index.ttl#this" && ! existingIds.includes(s.asRef())){
-            //  console.log(s)
+          //  console.log(s)
             //  let t = s.getTriples()
             let created = s.getString(dct.created)
             let content = s.getLiteral(sioc.content)
@@ -203,26 +214,31 @@ export default {
         if (sens == "top"){
           this.today_messages = []
           this.today_messages = messages
-          //  console.log("TODAY",this.today_messages)
+        //  console.log("TODAY",this.today_messages)
         }else{
           this.old_messages.push.apply(this.old_messages, messages)
-          //  console.log("OLD",this.old_messages)
+        //  console.log("OLD",this.old_messages)
         }
         //console.log("TODAY",this.today_messages)
         //console.log("OLD",this.old_messages)
         this.data = []
         this.data = this.today_messages.concat(this.old_messages)
+
         //console.log("TODAY",this.today_messages)
         //console.log("OLD",this.old_messages)
         //console.log("DATA",this.data)
         //console.log("USERS",this.$store.state.chat.users)
-
+        if (this.data.length == 0){
+          this.loadMore()
+        }
         //  console.log(triples)
         //  messages = triples.reverse()
       }catch(e){
         //  console.log(e)
+          this.showTop = true
         ! this.stopped ? this.loadMore() : ""
       }
+        this.showTop = false
     },
     onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
@@ -244,44 +260,44 @@ export default {
 }
 .Bitem{
   position: absolute;
-/*  left: 0px;
+  /*  left: 0px;
   top: 0px; */
   margin-left: 0px;
   margin-top: 0px;
-/*  width: 722px; */
-/*  height: 574px; */
+  /*  width: 722px; */
+  /*  height: 574px; */
   background-color: rgb(255, 255, 255);
 }
 .avatar{
   position: absolute;
-left: 0px;
-top: 8px;
-width: 29px;
-height: 29px;
-background-image: url(no-avatar.png);
-background-size: contain;
-opacity: .3;
+  left: 0px;
+  top: 8px;
+  width: 29px;
+  height: 29px;
+  background-image: url(no-avatar.png);
+  background-size: contain;
+  opacity: .3;
 }
 .maker{
- position: absolute;
-left: 35px;
-top: 4px;
-width: auto;
-height: auto;
-text-align: left;
+  position: absolute;
+  left: 35px;
+  top: 4px;
+  width: auto;
+  height: auto;
+  text-align: left;
 }
 .content{
   position: relative;
-padding-left: 36px;
-padding-top: 23px;
-padding-bottom: 5px;
-width: 90%;
-height: auto;
-text-align: left;
+  padding-left: 36px;
+  padding-top: 23px;
+  padding-bottom: 5px;
+  width: 90%;
+  height: auto;
+  text-align: left;
 }
 .created{
   color: #C5C5C5;
-    font-size: 13px;
-    font-weight: normal;
+  font-size: 13px;
+  font-weight: normal;
 }
 </style>

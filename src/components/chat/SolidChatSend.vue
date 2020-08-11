@@ -3,7 +3,7 @@
     <!--<h1>Room name</h1> -->
 
 
-    <b-input-group class="mt-3 input" v-if="webId != null" >
+    <b-input-group class=" input" v-if="webId != null" size="lg" >
       <b-form-input v-model="message" v-on:keyup.enter="send"></b-form-input>
       <b-input-group-append>
         <!--  <b-button variant="outline-success">Button</b-button>-->

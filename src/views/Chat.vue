@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      selected: "https://solidarity.inrupt.net/public/ChatTest/",
+      selected: "https://solidarity.inrupt.net/public/Solidarity/",
       options: [
         { value: null, text: 'Please select an option or add a manually created one (Creation is not available yet)' },
         { value: null, text: '' },
