@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-  <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to PoPock, the Pod in the Pocket"/>
+  <img  width="100px" alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="PoPock, the Pod in the Pocket"/>
   </div>
 </template>
 

@@ -19,7 +19,7 @@
       <b-list-group-item v-for="m in data" :key="m.id">
         <div class="item">
           <div class="avatar"></div>
-            <div class="maker" text-variant='info'>
+            <div class="maker text-info">
             {{m.maker.split('/').slice(2,3)[0]}}
           </div>
           <div class="content">
