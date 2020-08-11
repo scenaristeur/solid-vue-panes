@@ -17,8 +17,8 @@ import store from '@/store'
 
 
 import BreadCrumb from '@/components/layout/BreadCrumb.vue'
-import SolidChatSend from '@/components/SolidChatSend.vue'
-import SolidChatList from '@/components/SolidChatList.vue'
+import SolidChatSend from '@/components/parle/SolidChatSend.vue'
+import SolidChatList from '@/components/parle/SolidChatList.vue'
 
 export default {
   store,

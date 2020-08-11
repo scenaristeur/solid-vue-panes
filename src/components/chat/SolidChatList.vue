@@ -12,7 +12,7 @@
   <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" >
 
 
-    <b-list-group>
+    <b-list-group flush>
       <b-list-group-item v-for="m in data" :key="m.id">
         <div class="row card-header small m-0">
           <div class="col">
@@ -43,17 +43,15 @@
 </template>
 
 <script>
-import store from "@/store";
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces'
-import SolidChatSend from '@/components/SolidChatSend'
+import SolidChatSend from '@/components/chat/SolidChatSend'
 //import ChatScroller from '@/components/ChatScroller'
 import infiniteScroll from 'vue-infinite-scroll'
 
 
 
 export default {
-  store,
   name: 'SolidChatList',
   components: {
     SolidChatSend,

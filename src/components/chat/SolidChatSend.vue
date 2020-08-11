@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import store from "@/store";
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces' //
 const { namedNode } = require('@rdfjs/data-model');
@@ -31,7 +30,6 @@ console.log("SOLID",solid)
 
 
 export default {
-  store,
   name: 'SolidChatSend',
   components:{
     SolidLogin
@@ -114,7 +112,7 @@ export default {
         console.log(index)
         let messUri = this.fileUrl+"#"+messageId
         console.log(messUri)
-        await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
+        await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
         //    console.log(namedNode)
         //          await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(subj.asRef()))
 
