@@ -1,6 +1,7 @@
 <template>
   <div class="misc">
     <Offers/>
+    <Forms />
     Misc
   </div>
 </template>
@@ -9,8 +10,9 @@
 
 export default {
   name: 'Misc',
-    components: {
+  components: {
     'Offers': () => import('@/views/Offers'),
+    'Forms': () => import('@/views/Forms'),
   },
 }
 </script>

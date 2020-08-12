@@ -31,13 +31,14 @@
           <b-dropdown-item to="/chat">Chat</b-dropdown-item>
           <b-dropdown-item to="/inbox">Inbox</b-dropdown-item>
         </b-nav-item-dropdown>
-        
+
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
             <router-link class="nav-link" to="/misc"><em>Misc</em></router-link>
           </template>
           <b-dropdown-item to="/offers">Offers</b-dropdown-item>
+          <b-dropdown-item to="/forms">Forms</b-dropdown-item>
         </b-nav-item-dropdown>
 
 
@@ -59,8 +60,8 @@
           <em>User</em>
         </template>
         <b-dropdown-item to="/profile">Profile</b-dropdown-item>
-          <b-dropdown-item to="/general">Profile General</b-dropdown-item>
-            <b-dropdown-item to="/friends">Friends</b-dropdown-item>
+        <b-dropdown-item to="/general">Profile General</b-dropdown-item>
+        <b-dropdown-item to="/friends">Friends</b-dropdown-item>
         <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
 
