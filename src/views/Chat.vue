@@ -35,12 +35,32 @@ export default {
       selected: "https://solidarity.inrupt.net/public/Solidarity/",
       options: [
         { value: null, text: 'Please select an option or add a manually created one (Creation is not available yet)' },
-        { value: null, text: '' },
-        { value: 'https://solidarity.inrupt.net/public/ChatTest/', text: 'ChatTest' },
-        { value: 'https://solidarity.inrupt.net/public/Solidarity/', text: 'Solidarity' },
-        { value: 'https://solidarity.inrupt.net/public/Shighl/Shighl/', text: 'Shighl' },
+        //    { value: null, text: '' },
+
+        { value: 'https://solidarity.inrupt.net/public/Solidarity/', text: 'Solidarity (main)' },
+
+        { value: null, text: '-   Solid' },
+        { value: 'https://parle.inrupt.net/public/chat/solid/welcome', text: 'Welcome to Solid !' },
+
+        { value: 'https://parle.inrupt.net/public/chat/solid/app_developement', text: 'Solid App Developement' },
+        { value: 'https://parle.inrupt.net/public/chat/solid/specifications', text: 'Solid Specifications' },
+        { value: 'https://parle.inrupt.net/public/chat/solid/servers', text: 'Solid Servers' },
+        { value: 'https://parle.inrupt.net/public/chat/solid/applications', text: 'Solid Applications' },
+        { value: null, text: '-   Solid Groups' },
+        { value: 'https://parle.inrupt.net/public/chat/solid/panels/authorization', text: 'Solid Panels Authorization' },
+        { value: 'https://parle.inrupt.net/public/chat/solid/panels/authentication/', text: 'Solid Panels Authentication' },
         { value: 'https://solidos.solid.community/Team/SolidOs%20team%20chat/', text: 'Solidos' },
         { value: 'https://w3c-cg.solid.community/public/w3c-cg-chat/', text: 'Solid W3C CG' },
+
+        { value: null, text: '-   More'},
+        { value: 'https://parle.inrupt.net/public/chat/solid/misc', text: 'Misc' },
+        { value: 'https://parle.inrupt.net/public/chat/francais', text: 'Français' },
+        { value: 'https://solidarity.inrupt.net/public/Shighl/Shighl/', text: 'Shighl' },
+        { value: 'https://parle.inrupt.net/public/chat/ai', text: 'Artificial Intelligence' },
+        { value: null, text: '-   Tests' },
+        { value: 'https://solidarity.inrupt.net/public/ChatTest/', text: 'ChatTest' },
+        { value: 'https://parle.inrupt.net/public/chat/test', text: 'test' },
+
         /*    { value: { C: '3PO' }, text: 'This is an option with object value' },
         { value: 'd', text: 'This one is disabled', disabled: true }*/
       ],

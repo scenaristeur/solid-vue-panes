@@ -10,9 +10,15 @@
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.-->
     </p>
 
-    <h3>Auth</h3>
+
+
+    <h3>Communication</h3>
     <ul>
-      <li>SoligLogin (example of code with the source <a href="https://github.com/scenaristeur/solid-vue-panes/blob/master/src/components/solid/SolidLogin.vue" target="_blank">SolidLogin.vue</a> )</li>
+
+      <li><router-link to="/chat">Chat</router-link></li>
+      <li>Are you crazy enough for <router-link to="/parle">Parle</router-link> nested Chat ?</li>
+      <li><router-link to="/inbox">Inbox : todo</router-link></li>
+      <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>
     </ul>
 
     <h3>Storage</h3>
@@ -21,20 +27,21 @@
       <li><router-link to="/browser">Browser</router-link></li>
       <li><router-link to="/editor">Editor</router-link></li>
     </ul>
-
+    
     <h3>Profile</h3>
     <ul>
-      <li><router-link to="/profile">Profile (General + Friends)</router-link></li>
       <li><router-link to="/general">General</router-link></li>
       <li><router-link to="/friends">Friends</router-link></li>
+      <li><router-link to="/profile">Profile (General + Friends)</router-link></li>
     </ul>
 
-    <h3>Communication</h3>
+
+
+
+    <h3>Components</h3>
+    Solid-vue-panes is developped around the concept of webcomponents.
     <ul>
-      <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>
-      <li><router-link to="/chat">Chat</router-link></li>
-      <li><router-link to="/parle">Parle (Are you crazy enough ?)</router-link> </li>
-      <li><router-link to="/inbox">Inbox : todo</router-link></li>
+      <li>SoligLogin (example of code with the source <a href="https://github.com/scenaristeur/solid-vue-panes/blob/master/src/components/solid/SolidLogin.vue" target="_blank">SolidLogin.vue</a> )</li>
     </ul>
 
 
