@@ -1,8 +1,7 @@
 <template>
   <div class="group-member">
     <div v-if="webId != null">
-<GroupAddMember />
-    hasMember: {{ member }}
+
 
 </div>
     </div>
@@ -13,11 +12,7 @@
 
 
   export default {
-    name: 'GroupMember',
-    props : ['member'],
-    components: {
-      'GroupAddMember': () => import('@/components/groups/GroupAddMember'),
-    },
+    name: 'GroupAddMember',
     computed:{
       webId(){
         return this.$store.state.solid.webId

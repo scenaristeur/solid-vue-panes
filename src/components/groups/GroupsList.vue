@@ -1,10 +1,9 @@
 <template>
   <div class="groups-list">
-    <h1>This is an groupslist page</h1>
+
     <GroupCreate />
-    wi :  {{ webId}}<br>
-    sto {{ storage }}<br>
-    url {{ url }}<br>
+
+<b-button variant="info" @click="initGroups">Reload groups</b-button>
 
     <b-list-group flush>
       <b-list-group-item v-for="f in folder.files" :key="f.url">
@@ -31,6 +30,7 @@
 </b-list-group>
 
 
+
 </div>
 </template>
 
@@ -48,6 +48,7 @@ export default {
   name: 'GroupsList',
   components: {
     'GroupCreate': () => import('@/components/groups/GroupCreate'),
+    'GroupMembers': () => import('@/components/groups/GroupMembers'),
   },
   data: function () {
     return {
@@ -55,7 +56,7 @@ export default {
     }
   },
   created(){
-    this.initGroups(this.url)
+    this.initGroups()
   },
   computed:{
     webId(){
@@ -69,10 +70,10 @@ export default {
     }
   },
   methods: {
-    async  initGroups(url){
-      console.log("init groups : ",url)
+    async  initGroups(){
+      console.log("init groups : ",this.url)
 
-      this.folder = await fc.readFolder(url)
+      this.folder = await fc.readFolder(this.url)
       console.log("Folder : ", this.folder)
     }
   },
@@ -81,7 +82,7 @@ export default {
       if(url != null){
         console.log(url)
         //  this.sendMessage("switched to "+url)
-        this.initGroups(url)
+        this.initGroups()
       }
     }
   },

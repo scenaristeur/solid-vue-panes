@@ -1,7 +1,6 @@
 <template>
   <div class="groups">
     <div v-if="webId != null">
-      <h1>This is an experimental groups page</h1>
       <GroupsList />
     </div>
 

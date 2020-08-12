@@ -1,7 +1,5 @@
 <template>
-  <div class="groups-list">
-    <h1>This is an groupCreate page</h1>
-
+  <div class="group-create">
     <div class="container">
 
       <b-form-group class="row">
@@ -9,13 +7,10 @@
         <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
         <label for="url">Group url</label>
         <b-form-input id="url" v-model="url" :placeholder="'ex: '+url"></b-form-input>
-        <div class="mt-2">Value: {{ url }}</div>
         <b-button @click="add">Add</b-button>
       </b-form-group>
     </div>
 
-    wi :  {{ webId}}<br>
-    sto {{ storage }}
   </div>
 </template>
 
