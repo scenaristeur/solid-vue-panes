@@ -16,7 +16,7 @@
     <div class="spinner-border" v-if="busy" role="status">
       <span class="sr-only">Loading...</span>
     </div>
-    <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" >
+    <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" infinite-scroll-immediate-check=false >
 
 
       <b-list-group flush>
@@ -55,11 +55,13 @@ import { sioc, dct, foaf } from 'rdf-namespaces'
 import SolidChatSend from '@/components/chat/SolidChatSend'
 //import ChatScroller from '@/components/ChatScroller'
 import infiniteScroll from 'vue-infinite-scroll'
+import aclMixin from '@/mixins/aclMixin'
 
 
 
 export default {
   name: 'SolidChatList',
+  mixins: [aclMixin],
   components: {
     SolidChatSend,
     //  ChatScroller
@@ -98,23 +100,27 @@ export default {
 
 },*/
 watch: {
-  channel: function(channel){
+  channel: async function(channel){
     console.log(channel)
-  //  this.url = channel.instance
+    //  this.url = channel.instance
     let d  = channel.created
     console.log(d)
     this.limite =  new Date(d)
     console.log("LIMITE",this.limite)
     this.date = new Date()
-    this.initChat(channel.instance)
+    this.url = this.channel.instance.substr(0, this.channel.instance.lastIndexOf("/") + 1);
+  /*  await this.readPublicAccess(this.url)
+    let pattern = { read: true, append: true, write: false, control: false }
+    await this.setPublicAccess(this.url, pattern)*/
+    await   this.initChat(this.url)
   },
   /*url: function (url) {
-    if(url != null && this.channel.instance != undefined){
-      console.log(url)
-      //  this.sendMessage("switched to "+url)
-      this.initChat(url)
-    }
-  }*/
+  if(url != null && this.channel.instance != undefined){
+  console.log(url)
+  //  this.sendMessage("switched to "+url)
+  this.initChat(url)
+}
+}*/
 },
 methods: {
   initChat(url){
@@ -133,7 +139,7 @@ methods: {
 
     this.fileUrl =  [this.root, this.date.getFullYear(), ("0" + (this.date.getMonth() + 1)).slice(-2), ("0" + this.date.getDate()).slice(-2), "chat.ttl"].join("/")
 
-  console.log(this.fileUrl)
+    console.log(this.fileUrl)
     this.$store.commit('chat/setFileUrl', this.fileUrl)
     this.$store.commit('chat/setRoot', this.root)
     let withoutProtocol = this.root.split('//')[1]

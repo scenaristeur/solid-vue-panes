@@ -34,25 +34,19 @@ export default  {
 
     options () {
       let optionsBase =  [
-
-        //     {  v a l u e :  n u l l ,  t e x t :  ' '  } ,
-
-        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:"01/01/2020", label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
-        //   {  v a l u e :  n u l l ,  t e x t :  ' P l e a s e  s e l e c t  a n  o p t i o n  o r  a d d  a  m a n u a l l y  c r e a t e d  o n e  ( C r e a t i o n  i s  n o t  a v a i l a b l e  y e t ) ' } ,
-
-        {value: null, text: '-  Solid'} ,
-        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:"01/01/2020", label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:"08/12/2020", label: 'Welcome'} ,  text : 'Welcome to Solid' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/app_develpement/', created:"08/12/2020", label: 'App Developement'} ,  text : 'App Developement' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/specifications/', created:"08/12/2020", label: 'Specifications'} ,  text : 'Solidarity (main) ' } ,
-
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/servers/', created:"08/12/2020", label: 'Servers'} ,  text : 'Servers' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:"08/12/2020", label: 'Applications'} ,  text : 'Applications' } ,
-        { value: {instance:'https://parle.inrupt.net/public/solid/francais/', created:"08/12/2020", label: 'Français'} ,  text : 'Français' } ,
-        { value: {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:"08/12/2020", label: 'Shighl'} ,  text : 'Shighl' } ,
-        { value: {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:"08/12/2020", label: 'ChatTest'} ,  text : 'ChatTest' } ,
         {value: null, text: '----'} ,
-      /*  {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / w e l c o m e ' ,  t e x t :  ' W e l c o m e  t o  S o l i d  ! '  } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:"01/01/2020", label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:"08/01/2020", label: 'Welcome'} ,  text : 'Welcome to Solid' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/app_develpement/', created:"08/01/2020", label: 'App Developement'} ,  text : 'Solid App Developement' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/specifications/', created:"08/01/2020", label: 'Specifications'} ,  text : 'Solid Specifications' } ,
+
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/servers/', created:"08/01/2020", label: 'Servers'} ,  text : 'Solid Servers' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:"08/01/2020", label: 'Applications'} ,  text : 'Solid Applications' } ,
+        { value: {instance:'https://parle.inrupt.net/public/solid/francais/', created:"08/01/2020", label: 'Français'} ,  text : 'Français' } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:"01/01/2020", label: 'Shighl'} ,  text : 'Shighl' } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:"01/01/2020", label: 'ChatTest'} ,  text : 'ChatTest' } ,
+
+        /*  {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / w e l c o m e ' ,  t e x t :  ' W e l c o m e  t o  S o l i d  ! '  } ,
 
         {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / a p p _ d e v e l o p e m e n t ' ,  t e x t :  ' S o l i d  A p p  D e v e l o p e m e n t '  } ,
         {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / s p e c i f i c a t i o n s ' ,  t e x t :  ' S o l i d  S p e c i f i c a t i o n s '  } ,
@@ -77,14 +71,14 @@ export default  {
       let optionsChannels = []
       if (channels.length > 0) {
         channels.forEach((c) => {
-          console.log(c)
+          //  console.log(c)
           if (c.classe == 'http://www.w3.org/ns/pim/meeting#LongChat') {
             optionsChannels.push({value: c, text: c.label } )
           }
         } ) ;
       }
 
-      let options = optionsBase.concat(optionsChannels)
+      let options = optionsChannels.concat(optionsBase)
       console.log ("OPTIONS",options )
       return options
     } ,

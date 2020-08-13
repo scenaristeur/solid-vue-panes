@@ -6,7 +6,7 @@
           <label for="name">Instance Name:</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input id="name" type="text" v-model="name"></b-form-input>
+          <b-form-input id="name" type="text" v-model="name" placeholder="Name of the instance"></b-form-input>
         </b-col>
       </b-row>
       <b-row class="my-1">
@@ -14,7 +14,7 @@
           <label for="path">Path:</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input id="path" type="text" v-model="path"></b-form-input>
+          <b-form-input id="path" type="text" v-model="path" placeholder="Path to the instance folder"></b-form-input>
         </b-col>
       </b-row>
       <b-row class="my-1">
@@ -26,7 +26,7 @@
         </b-col>
       </b-row>
       <div>!! Don't forget to grant 'Everyone' to 'Posters' !!</div>
-      <b-button @click="add" >Add</b-button>
+      <b-button @click="add" variant="info">Add</b-button>
 
     </b-container>
     <!--
@@ -45,33 +45,61 @@
 <script>
 // @ is an alias to /src
 import profileMixin from '@/mixins/profileMixin'
+import aclMixin from '@/mixins/aclMixin'
+const SolidFileClient = window.SolidFileClient
+import auth from 'solid-auth-client';
+console.log("SFC", SolidFileClient)
+const fc = new SolidFileClient(auth)
 
 export default {
   name: 'AddInstance',
-  mixins: [profileMixin],
+  mixins: [profileMixin, aclMixin],
   data() {
     return {
       name: "",
-      path: "https://spoggy-test.solid.community/public/Chat/",
-      type: 'http://www.w3.org/ns/pim/meeting#LongChat'
+      path: "",
+      type: 'http://www.w3.org/ns/pim/meeting#LongChat',
     }
+  },
+  created(){
+    //this.storage = this.$store.state.solid.storage
   },
   methods:{
     async add(){
-      await this.addIndex(this.path, this.type, this.name, this.webId)
+      this.name =  this.name.split(' ').join('_');
+      let fullpath  =  this.path.endsWith('/') ? this.path+this.name+"/" : this.path+"/"+this.name+"/"
+
+      await fc.createFolder(fullpath).then((res) => {
+        console.log(res)
+      })
+      await this.addIndex(this.fullpath, this.type, this.name)
       console.log("index added")
       let indexes  = await this.getIndexes(this.webId)
       this.$store.commit('solid/setIndexes', indexes)
+
+      await this.readPublicAccess(fullpath)
+      let pattern = { read: true, append: true, write: false, control: false }
+      await this.setPublicAccess(fullpath, pattern)
       //this.options.push({ value: this.path, text: this.name })
       //    this.selected = this.path
       //  this.path = this.$store.state.solid.storage+"public/Chat"
       //  this.name = "Chat"
     }
   },
+  watch: {
+    storage: function(storage){
+      console.log(storage)
+      this.path = storage+"public/Chat/"
+      this.name = "Instance Name"
+    }
+  },
   computed:{
     webId(){
       return this.$store.state.solid.webId
     },
+    storage(){
+      return this.$store.state.solid.storage
+    }
   }
   /*  components: {
   'Component': () => import('@/components/Component'),

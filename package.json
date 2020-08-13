@@ -1,6 +1,6 @@
 {
   "name": "solid-vue-panes",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,6 +11,7 @@
     "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "@inrupt/solid-client": "^0.1.0",
     "@rdfjs/data-model": "^1.1.2",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
