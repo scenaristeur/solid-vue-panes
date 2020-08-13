@@ -2,9 +2,8 @@
   <div class="group-members">
     <div v-if="webId != null">
       <h4>Members :</h4>
-    <!--  url GM : {{ url }}
-      members : {{ members}}-->
-      <GroupMember v-for="m in members" :key="m" :member="m" />
+      <GroupAddMember  :url="url"   v-on:added="initMembers"/>
+      <GroupMember v-for="m in members" :key="m" :member="m" :url="url" />
     </div>
 
 
@@ -18,10 +17,9 @@ import { vcard } from 'rdf-namespaces'
 
 export default {
   name: 'GroupMembers',
-
-
   components: {
     'GroupMember': () => import('@/components/groups/GroupMember'),
+    'GroupAddMember': () => import('@/components/groups/GroupAddMember'),
   },
   props : ['url']
   ,
@@ -31,8 +29,7 @@ export default {
     }
   },
   created(){
-    console.log("GROUP MEMBERS")
-    this.initMembers(this.url)
+    this.initMembers()
   },
   computed:{
     webId(){
@@ -41,20 +38,10 @@ export default {
 
   },
   methods: {
-    async  initMembers(url){
-      console.log("init members : ",url)
-
-      const groupDoc = await fetchDocument(url);
-      console.log("GROUPDOC ", groupDoc)
+    async  initMembers(){
+      const groupDoc = await fetchDocument(this.url);
       let index = groupDoc.findSubject()
-      console.log(index)
       this.members = index.getAllNodeRefs(vcard.hasMember)
-      console.log(this.members)
-      /*  let  subjects = chatDoc.findSubjects();
-      subjects = subjects.filter( this.onlyUnique )*/
-      //  console.log(subjects)
-      //let triples = []
-
     }
   },
 

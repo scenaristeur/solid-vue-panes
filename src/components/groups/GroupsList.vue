@@ -1,12 +1,12 @@
 <template>
   <div class="groups-list">
 
-    <GroupCreate />
+    <GroupCreate v-on:created="initGroups" />
 
-<b-button variant="info" @click="initGroups">Reload groups</b-button>
+<!--    <b-button variant="info" @click="initGroups">Reload groups</b-button>-->
 
     <b-list-group flush>
-      <b-list-group-item v-for="f in folder.files" :key="f.url">
+      <b-list-group-item v-for="f in sorted(folder.files)" :key="f.url">
         <div class="item">
           <div class="avatar"></div>
           <div class="name text-info">
@@ -66,15 +66,24 @@ export default {
       return this.$store.state.solid.storage
     },
     url(){
-      return this.$store.state.solid.storage+"public/groups/"
+      return this.storage+"public/groups/"
     }
   },
   methods: {
     async  initGroups(){
-      console.log("init groups : ",this.url)
+      if (this.storage.length > 0){
+        console.log("init groups : ",this.url)
 
-      this.folder = await fc.readFolder(this.url)
-      console.log("Folder : ", this.folder)
+        this.folder = await fc.readFolder(this.url)
+        console.log("Folder : ", this.folder)
+      }
+    },
+    sorted(groups) {
+      if (groups != undefined){
+        return groups.sort(function (a,b) {
+          return a.modified < b.modified
+        })
+      }
     }
   },
   watch: {

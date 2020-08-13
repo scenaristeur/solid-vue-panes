@@ -53,6 +53,7 @@ methods:{
     indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
 
     await groupDoc.save();
+    this.$emit('created')
     /*@prefix vcard: <http://www.w3.org/2006/vcard/ns#>.
     @prefix ldp: <http://www.w3.org/ns/ldp#>.
 

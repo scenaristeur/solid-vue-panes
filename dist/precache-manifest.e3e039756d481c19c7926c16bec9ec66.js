@@ -4,11 +4,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.f8a4f7e5.css"
   },
   {
-    "revision": "b389a686fcc43a9c2b32",
+    "revision": "a1bfb414bfc6153c59db",
     "url": "/solid-vue-panes/css/app.7cfbae06.css"
   },
   {
-    "revision": "d9df318ffca7dcc5d7d3",
+    "revision": "ae7ae35d7c1c9765ced9",
     "url": "/solid-vue-panes/css/chunk-3eafbc51.736d1035.css"
   },
   {
@@ -32,7 +32,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "45f48951441b4343a6b3036d3e9ef419",
+    "revision": "3fda8e21d399f37c7481acd53bedc0cd",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -40,28 +40,36 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/about.58732056.js"
   },
   {
-    "revision": "b389a686fcc43a9c2b32",
-    "url": "/solid-vue-panes/js/app.e92a018b.js"
+    "revision": "a1bfb414bfc6153c59db",
+    "url": "/solid-vue-panes/js/app.51b75443.js"
   },
   {
-    "revision": "5e3cecbec0973039acc6",
-    "url": "/solid-vue-panes/js/chunk-2d0b2e88.b5eaea71.js"
+    "revision": "c6cec7db39f12ecbedf2",
+    "url": "/solid-vue-panes/js/chunk-2d0b219b.4301c0b6.js"
+  },
+  {
+    "revision": "1abea3cca884cab11b49",
+    "url": "/solid-vue-panes/js/chunk-2d0b2e88.12a69425.js"
   },
   {
     "revision": "a83d6ebf4ba1beeaf6f9",
     "url": "/solid-vue-panes/js/chunk-2d0cc665.cf5561fb.js"
   },
   {
-    "revision": "577fad711fac6714cc6c",
-    "url": "/solid-vue-panes/js/chunk-2d0de2b4.e70383a4.js"
+    "revision": "419e8940dc365184a4b7",
+    "url": "/solid-vue-panes/js/chunk-2d0de2b4.8e1fd2e8.js"
   },
   {
-    "revision": "92b8ce0f2c128c25f2b5",
-    "url": "/solid-vue-panes/js/chunk-2d2176ea.cfa15467.js"
+    "revision": "9c3085bd75745d0a9dae",
+    "url": "/solid-vue-panes/js/chunk-2d2176ea.0d08b85b.js"
   },
   {
-    "revision": "d9df318ffca7dcc5d7d3",
-    "url": "/solid-vue-panes/js/chunk-3eafbc51.31c53143.js"
+    "revision": "a15d5e382261460b90ae",
+    "url": "/solid-vue-panes/js/chunk-2d225270.34b97cc4.js"
+  },
+  {
+    "revision": "ae7ae35d7c1c9765ced9",
+    "url": "/solid-vue-panes/js/chunk-3eafbc51.4fa71b88.js"
   },
   {
     "revision": "5234e5ae384e59c77150",
