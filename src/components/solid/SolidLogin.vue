@@ -11,7 +11,7 @@ import profileMixin from '@/mixins/profileMixin'
 
 export default {
   name: 'SolidLogin',
-    mixins: [profileMixin],
+  mixins: [profileMixin],
   data: function () {
     return {
       webId: null
@@ -19,7 +19,7 @@ export default {
   },
   created(){
     auth.trackSession(async session => {
-    //  console.log("session",session)
+      //  console.log("session",session)
       if (!session){
         this.webId = null
         console.log('The user is not logged in', this.webId)
@@ -36,8 +36,12 @@ export default {
         //  console.log(this.friends)
         this.$store.commit('solid/setFriends', this.friends)
         this.profile = await this.getProfile(this.webId)
-    //    console.log(this.profile)
+        //    console.log(this.profile)
         this.$store.commit('solid/setProfile', this.profile)
+
+        this.indexes = await this.getIndexes(this.webId)
+        console.log("Indexes",this.indexes)
+        this.$store.commit('solid/setIndexes', this.indexes)
       }
     })
   },

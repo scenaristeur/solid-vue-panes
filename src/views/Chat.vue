@@ -1,31 +1,39 @@
 <template>
   <div class="chat">
     <h1>Solid Chat</h1>
-    <b-form-select v-model="selected" :options="options"></b-form-select>
+
+    <div class="container">
+    <!--  {{ channels}}èè
+      {{ path}}-->
+
+      <b-form-select v-model="selected" :options="options"></b-form-select>
 
 
-    <div v-if="selected == null">
 
-      <b-form-group class="row">
-        <label for="name">Chat Channel Name</label>
-        <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
-        <label for="url">Chat Channel url</label>
-        <b-form-input id="url" v-model="url" :placeholder="'ex: '+url"></b-form-input>
-        <div class="mt-2">Value: {{ url }}</div>
-        <b-button @click="add">Add</b-button>
-      </b-form-group>
+      <div v-if="selected == null">
+
+        <b-form-group class="row">
+          <label for="name">Chat Channel Name</label>
+          <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
+          <div class="mt-2">Value: {{ name }}</div>
+          <label for="url">Chat Channel url</label>
+          <b-form-input id="url" v-model="path" :placeholder="'ex: '+path"></b-form-input>
+          <div class="mt-2">Value: {{ path }}</div>
+          <b-button @click="add" disabled>Add (WIP, don't touch, not ready)</b-button>
+        </b-form-group>
+      </div>
     </div>
-
     <!--  <PopChat :url="selected" />-->
     <SolidChatList :url="selected" />
   </div>
 </template>
 
 <script>
-
+import profileMixin from '@/mixins/profileMixin'
 
 export default {
   name: 'Chat',
+  mixins: [profileMixin],
   components: {
     //  'PopChat': () => import('@/components/PopChat'),
     'SolidChatList': () => import('@/components/chat/SolidChatList')
@@ -65,14 +73,17 @@ export default {
         { value: 'd', text: 'This one is disabled', disabled: true }*/
       ],
       //  url: this.$store.state.solid.storage+"public/Chat",
-      name: "Chat"
+      name: "Chat",
+      //  path: "dd"
     }
   },
   methods:{
     add(){
-      this.options.push({ value: this.url, text: this.name })
-      this.selected = this.url
-      this.url = this.$store.state.solid.storage+"public/Chat"
+      this.addIndex(this.path, 'http://www.w3.org/ns/pim/meeting#LongChat', this.name)
+
+      this.options.push({ value: this.path, text: this.name })
+      this.selected = this.path
+      //  this.path = this.$store.state.solid.storage+"public/Chat"
       this.name = "Chat"
     }
   },
@@ -80,11 +91,21 @@ export default {
     selected: function (val) {
       console.log(val)
       //  this.fullName = val + ' ' + this.lastName
+    },
+    storage: function(st){
+      console.log("ST",st)
+      this.path = st+"public/Chat"
     }
   },
   computed:{
-    url(){
-      return this.$store.state.solid.storage+"public/Chat"
+    storage(){
+      return this.$store.state.solid.storage
+    },
+    channels(){
+      return this.$store.state.solid.indexes.puti.classes['http://www.w3.org/ns/pim/meeting#LongChat']
+    },
+    path(){
+      return this.storage+"public/Chat"
     }
   },
 }

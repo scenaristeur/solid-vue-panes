@@ -18,6 +18,7 @@ const state = () => ({
   //Profile
   profile: {},
   friends:[],
+  indexes: {puti: {instances: {}, classes: {}}, prti: {instances: {}, classes: {}}},
   // Progress
   progressMax: 14,
   progressValue: 0,
@@ -92,6 +93,9 @@ const mutations = {
   },
   setProfile (state, profile){
     state.profile = profile
+  },
+  setIndexes (state, indexes){
+    state.indexes = indexes
   },
 
   setStorage (state, st) {
