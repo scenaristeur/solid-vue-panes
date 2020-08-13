@@ -34,14 +34,11 @@ export default {
 computed: {
   options(){
     let friends = this.$store.state.solid.friends
-    console.log(friends)
-    
     let options =[]
     options.push({ value: 'null', text: 'Select one or more friends', disabled: true })
     friends.forEach((f) => {
       options.push({value: f, text: f})
     });
-
     return options
   },
 },

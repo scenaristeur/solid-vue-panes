@@ -7,9 +7,11 @@
 
 <script>
 import auth from 'solid-auth-client';
+import profileMixin from '@/mixins/profileMixin'
 
 export default {
   name: 'SolidLogin',
+    mixins: [profileMixin],
   data: function () {
     return {
       webId: null
@@ -17,29 +19,41 @@ export default {
   },
   created(){
     auth.trackSession(async session => {
+    //  console.log("session",session)
       if (!session){
         this.webId = null
         console.log('The user is not logged in', this.webId)
         this.$store.dispatch('solid/setWebId', this.webId)
-        localStorage.removeItem("solid-auth-client");
+        this.$store.commit('solid/setFriends', [])
+        this.$store.commit('solid/setProfile', {})
+        //  localStorage.removeItem("solid-auth-client");
       } else{
         this.webId = session.webId
+        console.log("TODO must getFriends & getProfile only once")
         console.log(`The user is ${session.webId}`)
         this.$store.dispatch('solid/setWebId', this.webId)
+        this.friends = await this.getFriends(this.webId)
+        //  console.log(this.friends)
+        this.$store.commit('solid/setFriends', this.friends)
+        this.profile = await this.getProfile(this.webId)
+    //    console.log(this.profile)
+        this.$store.commit('solid/setProfile', this.profile)
       }
     })
   },
   methods: {
     login(){
+
       console.log("login")
       this.popupLogin()
     },
-    logout(){
-      auth.logout()
-        localStorage.removeItem("solid-auth-client");
+    async logout(){
+      await  auth.logout()
+      //  localStorage.removeItem("solid-auth-client");
     },
     async popupLogin() {
       let session = await auth.currentSession();
+      console.log("Current session before login" ,session)
       let popupUri = './dist-popup/popup.html';
       //  let popupUri = 'https://solid.community/common/popup.html';
       if (!session){

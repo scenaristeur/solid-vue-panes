@@ -79,30 +79,25 @@ label-for="note">
 
 <script>
 
-import profileMixin from '@/mixins/profileMixin'
+
 export default {
   name: 'General',
   components: {
     'SolidLogin': () => import('@/components/solid/SolidLogin')
   },
-  mixins: [profileMixin],
-  data: function () {
+
+/*  data: function () {
     return {
-      profile: {}
+    //  profile: {}
     }
   },
   async  created(){
-    let profile = this.$store.state.solid.profile
-    console.log("PROFILE FROM STORE", profile.name)
-    //  console.log("WI",this.webId)
+    this.profile = this.$store.state.solid.profile
 
-
-    this.profile = await this.getProfile(this.webId)
-    console.log(this.profile)
-    this.$store.commit('solid/setProfile', this.profile)
-  },
+  },*/
   computed:{
     webId(){return this.$store.state.solid.webId},
+    profile(){return this.$store.state.solid.profile}
     /*  profileDoc(){return this.$store.state.solid.profileDoc},
     name(){return this.$store.state.solid.name},
     organization(){return this.$store.state.solid.organization},

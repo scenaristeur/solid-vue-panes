@@ -40,7 +40,7 @@ export default {
   },
   methods:{
     onSelected: function (selected) {
-      console.log("YEAH SELECTED !", selected)
+  //    console.log("YEAH SELECTED !", selected)
       this.selected = selected
     },
     async add(){
