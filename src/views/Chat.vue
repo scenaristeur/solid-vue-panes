@@ -1,117 +1,98 @@
 <template>
-  <div class="chat">
+  <div class = "chat">
     <h1>Solid Chat</h1>
 
     <div class="container">
-    <!--  {{ channels}}èè
-      {{ path}}-->
+      <router-link to="/indexes">Add an instance to your publicTypeIndex</router-link>
+      <b-form-select  v-model="selected" :options="options"> </b-form-select>
 
-      <b-form-select v-model="selected" :options="options"></b-form-select>
-
-
-
-      <div v-if="selected == null">
-
-        <b-form-group class="row">
-          <label for="name">Chat Channel Name</label>
-          <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
-          <div class="mt-2">Value: {{ name }}</div>
-          <label for="url">Chat Channel url</label>
-          <b-form-input id="url" v-model="path" :placeholder="'ex: '+path"></b-form-input>
-          <div class="mt-2">Value: {{ path }}</div>
-          <b-button @click="add" disabled>Add (WIP, don't touch, not ready)</b-button>
-        </b-form-group>
-      </div>
     </div>
-    <!--  <PopChat :url="selected" />-->
-    <SolidChatList :url="selected" />
+    <!--<PopChat  :url="selected" />-->
+    <SolidChatList  :channel="selected" />
   </div>
 </template>
 
 <script>
-import profileMixin from '@/mixins/profileMixin'
 
-export default {
-  name: 'Chat',
-  mixins: [profileMixin],
-  components: {
-    //  'PopChat': () => import('@/components/PopChat'),
-    'SolidChatList': () => import('@/components/chat/SolidChatList')
-  },
-  data() {
-    return {
-      selected: "https://solidarity.inrupt.net/public/Solidarity/",
-      options: [
-        { value: null, text: 'Please select an option or add a manually created one (Creation is not available yet)' },
-        //    { value: null, text: '' },
 
-        { value: 'https://solidarity.inrupt.net/public/Solidarity/', text: 'Solidarity (main)' },
+export default  {
+  name :  'Chat' ,
 
-        { value: null, text: '-   Solid' },
-        { value: 'https://parle.inrupt.net/public/chat/solid/welcome', text: 'Welcome to Solid !' },
+  components :  {
+    //   ' P o p C h a t ' :  ( )  = >  i m p o r t ( ' @ / c o m p o n e n t s / P o p C h a t ' ) ,
+    'SolidChatList' :  () => import ( '@/components/chat/SolidChatList' )
+  } ,
+  data ( )  {
+    return  {
+      selected :  {} ,
 
-        { value: 'https://parle.inrupt.net/public/chat/solid/app_developement', text: 'Solid App Developement' },
-        { value: 'https://parle.inrupt.net/public/chat/solid/specifications', text: 'Solid Specifications' },
-        { value: 'https://parle.inrupt.net/public/chat/solid/servers', text: 'Solid Servers' },
-        { value: 'https://parle.inrupt.net/public/chat/solid/applications', text: 'Solid Applications' },
-        { value: null, text: '-   Solid Groups' },
-        { value: 'https://parle.inrupt.net/public/chat/solid/panels/authorization', text: 'Solid Panels Authorization' },
-        { value: 'https://parle.inrupt.net/public/chat/solid/panels/authentication/', text: 'Solid Panels Authentication' },
-        { value: 'https://solidos.solid.community/Team/SolidOs%20team%20chat/', text: 'Solidos' },
-        { value: 'https://w3c-cg.solid.community/public/w3c-cg-chat/', text: 'Solid W3C CG' },
-
-        { value: null, text: '-   More'},
-        { value: 'https://parle.inrupt.net/public/chat/solid/misc', text: 'Misc' },
-        { value: 'https://parle.inrupt.net/public/chat/francais', text: 'Français' },
-        { value: 'https://solidarity.inrupt.net/public/Shighl/Shighl/', text: 'Shighl' },
-        { value: 'https://parle.inrupt.net/public/chat/ai', text: 'Artificial Intelligence' },
-        { value: null, text: '-   Tests' },
-        { value: 'https://solidarity.inrupt.net/public/ChatTest/', text: 'ChatTest' },
-        { value: 'https://parle.inrupt.net/public/chat/test', text: 'test' },
-
-        /*    { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }*/
-      ],
-      //  url: this.$store.state.solid.storage+"public/Chat",
-      name: "Chat",
-      //  path: "dd"
     }
-  },
-  methods:{
-    add(){
-      this.addIndex(this.path, 'http://www.w3.org/ns/pim/meeting#LongChat', this.name)
+  } ,
 
-      this.options.push({ value: this.path, text: this.name })
-      this.selected = this.path
-      //  this.path = this.$store.state.solid.storage+"public/Chat"
-      this.name = "Chat"
-    }
-  },
-  watch: {
-    selected: function (val) {
-      console.log(val)
-      //  this.fullName = val + ' ' + this.lastName
-    },
-    storage: function(st){
-      console.log("ST",st)
-      this.path = st+"public/Chat"
-    }
-  },
-  computed:{
-    storage(){
-      return this.$store.state.solid.storage
-    },
-    channels(){
-      return this.$store.state.solid.indexes.puti.classes['http://www.w3.org/ns/pim/meeting#LongChat']
-    },
-    path(){
-      return this.storage+"public/Chat"
-    }
-  },
+
+  computed : {
+
+    options () {
+      let optionsBase =  [
+
+        //     {  v a l u e :  n u l l ,  t e x t :  ' '  } ,
+
+        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:"01/01/2020", label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
+        //   {  v a l u e :  n u l l ,  t e x t :  ' P l e a s e  s e l e c t  a n  o p t i o n  o r  a d d  a  m a n u a l l y  c r e a t e d  o n e  ( C r e a t i o n  i s  n o t  a v a i l a b l e  y e t ) ' } ,
+
+        {value: null, text: '-  Solid'} ,
+        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:"01/01/2020", label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:"08/12/2020", label: 'Welcome'} ,  text : 'Welcome to Solid' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/app_develpement/', created:"08/12/2020", label: 'App Developement'} ,  text : 'App Developement' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/specifications/', created:"08/12/2020", label: 'Specifications'} ,  text : 'Solidarity (main) ' } ,
+
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/servers/', created:"08/12/2020", label: 'Servers'} ,  text : 'Servers' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:"08/12/2020", label: 'Applications'} ,  text : 'Applications' } ,
+        { value: {instance:'https://parle.inrupt.net/public/solid/francais/', created:"08/12/2020", label: 'Français'} ,  text : 'Français' } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:"08/12/2020", label: 'Shighl'} ,  text : 'Shighl' } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:"08/12/2020", label: 'ChatTest'} ,  text : 'ChatTest' } ,
+        {value: null, text: '----'} ,
+      /*  {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / w e l c o m e ' ,  t e x t :  ' W e l c o m e  t o  S o l i d  ! '  } ,
+
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / a p p _ d e v e l o p e m e n t ' ,  t e x t :  ' S o l i d  A p p  D e v e l o p e m e n t '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / s p e c i f i c a t i o n s ' ,  t e x t :  ' S o l i d  S p e c i f i c a t i o n s '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / s e r v e r s ' ,  t e x t :  ' S o l i d  S e r v e r s '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / a p p l i c a t i o n s ' ,  t e x t :  ' S o l i d  A p p l i c a t i o n s '  } ,
+        {  v a l u e :  n u l l ,  t e x t :  ' -    S o l i d  G r o u p s '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / p a n e l s / a u t h o r i z a t i o n ' ,  t e x t :  ' S o l i d  P a n e l s  A u t h o r i z a t i o n '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / p a n e l s / a u t h e n t i c a t i o n / ' ,  t e x t :  ' S o l i d  P a n e l s  A u t h e n t i c a t i o n '  } ,
+        {  v a l u e :  ' h t t p s : / / s o l i d o s . s o l i d . c o m m u n i t y / T e a m / S o l i d O s % 2 0 t e a m % 2 0 c h a t / ' ,  t e x t :  ' S o l i d o s '  } ,
+        {  v a l u e :  ' h t t p s : / / w 3 c - c g . s o l i d . c o m m u n i t y / p u b l i c / w 3 c - c g - c h a t / ' ,  t e x t :  ' S o l i d  W 3 C  C G '  } ,
+
+        {  v a l u e :  n u l l ,  t e x t :  ' -    M o r e ' } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / m i s c ' ,  t e x t :  ' M i s c '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / f r a n c a i s ' ,  t e x t :  ' F r a n � a i s '  } ,
+        {  v a l u e :  ' h t t p s : / / s o l i d a r i t y . i n r u p t . n e t / p u b l i c / S h i g h l / S h i g h l / ' ,  t e x t :  ' S h i g h l '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / a i ' ,  t e x t :  ' A r t i f i c i a l  I n t e l l i g e n c e '  } ,
+        /*    {  v a l u e :  n u l l ,  t e x t :  ' -    T e s t s '  } ,
+        {  v a l u e :  ' h t t p s : / / s o l i d a r i t y . i n r u p t . n e t / p u b l i c / C h a t T e s t / ' ,  t e x t :  ' C h a t T e s t '  } ,
+        {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / t e s t ' ,  t e x t :  ' t e s t '  } , */
+      ]
+      let channels = this.$store.state.solid.indexes.puti.instances
+      let optionsChannels = []
+      if (channels.length > 0) {
+        channels.forEach((c) => {
+          console.log(c)
+          if (c.classe == 'http://www.w3.org/ns/pim/meeting#LongChat') {
+            optionsChannels.push({value: c, text: c.label } )
+          }
+        } ) ;
+      }
+
+      let options = optionsBase.concat(optionsChannels)
+      console.log ("OPTIONS",options )
+      return options
+    } ,
+  } ,
 }
 </script>
 <style>
 .chat {
-  text-align: left;
+  text-align : left;
 }
 </style>

@@ -27,10 +27,11 @@
       <li><router-link to="/browser">Browser</router-link></li>
       <li><router-link to="/editor">Editor</router-link></li>
     </ul>
-    
+
     <h3>Profile</h3>
     <ul>
       <li><router-link to="/general">General</router-link></li>
+      <li><router-link to="/indexes">Indexes</router-link></li>
       <li><router-link to="/friends">Friends</router-link></li>
       <li><router-link to="/profile">Profile (General + Friends)</router-link></li>
     </ul>

@@ -1,7 +1,8 @@
 <template>
   <div class="indexes">
-    <PublicTypeIndex />
-    <PrivateTypeIndex />
+    <!--{{ indexes }}-->
+    <PublicTypeIndex :puti="indexes.puti"/>
+    <PrivateTypeIndex :prti="indexes.prti"/>
   </div>
 </template>
 
@@ -13,7 +14,11 @@ export default {
   components: {
     PublicTypeIndex,
     PrivateTypeIndex
-
-  }
+  },
+  computed:{
+    indexes(){
+      return this.$store.state.solid.indexes
+    },
+  },
 }
 </script>

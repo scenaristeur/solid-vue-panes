@@ -1,7 +1,7 @@
 <template>
   <div class="puti">
-    PUTI
-
+  <!--  PUTI : {{ puti}}<br>-->
+<Instances :index="puti" />
   </div>
 </template>
 
@@ -11,10 +11,9 @@
 
 export default {
   name: 'PublicTypeIndex',
+  props: ['puti'],
   components: {
-  //  Inbox,
-    //Chat
-
-  }
+    'Instances': () => import('@/components/profile/Instances'),
+  },
 }
 </script>

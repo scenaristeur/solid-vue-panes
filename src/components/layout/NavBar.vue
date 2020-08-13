@@ -62,6 +62,7 @@
         </template>
         <b-dropdown-item to="/profile">Profile</b-dropdown-item>
         <b-dropdown-item to="/general">Profile General</b-dropdown-item>
+        <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
         <b-dropdown-item to="/friends">Friends</b-dropdown-item>
         <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
