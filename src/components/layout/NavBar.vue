@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand to="/">Solid</b-navbar-brand>
+      <b-navbar-brand to="/">PoPock</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -22,6 +22,8 @@
 
         <b-nav-item  to="/profile">Profile</b-nav-item>
         <b-nav-item  to="/friends">Friends</b-nav-item>
+        <b-nav-item to="/fofri">Following Friends</b-nav-item>
+
 
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
@@ -40,6 +42,7 @@
           <b-dropdown-item to="/groups">Groups</b-dropdown-item>
           <b-dropdown-item to="/offers">Offers</b-dropdown-item>
           <b-dropdown-item to="/forms">Forms</b-dropdown-item>
+
         </b-nav-item-dropdown>
 
 
@@ -62,6 +65,7 @@
         </template>
         <b-dropdown-item to="/profile">Profile</b-dropdown-item>
         <b-dropdown-item to="/general">Profile General</b-dropdown-item>
+        <b-dropdown-item to="/fofri">Following Friends</b-dropdown-item>
         <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
         <b-dropdown-item to="/friends">Friends</b-dropdown-item>
         <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>

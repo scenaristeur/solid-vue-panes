@@ -1,6 +1,6 @@
 <template>
   <div class = "chat">
-    <h1>Solid Chat</h1>
+    <h6>Solid Chat</h6>
 
     <div class="container">
       <router-link to="/indexes">Add an instance to your publicTypeIndex</router-link>

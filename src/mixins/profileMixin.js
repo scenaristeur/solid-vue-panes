@@ -28,7 +28,8 @@ export default {
         let photo = await solid.data.[webId].vcard$hasPhoto
         profile.photo = `${photo}`
       }catch(e){
-        //  console.log(e)
+        //console.log(e)
+        this.makeToast(e.message, webId, 'warning')
       }
       return profile
     },
@@ -39,7 +40,8 @@ export default {
         const p = profileDoc.getSubject(webId)
         friends = await  p.getAllRefs(foaf.knows )
       }catch(e){
-        //  console.log(e)
+        //alert(webId+" : "+e)
+        this.makeToast(e.message, webId, 'warning')
       }
       return friends
     },
@@ -48,9 +50,9 @@ export default {
       var dateObj = new Date();
       var date = dateObj.toISOString()
 
-//      console.log(inst, classe, name, webId)
+      //      console.log(inst, classe, name, webId)
       let puti = this.$store.state.solid.indexes.puti
-  //    console.log(puti)
+      //    console.log(puti)
       let putiDoc = await fetchDocument(puti.url)
       let newchat = await putiDoc.addSubject()
       //subj.addLiteral(dct.created, date)
@@ -70,24 +72,24 @@ export default {
         let puti = await  subject.getNodeRef("http://www.w3.org/ns/solid/terms#publicTypeIndex" )
         let prti = await  subject.getNodeRef("http://www.w3.org/ns/solid/terms#privateTypeIndex" )
 
-    //    console.log(puti)
-    //    console.log(prti)
+        //    console.log(puti)
+        //    console.log(prti)
         indexes.puti.url = puti
         indexes.prti.url = prti
         let putiDoc = await fetchDocument(puti)
         let prtiDoc = await fetchDocument(prti)
-    //    console.log(putiDoc)
-    //    console.log(prtiDoc)
+        //    console.log(putiDoc)
+        //    console.log(prtiDoc)
         let puIndexes = await putiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass", null)
         let prIndexes = await prtiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
-    //    console.log(puIndexes,prIndexes)
+        //    console.log(puIndexes,prIndexes)
 
         puIndexes.forEach( async function(index) {
           let classe = await index.getRef("http://www.w3.org/ns/solid/terms#forClass")
           let instance = await index.getRef("http://www.w3.org/ns/solid/terms#instance")
           let created = await index.getString(dct.created)
           let label = await index.getString(rdfs.label)
-      //    console.log(instance, classe)
+          //    console.log(instance, classe)
           indexes.puti.instances.push({instance: instance, classe: classe, label: label, created: created})
           indexes.puti.classes[classe] ==  undefined ? indexes.puti.classes[classe] = [] : ""
           indexes.puti.classes[classe].push(instance)
@@ -98,7 +100,7 @@ export default {
           let instance = await index.getRef("http://www.w3.org/ns/solid/terms#instance")
           let created = await index.getString(dct.created)
           let label = await index.getString(rdfs.label)
-      //    console.log(instance, classe)
+          //    console.log(instance, classe)
           indexes.prti.instances.push({instance: instance, classe: classe, label: label, created: created})
           indexes.prti.classes[classe] ==  undefined ? indexes.prti.classes[classe] = [] : ""
           indexes.prti.classes[classe].push(instance)
@@ -110,6 +112,13 @@ export default {
         console.log(e)
       }
       return indexes
+    },
+    makeToast(title, content,variant = null) {
+      this.$bvToast.toast(content , {
+        title: title,
+        variant: variant,
+        solid: true
+      })
     }
   }
 

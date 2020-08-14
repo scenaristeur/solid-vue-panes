@@ -109,7 +109,7 @@ watch: {
     console.log("LIMITE",this.limite)
     this.date = new Date()
     this.url = this.channel.instance.substr(0, this.channel.instance.lastIndexOf("/") + 1);
-  /*  await this.readPublicAccess(this.url)
+    /*  await this.readPublicAccess(this.url)
     let pattern = { read: true, append: true, write: false, control: false }
     await this.setPublicAccess(this.url, pattern)*/
     await   this.initChat(this.url)
@@ -165,7 +165,7 @@ methods: {
     this.showTop = true;
     //  console.log("Load")
     if (this.limite <= this.date ){
-      console.log(this.limite)
+    //  console.log(this.limite)
       //  let date =  this.date
       //  console.log(this.date)
       let path = [this.root, this.date.getFullYear(), ("0" + (this.date.getMonth() + 1)).slice(-2), ("0" + this.date.getDate()).slice(-2), "chat.ttl"].join("/")
@@ -184,7 +184,8 @@ methods: {
       //console.log("over", this.limite)
       //alert ("No message before "+this.limite)
       this.data.push({id:this.limite.toLocaleString(), maker:"https://System.solid-vue-panes.really-sorry-about.this-diasppointement", content: "This is the end, my friend, there are no message before that date (*)=:>", created: this.limite.toLocaleString()})
-      alert ("No message before "+this.limite)
+      //alert ("No message before "+this.limite)
+      this.makeToast("No message before", this.limite, 'warning')
       this.stopped = true
     }
     this.busy = false;
@@ -259,6 +260,13 @@ methods: {
       ! this.stopped ? this.loadMore() : ""
     }
     this.showTop = false
+  },
+  makeToast(title, content,variant = null) {
+    this.$bvToast.toast(content , {
+      title: title,
+      variant: variant,
+      solid: true
+    })
   },
   onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
