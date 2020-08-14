@@ -16,7 +16,7 @@
     <div class="spinner-border" v-if="busy" role="status">
       <span class="sr-only">Loading...</span>
     </div>
-    <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300" infinite-scroll-immediate-check=false >
+    <div class="mb-5" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-immediate-check=false >
 
 
       <b-list-group flush>

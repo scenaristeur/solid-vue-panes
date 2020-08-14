@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["inbox"],{e529:function(n,e,t){"use strict";t.r(e);var s=function(){var n=this,e=n.$createElement;n._self._c;return n._m(0)},i=[function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",{staticClass:"inbox"},[t("h1",[n._v("This is an inbox page")])])}],a={name:"Inbox",components:{}},o=a,c=t("2877"),l=Object(c["a"])(o,s,i,!1,null,null,null);e["default"]=l.exports}}]);
+//# sourceMappingURL=inbox.c0e22d6d.js.map

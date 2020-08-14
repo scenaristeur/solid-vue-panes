@@ -34,17 +34,16 @@ export default  {
 
     options () {
       let optionsBase =  [
-        {value: null, text: '----'} ,
-        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:"01/01/2020", label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:"08/01/2020", label: 'Welcome'} ,  text : 'Welcome to Solid' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/app_develpement/', created:"08/01/2020", label: 'App Developement'} ,  text : 'Solid App Developement' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/specifications/', created:"08/01/2020", label: 'Specifications'} ,  text : 'Solid Specifications' } ,
 
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/servers/', created:"08/01/2020", label: 'Servers'} ,  text : 'Solid Servers' } ,
-        { value: {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:"08/01/2020", label: 'Applications'} ,  text : 'Solid Applications' } ,
-        { value: {instance:'https://parle.inrupt.net/public/solid/francais/', created:"08/01/2020", label: 'Français'} ,  text : 'Français' } ,
-        { value: {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:"01/01/2020", label: 'Shighl'} ,  text : 'Shighl' } ,
-        { value: {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:"01/01/2020", label: 'ChatTest'} ,  text : 'ChatTest' } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:'01/01/2020', label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:'08/01/2020', label: 'Welcome'} ,  text : 'Welcome to Solid' } ,
+        { value: {instance:'https://solidos.solid.community/Team/SolidOs%20team%20chat/', created:'01/01/2020', label: 'Solidos'}, text: 'Solidos' } ,
+        { value: {instance:'https://w3c-cg.solid.community/public/w3c-cg-chat/', created:'12/01/2019', label: 'Solid W3C CG'}, text: 'Solid W3C CG' },
+        { value: {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:'08/01/2020', label: 'Applications'} ,  text : 'Solid Applications' } ,
+        { value: {instance:'https://parle.inrupt.net/public/solid/francais/', created:'08/01/2020', label: 'Français'} ,  text : 'Français' } ,
+        { value: {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:'01/01/2020', label: 'Shighl / Solid-vue-panes'} ,  text : 'Shighl / Solid-vue-panes' } ,
+        {value: null, text: '----'} ,
+        { value: {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:'01/01/2020', label: 'ChatTest'} ,  text : 'ChatTest' } ,
 
         /*  {  v a l u e :  ' h t t p s : / / p a r l e . i n r u p t . n e t / p u b l i c / c h a t / s o l i d / w e l c o m e ' ,  t e x t :  ' W e l c o m e  t o  S o l i d  ! '  } ,
 
@@ -71,9 +70,9 @@ export default  {
       let optionsChannels = []
       if (channels.length > 0) {
         channels.forEach((c) => {
-          //  console.log(c)
+        //  console.log(c)
           if (c.classe == 'http://www.w3.org/ns/pim/meeting#LongChat') {
-            optionsChannels.push({value: c, text: c.label } )
+            optionsChannels.push({value: c, text: c.label || c.instance } )
           }
         } ) ;
       }
