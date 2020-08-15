@@ -1,6 +1,6 @@
 {
-  "name": "solid-vue-panes",
-  "version": "0.1.9",
+  "name": "PoPock",
+  "version": "0.1.10",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
