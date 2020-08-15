@@ -9,29 +9,32 @@ module.exports = {
   //https://github.com/nico-martin/todo-pwa
   //https://github.com/nico-martin/todo-pwa/blob/9ae64f77c622785e4be05bb1ce6ccfdbc96f43cc/vue/webpack.config.babel.js
   pwa: {
-    name: 'PoPock VueConfig',
+    name: 'PoPock',
   //  themeColor: '#4DBA87',
   //  msTileColor: '#000000',
   //  appleMobileWebAppCapable: 'yes',
   //  appleMobileWebAppStatusBarStyle: 'black',
-    share_target: {
-      action: "/share",
-      method: "GET",
-      enctype: "application/x-www-form-urlencoded",
-      params: {
-        title: "title",
-        text: "text",
-        url: "url"
-      }
+  manifestOptions: {
+      share_target: {
+        action: "/share",
+        method: "GET",
+        enctype: "application/x-www-form-urlencoded",
+        params: {
+          title: "title",
+          text: "text",
+          url: "url"
+        }
+      },
     },
 
+
     // configure the workbox plugin
-    workboxPluginMode: 'InjectManifest',
+  /*  workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       // swSrc is required in InjectManifest mode.
       swSrc: 'src/registerServiceWorker.js',
       // ...other Workbox options...
-    }
+    }*/
   }
   /* pages: {
   loadShape: {
