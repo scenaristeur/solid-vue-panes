@@ -174,7 +174,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes, mode: 'history'
+  routes, mode: 'history', base: "/solid-vue-panes/"
 })
 
 
