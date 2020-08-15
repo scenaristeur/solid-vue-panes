@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["forms"],{"0894":function(e,t,a){"use strict";a.r(t);var n=function(){var e=this,t=e.$createElement;e._self._c;return e._m(0)},s=[function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",{staticClass:"forms"},[a("h1",[e._v("This is an forms page")]),e._v(" a page that generate form from a ShEx shape and post it as an activityPub action."),a("br")])}],r={name:"Modele"},i=r,o=a("2877"),c=Object(o["a"])(i,n,s,!1,null,null,null);t["default"]=c.exports}}]);
-//# sourceMappingURL=forms.84b5fda5.js.map
