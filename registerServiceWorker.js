@@ -1,4 +1,4 @@
-importScripts("/solid-vue-panes/precache-manifest.a5ce3bc5131e88d5cc37282318656afc.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/solid-vue-panes/precache-manifest.a0cb0aea5a2cbecaa80dd21a731ba4a6.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 /* eslint-disable no-console */
 
