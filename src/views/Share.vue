@@ -42,6 +42,7 @@
 
 <script>
 // @ is an alias to /src
+// router en mode history
 
 export default {
   name: 'Share',
