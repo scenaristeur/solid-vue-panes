@@ -1,7 +1,9 @@
+const publicPath = '/solid-vue-panes/'
+
 module.exports = {
   // options...
   publicPath: process.env.NODE_ENV === 'production'
-  ? '/solid-vue-panes/'
+  ? publicPath
   : '/'
   ,
   //https://cli.vuejs.org/core-plugins/pwa.html#example-configuration
@@ -16,7 +18,7 @@ module.exports = {
   //  appleMobileWebAppStatusBarStyle: 'black',
   manifestOptions: {
       share_target: {
-        action: "/share",
+        action: publicPath+"share",
         method: "GET",
         enctype: "application/x-www-form-urlencoded",
         params: {
