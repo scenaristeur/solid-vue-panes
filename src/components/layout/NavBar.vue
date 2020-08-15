@@ -43,6 +43,7 @@
           <b-dropdown-item to="/offers">Offers</b-dropdown-item>
           <b-dropdown-item to="/forms">Forms</b-dropdown-item>
           <b-dropdown-item to="/pod">Pod</b-dropdown-item>
+          <b-dropdown-item to="/share">Share</b-dropdown-item>
 
         </b-nav-item-dropdown>
 
