@@ -7,6 +7,12 @@
     <br>
     url : {{ url }}
     <br>
+    query : {{query }}<br>
+    <br>
+    params : {{ params }}<br>
+    fullPath : {{ fullPath }}<br>
+    <br>
+
     <router-link to="share?title=hello&text=world&url=http%3A%2F%2Fsolid.community%2Fboo">Text One</router-link>
 
     <router-link to="share?title=O*LA&text=ME&url=http://hello.test">text two</router-link>
@@ -50,12 +56,17 @@ data: function () {
     url: "",
     titleS: 'ToDo PWA (VueJS)',
     shareFeature: 'share' in window.navigator,
+    query:  "",
+    route: ""
   }
 },
 created() {
   this.title = this.$route.query.title
   this.text = this.$route.query.text
   this.url = this.$route.query.url
+  this.query  = this.$route.query
+  this.params = this.$route.params
+  this.fullPath =  this.$route.fullPath
   console.log(this.$route)
 },
 watch: {
@@ -64,6 +75,9 @@ watch: {
     this.title = to.query.title
     this.text = to.query.text
     this.url = to.query.url
+    this.query= to.query
+    this.params = to.params
+    this.fullPath = to.fullPath
     console.log(this.$route.query)
     console.log(to.query)
     //    this.updatePod()
