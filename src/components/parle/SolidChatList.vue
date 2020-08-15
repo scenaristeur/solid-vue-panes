@@ -191,7 +191,7 @@ export default {
         alert ("You must provide a name to create a sub Channel")
       }
     },
-    makeToast(title, content,variant = null) {
+    makeToast(title, content, variant = null) {
       this.$bvToast.toast(content , {
         title: title,
         variant: variant,

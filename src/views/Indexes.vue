@@ -1,24 +1,28 @@
 <template>
   <div class="indexes">
     <!--{{ indexes }}-->
-    <PublicTypeIndex :puti="indexes.puti"/>
-    <PrivateTypeIndex :prti="indexes.prti"/>
+    <div v-if="webId != null" class="container">
+      <PublicTypeIndex :puti="indexes.puti"/>
+      <PrivateTypeIndex :prti="indexes.prti"/>
+    </div>
+    <div v-else>
+      <SolidLogin />
+    </div>
   </div>
 </template>
 
 <script>
-import PublicTypeIndex from '@/views/PublicTypeIndex.vue'
-import PrivateTypeIndex from '@/views/PrivateTypeIndex.vue'
+
 export default {
   name: 'Indexes',
   components: {
-    PublicTypeIndex,
-    PrivateTypeIndex
+    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+    'PublicTypeIndex': () => import('@/views/PublicTypeIndex.vue'),
+    'PrivateTypeIndex': () => import('@/views/PrivateTypeIndex.vue'),
   },
   computed:{
-    indexes(){
-      return this.$store.state.solid.indexes
-    },
+    webId(){return this.$store.state.solid.webId},
+    indexes(){return this.$store.state.solid.indexes},
   },
 }
 </script>

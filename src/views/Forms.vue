@@ -1,11 +1,10 @@
 <template>
   <div class="forms">
     <h1>This is an forms page</h1>
-    a page that generate form from a ShEx shape and post it as an activityPub  action.<br> 
-    <!--
-    <COMPONENET />
+    a page that generate form from a ShEx shape and post it as an activityPub  action.<br>
 
-  -->
+    <Crud />
+
 </div>
 </template>
 
@@ -14,13 +13,10 @@
 
 
 export default {
-  name: 'Modele',
-  /*
-
+  name: 'Forms',
   components: {
-  'Component': () => import('@/component/Component'),
+  'Crud': () => import('@/components/crud/Crud'),
 },
 
-*/
 }
 </script>

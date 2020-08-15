@@ -55,7 +55,7 @@
 <div>
   <b-form-textarea
   id="textarea"
-  v-model="text"
+  v-model="content"
   placeholder="Enter something..."
   rows="3"
   max-rows="15"
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-
+import auth from 'solid-auth-client';
 export default {
   //  store,
 
@@ -89,12 +89,68 @@ export default {
     return {
       name: "",
       type: "",
-      path: ""
+      path: "",
+      content:{}
       //  storage: "",
       //folder: {}
     }
   },
-  async   created(){
+
+created() {
+  const SolidFileClient = window.SolidFileClient
+  console.log("SFC", SolidFileClient)
+  this.fc = new SolidFileClient(auth)
+  this.file = this.$route.params.file
+  console.log(this.file)
+  this.path = this.file.url
+  this.updateFile()
+},
+watch: {
+  '$route' (to) {
+
+    //  '$route' (to, from) {
+    this.file = to.params.file
+    this.path = this.file.url
+    this.updateFile()
+  }
+},
+methods:{
+  async updateFile(){
+    this.content = await this.fc.readFile(this.path)
+  },
+  clean(){
+    this.text=""
+    let f = {name: "new_file.txt", type: "text/plain", parent: this.folder.url || this.storage}
+    this.$store.commit('solid/setFile', f)
+    this.$store.commit('solid/setContent', "" )
+  },
+  change(e){
+    console.log("change",e)
+  },
+  input(e){
+    console.log("input",e)
+  },
+  fill(){
+    this.name = this.file.name
+    this.type = this.file.type
+    this.path = this.file.parent
+  },
+  save(){
+    console.log("text", this.text)
+    this.path =   this.path.endsWith("/") ? this.path : this.path+"/"
+    console.log('File',this.type, this.path, this.name)
+    let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
+    this.$store.dispatch('solid/writeFile', file)
+  }
+
+},
+computed:{
+  webId(){
+    return this.$store.state.solid.webId
+  },
+}
+
+/*  async   created(){
     this.name = "new_file.txt"
     this.type = "text/plain"
     this.path = this.storage
@@ -129,22 +185,7 @@ export default {
       let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
       this.$store.dispatch('solid/writeFile', file)
     }
-    /*    selected(item){
-    console.log(item)
-    item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.openFile(item)
-    //  this.folder =  this.$store.state.solid.folder
-  },
-  openFile(item){
-  console.log("Open",item.url)
-},
-goUp(){
-console.log(this.folder)
-this.$store.dispatch('solid/updateFolder', this.folder.parent)
-}*/
-/*  updateBrowser: async  function (){
-this.folder = await this.fc.readFolder(this.storage)
-console.log(this.folder)
-}*/
+
 },
 computed:{
   webId(){
@@ -169,22 +210,74 @@ computed:{
     }
   },
 
-},
-watch: {
-  // whenever question changes, this function will run
-  /*  text: async function (text) {
+},  async   created(){
+    this.name = "new_file.txt"
+    this.type = "text/plain"
+    this.path = this.storage
+    //  this.solid= window.solid
+    //  this.webId =
+    //  this.fc = new SolidFileClient(auth)
+    //  example     await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
 
-  console.log(text)
+  },
+  methods: {
+    clean(){
+      this.text=""
+      let f = {name: "new_file.txt", type: "text/plain", parent: this.folder.url || this.storage}
+      this.$store.commit('solid/setFile', f)
+      this.$store.commit('solid/setContent', "" )
+    },
+    change(e){
+      console.log("change",e)
+    },
+    input(e){
+      console.log("input",e)
+    },
+    fill(){
+      this.name = this.file.name
+      this.type = this.file.type
+      this.path = this.file.parent
+    },
+    save(){
+      console.log("text", this.text)
+      this.path =   this.path.endsWith("/") ? this.path : this.path+"/"
+      console.log('File',this.type, this.path, this.name)
+      let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
+      this.$store.dispatch('solid/writeFile', file)
+    }
 
-}*/
 },
+computed:{
+  webId(){
+    return this.$store.state.solid.webId
+  },
+  storage(){
+    return this.$store.state.solid.storage
+  },
+  folder(){
+    return  this.$store.state.solid.folder
+  },
+  file(){
+    return  this.$store.state.solid.file
+  },
+
+  text: {
+    get: function () {
+      return this.$store.state.solid.content
+    },
+    set: function (text) {
+      return this.$store.commit('solid/setContent', text)
+    }
+  },
+
+},*/
 }
 </script>
 <style>
 .item {
-  text-align: left;
+text-align: left;
 }
 #textarea {
-  height: 100%;
+height: 100%;
 }
 </style>

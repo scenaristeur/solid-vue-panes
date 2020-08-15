@@ -183,9 +183,9 @@ methods: {
     }else{
       //console.log("over", this.limite)
       //alert ("No message before "+this.limite)
-      this.data.push({id:this.limite.toLocaleString(), maker:"https://System.solid-vue-panes.really-sorry-about.this-diasppointement", content: "This is the end, my friend, there are no message before that date (*)=:>", created: this.limite.toLocaleString()})
+      this.data.push({id:this.limite, maker:"https://System.solid-vue-panes", content: "This is the end, my friend, there are no message before that date", created: this.limite.toLocaleString()})
       //alert ("No message before "+this.limite)
-      this.makeToast("No message before", this.limite, 'warning')
+      this.makeToast("No message before", this.limite.toLocaleString(), 'warning')
       this.stopped = true
     }
     this.busy = false;
@@ -261,7 +261,7 @@ methods: {
     }
     this.showTop = false
   },
-  makeToast(title, content,variant = null) {
+  makeToast(title, content, variant = null) {
     this.$bvToast.toast(content , {
       title: title,
       variant: variant,

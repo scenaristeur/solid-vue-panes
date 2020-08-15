@@ -3,6 +3,37 @@
     <h5>FoFri ! The following friends tool...</h5>
     Current :  <small>{{ webId }}</small><br>
     {{ friends.length }} friends<br>
+    <!--{{ indexes }} instances<br>-->
+
+    <div class="row">
+    <!--  <div class="col">-->
+        Public Instances
+        <b-list-group>
+          <div v-for="i in indexes.puti.instances" :key="i.instance" class="container fluid mb-3">
+            <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { instance: i }}">
+              label : {{i.label}}<br>
+              instance : {{i.instance}}<br>
+              classe : {{i.classe}}<br>
+              created : {{i.created}}<br>
+
+              <!--  <div><PeopleItem :webId="f" /></div>-->
+            </b-list-group-item>
+            <small class="row"><a :href="i.instance" target="_blank">{{ i.instance }}</a></small>
+          </div>
+        </b-list-group>
+    <!--  </div>
+      <div class="col">
+        <b-list-group>
+          <div v-for="f in friends" :key="f" class="container fluid mb-3">
+            <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { webId: f }}">
+              <div><PeopleItem :webId="f" /></div>
+            </b-list-group-item>
+            <small class="row"><a :href="f" target="_blank">{{ f }}</a></small>
+          </div>
+        </b-list-group>
+
+      </div>-->
+    </div>
 
     <router-link :to="{ name: 'FoFri'}">Me</router-link><br>
     <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link>
@@ -15,12 +46,7 @@
   <b-list-group>
     <div v-for="f in friends" :key="f" class="container fluid mb-3">
       <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { webId: f }}">
-        <!--<b-avatar class="mr-3"></b-avatar>
-        <b-avatar button  src="https://placekitten.com/300/300" badge badge-variant="danger" class="mr-3"></b-avatar>
-        <span class="mr-auto">{{ f }}</span>
-        <b-badge>12</b-badge>-->
         <div><PeopleItem :webId="f" /></div>
-
       </b-list-group-item>
       <small class="row"><a :href="f" target="_blank">{{ f }}</a></small>
     </div>
@@ -50,22 +76,31 @@ export default {
     return {
       webId: {},
       friends: [],
+      indexes:{puti: {instances: []}}
+      //  publicInstances : []
     }
   },
   created() {
     this.webId = this.$route.params.webId || this.$store.state.solid.webId
     this.updateFriends()
+    this.updateIndexes()
   },
   watch: {
     '$route' (to) {
       //  '$route' (to, from) {
       this.webId = to.params.webId || this.$store.state.solid.webId
       this.updateFriends()
+      this.updateIndexes()
     }
   },
   methods:{
     async updateFriends(){
       this.friends = await this.getFriends(this.webId)
+    },
+    async updateIndexes(){
+      //temporary commented to see where to put it
+    //  this.indexes = await this.getIndexes(this.webId)
+      console.log("TODO : temporary commented to see where to put it",this.indexes)
     }
   }
 }

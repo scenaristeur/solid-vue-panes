@@ -77,11 +77,11 @@ export default {
         indexes.puti.url = puti
         indexes.prti.url = prti
         let putiDoc = await fetchDocument(puti)
-        let prtiDoc = await fetchDocument(prti)
+      //  let prtiDoc = await fetchDocument(prti)
         //    console.log(putiDoc)
         //    console.log(prtiDoc)
-        let puIndexes = await putiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass", null)
-        let prIndexes = await prtiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
+        let puIndexes = await putiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
+      //  let prIndexes = await prtiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
         //    console.log(puIndexes,prIndexes)
 
         puIndexes.forEach( async function(index) {
@@ -95,7 +95,7 @@ export default {
           indexes.puti.classes[classe].push(instance)
         });
 
-        prIndexes.forEach( async function(index) {
+      /*  prIndexes.forEach( async function(index) {
           let classe = await index.getRef("http://www.w3.org/ns/solid/terms#forClass")
           let instance = await index.getRef("http://www.w3.org/ns/solid/terms#instance")
           let created = await index.getString(dct.created)
@@ -104,13 +104,14 @@ export default {
           indexes.prti.instances.push({instance: instance, classe: classe, label: label, created: created})
           indexes.prti.classes[classe] ==  undefined ? indexes.prti.classes[classe] = [] : ""
           indexes.prti.classes[classe].push(instance)
-        });
+        });*/
 
 
 
       }catch(e){
-        console.log(e)
+        //  console.log(e)
       }
+      console.log(webId, indexes)
       return indexes
     },
     makeToast(title, content,variant = null) {

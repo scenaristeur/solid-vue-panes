@@ -11,6 +11,22 @@ const routes = [
     component: Home
   },
   {
+    path: '/pod/:path?',
+    name: 'Pod',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "pod" */ '@/views/Pod.vue')
+  },
+  {
+    path: '/file/:file?',
+    name: 'File',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "file" */ '@/views/File.vue')
+  },
+  {
     path: '/fofri/:webId?',
     name: 'FoFri',
     // route level code-splitting
