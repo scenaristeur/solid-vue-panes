@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5a6ec2352bb0eecab543",
-    "url": "/solid-vue-panes/css/app.1cf4ec16.css"
+    "revision": "1499c3d265589a57d74e",
+    "url": "/solid-vue-panes/css/app.44e4f6a8.css"
   },
   {
     "revision": "a45e9c18a25b0fb28cb5",
@@ -68,12 +68,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "9a2fed6ed40b664b1565c16cf30ae7d4",
+    "revision": "3809972afd90c547871fe41ad647c6a9",
     "url": "/solid-vue-panes/index.html"
   },
   {
-    "revision": "5a6ec2352bb0eecab543",
-    "url": "/solid-vue-panes/js/app.68f0c7d1.js"
+    "revision": "1499c3d265589a57d74e",
+    "url": "/solid-vue-panes/js/app.46d63a21.js"
   },
   {
     "revision": "a45e9c18a25b0fb28cb5",
