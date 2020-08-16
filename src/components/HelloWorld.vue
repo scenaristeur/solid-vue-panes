@@ -14,7 +14,7 @@
       <li>Are you crazy enough for <router-link to="/parle">Parle</router-link> nested Chat ?</li>
       <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
       <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
-      <li><router-link to="/share">Share, todo move to misc</router-link></li>
+      <li><router-link to="/share"> - Share, todo move to misc</router-link></li>
     </ul>
 
     <h3>Storage</h3>
