@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "23e3eaac274674bdd210",
+    "revision": "87fa28f73befc232c898",
     "url": "/solid-vue-panes/css/app.e1dc1283.css"
   },
   {
@@ -68,12 +68,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "5ed088cd060162498cfa3aa2f56c21d0",
+    "revision": "deb49bfb51426060f8921043a634b7f4",
     "url": "/solid-vue-panes/index.html"
   },
   {
-    "revision": "23e3eaac274674bdd210",
-    "url": "/solid-vue-panes/js/app.2f050878.js"
+    "revision": "87fa28f73befc232c898",
+    "url": "/solid-vue-panes/js/app.5c5faf5c.js"
   },
   {
     "revision": "a45e9c18a25b0fb28cb5",
@@ -224,7 +224,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/share.6f8cfb8a.js"
   },
   {
-    "revision": "6947e6d59c19854f0eddcd3cde78dc82",
+    "revision": "8a33bf2d39b99d9bc8854ba642e01efb",
     "url": "/solid-vue-panes/manifest.json"
   },
   {

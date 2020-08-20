@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-  <img  width="100px" alt="Vue logo" src="../assets/logo.png">
+    <img  width="100px" alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="PoPock, the Pod in the Pocket"/>
+    <Share />
   </div>
 </template>
 
@@ -13,7 +14,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    HelloWorld,
+    'Share': () => import('@/views/Share')
   }
 }
 </script>
