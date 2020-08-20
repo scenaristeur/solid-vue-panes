@@ -6,7 +6,7 @@
       All in the pocket to manage your
       <a href="https://forum.solidproject.org/t/popock-the-pod-in-the-pocket/3378" target="_blank">Solid Pods</a>
       <br>
-      <a href="/?title=Popock&url=https://scenaristeur.github.io/solid-vue-panes/&text=My%20favorite%20Pod%20Manager">Add Popock to your bookmarks</a>
+      <a href="https://scenaristeur.github.io/solid-vue-panes/?title=Popock&url=https://scenaristeur.github.io/solid-vue-panes/&text=My%20favorite%20Pod%20Manager">Add Popock to your bookmarks</a>
     </p>
 
     <SolidLogin class="m-3" v-if="webId == null" />
