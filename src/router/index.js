@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+const publicPath = process.env.NODE_ENV === 'production' ? '/solid-vue-panes/' : '/'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -9,15 +11,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/share',
-    //  path: '/share/text/:text?',
-    name: 'Share',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "share" */ '@/views/Share.vue')
   },
   {
     path: '/pod/:path?',
@@ -174,7 +167,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes, mode: 'history', base: "/solid-vue-panes"
+  routes, mode: 'history', base: publicPath
 })
 
 

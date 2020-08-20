@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Share />
+    <ShareTarget />
     <img  width="100px" alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="PoPock, the Pod in the Pocket"/>
 
@@ -16,7 +16,8 @@ export default {
   name: 'Home',
   components: {
     HelloWorld,
-    'Share': () => import('@/views/Share')
+    'ShareTarget': () => import('@/components/share/ShareTarget')
+
   }
 }
 </script>

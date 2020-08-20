@@ -21,7 +21,6 @@
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces' //
 const { namedNode } = require('@rdfjs/data-model');
-import SolidLogin from '@/components/solid/SolidLogin.vue'
 import auth from 'solid-auth-client';
 let SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
@@ -32,7 +31,8 @@ console.log("SOLID",solid)
 export default {
   name: 'SolidChatSend',
   components:{
-    SolidLogin
+    'SolidLogin': () => import('@/components/solid/SolidLogin')
+
   },
   data: function () {
     return {
