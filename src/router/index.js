@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
-const publicPath = process.env.NODE_ENV === 'production' ? '/solid-vue-panes' : '/'
+const publicPath = process.env.NODE_ENV === 'production' ? '/solid-vue-panes' : ''
 
 Vue.use(VueRouter)
 
