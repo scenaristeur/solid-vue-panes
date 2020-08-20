@@ -1,8 +1,9 @@
 <template>
   <div class="home">
+    <Share />
     <img  width="100px" alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="PoPock, the Pod in the Pocket"/>
-    <Share />
+
   </div>
 </template>
 
