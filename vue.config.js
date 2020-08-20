@@ -1,8 +1,8 @@
-const publicPath = process.env.NODE_ENV === 'production' ? '/solid-vue-panes/' : '/'
+//const publicPath = process.env.NODE_ENV === 'production' ? '/solid-vue-panes/' : '/'
 
 module.exports = {
   // options...
-  publicPath: publicPath
+  publicPath: process.env.NODE_ENV === 'production' ? '/solid-vue-panes/' : '/'
   ,
   // router en mode history
   //https://cli.vuejs.org/core-plugins/pwa.html#example-configuration
