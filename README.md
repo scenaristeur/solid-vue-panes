@@ -43,3 +43,9 @@ git add dist -f && git commit -m "Initial dist subtree commit"
 npm run build && git add .
 git commit -m "my modif"
 git push && git subtree push --prefix dist origin gh-pages
+
+
+# todo
+add blog
+https://snipcart.com/blog/vuejs-blog-demo
+https://github.com/snipcart/vue-blog-demo

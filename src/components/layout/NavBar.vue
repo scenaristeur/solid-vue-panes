@@ -32,6 +32,7 @@
           <b-dropdown-item to="/parle">Parle</b-dropdown-item>
           <b-dropdown-item to="/chat">Chat</b-dropdown-item>
           <b-dropdown-item to="/inbox">Inbox</b-dropdown-item>
+          <b-dropdown-item to="/agora">Agora</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
@@ -57,7 +58,7 @@
         <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
       </b-nav-form> -->
 
-  <!--    <ShareButton /> -->
+      <!--    <ShareButton /> -->
 
       <!-- Using 'button-content' slot -->
       <b-nav-item-dropdown right>
@@ -104,7 +105,7 @@ export default {
   },
   components: {
     SolidLogin,
-//    'ShareButton': () => import('@/components/share/ShareButton')
+    //    'ShareButton': () => import('@/components/share/ShareButton')
   }
 }
 </script>

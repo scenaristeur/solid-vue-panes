@@ -126,6 +126,14 @@ const routes = [
     component: () => import( /* webpackChunkName: "inbox" */'@/views/Inbox.vue')
   },
   {
+    path: '/agora',
+    name: 'Agora',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "editor" */ '@/views/Agora.vue')
+  },
+  {
     path: '/editor',
     name: 'Editor',
     // route level code-splitting
@@ -176,7 +184,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes, mode: 'history', base: publicPath
+  routes, mode: 'history', base: publicPath,  linkActiveClass: 'active'
 })
 
 

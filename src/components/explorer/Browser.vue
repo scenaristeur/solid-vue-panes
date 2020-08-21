@@ -21,28 +21,35 @@
       >
       <p class="p-0 m-0 flex-grow-1">  <b-icon-folder></b-icon-folder>
         {{ fo.name }}</p>
+        <b-button size="sm mr-2" variant="outline-primary">
+          <b-icon-alt @click.stop="init_move(fo)" variant="primary"></b-icon-alt>
+        </b-button>
+
+        <b-button size="sm" variant="outline-danger">
+          <b-icon-trash @click.stop="init_trash(fo)" variant="danger"></b-icon-trash>
+        </b-button>
+
+      </b-list-group-item>
+    </b-list-group>
+
+    <b-list-group>
+      <b-list-group-item
+      class="item list-group-item d-flex justify-content-between"
+      v-for="fi in folder.files"
+      :key="fi.name"
+      @click="selected(fi)"
+      @contextmenu.prevent="right(fi)">
+
+      <p class="p-0 m-0 flex-grow-1"><b-icon-file></b-icon-file> {{ fi.name }}</p>
+      <b-button size="sm mr-2" variant="outline-primary">
+        <b-icon-alt @click.stop="init_move(fi)" variant="primary"></b-icon-alt>
+      </b-button>
       <b-button size="sm" variant="outline-danger">
-        <b-icon-trash @click.stop="trash(fo)" variant="danger"></b-icon-trash>
+        <b-icon-trash @click.stop="init_trash(fi)" variant="danger"></b-icon-trash>
       </b-button>
 
     </b-list-group-item>
   </b-list-group>
-
-  <b-list-group>
-    <b-list-group-item
-    class="item list-group-item d-flex justify-content-between"
-    v-for="fi in folder.files"
-    :key="fi.name"
-    @click="selected(fi)"
-    @contextmenu.prevent="right(fi)">
-
-    <p class="p-0 m-0 flex-grow-1"><b-icon-file></b-icon-file> {{ fi.name }}</p>
-    <b-button size="sm" variant="outline-danger">
-      <b-icon-trash @click.stop="trash(fi)" variant="danger"></b-icon-trash>
-    </b-button>
-
-  </b-list-group-item>
-</b-list-group>
 </div>
 <div v-else>
   <SolidLogin />
@@ -63,12 +70,26 @@
   </b-list-group>
 </b-modal>
 
-<b-modal id="confirm-delete" title=" !!! Are you sure you want to delete ??? ">
-  {{ currentItem.name }}
+<b-modal id="confirm-trash" title="Trash" @ok="trash">
+  Are you sure you want to delete
+  <b-icon-trash variant="danger"></b-icon-trash>
+  <b>{{ currentItem.name }}</b> ({{ currentItem.type }})
+  <b-icon-trash variant="danger"></b-icon-trash> and all its content ?
   <br>
   <small>
     {{ currentItem.url }}
   </small>
+</b-modal>
+
+<b-modal id="move" title="Are you sure you want to move or rename" @ok="move">
+  name : {{ currentItem.name }}
+  <br>
+  <small>
+    {{ currentItem.url }}
+  </small>
+  <b-input-group size="sm" prepend="New location">
+    <b-form-input v-model="new_location"></b-form-input>
+  </b-input-group>
 </b-modal>
 
 </div>
@@ -86,7 +107,8 @@ export default {
       contextTitle: "",
       currentItem: {},
       newName: "",
-      deleteMessage: ""
+      //  deleteMessage: "",
+      new_location:""
       //  storage: "",
       //folder: {}
     }
@@ -102,10 +124,22 @@ export default {
       this.$bvModal.show("context-menu")
       this.currentItem = item
     },
-    trash(item){
+    init_trash(item){
       console.log(item)
-      this.$bvModal.show("confirm-delete")
+      this.$bvModal.show("confirm-trash")
       this.currentItem = item
+    },
+    init_move(item){
+      console.log(item)
+      this.$bvModal.show("move")
+      this.currentItem = item
+      this.new_location = item.url
+    },
+    move(){
+      console.log("Move",this.currentItem.type, this.currentItem.url, "to", this.new_location)
+    },
+    trash(){
+      console.log("Trash",this.currentItem.type,this.currentItem.url)
     },
     goUp(){
       this.$store.dispatch('solid/updateFolder', this.folder.parent)
