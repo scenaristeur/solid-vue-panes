@@ -24,7 +24,7 @@ import SolidLogin from '@/components/solid/SolidLogin.vue'
 
 
 export default {
-  name: 'SolidChatSend',
+  name: 'ParleSend',
   components:{
     SolidLogin
   },

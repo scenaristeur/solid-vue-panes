@@ -6,8 +6,8 @@
     <BreadCrumb />
 
     <!--    <SolidChatRooms :root="this.base" :index="this.index" /> -->
-    <SolidChatList />
-    <SolidChatSend />
+    <ParleList />
+    <ParleSend />
   </div>
 </template>
 
@@ -17,17 +17,15 @@ import store from '@/store'
 
 
 import BreadCrumb from '@/components/layout/BreadCrumb.vue'
-import SolidChatSend from '@/components/parle/SolidChatSend.vue'
-import SolidChatList from '@/components/parle/SolidChatList.vue'
 
 export default {
   store,
   name: 'Parle',
-//  mixins: [ ChatMixin ],
+  //  mixins: [ ChatMixin ],
   components: {
-    SolidChatSend,
+    'ParleList': () => import('@/components/parle/ParleList'),
+    'ParleSend': () => import('@/components/parle/ParleSend'),
     //  SolidChatRooms,
-    SolidChatList,
     BreadCrumb
   },
 

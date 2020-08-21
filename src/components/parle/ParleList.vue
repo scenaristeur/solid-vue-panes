@@ -83,7 +83,7 @@ import { fetchDocument } from 'tripledoc';
 import {/* sioc,*/ dct, foaf, schema } from 'rdf-namespaces'
 
 export default {
-  name: 'SolidChatList',
+  name: 'ParleList',
   props: {
     msg: String
   },

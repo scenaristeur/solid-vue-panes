@@ -24,6 +24,8 @@ const { namedNode } = require('@rdfjs/data-model');
 import auth from 'solid-auth-client';
 let SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
+let fc = new SolidFileClient(auth)
+console.log(fc)
 let solid = window.solid
 console.log("SOLID",solid)
 
@@ -39,10 +41,10 @@ export default {
       message: "",
     }
   },
-  async created(){
-    this.fc = new SolidFileClient(auth)
-    if( !await this.fc.itemExists( this.fileUrl )) {
-      await this.fc.postFile(this.fileUrl, "", "text/turtle")
+  /*async created(){
+
+    if( !await fc.itemExists( this.fileUrl )) {
+      await fc.postFile(this.fileUrl, "", "text/turtle")
       .then((content) => {
         console.log("File Created",content)
       })
@@ -50,10 +52,8 @@ export default {
     }else{
       console.log("File exist",this.fileUrl)
     }
-  },
-  async mounted(){
+  },*/
 
-  },
   computed:{
     fileUrl: function(){
       return  this.$store.state.chat.fileUrl
@@ -67,8 +67,8 @@ export default {
       console.log("Webid",webId)
     },
     async  fileUrl(){
-      if( !await this.fc.itemExists( this.fileUrl )) {
-        await this.fc.postFile(this.fileUrl, "", "text/turtle")
+      if( !await fc.itemExists( this.fileUrl )) {
+        await fc.postFile(this.fileUrl, "", "text/turtle")
         .then((content) => {
           console.log("File Created",content)
         })

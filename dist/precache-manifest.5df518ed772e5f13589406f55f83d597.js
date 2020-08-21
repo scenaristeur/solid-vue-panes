@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "50e640c7a846de953992",
+    "revision": "085c808b19d7d21c6552",
     "url": "/solid-vue-panes/css/app.bbae9501.css"
   },
   {
@@ -8,16 +8,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/browser.7980ae7d.css"
   },
   {
-    "revision": "4d1d76ffe9460280ea2f",
+    "revision": "d3d4faac7c7fcce7785c",
     "url": "/solid-vue-panes/css/chat.3eeccf93.css"
   },
   {
-    "revision": "1cb793a8d64d83e5222b",
-    "url": "/solid-vue-panes/css/chunk-38e9209a.3aa6711a.css"
+    "revision": "2717a877136660f57cad",
+    "url": "/solid-vue-panes/css/chunk-2cf7e1c1.736d1035.css"
   },
   {
-    "revision": "0c2bb16f11cb0f734582",
-    "url": "/solid-vue-panes/css/chunk-3eafbc51.736d1035.css"
+    "revision": "b485557840338403b474",
+    "url": "/solid-vue-panes/css/chunk-4d16cdbe.c1d33819.css"
+  },
+  {
+    "revision": "a6671c671646f084259d",
+    "url": "/solid-vue-panes/css/chunk-588ee8c9.a114f823.css"
+  },
+  {
+    "revision": "5fb9ee74cdd4d51ed6b6",
+    "url": "/solid-vue-panes/css/chunk-ad9d42d0.736d1035.css"
   },
   {
     "revision": "e8433aa7fd0728315954",
@@ -28,8 +36,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-vendors.e33783dd.css"
   },
   {
-    "revision": "aeeb373997e4564b6d38",
-    "url": "/solid-vue-panes/css/communication.3eeccf93.css"
+    "revision": "ea0acfe5e4640996669b",
+    "url": "/solid-vue-panes/css/communication.69c1e146.css"
   },
   {
     "revision": "d3ab52769ddfd83c21fd",
@@ -48,8 +56,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/friends_follower.f229789b.css"
   },
   {
-    "revision": "a05b2aff0362e286adc2",
-    "url": "/solid-vue-panes/css/parle.27879b81.css"
+    "revision": "d461290ee54e7b3583b9",
+    "url": "/solid-vue-panes/css/parle.678f78a6.css"
   },
   {
     "revision": "696257e01f45cffa1b1a",
@@ -68,7 +76,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "bd5026c61b60b9d6c7e5add521a3f1a6",
+    "revision": "fb253cf951fe0962dd50f225679614b6",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -76,16 +84,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/about.ca3af3fb.js"
   },
   {
-    "revision": "50e640c7a846de953992",
-    "url": "/solid-vue-panes/js/app.eedb1b28.js"
+    "revision": "085c808b19d7d21c6552",
+    "url": "/solid-vue-panes/js/app.7cee1c44.js"
   },
   {
     "revision": "4927e9b7b0800a14b876",
     "url": "/solid-vue-panes/js/browser.98956bcf.js"
   },
   {
-    "revision": "4d1d76ffe9460280ea2f",
-    "url": "/solid-vue-panes/js/chat.4cc70615.js"
+    "revision": "d3d4faac7c7fcce7785c",
+    "url": "/solid-vue-panes/js/chat.fa7a292d.js"
+  },
+  {
+    "revision": "2717a877136660f57cad",
+    "url": "/solid-vue-panes/js/chunk-2cf7e1c1.115908f9.js"
   },
   {
     "revision": "313e8708237ce2c309e4",
@@ -112,16 +124,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-2d0e62e8.26a005d2.js"
   },
   {
-    "revision": "b8e371974845a603d7c2",
-    "url": "/solid-vue-panes/js/chunk-2d0e68d5.ca23fd9a.js"
-  },
-  {
     "revision": "5a076c79fea341ad2217",
     "url": "/solid-vue-panes/js/chunk-2d2176ea.ff9255c0.js"
   },
   {
-    "revision": "4a5bdab7c8940fb9326c",
-    "url": "/solid-vue-panes/js/chunk-2d217aa6.1ae80771.js"
+    "revision": "28aa9192b1e81c2ee0c7",
+    "url": "/solid-vue-panes/js/chunk-2d217aa6.438eb3a3.js"
   },
   {
     "revision": "ca780240ed0451c97b53",
@@ -136,20 +144,28 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-2d225453.cbf03dfd.js"
   },
   {
-    "revision": "1cb793a8d64d83e5222b",
-    "url": "/solid-vue-panes/js/chunk-38e9209a.c20c134f.js"
+    "revision": "6e62f090035f23e46cab",
+    "url": "/solid-vue-panes/js/chunk-4b5bef7c.1e50a896.js"
   },
   {
-    "revision": "0c2bb16f11cb0f734582",
-    "url": "/solid-vue-panes/js/chunk-3eafbc51.df26f1ec.js"
+    "revision": "b485557840338403b474",
+    "url": "/solid-vue-panes/js/chunk-4d16cdbe.4a199a1f.js"
   },
   {
-    "revision": "28810029a21bc5f6878f",
-    "url": "/solid-vue-panes/js/chunk-434f4ede.62f6bd5a.js"
+    "revision": "ce648eb666ca4ee37c5e",
+    "url": "/solid-vue-panes/js/chunk-52607c4c.38c7099e.js"
+  },
+  {
+    "revision": "a6671c671646f084259d",
+    "url": "/solid-vue-panes/js/chunk-588ee8c9.007509b7.js"
   },
   {
     "revision": "28d9da66bb1ab9277e2f",
     "url": "/solid-vue-panes/js/chunk-66f62c28.d310bc4b.js"
+  },
+  {
+    "revision": "5fb9ee74cdd4d51ed6b6",
+    "url": "/solid-vue-panes/js/chunk-ad9d42d0.1d5eeeef.js"
   },
   {
     "revision": "e8433aa7fd0728315954",
@@ -160,8 +176,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-vendors.63d6ad48.js"
   },
   {
-    "revision": "aeeb373997e4564b6d38",
-    "url": "/solid-vue-panes/js/communication.914b2089.js"
+    "revision": "ea0acfe5e4640996669b",
+    "url": "/solid-vue-panes/js/communication.859f878b.js"
   },
   {
     "revision": "d3ab52769ddfd83c21fd",
@@ -188,8 +204,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/general.4c33b224.js"
   },
   {
-    "revision": "5f1bfa4959651bd7a8b8",
-    "url": "/solid-vue-panes/js/groups.89bc697b.js"
+    "revision": "25bf065e749bcbf3da57",
+    "url": "/solid-vue-panes/js/groups.1b02993a.js"
   },
   {
     "revision": "f88af4ed461fa40c94de",
@@ -208,8 +224,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/offers.68181257.js"
   },
   {
-    "revision": "a05b2aff0362e286adc2",
-    "url": "/solid-vue-panes/js/parle.7e2ce42b.js"
+    "revision": "d461290ee54e7b3583b9",
+    "url": "/solid-vue-panes/js/parle.3ce70e03.js"
   },
   {
     "revision": "696257e01f45cffa1b1a",
