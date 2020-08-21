@@ -1,7 +1,7 @@
 <template>
-  <div class="solid-hat-list">
+  <div class="solid-chat-list">
 
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300">
+    <div class="container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300">
       <b-list-group flush>
         <b-list-group-item v-for="m in data" :key="m.id">
           <div class="item">

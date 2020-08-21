@@ -4,34 +4,40 @@
     <GroupCreate v-on:created="initGroups" />
 
     <!--    <b-button variant="info" @click="initGroups">Reload groups</b-button>-->
+    <div>
+      <b-card-group columns>
 
-    <b-list-group flush>
-      <b-list-group-item v-for="f in folder.files" :key="f.url"> <!-- sorted(folder.files) -->
-        <div class="item">
-          <div class="avatar"></div>
-          <div class="name text-info">
-            {{f.name}}
-          </div>
-          <!--<div class="maker text-info">
-          {{m.maker.split('/').slice(2,3)[0]}}
-        </div>-->
-        <div class="content">
-          {{f.url}}
-          <GroupMembers :url="f.url" />
-        </div>
-        <div class="created">
-          {{f.modified}}
-        </div>
-        <!--  <div class="row">
-        {{m.id.split("#")[1]}}
-      </div>-->
+
+        <b-card v-for="f in folder.files" :key="f.url" v-bind:header="f.name">
+          <blockquote class="blockquote mb-0">
+            <p>
+              {{f.url}}
+              <GroupMembers :url="f.url" />
+
+            </p>
+            <footer class="blockquote-footer">
+              <div class="created">
+                {{f.modified}}
+              </div>
+              Someone famous in <cite title="Source Title">Source Title</cite>
+            </footer>
+          </blockquote>
+        </b-card>
+
+
+
+      </b-card-group>
     </div>
-  </b-list-group-item>
-</b-list-group>
 
 
 
-</div>
+
+
+
+
+
+
+  </div>
 </template>
 
 <script>
