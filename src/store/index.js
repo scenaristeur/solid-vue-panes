@@ -4,6 +4,7 @@ import solid from './modules/solid'
 import parle from './modules/parle'
 import chat from './modules/chat'
 import websocket from './modules/websocket'
+import crud from './modules/crud'
 
 Vue.use(Vuex)
 
@@ -14,5 +15,5 @@ export default new Vuex.Store({
   },
   actions: {
   },
-  modules: { solid,  websocket, parle, chat }
+  modules: { solid,  websocket, parle, chat, crud }
 })

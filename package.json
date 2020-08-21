@@ -22,7 +22,7 @@
     "save": "^2.4.0",
     "solid-auth-client": "^2.5.0",
     "tripledoc": "^4.3.4",
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-beautiful-chat": "^2.5.0",
     "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.4.3",
@@ -36,11 +36,11 @@
     "@vue/cli-plugin-unit-mocha": "~4.4.0",
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/test-utils": "^1.0.4",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   }
 }

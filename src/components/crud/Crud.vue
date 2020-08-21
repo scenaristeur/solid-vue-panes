@@ -1,67 +1,77 @@
 <template>
   <div class="crud container">
-    <h5>FoFri ! The following friends tool...</h5>
-    Current :  {{ webId }}, {{ friends.length }} friends<br>
+    shapeUrl : {{ shape_url }}
+    <LoadShape />
 
-    <router-link :to="{ name: 'FoFri'}">Me</router-link><br>
-    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link>
-  -->   <b-button disabled>add Spoggy to your friends</b-button><br>
-  <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solid.community/profile/card#me' }}">spoggy-test6</router-link><br>
-  <hr>
-
-
-  <!-- avatar & badge https://bootstrap-vue.org/docs/components/avatar-->
-  <b-list-group>
-    <b-list-group-item v-for="f in friends" :key="f" v-bind:to="{ name: 'FoFri', params: { webId: f }}" class="d-flex align-items-center">
-      <b-avatar class="mr-3"></b-avatar>
-      <b-avatar button  src="https://placekitten.com/300/300" badge badge-variant="danger" class="mr-3"></b-avatar>
-      <span class="mr-auto">{{ f }}</span>
-      <b-badge>12</b-badge>
-      <PeopleItem :webId="f" />
-    </b-list-group-item>
-  </b-list-group>
-
-  <!--  <div v-for="f in friends" :key="f"  style="font-size: 2rem;">
-  <router-link v-bind:to="{ name: 'FoFri', params: { webId: f }}">
-  <b-avatar rounded="lg"></b-avatar>  {{ f }}
-</router-link>
-<br>
-</div > -->
-
-
-</div>
+  </div>
 </template>
 
 <script>
-import profileMixin from '@/mixins/profileMixin'
+//import profileMixin from '@/mixins/profileMixin'
 
 export default {
   name: 'Crud',
-  mixins: [profileMixin],
+  //  mixins: [profileMixin],
   components: {
-    'PeopleItem': () => import('@/components/profile/PeopleItem'),
+    'LoadShape': () => import('@/components/crud/LoadShape'),
   },
   data: function () {
     return {
       webId: {},
-      friends: [],
+      shape_url: "",
     }
   },
   created() {
-    this.webId = this.$route.params.webId || this.$store.state.solid.webId
-    this.updateFriends()
+    this.shape_url = this.$route.query.shape_url
+    /*this.webId = this.$route.params.webId || this.$store.state.solid.webId
+    this.updateFriends()*/
   },
   watch: {
     '$route' (to) {
+      console.log(to)
       //  '$route' (to, from) {
-      this.webId = to.params.webId || this.$store.state.solid.webId
-      this.updateFriends()
+      //  this.webId = to.params.webId || this.$store.state.solid.webId
+      //  this.updateFriends()
     }
   },
   methods:{
-    async updateFriends(){
-      this.friends = await this.getFriends(this.webId)
-    }
-  }
+    /*async updateFriends(){
+    this.friends = await this.getFriends(this.webId)
+  }*/
+}
 }
 </script>
+
+<style>
+.crud {
+  text-align: center;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: #2c3e50;
+
+  /* palette */
+  --light-pink: hsla(0, 100%, 84%, 1);
+  --deep-champagne: hsla(33, 100%, 82%, 1);
+  --lemon-yellow-crayola: hsla(62, 100%, 86%, 1);
+  --tea-green: hsla(110, 100%, 87%, 1);
+  --celeste: hsla(185, 100%, 80%, 1);
+  --baby-blue-eyes: hsla(217, 100%, 81%, 1);
+  --maximum-blue-purple: hsla(249, 100%, 85%, 1);
+  --mauve: hsla(300, 100%, 89%, 1);
+  --baby-powder: hsla(60, 100%, 99%, 1);
+  
+}
+.brute {
+  background-color: var(--mauve);
+  border:1px dotted black;
+  font-size: smaller;
+}
+.brute-hide {
+  display: none;
+}
+.brute:before {
+  content: "♥ debug: ";
+}
+</style>
