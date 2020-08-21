@@ -1,15 +1,16 @@
 <template>
   <div id="app">
     <NavBar />
-          <b-progress v-if=" progressValue < progressMax" :value="progressValue" :max="progressMax" show-progress animated></b-progress>
-  <!--  <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
-    <transition name="fade">
+    <b-progress v-if=" progressValue < progressMax" :value="progressValue" :max="progressMax" show-progress animated></b-progress>
+    <!--  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </div>-->
+  <transition name="fade">
     <router-view/>
   </transition>
-  </div>
+  0.1.22
+</div>
 </template>
 
 <script>

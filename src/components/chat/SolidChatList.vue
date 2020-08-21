@@ -390,7 +390,7 @@ watch: {
   top: 8px;
   width: 29px;
   height: 29px;
-  background-image: url(no-avatar.png);
+  background-image: url(../../assets/no-avatar.png);
   background-size: contain;
   opacity: .3;
 }

@@ -3,12 +3,12 @@
 
     Inbox_urls : {{ inbox_urls}} <br>
     inbox_acl : {{ inbox_acl }}<br>
-
+    <InboxSend />
 
 
     <b-list-group>
       <b-list-group-item v-for="m in inbox.files" :key="m.name" class="d-flex align-items-center">
-<!--
+        <!--
         {{ m.name }}-->
 
         <MessageLine :message="m"/>
@@ -23,7 +23,7 @@
     Subfolders ? {{ inbox.folders }} <br>
 
 
-  <!--  inbox: {{ inbox }}-->
+    <!--  inbox: {{ inbox }}-->
 
     <!--  <div v-for="f in friends" :key="f"  style="font-size: 2rem;">
     <router-link v-bind:to="{ name: 'FoFri', params: { webId: f }}">
@@ -50,7 +50,9 @@ export default {
   name: 'Inbox',
   mixins: [profileMixin],
   components: {
-      'MessageLine': () => import('@/components/inbox/MessageLine'),
+    'MessageLine': () => import('@/components/inbox/MessageLine'),
+    'InboxSend': () => import('@/components/inbox/InboxSend'),
+
   },
   data: function () {
     return {

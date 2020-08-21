@@ -1,25 +1,51 @@
 <template>
   <div class="message-line container">
-    <div class="d-flex align-items-center">
-      <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
+    <div class="item ">
+
+      <div class="avatar"></div>
+      <!--    <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
       <b-avatar button v-else :src="photo" badge badge-variant="danger" class="mr-3"></b-avatar>
-      <h6 class="mr-auto">{{ sender }}</h6>
-
-      <span> {{ text }}</span>
-
-      <b-badge>{{ dateSent }}</b-badge><br>
-      <!--  publicTypeIndex<b-badge>{{ friends.length }}</b-badge><br>-->
+    -->
+    <div class="maker text-info">
+      {{sender}}
+      <b-button size="sm" variant="success" @click.stop="init_reply()">
+        <b-icon-reply  variant="outline-success"></b-icon-reply>
+      </b-button>
     </div>
-    <div class="row">
-      <!--  <div v-if="profile.locality" class="col-sm-4"><small>locality:</small> {{profile.locality}}</div>
-      <div v-if="profile.organization" class="col-sm-4"><small>organization:</small> {{profile.organization}}</div>-->
-      <div><small>{{message.url}}</small></div>
+    <div class="created">
+      {{dateSent}}
+      <b-button size="sm" variant="outline-danger" @click.stop="init_trash()">
+        <b-icon-trash  variant="danger"></b-icon-trash>
+      </b-button>
+    </div>
+    <!--  <div><small>{{message.url}}</small></div>-->
+    <div class="content">
 
-
-      <!--  <Instancesmin :webId="webId"/> -->
+      <b>{{label}}</b><br>
+      {{ text }}
     </div>
 
+
+
+
+
+
+    <!--  <b-badge>{{ dateSent }}</b-badge><br>-->
+    <!--  publicTypeIndex<b-badge>{{ friends.length }}</b-badge><br>-->
   </div>
+  <div class="row">
+
+    <!--  <div v-if="profile.locality" class="col-sm-4"><small>locality:</small> {{profile.locality}}</div>
+    <div v-if="profile.organization" class="col-sm-4"><small>organization:</small> {{profile.organization}}</div>-->
+
+
+
+    <!--  <Instancesmin :webId="webId"/> -->
+  </div>
+
+
+
+</div>
 </template>
 
 <script>
@@ -40,7 +66,8 @@ data: function () {
     label: "...",
     photo: undefined,
     text: "...",
-    dateSent: ""
+    dateSent: "",
+    replyTitle: ""
     //  webId: {},
     //  friends: [],
     //  profile:{name: "loading profile..."},
@@ -59,21 +86,83 @@ watch: {
 }*/
 },
 methods:{
+  async init_trash(){
+    console.log("trash",this.message)
+  },
+  async init_reply(){
+    console.log("reply",this.message)
+    this.$bvModal.show("reply")
+    this.$store.commit('inbox/setRecipient', this.sender)
+    this.$store.commit('inbox/setLabel', "Ref: "+this.label)
+    this.$store.commit('inbox/setOldContent', this.dateSent+" : "+this.text)
+  },
   async updateLine(){
     const messageDoc = await fetchDocument(this.message.url);
-    console.log(messageDoc)
     let  subject = messageDoc.getSubject(this.message.url);
-    this.sender = await  subject.getRef(schema.sender)
+    let sender = await  subject.getRef(schema.sender)
+    this.sender = `${sender}`.split('/').slice(2,3)[0]
     this.label = await  subject.getString(rdfs.label)
-    this.dateSent = await subject.getDateTime(schema.dateSent)
+    this.dateSent = await subject.getString(schema.dateSent)
     this.text = await subject.getString(schema.text)
-    console.log(this.sender, this.label, this.dateSent, this.text)
-    /*  this.profile = await this.getProfile(this.webId)
-    //  console.log(this.profile)
-    this.friends = await this.getFriends(this.webId)
-    this.indexes = await this.getIndexes(this.webId)
-    console.log("indexes",this.indexes)*/
   }
 }
 }
 </script>
+<style>
+.Asolid-chat-list{
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-width: 320px;
+  background: #fff;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-size: 14px;
+  line-height: 1.4285em;
+  color: rgba(0,0,0,.87);
+}
+.Bitem{
+  position: absolute;
+  /*  left: 0px;
+  top: 0px; */
+  margin-left: 0px;
+  margin-top: 0px;
+  /*  width: 722px; */
+  /*  height: 574px; */
+  background-color: rgb(255, 255, 255);
+}
+.avatar{
+  position: absolute;
+  left: 0px;
+  top: 8px;
+  width: 29px;
+  height: 29px;
+  background-image: url(../../assets/no-avatar.png);
+  background-size: contain;
+  opacity: .3;
+}
+.maker{
+  position: absolute;
+  left: 35px;
+  top: 4px;
+  width: auto;
+  height: auto;
+  text-align: left;
+}
+.content{
+  position: relative;
+  padding-left: 36px;
+  padding-top: 23px;
+  padding-bottom: 5px;
+  width: 90%;
+  height: auto;
+  text-align: left;
+}
+.created{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #C5C5C5;
+  font-size: 13px;
+  font-weight: normal;
+}
+</style>
