@@ -1,5 +1,5 @@
 import { fetchDocument } from 'tripledoc';
-import { vcard, foaf, dct, rdfs } from 'rdf-namespaces'
+import { vcard, foaf, dct, rdfs, ldp } from 'rdf-namespaces'
 const solid= window.solid
 
 export default {
@@ -32,6 +32,18 @@ export default {
         this.makeToast(e.message, webId, 'warning')
       }
       return profile
+    },
+    getInbox: async function(webId){
+      let inbox_urls = []
+      try{
+        let profileDoc = await fetchDocument(webId);
+        const p = profileDoc.getSubject(webId)
+        inbox_urls = await  p.getAllRefs(ldp.inbox )
+      }catch(e){
+        //alert(webId+" : "+e)
+        this.makeToast(e.message, webId, 'warning')
+      }
+      return inbox_urls
     },
     getFriends: async function(webId){
       let friends = []

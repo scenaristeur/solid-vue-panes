@@ -2,20 +2,20 @@
   <div class="communication">
 
     <Parle root="https://parle.solid.community/public/" />
-    <Inbox />
+    <InboxView />
     <Chat />
   </div>
 </template>
 
 <script>
-import Inbox from '@/views/Inbox.vue'
+import InboxView from '@/views/InboxView.vue'
 import Chat from '@/views/Chat.vue'
 import Parle from '@/views/Parle.vue'
 
 export default {
   name: 'Communication',
   components: {
-    Inbox,
+    InboxView,
     Chat,
     Parle
 
