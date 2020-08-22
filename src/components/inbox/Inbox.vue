@@ -1,28 +1,32 @@
 <template>
   <div class="inbox container">
 
-    Inbox_urls : {{ inbox_urls}} <br>
-    inbox_acl : {{ inbox_acl }}<br>
-    <InboxSend />
+    <div v-if="webId != null">
+      Inbox_urls : {{ inbox_urls}} <br>
+      inbox_acl : {{ inbox_acl }}<br>
+      <InboxSend />
 
 
-    <b-list-group>
-      <b-list-group-item v-for="m in inbox.files" :key="m.name" class="d-flex align-items-center">
-        <!--
-        {{ m.name }}-->
+      <b-list-group>
+        <b-list-group-item v-for="m in inbox.files" :key="m.name" class="d-flex align-items-center">
+          <!--
+          {{ m.name }}-->
 
-        <MessageLine :message="m"/>
+          <MessageLine :message="m"/>
 
-        <!--  <b-avatar class="mr-3"></b-avatar>
-        <b-avatar button  src="https://placekitten.com/300/300" badge badge-variant="danger" class="mr-3"></b-avatar>
-        <span class="mr-auto">{{ f }}</span>-->
+          <!--  <b-avatar class="mr-3"></b-avatar>
+          <b-avatar button  src="https://placekitten.com/300/300" badge badge-variant="danger" class="mr-3"></b-avatar>
+          <span class="mr-auto">{{ f }}</span>-->
 
-      </b-list-group-item>
-    </b-list-group>
+        </b-list-group-item>
+      </b-list-group>
 
-    Subfolders ? {{ inbox.folders }} <br>
+      Subfolders ? {{ inbox.folders }} <br>
 
-
+    </div>
+    <div v-else>
+      <SolidLogin />
+    </div>
     <!--  inbox: {{ inbox }}-->
 
     <!--  <div v-for="f in friends" :key="f"  style="font-size: 2rem;">
@@ -38,9 +42,6 @@
 
 <script>
 import auth from 'solid-auth-client';
-//import { fetchDocument } from 'tripledoc';
-//import { vcard, foaf /*sioc, dct, foaf*/ } from 'rdf-namespaces'
-
 const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
@@ -52,6 +53,7 @@ export default {
   components: {
     'MessageLine': () => import('@/components/inbox/MessageLine'),
     'InboxSend': () => import('@/components/inbox/InboxSend'),
+    'SolidLogin': () => import('@/components/solid/SolidLogin'),
 
   },
   data: function () {
@@ -59,7 +61,8 @@ export default {
       inbox_urls: "",
       friends: [],
       inbox_acl: {},
-      inbox: {}
+      inbox: {},
+      webId: null
     }
   },
   async mounted() {

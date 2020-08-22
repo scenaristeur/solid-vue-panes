@@ -108,7 +108,6 @@ export default {
 
         await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
 
-
         const chatDoc = await fetchDocument(this.fileUrl);
         let subj =   chatDoc.addSubject({identifier:messageId})
         subj.addLiteral(sioc.content, this.message)

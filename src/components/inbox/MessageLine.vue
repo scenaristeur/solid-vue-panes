@@ -2,30 +2,36 @@
   <div class="message-line container">
     <div class="item ">
 
-      <div class="avatar"></div>
-      <!--    <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
-      <b-avatar button v-else :src="photo" badge badge-variant="danger" class="mr-3"></b-avatar>
-    -->
-    <div class="maker text-info">
-      {{sender}}
+      <div  v-if="sender != null">
+        <div class="avatar"></div>
+        <!--    <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
+        <b-avatar button v-else :src="photo" badge badge-variant="danger" class="mr-3"></b-avatar>
+      -->
+      <div class="maker text-info">
+        {{sender.split('/').slice(2,3)[0]}}
+
+      </div>
+
       <b-button size="sm" variant="success" @click.stop="init_reply()">
-        <b-icon-reply  variant="outline-success"></b-icon-reply>
+        <b-icon-reply  @click.stop="init_reply()" variant="outline-success"></b-icon-reply>
       </b-button>
-    </div>
-    <div class="created">
-      {{dateSent}}
-      <b-button size="sm" variant="outline-danger" @click.stop="init_trash()">
-        <b-icon-trash  variant="danger"></b-icon-trash>
-      </b-button>
-    </div>
-    <!--  <div><small>{{message.url}}</small></div>-->
-    <div class="content">
+      <div class="created mt-2">
+        {{dateSent}}
+        <b-button size="sm" variant="outline-danger" @click.stop="init_trash()">
+          <b-icon-trash  variant="danger"></b-icon-trash>
+        </b-button>
+      </div>
+      <!--  <div><small>{{message.url}}</small></div>-->
+      <div class="content mb-2 mr-2">
 
-      <b>{{label}}</b><br>
-      {{ text }}
+        <b>{{label}}</b><br>
+        {{ text }}
+      </div>
+
     </div>
-
-
+    <div v-else>
+      <a v-bind:href="message.url" target="_blank">{{message.name}}</a>
+    </div>
 
 
 
@@ -99,8 +105,7 @@ methods:{
   async updateLine(){
     const messageDoc = await fetchDocument(this.message.url);
     let  subject = messageDoc.getSubject(this.message.url);
-    let sender = await  subject.getRef(schema.sender)
-    this.sender = `${sender}`.split('/').slice(2,3)[0]
+    this.sender = await  subject.getRef(schema.sender)
     this.label = await  subject.getString(rdfs.label)
     this.dateSent = await subject.getString(schema.dateSent)
     this.text = await subject.getString(schema.text)
