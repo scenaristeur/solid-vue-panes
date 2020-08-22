@@ -62,6 +62,13 @@ console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
 import profileMixin from '@/mixins/profileMixin'
 
+//read public access & agents access
+import {
+  getSolidDatasetWithAcl,
+  getAgentAccessAll,
+  getPublicAccess
+} from "@inrupt/solid-client";
+
 export default {
   name: 'Inbox',
   mixins: [profileMixin],
@@ -85,6 +92,14 @@ export default {
     this.webId  = this.$store.state.solid.webId
     this.inbox_urls = await this.updateInboxUrl()
     this.current_inbox_url = this.inbox_urls[0]
+    console.log(this.current_inbox_url)
+    const myDatasetWithAcl = await getSolidDatasetWithAcl(this.current_inbox_url);
+    console.log(myDatasetWithAcl)
+    const accessByAgent = getAgentAccessAll(myDatasetWithAcl);
+
+const publicAccess = getPublicAccess(myDatasetWithAcl);
+  console.log("accessByAgent",accessByAgent, "publicAccess",publicAccess)
+
     console.log(this.current_inbox_url)
     await this.getMessages()
   },

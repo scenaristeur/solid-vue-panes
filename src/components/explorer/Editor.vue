@@ -128,6 +128,7 @@ export default {
       console.log('File',this.type, this.path, this.name)
       let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
       this.$store.dispatch('solid/writeFile', file)
+      this.$store.dispatch('solid/updateFolder', this.path)
     }
     /*    selected(item){
     console.log(item)

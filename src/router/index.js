@@ -10,18 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    beforeEnter: (to, from, next) => {
-      if(sessionStorage.getItem('redirect') !== null){
-        console.log(to,from,next)
-        const redirect = sessionStorage.redirect
-        console.log(redirect)
-        delete sessionStorage.redirect
-        next(redirect)
-      }else{
-        next()
-      }
-    },
+    component: Home
   },
   {
     path: '/pod/:path?',

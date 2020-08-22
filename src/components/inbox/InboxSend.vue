@@ -7,52 +7,52 @@
           <b-button title="new" class="new" size="sm" variant="success" @click.stop="init_new()">
             <b-icon-pencil-square  @click.stop="init_new()" variant="outline-success"></b-icon-pencil-square>
           </b-button>
-              <!--    <b-button title="refresh">
-            <b-icon-mailbox  @click.stop="refresh()" variant="outline-success"></b-icon-mailbox>
-          </b-button>
-  <b-button>Edit</b-button>
-          <b-button>Undo</b-button>-->
-        </b-button-group>
-      </b-button-toolbar>
-    </div>
+          <!--    <b-button title="refresh">
+          <b-icon-mailbox  @click.stop="refresh()" variant="outline-success"></b-icon-mailbox>
+        </b-button>
+        <b-button>Edit</b-button>
+        <b-button>Undo</b-button>-->
+      </b-button-group>
+    </b-button-toolbar>
+  </div>
 
-    Modal, {{ recipient }}
-    <b-modal id="reply"
-    :title="title"
-    @ok="send">
-
-
-    <div class="container flush">
-
-      <b-form-group class="row">
-        <FriendsSelection  v-on:selected="onSelected"/>
-        <label for="destinataire">WebId :</label>
-        <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
-        <!--  <b-button @click="add">Add</b-button> -->
-      </b-form-group>
-    </div>
+  Modal, {{ recipient }}
+  <b-modal id="reply"
+  :title="title"
+  @ok="send">
 
 
+  <div class="container flush">
 
-    <b-list-group>
+    <b-form-group class="row">
+      <FriendsSelection  v-on:selected="onSelected"/>
+      <label for="destinataire">WebId :</label>
+      <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
+      <!--  <b-button @click="add">Add</b-button> -->
+    </b-form-group>
+  </div>
 
-      <b-input-group prepend="Label">
-        <b-form-input v-model="label"></b-form-input>
-      </b-input-group>
 
-      <b-form-textarea
-      id="textarea-rows"
-      placeholder=""
-      v-model="content"
-      rows="8"
-      ></b-form-textarea>
 
-      <!--<b-list-group-item>Move</b-list-group-item>-->
-      <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
-      <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-      <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
-    </b-list-group>
-  </b-modal>
+  <b-list-group>
+
+    <b-input-group prepend="Label">
+      <b-form-input v-model="label"></b-form-input>
+    </b-input-group>
+
+    <b-form-textarea
+    id="textarea-rows"
+    placeholder=""
+    v-model="content"
+    rows="8"
+    ></b-form-textarea>
+
+    <!--<b-list-group-item>Move</b-list-group-item>-->
+    <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
+    <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
+    <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
+  </b-list-group>
+</b-modal>
 
 
 
@@ -62,6 +62,9 @@
 <script>
 
 import profileMixin from '@/mixins/profileMixin'
+//import { saveFileInContainer, getSourceUrl } from "@inrupt/solid-client";
+//import { overwriteFile } from "@inrupt/solid-client";
+
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
@@ -96,15 +99,16 @@ export default {
       console.log(this.selected)
     },
     async send() {
-      console.log(this.webId,this.r_inbox[0], this.label, this.content)
+      //  console.log(this.webId,this.r_inbox[0], this.label, this.content)
 
+      console.log("selected",this.selected)
       if (this.content.length > 0){
         let message = {}
-        message.recipient = this.r_inbox[0]
+        //
         message.date = new Date(Date.now())
         message.id = message.date.getTime()
         message.sender = this.webId
-        message.url = message.recipient+message.id+".ttl"
+
         message.content = this.content
         message.label = this.label
 
@@ -123,66 +127,89 @@ export default {
         schem:abstract "this message can be opened with inbox of Popock https://scenaristeur.github.io/solid-vue-panes/".
         `
         console.log(messageStr)
-
-        await fc.createFile( message.url, messageStr, "text/turtle")
-
         /*
-        const messageDoc = await createDocument(message.url);
-        let subj = messageDoc.addSubject()
-        subj.addLiteral(schema.text, message.content)
-        subj.addLiteral(rdfs.label, message.label)
-        subj.addLiteral(schema.dateSent, message.date.toISOString())
-        subj.addNodeRef(rdf.type, 'https://schema.org/Message')
-        subj.addNodeRef(schema.sender, message.sender)
+        if (this.r_inbox!= undefined && this.r_inbox.length > 0){
+        this.selected.push( this.r_inbox[0])
+      }*/
 
-        await messageDoc.save();*/
+      let getInbox = this.getInbox
+      this.selected.forEach(async function(webId) {
+        let inbox = await getInbox(webId)
+        message.url = inbox+message.id+".ttl"
+        console.log(message.url)
+         await fc.createFile( message.url, messageStr, "text/turtle")
 
-
-        //  await data[mess].schema$text.add(message.content);
-        //  await data[mess].rdfs$label.add(message.title)
-        //  await data[mess].schema$dateSent.add(message.date.toISOString())
-        //await data[mess].rdf$type.add(namedNode('https://schema.org/Message'))
-        //  await data[mess].schema$sender.add(namedNode(this.webId))
-
-        /*    var notif = message.recipient+"log.ttl#"+message.id
-        await data[notif].schema$message.add(namedNode(mess))*/
-      }else{
-        alert("content must not be empty")
-      }
-
+    /*    const response = await overwriteFile(
+    message.url,
+    new Blob([messageStr], { type: "text/turtle" })
+    // Or in Node:
+    // Buffer.from("This is a plain piece of text", "utf8"), { type: "plain/text" })
+  );
+  if (response.ok) {
+    console.log("File saved!");
+  }*/
+      })
 
 
 
+
+      /*
+      const messageDoc = await createDocument(message.url);
+      let subj = messageDoc.addSubject()
+      subj.addLiteral(schema.text, message.content)
+      subj.addLiteral(rdfs.label, message.label)
+      subj.addLiteral(schema.dateSent, message.date.toISOString())
+      subj.addNodeRef(rdf.type, 'https://schema.org/Message')
+      subj.addNodeRef(schema.sender, message.sender)
+
+      await messageDoc.save();*/
+
+
+      //  await data[mess].schema$text.add(message.content);
+      //  await data[mess].rdfs$label.add(message.title)
+      //  await data[mess].schema$dateSent.add(message.date.toISOString())
+      //await data[mess].rdf$type.add(namedNode('https://schema.org/Message'))
+      //  await data[mess].schema$sender.add(namedNode(this.webId))
+
+      /*    var notif = message.recipient+"log.ttl#"+message.id
+      await data[notif].schema$message.add(namedNode(mess))*/
+    }else{
+      alert("content must not be empty")
     }
-  },
-  watch: {
-    async recipient (r) {
-      this.title = "Reply to "+r.split('/').slice(2,3)[0]
-      this.r_inbox = await this.getInbox(r)
-    },
-    oldContent (oc){
-      console.log(oc)
-      this.content = ""
-      /*  this.content = `
 
-      -------------------------------------------------------------
-      ${oc}`*/
-    }
 
-  },
-  computed:{
-    webId(){
-      return this.$store.state.solid.webId
-    },
-    recipient(){
-      return this.$store.state.inbox.recipient
-    },
-    label(){
-      return this.$store.state.inbox.label
-    },
-    oldContent(){
-      return this.$store.state.inbox.oldContent
-    }
+
+
   }
+},
+watch: {
+  async recipient (r) {
+    this.title = "Reply to "+r.split('/').slice(2,3)[0]
+    this.r_inbox = await this.getInbox(r)
+  },
+  oldContent (oc){
+    console.log(oc)
+    this.content = ""
+    /*  this.content = `
+
+    -------------------------------------------------------------
+    ${oc}`*/
+  }
+
+},
+computed:{
+  webId(){
+    return this.$store.state.solid.webId
+  },
+  recipient(){
+    return this.$store.state.inbox.recipient
+  },
+  label(){
+    return this.$store.state.inbox.label
+  },
+  oldContent(){
+    return this.$store.state.inbox.oldContent
+  }
+}
 }
 </script>

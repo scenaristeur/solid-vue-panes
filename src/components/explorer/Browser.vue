@@ -5,12 +5,23 @@
         <b-list-group-item
         v-if="folder.parent != 'https://'"
         class="item"
-        @click="goUp()">
+        @click="updateFolder(folder.parent)">
         <b-icon-arrow-up></b-icon-arrow-up>   {{ folder.url }} <b-icon-upload></b-icon-upload>
       </b-list-group-item>
       <b-list-group-item v-else class="item">
         {{ storage }} <b-icon-upload></b-icon-upload>
       </b-list-group-item>
+
+      <div>
+        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+          <b-button-group class="mx-1">
+            <b-button @click="init_folder">New folder</b-button>
+            <!--  <b-button>Edit</b-button>
+            <b-button>Undo</b-button>-->
+          </b-button-group>
+        </b-button-toolbar>
+      </div>
+
 
       <b-list-group-item
       class="item list-group-item d-flex justify-content-between"
@@ -92,10 +103,22 @@
   </b-input-group>
 </b-modal>
 
+<b-modal id="folder-modal" title="New Folder" @ok="createFolder">
+  <b-input-group size="sm" prepend="New Folder">
+    <b-form-input v-model="new_folder"></b-form-input>
+  </b-input-group>
+</b-modal>
+
 </div>
 </template>
 
 <script>
+import { deleteFile } from "@inrupt/solid-client";
+import auth from 'solid-auth-client';
+const SolidFileClient = window.SolidFileClient
+console.log("SFC", SolidFileClient)
+const fc = new SolidFileClient(auth)
+console.log("SFC",fc)
 
 export default {
   name: 'Browser',
@@ -108,7 +131,8 @@ export default {
       currentItem: {},
       newName: "",
       //  deleteMessage: "",
-      new_location:""
+      new_location:"",
+      new_folder:"",
       //  storage: "",
       //folder: {}
     }
@@ -116,6 +140,26 @@ export default {
   methods: {
     selected(item){
       item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.$store.dispatch('solid/updateFile', item)
+    },
+    init_folder(){
+
+      this.$bvModal.show("folder-modal")
+    },
+    async createFolder(){
+      console.log(this.new_folder)
+      if (this.new_folder.length > 0){
+        //  this.new_folder =  ! this.new_folder.endsWith("/") ? this.new_folder+"/" : this.new_folder
+        let f = this.folder.url+this.new_folder
+        console.log(f)
+        if( !(await fc.itemExists(f)) ) {
+          await fc.createFolder(f) // only create if it doesn't already exist
+        }else{
+          alert (f+" already exists")
+        }
+        this.updateFolder(this.folder.url)
+      }else{
+        alert("folder name can not be empty")
+      }
     },
     right(item){
       console.log("right",item)
@@ -135,14 +179,26 @@ export default {
       this.currentItem = item
       this.new_location = item.url
     },
-    move(){
+    async  move(){
       console.log("Move",this.currentItem.type, this.currentItem.url, "to", this.new_location)
+      this.currentItem.type == "folder" ? await fc.move( this.currentItem.url, this.new_location ) : await fc.move( this.currentItem.url, this.new_location )
+      this.updateFolder(this.folder.url)
+
     },
-    trash(){
+    async  trash(){
       console.log("Trash",this.currentItem.type,this.currentItem.url)
+      if (this.currentItem.type != "folder"){
+        await deleteFile(
+          this.currentItem.url
+        );
+        console.log("File deleted !");
+      }else{
+        await  fc.deleteFolder(this.currentItem.url)
+      }
+      this.updateFolder(this.folder.url)
     },
-    goUp(){
-      this.$store.dispatch('solid/updateFolder', this.folder.parent)
+    updateFolder(folder){
+      this.$store.dispatch('solid/updateFolder', folder)
     }
   },
   computed:{
