@@ -4,7 +4,8 @@
 const state = () => ({
   recipient : "",
   label : "",
-  oldContent: ""
+  oldContent: "",
+  toTrash: ""
 })
 
 // getters
@@ -30,6 +31,9 @@ const mutations = {
   },
   setOldContent (state, oc) {
     state.oldContent = oc
+  },
+  setToTrash (state, tt) {
+    state.toTrash = tt
   },
 
 }

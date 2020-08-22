@@ -4,6 +4,9 @@
 
       <div  v-if="sender != null">
         <div class="avatar"></div>
+        <b-button class="reply" size="sm" variant="success" @click.stop="init_reply()">
+          <b-icon-reply  @click.stop="init_reply()" variant="outline-success"></b-icon-reply>
+        </b-button>
         <!--    <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
         <b-avatar button v-else :src="photo" badge badge-variant="danger" class="mr-3"></b-avatar>
       -->
@@ -12,9 +15,7 @@
 
       </div>
 
-      <b-button size="sm" variant="success" @click.stop="init_reply()">
-        <b-icon-reply  @click.stop="init_reply()" variant="outline-success"></b-icon-reply>
-      </b-button>
+
       <div class="created mt-2">
         {{dateSent}}
         <b-button size="sm" variant="outline-danger" @click.stop="init_trash()">
@@ -48,7 +49,6 @@
 
     <!--  <Instancesmin :webId="webId"/> -->
   </div>
-
 
 
 </div>
@@ -94,6 +94,10 @@ watch: {
 methods:{
   async init_trash(){
     console.log("trash",this.message)
+    this.$bvModal.show("confirm-trash")
+    this.$store.commit('inbox/setToTrash', this.message.url)
+    this.$store.commit('inbox/setLabel', "Ref: "+this.label)
+
   },
   async init_reply(){
     console.log("reply",this.message)
@@ -144,6 +148,14 @@ methods:{
   background-image: url(../../assets/no-avatar.png);
   background-size: contain;
   opacity: .3;
+}
+.reply{
+  position: absolute;
+  left: 0px;
+  top: 38px;
+  width: 29px;
+  height: 29px;
+
 }
 .maker{
   position: absolute;

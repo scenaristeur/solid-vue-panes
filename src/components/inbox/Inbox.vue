@@ -7,8 +7,23 @@
       <InboxSend />
 
 
+      <div>
+        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+          <b-button-group class="mx-1">
+            <b-button title="refresh">
+              <b-icon-mailbox  @click.stop="getMessages()" variant="outline-success"></b-icon-mailbox>
+            </b-button>
+            <!--  <b-button>Edit</b-button>
+            <b-button>Undo</b-button>-->
+          </b-button-group>
+        </b-button-toolbar>
+      </div>
+
+
+
+
       <b-list-group>
-        <b-list-group-item v-for="m in inbox.files" :key="m.name" class="d-flex align-items-center">
+        <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name" class="d-flex align-items-center">
           <!--
           {{ m.name }}-->
 
@@ -35,7 +50,7 @@
   </router-link>
   <br>
 </div > -->
-
+<InboxDialogs />
 
 </div>
 </template>
@@ -53,6 +68,7 @@ export default {
   components: {
     'MessageLine': () => import('@/components/inbox/MessageLine'),
     'InboxSend': () => import('@/components/inbox/InboxSend'),
+    'InboxDialogs': () => import('@/components/inbox/InboxDialogs'),
     'SolidLogin': () => import('@/components/solid/SolidLogin'),
 
   },
@@ -61,7 +77,7 @@ export default {
       inbox_urls: "",
       friends: [],
       inbox_acl: {},
-      inbox: {},
+      inbox: {files:[]},
       webId: null
     }
   },
@@ -70,7 +86,7 @@ export default {
     this.inbox_urls = await this.updateInboxUrl()
     this.current_inbox_url = this.inbox_urls[0]
     console.log(this.current_inbox_url)
-    await this.getMessages(this.current_inbox_url)
+    await this.getMessages()
   },
   watch: {
     /*  '$route' (to) {
@@ -80,13 +96,14 @@ export default {
   }*/
 },
 methods:{
-  async getMessages(url){
-    this.inbox = await fc.readFolder(url)
+  async getMessages(){
+    this.inbox = await fc.readFolder(this.current_inbox_url)
 
   },
   async updateInboxUrl(){
     return await this.getInbox(this.webId)
-  }
+  },
+
 }
 }
 </script>
