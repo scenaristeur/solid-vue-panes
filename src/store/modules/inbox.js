@@ -2,10 +2,9 @@
 
 // initial state
 const state = () => ({
-  recipient : "",
-  label : "",
-  oldContent: "",
-  toTrash: ""
+  reply : {},
+  toTrash: {}
+
 })
 
 // getters
@@ -23,14 +22,8 @@ const actions = {
 // mutations
 const mutations = {
 
-  setRecipient (state, recipient) {
-    state.recipient = recipient
-  },
-  setLabel (state, label) {
-    state.label = label
-  },
-  setOldContent (state, oc) {
-    state.oldContent = oc
+  setReply (state, reply) {
+    state.reply = reply
   },
   setToTrash (state, tt) {
     state.toTrash = tt

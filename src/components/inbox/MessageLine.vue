@@ -5,7 +5,7 @@
       <div  v-if="sender != null">
         <div class="avatar"></div>
         <b-button class="reply" size="sm" variant="success" @click.stop="init_reply()">
-          <b-icon-reply  @click.stop="init_reply()" variant="outline-success"></b-icon-reply>
+          <b-icon-reply  disabled @click.stop="init_reply()" variant="outline-success"></b-icon-reply>
         </b-button>
         <!--    <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
         <b-avatar button v-else :src="photo" badge badge-variant="danger" class="mr-3"></b-avatar>
@@ -96,15 +96,19 @@ methods:{
     console.log("trash",this.message)
     this.$bvModal.show("confirm-trash")
     this.$store.commit('inbox/setToTrash', this.message.url)
-    this.$store.commit('inbox/setLabel', "Ref: "+this.label)
-
   },
   async init_reply(){
     console.log("reply",this.message)
-    this.$bvModal.show("reply")
-    this.$store.commit('inbox/setRecipient', this.sender)
-    this.$store.commit('inbox/setLabel', "Ref: "+this.label)
-    this.$store.commit('inbox/setOldContent', this.dateSent+" : "+this.text)
+  //  this.$bvModal.show("reply")
+  let reply = {}
+  reply.url = this.message.url
+  reply.sender = this.sender
+  reply.dateSend = this.dateSent
+  reply.text = this.text
+  reply.label = this.label
+    this.$store.commit('inbox/setReply', reply)
+  /*  this.$store.commit('inbox/setLabel', "Ref: "+this.label)
+    this.$store.commit('inbox/setOldContent', this.dateSent+" : "+this.text)*/
   },
   async updateLine(){
     const messageDoc = await fetchDocument(this.message.url);
