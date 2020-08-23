@@ -18,7 +18,7 @@
     </div>
     <b-card-footer>
       <ul>
-        <li v-for="instance in indexes.puti.instances" :key="instance.instance">
+        <li v-for="(instance, i) in indexes.puti.instances" :key=i>
           {{ instance.classe }} : {{instance.instance}}
         </li>
       </ul>
