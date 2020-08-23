@@ -91,6 +91,48 @@ export default {
       webId: null
     }
   },
+  async created(){
+    /* acl example
+
+    @prefix : <#>.
+    @prefix n0: <http://www.w3.org/ns/auth/acl#>.
+    @prefix inbox: <./>.
+    @prefix c: </profile/card#>.
+
+    :AppendDefault
+        a n0:Authorization;
+        n0:agentClass n0:AuthenticatedAgent;
+        n0:default inbox:;
+        n0:mode n0:Append.
+    :AppendRead
+        a n0:Authorization;
+        n0:accessTo inbox:;
+        n0:agentClass n0:AuthenticatedAgent;
+        n0:mode n0:Append, n0:Read.
+    :AppendReadDefault
+    a n0:Authorization; n0:default inbox:; n0:mode n0:Append, n0:Read.
+    :ControlReadWrite
+        a n0:Authorization;
+        n0:accessTo inbox:;
+        n0:agent c:me;
+        n0:mode n0:Control, n0:Read, n0:Write.
+    :ControlReadWriteDefault
+        a n0:Authorization;
+        n0:agent c:me;
+        n0:default inbox:;
+        n0:mode n0:Control, n0:Read, n0:Write.
+    :ReadWrite
+        a n0:Authorization;
+        n0:accessTo inbox:;
+        n0:mode n0:Read, n0:Write;
+        n0:origin <http://127.0.0.1:8080>, <https://scenaristeur.github.io>.
+    :ReadWriteDefault
+        a n0:Authorization;
+        n0:default inbox:;
+        n0:mode n0:Read, n0:Write;
+        n0:origin <http://127.0.0.1:8080>, <https://scenaristeur.github.io>.
+    */
+  },
   async mounted() {
     this.webId  = this.$store.state.solid.webId
     this.inbox_urls = await this.updateInboxUrl()
