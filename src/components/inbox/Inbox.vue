@@ -38,8 +38,8 @@
 
         </b-list-group-item>
       </b-list-group>
-
-      Subfolders ? {{ inbox.folders }} <br>
+<!--
+      Subfolders ? {{ inbox.folders }} <br>-->
 
     </div>
     <div v-else>

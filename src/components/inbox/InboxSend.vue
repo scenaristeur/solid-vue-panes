@@ -241,8 +241,9 @@ computed:{
   recipient(){
     return this.$store.state.inbox.recipient
   },
-  label(){
-    return this.$store.state.inbox.label
+  label: {
+       get: function() { return this.$store.state.inbox.label},
+       set: function() {}    
   },
   oldContent(){
     return this.$store.state.inbox.oldContent
