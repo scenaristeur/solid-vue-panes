@@ -1,17 +1,15 @@
 <template>
   <div class="hello">
 
-    <h1>PoPock</h1>
-    <h4>all your pods in the pocket</h4>
-
-
     <SolidLogin class="m-3" v-if="webId == null" />
 
-    <p>
-      <a href="https://scenaristeur.github.io/solid-vue-panes/?title=Popock&url=https://scenaristeur.github.io/solid-vue-panes/&text=My%20favorite%20Pod%20Manager">Bookmark Popock</a>
-    </p>
-
     <hr>
+    <ul>
+    <li> Add me ( https://spoggy.solid.community/profile/card#me ) to your friends and send me a mail to my <router-link to="/inbox">Inbox</router-link></li>
+    <li> or explore some different <router-link to="/parle">Chat</router-link> channels</li>
+  </ul>
+
+
 
     <div class="container fluid">
       <div>
@@ -19,11 +17,11 @@
           <b-card bg-variant="warning" text-variant="white" header="Communication" class="text-center">
             <b-card-text>
               <ul>
-                <li><router-link to="/chat">Solid Chat</router-link></li>
+                <li><router-link to="/chat">Chat</router-link></li>
 
-                <li> Add me ( https://spoggy.solid.community/profile/card#me ) to your friends and send me a mail to my <router-link to="/inbox">Inbox</router-link></li>
-                <li> Are you crazy enough for nested Chat ? take a look at <router-link to="/parle">Parle</router-link></li>
-                
+                <li><router-link to="/inbox">Inbox</router-link></li>
+                <li><router-link to="/parle">Parle</router-link></li>
+
                 <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
                 <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
                 <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
@@ -37,6 +35,7 @@
                 <li><router-link to="/storage">Storage</router-link> </li>
                 <li><router-link to="/browser">Browser</router-link></li>
                 <li><router-link to="/editor">Editor</router-link></li>
+                <li><router-link to="/bookmarks">Bookmarks</router-link></li>
               </ul>
             </b-card-text>
           </b-card>
@@ -45,7 +44,7 @@
             <b-card-text>
               <ul>
                 <li><router-link to="/general">Profile</router-link></li>
-                <li><router-link to="/fofri">FoFri</router-link> (following friends tool)</li>
+                <li><router-link to="/fofri">FoFri</router-link></li>
                 <!--  <li><router-link to="/indexes">Indexes</router-link></li>-->
                 <li><router-link to="/friends">Friends</router-link></li>
                 <!--  <li><router-link to="/profile">Profile (General + Friends)</router-link></li> -->
@@ -147,9 +146,6 @@ Solid-vue-panes is developped around the concept of webcomponents.
 <script>
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
-  },
   components: {
     'SolidLogin': () => import('@/components/solid/SolidLogin')
   },

@@ -1,8 +1,11 @@
 <template>
   <div class="home">
-    <ShareTarget />
+
     <img  width="100px" alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="PoPock, the Pod in the Pocket"/>
+    <h1>PoPock</h1>
+    <h4>POds in the POCKet</h4>
+    <ShareTarget />
+    <HelloWorld />
 
   </div>
 </template>

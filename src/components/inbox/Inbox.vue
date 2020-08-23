@@ -113,7 +113,6 @@ const publicAccess = getPublicAccess(myDatasetWithAcl);
 methods:{
   async getMessages(){
     this.inbox = await fc.readFolder(this.current_inbox_url)
-
   },
   async updateInboxUrl(){
     return await this.getInbox(this.webId)

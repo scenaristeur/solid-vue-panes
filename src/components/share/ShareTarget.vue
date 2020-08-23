@@ -1,21 +1,23 @@
 <template>
-  <div class="share container col" v-if="valid == true">
-    <h3>Popock Bookmark</h3>
+  <div class="share container col">
 
-    <b-input-group prepend="Title" >
-      <b-form-input v-model="title" placeholder="What is this bookmark title ?"></b-form-input>
-    </b-input-group>
-    <b-input-group prepend="Text" >
-      <b-form-input v-model="text" placeholder="Blah Blah Blah..."></b-form-input>
-    </b-input-group>
-    <b-input-group prepend="Url" >
-      <b-form-input v-model="url" placeholder="https://the_url.com"></b-form-input>
-    </b-input-group>
-    <b-input-group prepend="Topic" >
-      <b-form-input v-model="topic" placeholder="topic/sub_topic/sub_sub_topic..."></b-form-input>
-    </b-input-group>
+    <div v-if="valid == true">
+      <h3>Popock Bookmark</h3>
 
-    <div v-if="webId != null">
+      <b-input-group prepend="Title" >
+        <b-form-input v-model="title" placeholder="What is this bookmark title ?"></b-form-input>
+      </b-input-group>
+      <b-input-group prepend="Text" >
+        <b-form-input v-model="text" placeholder="Blah Blah Blah..."></b-form-input>
+      </b-input-group>
+      <b-input-group prepend="Url" >
+        <b-form-input v-model="url" placeholder="https://the_url.com"></b-form-input>
+      </b-input-group>
+      <b-input-group prepend="Topic" >
+        <b-form-input v-model="topic" placeholder="topic/sub_topic/sub_sub_topic..."></b-form-input>
+      </b-input-group>
+
+
 
 
 
@@ -25,11 +27,29 @@
       </b-form-group>
 
       Path : {{ path }} !! <br>
-      <b-button variant="outline-info" @click="this.valid = false">Cancel</b-button>
-      <b-button variant="outline-info" @click="saveBm">Save Bookmark</b-button>
+      webId : {{ webId}} <br>
+      <p >
+        <b-button variant="outline-info" @click="valid = false">Cancel</b-button>
+        <b-button variant="outline-info" @click="saveBm">Save Bookmark</b-button>
+            <b-button class="mr-auto" variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
+      </p>
+      <p v-if="webId == null">
+        You need to <SolidLogin /> to your POD.
+      </p>
+
+
+
     </div>
     <div v-else>
-      <SolidLogin />
+      <p>
+        The first approach to discover Popock, could be for example to
+        <b-button variant="outline-info"
+         to="?title=Popock&url=https://scenaristeur.github.io/solid-vue-panes/&text=My%20favorite%20Pod%20Manager">bookmark Popock</b-button>
+        or
+        <b-button variant="outline-info" to="?title=something">bookmark something else</b-button> <br>
+        then take a look at
+        <b-button variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
+      </p>
     </div>
 
 
@@ -89,32 +109,41 @@ export default {
       this.fullPath = to.fullPath
       console.log(this.$route.query)
       console.log(to.query)
+      this.title != undefined || this.text != undefined || this.url != undefined ? this.valid = true : this.valid = false
+
       //    this.updatePod()
+    },
+    valid(v){
+      v == false ? this.$router.push('/bookmarks') : ""
     }
   },
   methods:{
     async saveBm(){
-      var date = new Date();
-      //  var date = dateObj.toISOString()
-      console.log(this.path)
-      const bookmarkDoc =    await fc.itemExists( this.path ) ?    await fetchDocument(this.path) : await createDocument(this.path);
+      if (this.webId != null){
+        var date = new Date();
+        //  var date = dateObj.toISOString()
+        console.log(this.path)
+        const bookmarkDoc =    await fc.itemExists( this.path ) ?    await fetchDocument(this.path) : await createDocument(this.path);
 
-      //  https://www.w3.org/2002/01/bookmark#recalls
-      let subj =   bookmarkDoc.addSubject()
-      subj.addLiteral(rdfs.label, this.title)
-      subj.addLiteral(sioc.content, this.text)
-      subj.addNodeRef("http://www.w3.org/2002/01/bookmark#recalls", this.url)
-      subj.addNodeRef("http://www.w3.org/2002/01/bookmark#hasTopic", this.topic)
-      subj.addLiteral(dct.created, date)
-      subj.addNodeRef(foaf.maker, this.webId)
-      subj.addLiteral(dct.created, date)
-      subj.addNodeRef(rdf.type, "http://www.w3.org/2002/01/bookmark#Bookmark")
-      await bookmarkDoc.save();
-      this.makeToast(this.title, "bookmark saved at "+ this.path, 'success')
-      this.title = undefined
-      this.text = undefined
-      this.url = undefined
-      this.valid = false
+        //  https://www.w3.org/2002/01/bookmark#recalls
+        let subj =   bookmarkDoc.addSubject()
+        subj.addLiteral(rdfs.label, this.title)
+        subj.addLiteral(sioc.content, this.text)
+        subj.addNodeRef("http://www.w3.org/2002/01/bookmark#recalls", this.url)
+        subj.addNodeRef("http://www.w3.org/2002/01/bookmark#hasTopic", this.topic)
+        subj.addLiteral(dct.created, date)
+        subj.addNodeRef(foaf.maker, this.webId)
+        subj.addLiteral(dct.created, date)
+        subj.addNodeRef(rdf.type, "http://www.w3.org/2002/01/bookmark#Bookmark")
+        await bookmarkDoc.save();
+        this.makeToast(this.title, "bookmark saved at "+ this.path, 'success')
+        this.title = undefined
+        this.text = undefined
+        this.url = undefined
+        this.valid = false
+      }else{
+        alert("You must first login to your POD !")
+      }
     },
     makeToast(title, content,variant = null) {
       this.$bvToast.toast(content , {
@@ -124,9 +153,10 @@ export default {
       })
     }
   },
+
   computed:{
     path(){
-      return  [this.storage.slice(0,-1), this.selected, "bookmarks", this.topic+"/bookmarks.ttl"].join("/")
+      return this.storage != null ? [this.storage.slice(0,-1), this.selected, "bookmarks", this.topic+"/bookmarks.ttl"].join("/") : ""
     },
     webId(){
       return this.$store.state.solid.webId
@@ -140,3 +170,21 @@ export default {
 },
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>

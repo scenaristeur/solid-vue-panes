@@ -40,6 +40,7 @@
           <template v-slot:button-content>
             <router-link class="nav-link" to="/misc"><em>Misc</em></router-link>
           </template>
+          <b-dropdown-item to="/bookmarks">Bookmarks</b-dropdown-item>
           <b-dropdown-item to="/groups">Groups</b-dropdown-item>
           <b-dropdown-item to="/offers">Offers</b-dropdown-item>
           <b-dropdown-item to="/forms">Forms</b-dropdown-item>

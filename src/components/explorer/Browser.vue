@@ -140,9 +140,7 @@
 import { deleteFile } from "@inrupt/solid-client";
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
-console.log("SFC",fc)
 
 export default {
   name: 'Browser',
