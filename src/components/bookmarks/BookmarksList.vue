@@ -2,31 +2,52 @@
   <div class="bookmarks-list container">
     <!--  storage: {{storage}}<br>
     path : {{path}} <br>-->
-    <h3>{{mode}} bookmarks</h3>
-    <b-button @click="updateBm()" >Back to Root</b-button><br>
-    ( {{ path }} )
 
+    <b-button @click="updateBm()" variant="outline-info" >Back to {{mode}}/bookmarks/</b-button><br>
 
     <h5>Bookmarks :</h5>
-    <b-list-group>
-      <b-list-group-item v-for="b in bookmarks" :key="b.id" class="d-flex align-items-center">
-        <h5 class="mr-2">  {{ b.label }}</h5>
-        <p>{{b.content}}</p>
-        <p class="ml-2">
 
-          <a v-bind:href="b.url" v-if="b.url != null" target="_blank">{{b.url}}</a>
-        </p>
-      </b-list-group-item>
-    </b-list-group>
 
-    <h5>Categories :</h5>
+    <div>
+      <b-card-group columns>
 
-    <b-button v-for="fo in bm.folders" :key="fo.url" variant="info" class="m-1" @click="updateBm(fo.url)">{{ fo.name }}</b-button>
-    <!--
-    <b-list-group>
-    <b-list-group-item v-for="fo in bm.folders" :key="fo.url" class="d-flex align-items-center">
-    {{ fo }}
-  </b-list-group-item>
+        <b-card v-for="b in bookmarks" :key="b.id"
+        v-bind:img-src="b.img" img-alt="Image" img-top>
+        <b-card-title>{{b.label}}</b-card-title>
+        <b-card-text>
+          {{b.content}}
+        </b-card-text>
+        <b-card-text class="small text-muted">
+          <a v-bind:href="b.url" target="_blank">{{b.url}}</a>
+        </b-card-text>
+      </b-card>
+
+
+    </b-card-group>
+  </div>
+
+  <!--
+  <b-list-group>
+  <b-list-group-item v-for="b in bookmarks" :key="b.id" >
+  <h5 class="mr-2">  {{ b.label }}</h5>
+  <p>{{b.content}}</p>
+  <p class="ml-2">
+
+  <a v-bind:href="b.url" v-if="b.url != null" target="_blank">{{b.url}}</a>
+</p>
+</b-list-group-item>
+</b-list-group>
+-->
+
+
+<h5>Categories :</h5>
+
+<b-button v-for="fo in bm.folders" :key="fo.url" variant="info" class="m-1" @click="updateBm(fo.url)">{{ fo.name }}</b-button>
+<!--
+<b-list-group>
+<b-list-group-item v-for="fo in bm.folders" :key="fo.url" class="d-flex align-items-center">
+{{ fo }}
+</b-list-group-item>
 </b-list-group>-->
 <!--  {{ bm }} -->
 
@@ -84,8 +105,8 @@ export default {
       //  friends: [],
     }
   },
-  created() {
-    this.path = this.$store.state.solid.storage+this.mode+"/bookmarks"
+  mounted() {
+    this.path = this.$store.state.solid.storage+this.mode+"/bookmarks/"
     this.updateBm()
   },
   watch: {
@@ -102,24 +123,30 @@ export default {
       console.log("path updated",path)
       let bm = {files: [], folders: []}
       let bookmarks = []
+      console.log(bm.files.length)
+
       try {
         bm = await fc.readFolder(path)
-        const bookmarkDoc = await fetchDocument(path+"bookmarks.ttl");
-        let  subjects = bookmarkDoc.findSubjects();
-        subjects = subjects.filter( this.onlyUnique )
-        for  (let s of subjects) {
-          let b ={id:s.asRef(),
-            content : s.getLiteral(sioc.content),
-            label: s.getLiteral(rdfs.label),
-            url: s.getNodeRef("http://www.w3.org/2002/01/bookmark#recalls")
-          }
-          console.log(b)
-          bookmarks.unshift(b)
-        }
+        if (bm.files.length > 0){
+          const bookmarkDoc = await fetchDocument(bm.files[0].url);
+          let  subjects = bookmarkDoc.findSubjects();
+          subjects = subjects.filter( this.onlyUnique )
+          for  (let s of subjects) {
+            let b ={id:s.asRef(),
+              content : s.getLiteral(sioc.content),
+              label: s.getLiteral(rdfs.label),
+              url: s.getNodeRef("http://www.w3.org/2002/01/bookmark#recalls"),
 
+            }
+            b.img= "//image.thum.io/get/width/355/crop/600/"+b.url
+            console.log(b)
+            bookmarks.unshift(b)
+          }
+        }
       }catch(e){
         //  console.log(e)
       }
+
       this.bm = bm
       this.bookmarks = bookmarks
       //  this.friends = await this.getFriends(this.webId)
