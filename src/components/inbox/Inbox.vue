@@ -231,7 +231,7 @@ export default {
   async subscribe(){
     let notif = this.current_inbox_url+"log.ttl"
     var websocket = "wss://"+this.current_inbox_url.split('/')[2];
-    let socket = new WebSocket(websocket);
+    let socket = new WebSocket(websocket, ['solid.0.1.0']);
     socket.onopen = function() {
 
       //      var now = d.toLocaleTimeString(app.lang)

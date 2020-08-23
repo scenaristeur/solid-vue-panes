@@ -26,11 +26,11 @@ module.exports = {
           url: "url"
         }
       },
-  /*    "permissions": {
+      "permissions": {
         "desktop-notification": {
           "description": "Needed for creating system notifications."
         }
-      }*/
+      }
     },
 
 
