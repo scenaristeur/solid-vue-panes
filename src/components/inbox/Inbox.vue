@@ -1,12 +1,12 @@
 <template>
   <div class="inbox container">
-    <h5>Inbox</h5>
     <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
       You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
     </p>
 
 
-    <button @click="notification('Notifications activated')">Activate Notifications</button>
+  <!--  <button @click="notification('Notifications activated')">Activate Notifications</button>-->
+    <button type="button" @click="notify">Show notification</button>
 
     <div>
       <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
@@ -144,6 +144,12 @@ export default {
     }
   },
   methods:{
+    notify (message= 'This is an example!') {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification#Parameters
+    this.$notification.show('Hello World', {
+      body: message
+    }, {})
+  },
     send(){
       console.log(this.title, this.content, this.selected, this.label, this.recipient)
       if (this.recipient != null){
@@ -241,15 +247,17 @@ export default {
     }
 
     let getMessages = this.getMessages
-    let notification = this.notification
+  //  let notification = this.notification
+    let notify = this.notify
     socket.onmessage = function(msg) {
       console.log(msg)
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
         //  app.notification("nouveau message Socialid")
         //app.openLongChat()
         console.log(msg.data)
-        notification("new inbox message")
+      //  notification("new inbox message")
         getMessages()
+        notify("new inbox message !!!")
         //app.todayMessages()
         //  app.agent.send("Flux", {action: "websocketMessage", url : url})
       }
@@ -280,29 +288,28 @@ export default {
     console.log("notif")
     // Si l'utilisateur accepte d'être notifié
     if (window.Notification && Notification.permission === "granted") {
-      alert("1")
-      new Notification(message);
+        new Notification(message);
     }
 
     // Si l'utilisateur n'a pas choisi s'il accepte d'être notifié
     // Note: à cause de Chrome, nous ne sommes pas certains que la propriété permission soit définie, par conséquent il n'est pas sûr de vérifier la valeur par défaut.
     else if (window.Notification && Notification.permission !== "denied") {
-        alert("2")
+
       Notification.requestPermission(function (status) {
         if (Notification.permission !== status) {
-            alert("3")
+
           Notification.permission = status;
         }
 
         // Si l'utilisateur est OK
         if (status === "granted") {
-            alert("4")
+
           new Notification(message);
         }
 
         // Sinon, revenons en à un mode d'alerte classique
         else {
-            alert("5")
+
           alert(message);
         }
       });

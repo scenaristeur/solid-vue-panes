@@ -26,11 +26,6 @@ module.exports = {
           url: "url"
         }
       },
-      "permissions": {
-        "desktop-notification": {
-          "description": "Needed for creating system notifications."
-        }
-      }
     },
 
 
