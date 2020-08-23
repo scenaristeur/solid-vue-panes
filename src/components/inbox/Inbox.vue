@@ -1,82 +1,88 @@
 <template>
   <div class="inbox container">
-    <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
-      You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
-    </p>
+    webId : {{ webId }}
+    <div v-if="webId != null">
+      <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
+        You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
+      </p>
 
 
-  <!--  <button @click="notification('Notifications activated')">Activate Notifications</button>-->
-    <button type="button" @click="notify">Show notification</button>
+      <!--  <button @click="notification('Notifications activated')">Activate Notifications</button>-->
+  <!--    <button type="button" @click="notify('Notifications activated')">Show notification</button>
+-->
+      <div>
+        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+          <b-button-group class="mx-1">
+            <b-button title="new" class="new" size="sm" variant="success" @click.stop="init_new()">
+              <b-icon-pencil-square  @click.stop="init_new()" variant="outline-success"></b-icon-pencil-square>
+            </b-button>
 
-    <div>
-      <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+          </b-button-group>
+          <!--  <b-dropdown class="mx-1" right text="menu">
+          <b-dropdown-item>Item 1</b-dropdown-item>
+          <b-dropdown-item>Item 2</b-dropdown-item>
+          <b-dropdown-item>Item 3</b-dropdown-item>
+        </b-dropdown>
         <b-button-group class="mx-1">
-          <b-button title="new" class="new" size="sm" variant="success" @click.stop="init_new()">
-            <b-icon-pencil-square  @click.stop="init_new()" variant="outline-success"></b-icon-pencil-square>
-          </b-button>
+        <b-button>Save</b-button>
+        <b-button>Cancel</b-button>
+      </b-button-group>-->
+    </b-button-toolbar>
+  </div>
 
-        </b-button-group>
-        <!--  <b-dropdown class="mx-1" right text="menu">
-        <b-dropdown-item>Item 1</b-dropdown-item>
-        <b-dropdown-item>Item 2</b-dropdown-item>
-        <b-dropdown-item>Item 3</b-dropdown-item>
-      </b-dropdown>
-      <b-button-group class="mx-1">
-      <b-button>Save</b-button>
-      <b-button>Cancel</b-button>
-    </b-button-group>-->
-  </b-button-toolbar>
-</div>
+  <b-list-group>
+    <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name" class="d-flex align-items-center">
+      <MessageLine :message="m"/>
+    </b-list-group-item>
+  </b-list-group>
 
-<b-list-group>
-  <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name" class="d-flex align-items-center">
-    <MessageLine :message="m"/>
-  </b-list-group-item>
-</b-list-group>
+  <b-modal id="confirm-trash" title="Are you sure you want to delete" @ok="trash">
+    {{ toTrash }}
+  </b-modal>
 
-<b-modal id="confirm-trash" title="Are you sure you want to delete" @ok="trash">
-  {{ toTrash }}
-</b-modal>
-
-<b-modal id="send-modal"
-:title="title"
-@ok="send"
-@cancel="selected = []">
+  <b-modal id="send-modal"
+  :title="title"
+  @ok="send"
+  @cancel="selected = []">
 
 
-<div class="container flush">
-  <FriendsSelection  v-on:selected="onSelected"  v-if="showFriends == true"/>
-  <b-form-group >
+  <div class="container flush">
+    <FriendsSelection  v-on:selected="onSelected"  v-if="showFriends == true"/>
+    <b-form-group >
 
-    <label for="destinataire">WebId :</label>
-    <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
-    <!--  <b-button @click="add">Add</b-button> -->
-  </b-form-group>
-</div>
+      <label for="destinataire">WebId :</label>
+      <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
+      <!--  <b-button @click="add">Add</b-button> -->
+    </b-form-group>
+  </div>
 
-<b-list-group>
+  <b-list-group>
 
-  <b-input-group prepend="Label">
-    <b-form-input v-model="label"></b-form-input>
-  </b-input-group>
+    <b-input-group prepend="Label">
+      <b-form-input v-model="label"></b-form-input>
+    </b-input-group>
 
-  <b-form-textarea
-  id="textarea-rows"
-  placeholder=""
-  v-model="content"
-  rows="8"
-  ></b-form-textarea>
+    <b-form-textarea
+    id="textarea-rows"
+    placeholder=""
+    v-model="content"
+    rows="8"
+    ></b-form-textarea>
 
-  <!--<b-list-group-item>Move</b-list-group-item>-->
-  <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
-  <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-  <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
-</b-list-group>
+    <!--<b-list-group-item>Move</b-list-group-item>-->
+    <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
+    <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
+    <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
+  </b-list-group>
 </b-modal>
 
 webId : {{ webId }}
 
 inbox_urls : {{ inbox_urls }}
+</div>
+<div v-else>
+  <SolidLogin />
+</div>
 
 </div>
 </template>
@@ -97,6 +103,7 @@ export default {
   components: {
     'MessageLine': () => import('@/components/inbox/MessageLine'),
     'FriendsSelection': () => import('@/components/solid/FriendsSelection'),
+    'SolidLogin': () => import('@/components/solid/SolidLogin'),
   },
   props: ['value'],
   data: function () {
@@ -114,14 +121,7 @@ export default {
   async created() {
     this.webId = this.$store.state.solid.webId
     this.inbox_urls = await this.getInbox(this.webId)
-    window.addEventListener('load', function () {
-      Notification.requestPermission(function (status) {
-        // Cela permet d'utiliser Notification.permission avec Chrome/Safari
-        if (Notification.permission !== status) {
-          Notification.permission = status;
-        }
-      });
-    });
+
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
   },
@@ -145,11 +145,11 @@ export default {
   },
   methods:{
     notify (message= 'This is an example!') {
-    // https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification#Parameters
-    this.$notification.show('Hello World', {
-      body: message
-    }, {})
-  },
+      // https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification#Parameters
+      this.$notification.show('Hello World', {
+        body: message
+      }, {})
+    },
     send(){
       console.log(this.title, this.content, this.selected, this.label, this.recipient)
       if (this.recipient != null){
@@ -247,17 +247,15 @@ export default {
     }
 
     let getMessages = this.getMessages
-  //  let notification = this.notification
-    let notify = this.notify
     socket.onmessage = function(msg) {
       console.log(msg)
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
         //  app.notification("nouveau message Socialid")
         //app.openLongChat()
         console.log(msg.data)
-      //  notification("new inbox message")
+        //  notification("new inbox message")
         getMessages()
-        notify("new inbox message !!!")
+
         //app.todayMessages()
         //  app.agent.send("Flux", {action: "websocketMessage", url : url})
       }
@@ -267,6 +265,7 @@ export default {
   },
   async getMessages(){
     this.inbox = await fc.readFolder(this.current_inbox_url)
+    this.notify(this.inbox.files.length+ " messages !!!")
   },
   async trash() {
     console.log(this.toTrash)
@@ -282,46 +281,6 @@ export default {
     //s.addNodeRef(schema.about, message.url)
     //  console.log(logDoc)
     await logDoc.save()
-  },
-  notification(message){
-
-    console.log("notif")
-    // Si l'utilisateur accepte d'être notifié
-    if (window.Notification && Notification.permission === "granted") {
-        new Notification(message);
-    }
-
-    // Si l'utilisateur n'a pas choisi s'il accepte d'être notifié
-    // Note: à cause de Chrome, nous ne sommes pas certains que la propriété permission soit définie, par conséquent il n'est pas sûr de vérifier la valeur par défaut.
-    else if (window.Notification && Notification.permission !== "denied") {
-
-      Notification.requestPermission(function (status) {
-        if (Notification.permission !== status) {
-
-          Notification.permission = status;
-        }
-
-        // Si l'utilisateur est OK
-        if (status === "granted") {
-
-          new Notification(message);
-        }
-
-        // Sinon, revenons en à un mode d'alerte classique
-        else {
-
-          alert(message);
-        }
-      });
-    }
-
-    // Si l'utilisateur refuse d'être notifié
-    else {
-      // We can fallback to a regular modal alert
-      alert(message);
-    }
-
-
   }
 },
 computed:{
