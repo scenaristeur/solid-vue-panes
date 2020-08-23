@@ -16,7 +16,7 @@
     </b-button-toolbar>
   </div>
 
-<!--  Modal, {{ recipient }}-->
+  <!--  Modal, {{ recipient }}-->
   <b-modal id="reply"
   :title="title"
   @ok="send">
@@ -69,8 +69,12 @@ import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
-//import { createDocument } from 'tripledoc';
-//import { schema, rdfs, rdf } from 'rdf-namespaces'
+//let solid = window.solid
+//console.log("SOLID",solid)
+//const { namedNode } = require('@rdfjs/data-model');
+
+import { fetchDocument } from 'tripledoc';
+import { schema } from 'rdf-namespaces'
 
 export default {
   name: 'InboxSend',
@@ -139,9 +143,37 @@ export default {
         console.log(message.url)
         try{
           await fc.postFile( message.url, messageStr, "text/turtle")
+          var notif = inbox+"log.ttl#"+message.id
+          if( !(await fc.itemExists(inbox+"log.ttl")) ) {
+         console.log(notif,"don't exist")
+         await fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
+       }
+          //  await solid.data[notif].schema$message.add(namedNode(message.url))
         }catch(e){
-          alert(e)
+          alert("one"+e)
         }
+
+        const logDoc = await fetchDocument(inbox+"log.ttl");
+        let s = logDoc.addSubject()
+        s.addNodeRef(schema.about, message.url)
+      //  console.log(logDoc)
+        await logDoc.save()
+
+
+        //  var notif = inbox+"log.ttl#"+message.id
+        //  await fc.postFile(notif,"","text/turtle")
+        /*  if( !(await fc.itemExists(inbox+"log.ttl")) ) {
+        console.log(notif,"don't exist")
+        await fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
+      }else{
+      console.log(notif," exist")
+    }*/
+  //  console.log(namedNode)
+/*
+    const logDoc = await createDocument(inbox+"log.ttl");
+    console.log(logDoc)
+    await logDoc.save()*/
+    // await solid.data[inbox+"log.ttl"].schema$message.set(namedNode(message.url))
 
 
     /*    const response = await overwriteFile(
@@ -151,41 +183,41 @@ export default {
     // Buffer.from("This is a plain piece of text", "utf8"), { type: "plain/text" })
   );
   if (response.ok) {
-    console.log("File saved!");
-  }*/
-      })
+  console.log("File saved!");
+}*/
+})
 
 
 
 
-      /*
-      const messageDoc = await createDocument(message.url);
-      let subj = messageDoc.addSubject()
-      subj.addLiteral(schema.text, message.content)
-      subj.addLiteral(rdfs.label, message.label)
-      subj.addLiteral(schema.dateSent, message.date.toISOString())
-      subj.addNodeRef(rdf.type, 'https://schema.org/Message')
-      subj.addNodeRef(schema.sender, message.sender)
+/*
+const messageDoc = await createDocument(message.url);
+let subj = messageDoc.addSubject()
+subj.addLiteral(schema.text, message.content)
+subj.addLiteral(rdfs.label, message.label)
+subj.addLiteral(schema.dateSent, message.date.toISOString())
+subj.addNodeRef(rdf.type, 'https://schema.org/Message')
+subj.addNodeRef(schema.sender, message.sender)
 
-      await messageDoc.save();*/
-
-
-      //  await data[mess].schema$text.add(message.content);
-      //  await data[mess].rdfs$label.add(message.title)
-      //  await data[mess].schema$dateSent.add(message.date.toISOString())
-      //await data[mess].rdf$type.add(namedNode('https://schema.org/Message'))
-      //  await data[mess].schema$sender.add(namedNode(this.webId))
-
-      /*    var notif = message.recipient+"log.ttl#"+message.id
-      await data[notif].schema$message.add(namedNode(mess))*/
-    }else{
-      alert("content must not be empty")
-    }
+await messageDoc.save();*/
 
 
+//  await data[mess].schema$text.add(message.content);
+//  await data[mess].rdfs$label.add(message.title)
+//  await data[mess].schema$dateSent.add(message.date.toISOString())
+//await data[mess].rdf$type.add(namedNode('https://schema.org/Message'))
+//  await data[mess].schema$sender.add(namedNode(this.webId))
+
+/*    var notif = message.recipient+"log.ttl#"+message.id
+await data[notif].schema$message.add(namedNode(mess))*/
+}else{
+  alert("content must not be empty")
+}
 
 
-  }
+
+
+}
 },
 watch: {
   async recipient (r) {

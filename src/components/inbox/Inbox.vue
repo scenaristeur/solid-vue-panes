@@ -5,7 +5,7 @@
       <!--  Inbox_urls : {{ inbox_urls}} <br>
       inbox_acl : {{ inbox_acl }}<br>-->
       <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
-You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
+        You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
       </p>
       <InboxSend />
 
@@ -66,11 +66,12 @@ const fc = new SolidFileClient(auth)
 import profileMixin from '@/mixins/profileMixin'
 
 //read public access & agents access
+/*
 import {
-  getSolidDatasetWithAcl,
-  getAgentAccessAll,
-  getPublicAccess
-} from "@inrupt/solid-client";
+getSolidDatasetWithAcl,
+getAgentAccessAll,
+getPublicAccess
+} from "@inrupt/solid-client";*/
 
 export default {
   name: 'Inbox',
@@ -92,6 +93,7 @@ export default {
     }
   },
   async created(){
+
     /* acl example
 
     @prefix : <#>.
@@ -100,37 +102,37 @@ export default {
     @prefix c: </profile/card#>.
 
     :AppendDefault
-        a n0:Authorization;
-        n0:agentClass n0:AuthenticatedAgent;
-        n0:default inbox:;
-        n0:mode n0:Append.
+    a n0:Authorization;
+    n0:agentClass n0:AuthenticatedAgent;
+    n0:default inbox:;
+    n0:mode n0:Append.
     :AppendRead
-        a n0:Authorization;
-        n0:accessTo inbox:;
-        n0:agentClass n0:AuthenticatedAgent;
-        n0:mode n0:Append, n0:Read.
+    a n0:Authorization;
+    n0:accessTo inbox:;
+    n0:agentClass n0:AuthenticatedAgent;
+    n0:mode n0:Append, n0:Read.
     :AppendReadDefault
     a n0:Authorization; n0:default inbox:; n0:mode n0:Append, n0:Read.
     :ControlReadWrite
-        a n0:Authorization;
-        n0:accessTo inbox:;
-        n0:agent c:me;
-        n0:mode n0:Control, n0:Read, n0:Write.
+    a n0:Authorization;
+    n0:accessTo inbox:;
+    n0:agent c:me;
+    n0:mode n0:Control, n0:Read, n0:Write.
     :ControlReadWriteDefault
-        a n0:Authorization;
-        n0:agent c:me;
-        n0:default inbox:;
-        n0:mode n0:Control, n0:Read, n0:Write.
+    a n0:Authorization;
+    n0:agent c:me;
+    n0:default inbox:;
+    n0:mode n0:Control, n0:Read, n0:Write.
     :ReadWrite
-        a n0:Authorization;
-        n0:accessTo inbox:;
-        n0:mode n0:Read, n0:Write;
-        n0:origin <http://127.0.0.1:8080>, <https://scenaristeur.github.io>.
+    a n0:Authorization;
+    n0:accessTo inbox:;
+    n0:mode n0:Read, n0:Write;
+    n0:origin <http://127.0.0.1:8080>, <https://scenaristeur.github.io>.
     :ReadWriteDefault
-        a n0:Authorization;
-        n0:default inbox:;
-        n0:mode n0:Read, n0:Write;
-        n0:origin <http://127.0.0.1:8080>, <https://scenaristeur.github.io>.
+    a n0:Authorization;
+    n0:default inbox:;
+    n0:mode n0:Read, n0:Write;
+    n0:origin <http://127.0.0.1:8080>, <https://scenaristeur.github.io>.
     */
   },
   async mounted() {
@@ -138,15 +140,18 @@ export default {
     this.inbox_urls = await this.updateInboxUrl()
     this.current_inbox_url = this.inbox_urls[0]
     console.log(this.current_inbox_url)
-    const myDatasetWithAcl = await getSolidDatasetWithAcl(this.current_inbox_url);
+    await this.getMessages()
+    await  this.subscribe()
+    /*  const myDatasetWithAcl = await getSolidDatasetWithAcl(this.current_inbox_url);
     console.log(myDatasetWithAcl)
     const accessByAgent = getAgentAccessAll(myDatasetWithAcl);
 
     const publicAccess = getPublicAccess(myDatasetWithAcl);
     console.log("accessByAgent",accessByAgent, "publicAccess",publicAccess)
 
-    console.log(this.current_inbox_url)
-    await this.getMessages()
+    console.log(this.current_inbox_url)*/
+    //  await this.getMessages()
+
   },
   watch: {
     /*  '$route' (to) {
@@ -162,6 +167,33 @@ methods:{
   async updateInboxUrl(){
     return await this.getInbox(this.webId)
   },
+  async subscribe(){
+    let notif = this.current_inbox_url+"log.ttl"
+    var websocket = "wss://"+this.current_inbox_url.split('/')[2];
+    let socket = new WebSocket(websocket);
+    socket.onopen = function() {
+
+      //      var now = d.toLocaleTimeString(app.lang)
+      this.send('sub '+notif);
+      console.log("subscribe to INBOX",websocket, notif)
+      //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
+    }
+
+    let getMessages = this.getMessages
+    socket.onmessage = function(msg) {
+      console.log(msg)
+      if (msg.data && msg.data.slice(0, 3) === 'pub') {
+        //  app.notification("nouveau message Socialid")
+        //app.openLongChat()
+        console.log(msg.data)
+        getMessages()
+        //app.todayMessages()
+        //  app.agent.send("Flux", {action: "websocketMessage", url : url})
+      }
+    };
+
+
+  }
 
 }
 }
