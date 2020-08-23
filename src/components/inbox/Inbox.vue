@@ -1,9 +1,10 @@
 <template>
   <div class="inbox container">
     <h5>Inbox</h5>
-    webId : {{ webId }}
+    <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
+      You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
+    </p>
 
-    inbox_urls : {{ inbox_urls }}
 
     <button @click="notification('Notifications activated')">Activate Notifications</button>
 
@@ -72,6 +73,10 @@
   <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
 </b-list-group>
 </b-modal>
+
+webId : {{ webId }}
+
+inbox_urls : {{ inbox_urls }}
 
 </div>
 </template>
