@@ -20,7 +20,10 @@
             <b-card-text>
               <ul>
                 <li><router-link to="/chat">Solid Chat</router-link></li>
+
+                <li> Add me ( https://spoggy.solid.community/profile/card#me ) to your friends and send me a mail to my <router-link to="/inbox">Inbox</router-link></li>
                 <li> Are you crazy enough for nested Chat ? take a look at <router-link to="/parle">Parle</router-link></li>
+                
                 <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
                 <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
                 <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->

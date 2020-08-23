@@ -9,7 +9,7 @@
   <transition name="fade">
     <router-view/>
   </transition>
-  0.1.23
+  0.1.24
 </div>
 </template>
 

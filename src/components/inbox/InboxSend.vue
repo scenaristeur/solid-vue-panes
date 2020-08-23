@@ -137,7 +137,12 @@ export default {
         let inbox = await getInbox(webId)
         message.url = inbox+message.id+".ttl"
         console.log(message.url)
-         await fc.createFile( message.url, messageStr, "text/turtle")
+        try{
+          await fc.createFile( message.url, messageStr, "text/turtle")
+        }catch(e){
+          alert(e)
+        }
+
 
     /*    const response = await overwriteFile(
     message.url,

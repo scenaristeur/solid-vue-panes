@@ -5,17 +5,17 @@
       <div>
         <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
           <b-button-group size="sm" class="mr-1">
-            <b-button size="sm" @click="clean">New</b-button>
-            <b-button size="sm" disabled>Edit</b-button>
-            <b-button size="sm" disabled>Undo</b-button>
+            <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
+          <!--  <b-button size="sm" disabled>Edit</b-button>
+            <b-button size="sm" disabled>Undo</b-button>-->
           </b-button-group>
-          <b-dropdown size="sm" class="mr-1" right text="menu">
+      <!--    <b-dropdown size="sm" class="mr-1" right text="menu">
             <b-dropdown-item size="sm">Item 1</b-dropdown-item>
             <b-dropdown-item size="sm">Item 2</b-dropdown-item>
             <b-dropdown-item size="sm">Item 3</b-dropdown-item>
-          </b-dropdown>
+          </b-dropdown>-->
           <b-button-group size="sm" class="mr-1">
-            <b-button size="sm" variant="warning" v-b-modal.modal-1>Save</b-button>
+            <b-button size="sm" variant="warning" v-b-modal.modal-1>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
             <!--<b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>-->
             <!--  <b-button size="sm">Cancel</b-button>-->
 
@@ -56,12 +56,13 @@
   <b-form-textarea
   id="textarea"
   v-model="text"
-  placeholder="Enter something..."
+  placeholder="Enter something, then click 'Save' button..."
   rows="3"
   max-rows="15"
   @change="change"
-  @input="input">
+>
 </b-form-textarea>
+<!--   @input="input" -->
 
 <!--  File : {{ file }}  disabled -->
 
@@ -114,9 +115,9 @@ export default {
     change(e){
       console.log("change",e)
     },
-    input(e){
+  /*  input(e){
       console.log("input",e)
-    },
+    },*/
     fill(){
       this.name = this.file.name
       this.type = this.file.type

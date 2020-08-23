@@ -6,20 +6,41 @@
         v-if="folder.parent != 'https://'"
         class="item"
         @click="updateFolder(folder.parent)">
-        <b-icon-arrow-up></b-icon-arrow-up>   {{ folder.url }} <b-icon-upload></b-icon-upload>
+        <b-icon-arrow-up></b-icon-arrow-up>   {{ folder.url }}
       </b-list-group-item>
       <b-list-group-item v-else class="item">
-        {{ storage }} <b-icon-upload></b-icon-upload>
+        {{ storage }}
       </b-list-group-item>
 
       <div>
         <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
           <b-button-group class="mx-1">
-            <b-button @click="init_folder">New folder</b-button>
+            <b-button title="New Folder" @click="init_folder"><b-icon-folder-plus></b-icon-folder-plus></b-button>
+            <b-button title="Upload Files" @click="$refs.fileInput.$el.childNodes[0].click()"> <b-icon-files></b-icon-files></b-button>
+            <b-button title="Upload Folder" @click="$refs.folderInput.$el.childNodes[0].click()"> <b-icon-folder-symlink></b-icon-folder-symlink></b-button>
+
+
             <!--  <b-button>Edit</b-button>
             <b-button>Undo</b-button>-->
           </b-button-group>
         </b-button-toolbar>
+
+        <b-form-file
+        ref="fileInput" style="display:none;"
+        v-model="files"
+        placeholder="upload files"
+        drop-placeholder="Drop file here..."
+        multiple
+        ></b-form-file>
+
+        <b-form-file
+        ref="folderInput" style="display:none;"
+        v-model="files"
+        placeholder="Upload directory"
+        drop-placeholder="Upoload directory"
+        directory
+        multiple
+        ></b-form-file>
       </div>
 
 
@@ -30,7 +51,7 @@
       @click="selected(fo)"
       @contextmenu.prevent="right(fo)"
       >
-      <p class="p-0 m-0 flex-grow-1">  <b-icon-folder></b-icon-folder>
+      <p class="p-0 m-0 flex-grow-1">  <b-icon-folder2></b-icon-folder2>
         {{ fo.name }}</p>
         <b-button size="sm mr-2" variant="outline-primary">
           <b-icon-alt @click.stop="init_move(fo)" variant="primary"></b-icon-alt>
@@ -51,7 +72,10 @@
       @click="selected(fi)"
       @contextmenu.prevent="right(fi)">
 
-      <p class="p-0 m-0 flex-grow-1"><b-icon-file></b-icon-file> {{ fi.name }}</p>
+      <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
+      <b-button size="sm mr-2" variant="outline-primary" disabled>
+        <b-icon-download></b-icon-download>
+      </b-button>
       <b-button size="sm mr-2" variant="outline-primary">
         <b-icon-alt @click.stop="init_move(fi)" variant="primary"></b-icon-alt>
       </b-button>
@@ -133,9 +157,27 @@ export default {
       //  deleteMessage: "",
       new_location:"",
       new_folder:"",
+      files:[],
+
       //  storage: "",
       //folder: {}
     }
+  },
+  watch: {
+    async  files (files) {
+      console.log(files)
+      let folder = this.folder.url
+      console.log(folder)
+      await   files.forEach(async function(f, i)  {
+        console.log(f,i)
+
+        let uri = f.webkitRelativePath.length > 0 ? folder+f.webkitRelativePath : folder+f.name
+        console.log(uri, f, f.type)
+        await fc.createFile(uri, f, f.type)
+      })
+      this.updateFolder(this.folder.url)
+
+    },
   },
   methods: {
     selected(item){
