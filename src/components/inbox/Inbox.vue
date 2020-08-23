@@ -280,24 +280,29 @@ export default {
     console.log("notif")
     // Si l'utilisateur accepte d'être notifié
     if (window.Notification && Notification.permission === "granted") {
+      alert("1")
       new Notification(message);
     }
 
     // Si l'utilisateur n'a pas choisi s'il accepte d'être notifié
     // Note: à cause de Chrome, nous ne sommes pas certains que la propriété permission soit définie, par conséquent il n'est pas sûr de vérifier la valeur par défaut.
     else if (window.Notification && Notification.permission !== "denied") {
+        alert("2")
       Notification.requestPermission(function (status) {
         if (Notification.permission !== status) {
+            alert("3")
           Notification.permission = status;
         }
 
         // Si l'utilisateur est OK
         if (status === "granted") {
+            alert("4")
           new Notification(message);
         }
 
         // Sinon, revenons en à un mode d'alerte classique
         else {
+            alert("5")
           alert(message);
         }
       });
