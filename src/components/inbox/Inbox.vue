@@ -5,6 +5,8 @@
 
     inbox_urls : {{ inbox_urls }}
 
+    <button @click="notification('Notifications activated')">Activate Notifications</button>
+
     <div>
       <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
         <b-button-group class="mx-1">
@@ -107,6 +109,14 @@ export default {
   async created() {
     this.webId = this.$store.state.solid.webId
     this.inbox_urls = await this.getInbox(this.webId)
+    window.addEventListener('load', function () {
+      Notification.requestPermission(function (status) {
+        // Cela permet d'utiliser Notification.permission avec Chrome/Safari
+        if (Notification.permission !== status) {
+          Notification.permission = status;
+        }
+      });
+    });
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
   },
@@ -226,12 +236,14 @@ export default {
     }
 
     let getMessages = this.getMessages
+    let notification = this.notification
     socket.onmessage = function(msg) {
       console.log(msg)
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
         //  app.notification("nouveau message Socialid")
         //app.openLongChat()
         console.log(msg.data)
+        notification("new inbox message")
         getMessages()
         //app.todayMessages()
         //  app.agent.send("Flux", {action: "websocketMessage", url : url})
@@ -257,6 +269,42 @@ export default {
     //s.addNodeRef(schema.about, message.url)
     //  console.log(logDoc)
     await logDoc.save()
+  },
+  notification(message){
+
+    console.log("notif")
+    // Si l'utilisateur accepte d'être notifié
+    if (window.Notification && Notification.permission === "granted") {
+      new Notification(message);
+    }
+
+    // Si l'utilisateur n'a pas choisi s'il accepte d'être notifié
+    // Note: à cause de Chrome, nous ne sommes pas certains que la propriété permission soit définie, par conséquent il n'est pas sûr de vérifier la valeur par défaut.
+    else if (window.Notification && Notification.permission !== "denied") {
+      Notification.requestPermission(function (status) {
+        if (Notification.permission !== status) {
+          Notification.permission = status;
+        }
+
+        // Si l'utilisateur est OK
+        if (status === "granted") {
+          new Notification(message);
+        }
+
+        // Sinon, revenons en à un mode d'alerte classique
+        else {
+          alert(message);
+        }
+      });
+    }
+
+    // Si l'utilisateur refuse d'être notifié
+    else {
+      // We can fallback to a regular modal alert
+      alert(message);
+    }
+
+
   }
 },
 computed:{
