@@ -16,7 +16,7 @@
     </b-button-toolbar>
   </div>
 
-  Modal, {{ recipient }}
+<!--  Modal, {{ recipient }}-->
   <b-modal id="reply"
   :title="title"
   @ok="send">
@@ -138,7 +138,7 @@ export default {
         message.url = inbox+message.id+".ttl"
         console.log(message.url)
         try{
-          await fc.createFile( message.url, messageStr, "text/turtle")
+          await fc.postFile( message.url, messageStr, "text/turtle")
         }catch(e){
           alert(e)
         }

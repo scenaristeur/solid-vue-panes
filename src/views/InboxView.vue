@@ -1,6 +1,6 @@
 <template>
   <div class="inbox">
-    <h1>This is an inbox page</h1>
+    <h4>inbox</h4>
     <Inbox />
   </div>
 </template>

@@ -2,8 +2,11 @@
   <div class="inbox container">
 
     <div v-if="webId != null">
-      Inbox_urls : {{ inbox_urls}} <br>
-      inbox_acl : {{ inbox_acl }}<br>
+      <!--  Inbox_urls : {{ inbox_urls}} <br>
+      inbox_acl : {{ inbox_acl }}<br>-->
+      <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
+You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
+      </p>
       <InboxSend />
 
 
@@ -97,8 +100,8 @@ export default {
     console.log(myDatasetWithAcl)
     const accessByAgent = getAgentAccessAll(myDatasetWithAcl);
 
-const publicAccess = getPublicAccess(myDatasetWithAcl);
-  console.log("accessByAgent",accessByAgent, "publicAccess",publicAccess)
+    const publicAccess = getPublicAccess(myDatasetWithAcl);
+    console.log("accessByAgent",accessByAgent, "publicAccess",publicAccess)
 
     console.log(this.current_inbox_url)
     await this.getMessages()
