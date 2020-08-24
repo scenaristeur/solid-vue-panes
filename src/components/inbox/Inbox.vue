@@ -8,72 +8,72 @@
 
 
       <!--  <button @click="notification('Notifications activated')">Activate Notifications</button>-->
-  <!--    <button type="button" @click="notify('Notifications activated')">Show notification</button>
--->
-      <div>
-        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-          <b-button-group class="mx-1">
-            <b-button title="new" class="new" size="sm" variant="success" @click.stop="init_new()">
-              <b-icon-pencil-square  @click.stop="init_new()" variant="outline-success"></b-icon-pencil-square>
-            </b-button>
-
-          </b-button-group>
-          <!--  <b-dropdown class="mx-1" right text="menu">
-          <b-dropdown-item>Item 1</b-dropdown-item>
-          <b-dropdown-item>Item 2</b-dropdown-item>
-          <b-dropdown-item>Item 3</b-dropdown-item>
-        </b-dropdown>
+      <!--    <button type="button" @click="notify('Notifications activated')">Show notification</button>
+    -->
+    <div>
+      <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
         <b-button-group class="mx-1">
-        <b-button>Save</b-button>
-        <b-button>Cancel</b-button>
-      </b-button-group>-->
-    </b-button-toolbar>
-  </div>
+          <b-button title="new" class="new" size="sm" variant="success" @click.stop="init_new()">
+            <b-icon-pencil-square  @click.stop="init_new()" variant="outline-success"></b-icon-pencil-square>
+          </b-button>
 
-  <b-list-group>
-    <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name" class="d-flex align-items-center">
-      <MessageLine :message="m"/>
-    </b-list-group-item>
-  </b-list-group>
+        </b-button-group>
+        <!--  <b-dropdown class="mx-1" right text="menu">
+        <b-dropdown-item>Item 1</b-dropdown-item>
+        <b-dropdown-item>Item 2</b-dropdown-item>
+        <b-dropdown-item>Item 3</b-dropdown-item>
+      </b-dropdown>
+      <b-button-group class="mx-1">
+      <b-button>Save</b-button>
+      <b-button>Cancel</b-button>
+    </b-button-group>-->
+  </b-button-toolbar>
+</div>
 
-  <b-modal id="confirm-trash" title="Are you sure you want to delete" @ok="trash">
-    {{ toTrash }}
-  </b-modal>
+<b-list-group>
+  <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name" class="d-flex align-items-center">
+    <MessageLine :message="m"/>
+  </b-list-group-item>
+</b-list-group>
 
-  <b-modal id="send-modal"
-  :title="title"
-  @ok="send"
-  @cancel="selected = []">
+<b-modal id="confirm-trash" title="Are you sure you want to delete" @ok="trash">
+  {{ toTrash }}
+</b-modal>
+
+<b-modal id="send-modal"
+:title="title"
+@ok="send"
+@cancel="selected = []">
 
 
-  <div class="container flush">
-    <FriendsSelection  v-on:selected="onSelected"  v-if="showFriends == true"/>
-    <b-form-group >
+<div class="container flush">
+  <FriendsSelection  v-on:selected="onSelected"  v-if="showFriends == true"/>
+  <b-form-group >
 
-      <label for="destinataire">WebId :</label>
-      <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
-      <!--  <b-button @click="add">Add</b-button> -->
-    </b-form-group>
-  </div>
+    <label for="destinataire">WebId :</label>
+    <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
+    <!--  <b-button @click="add">Add</b-button> -->
+  </b-form-group>
+</div>
 
-  <b-list-group>
+<b-list-group>
 
-    <b-input-group prepend="Label">
-      <b-form-input v-model="label"></b-form-input>
-    </b-input-group>
+  <b-input-group prepend="Label">
+    <b-form-input v-model="label"></b-form-input>
+  </b-input-group>
 
-    <b-form-textarea
-    id="textarea-rows"
-    placeholder=""
-    v-model="content"
-    rows="8"
-    ></b-form-textarea>
+  <b-form-textarea
+  id="textarea-rows"
+  placeholder=""
+  v-model="content"
+  rows="8"
+  ></b-form-textarea>
 
-    <!--<b-list-group-item>Move</b-list-group-item>-->
-    <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
-    <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
-  </b-list-group>
+  <!--<b-list-group-item>Move</b-list-group-item>-->
+  <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
+  <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
+  <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
+</b-list-group>
 </b-modal>
 
 webId : {{ webId }}
@@ -89,6 +89,7 @@ inbox_urls : {{ inbox_urls }}
 
 <script>
 import profileMixin from '@/mixins/profileMixin'
+import aclMixin from '@/mixins/aclMixin'
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
@@ -99,7 +100,7 @@ import { schema } from 'rdf-namespaces'
 
 export default {
   name: 'Inbox',
-  mixins: [profileMixin],
+  mixins: [profileMixin, aclMixin],
   components: {
     'MessageLine': () => import('@/components/inbox/MessageLine'),
     'FriendsSelection': () => import('@/components/solid/FriendsSelection'),
@@ -121,6 +122,7 @@ export default {
   async created() {
     this.webId = this.$store.state.solid.webId
     this.inbox_urls = await this.getInbox(this.webId)
+    await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
 
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
@@ -293,6 +295,9 @@ computed:{
   },
   reply(){
     return this.$store.state.inbox.reply
+  },
+  storage(){
+    return this.$store.state.solid.storage
   }
 }
 }
