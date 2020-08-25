@@ -95,8 +95,9 @@ const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
 import { deleteFile } from "@inrupt/solid-client";
-import { fetchDocument } from 'tripledoc';
+import { fetchDocument, /*createDocument*/ } from 'tripledoc';
 import { schema } from 'rdf-namespaces'
+//const { namedNode } = require('@rdfjs/data-model');
 
 export default {
   name: 'Inbox',
@@ -143,6 +144,10 @@ export default {
       this.$bvModal.show("send-modal")
       this.recipient = r.sender
       this.label = "ref: "+r.label
+    },
+    storage(st){
+      this.inbox_log_file = st+"popock/inbox_log.ttl"
+      console.log("inbox_log_file",this.inbox_log_file)
     }
   },
   methods:{
@@ -190,29 +195,35 @@ export default {
       }*/
 
       let getInbox = this.getInbox
+
       console.log(this.selected)
       this.selected.forEach(async function(webId) {
         let inbox = await getInbox(webId)
         if (inbox != undefined && inbox.length > 0){
           message.url = inbox+message.id+".ttl"
+          //  let notif = inbox_log_file+"#"+message.id
           console.log(message.url)
           try{
             await fc.postFile( message.url, messageStr, "text/turtle")
-            var notif = inbox+"log.ttl#"+message.id
-            if( !(await fc.itemExists(inbox+"log.ttl")) ) {
-              console.log(notif,"don't exist")
-              await fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
-            }
-            //  await solid.data[notif].schema$message.add(namedNode(message.url))
+            //  await solid.data[notif].schema$about.add(namedNode(message.url))
           }catch(e){
-            alert("one"+e)
+            alert("erreur sfc.postfile"+e)
+          }
+          let recipient_storage = await solid.data[webId].storage
+          let inbox_log_file = recipient_storage+"popock/inbox_log.ttl"
+          console.log(inbox_log_file)
+        /*  let logDoc ={}
+          try{
+            logDoc = await fetchDocument(inbox_log_file);
+          } catch(e){
+            logDoc = await createDocument(inbox_log_file);
           }
 
-          const logDoc = await fetchDocument(inbox+"log.ttl");
+
           let s = logDoc.addSubject()
           s.addNodeRef(schema.about, message.url)
           //  console.log(logDoc)
-          await logDoc.save()
+          await logDoc.save()*/
         }
 
       })
@@ -237,14 +248,14 @@ export default {
     this.content = ""
   },
   async subscribe(){
-    let notif = this.current_inbox_url+"log.ttl"
+
     var websocket = "wss://"+this.current_inbox_url.split('/')[2];
     let socket = new WebSocket(websocket, ['solid.0.1.0']);
     socket.onopen = function() {
 
       //      var now = d.toLocaleTimeString(app.lang)
-      this.send('sub '+notif);
-      console.log("subscribe to INBOX",websocket, notif)
+      this.send('sub '+this.inbox_log_file);
+      console.log("subscribe to INBOX",websocket, this.inbox_log_file)
       //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
     }
 
