@@ -203,12 +203,10 @@ export default {
           message.url = inbox+message.id+".ttl"
           //  let notif = inbox_log_file+"#"+message.id
           console.log(message.url)
-          try{
+
             await fc.postFile( message.url, messageStr, "text/turtle")
             //  await solid.data[notif].schema$about.add(namedNode(message.url))
-          }catch(e){
-            alert("erreur sfc.postfile"+e)
-          }
+    
           let recipient_storage = await solid.data[webId].storage
           let inbox_log_file = recipient_storage+"popock/inbox_log.ttl"
           console.log(inbox_log_file)

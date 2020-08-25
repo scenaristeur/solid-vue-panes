@@ -89,9 +89,10 @@ export default {
       );
 
       // Now save the ACL:
-      //  await saveAclFor(inboxtWithAcl, updatedAcl);
-      console.log(updatedAcl, updatedAclFolder, saveAclFor)
-      //  await saveAclFor(inboxtWithAcl, updatedAclFolder);
+        await saveAclFor(inboxtWithAcl, updatedAclFolder);
+       await saveAclFor(inboxtWithAcl, updatedAcl);
+      console.log("DOSSIER, EVERYONE POSTER, DEFAULT EVERYONE SUBMITTERS",updatedAcl, updatedAclFolder, saveAclFor)
+
 
       //console.log("just for block",inboxtWithAcl, updatedAcl,saveAclFor);
 
