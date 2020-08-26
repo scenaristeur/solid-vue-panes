@@ -10,7 +10,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.35 - split solid login
+  0.1.36 - getinbox_urls
 </div>
 </template>
 

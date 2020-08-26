@@ -126,7 +126,7 @@ export default {
     this.webId = this.$store.state.solid.webId
     console.log("################# created inbox webid", this.webId)
     if (this.webId != null){
-      this.inbox_urls = this.$store.state.inbox.inbox_urls
+      this.inbox_urls = await this.getInboxUrls(this.webId)
       this.storage = this.$store.state.solid.storage
       await this.inbox_init("created webId non null")
       await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
