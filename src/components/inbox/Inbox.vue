@@ -122,13 +122,13 @@ export default {
     }
   },
   async created() {
-    await this.inbox_init()
+
     this.webId = this.$store.state.solid.webId
     console.log("################# created inbox webid", this.webId)
     if (this.webId != null){
       this.inbox_urls = this.$store.state.inbox.inbox_urls
       this.storage = this.$store.state.solid.storage
-      console.log(this.inbox_urls)
+      await this.inbox_init("created webId non null")
       await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
       this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
       console.log("created inbox_log_file",this.inbox_log_file)
@@ -136,6 +136,8 @@ export default {
       /*this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
       console.log("CREATED inbox_log_file",this.inbox_log_file)
       this.subscribe()*/
+    }else{
+      await this.inbox_init("created webId null")
     }
 
 
@@ -147,7 +149,7 @@ export default {
   watch: {
 
     async webId (webId) {
-      await  this.inbox_init()
+      await  this.inbox_init("webid watch")
       console.log("############# WEBID changed",webId)
       if (webId != null){
         this.inbox_urls = await this.getInboxUrls(webId)
@@ -179,8 +181,8 @@ export default {
     }
   },
   methods:{
-    async inbox_init(){
-      console.log("###################################### INBOX INIT ")
+    async inbox_init(parent){
+      console.log("###################################### INBOX INIT from ",parent)
       console.log("INIT WITH",this.webId, this.inbox_urls[0],  this.storage)
 
 
