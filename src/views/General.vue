@@ -72,7 +72,7 @@ label-for="note">
 </div>
 
 <div v-else>
-  <SolidLogin />
+  <SolidLoginButton />
 </div>
 </div>
 </template>
@@ -83,7 +83,7 @@ label-for="note">
 export default {
   name: 'General',
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
 
 /*  data: function () {

@@ -10,7 +10,7 @@
         <b-button variant="warning" @click="send" >Send</b-button>
       </b-input-group-append>
     </b-input-group>
-    <SolidLogin class="mt-3 input" v-else />
+    <SolidLoginButton class="mt-3 input" v-else />
 
 
 
@@ -20,13 +20,11 @@
 <script>
 import { fetchDocument } from 'tripledoc';
 import {/*namedNode,*/ sioc, dct, foaf } from 'rdf-namespaces'
-import SolidLogin from '@/components/solid/SolidLogin.vue'
-
 
 export default {
   name: 'ParleSend',
   components:{
-    SolidLogin
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
 
   data: function () {
@@ -47,7 +45,7 @@ export default {
         var dateObj = new Date();
         var messageId = "Msg"+dateObj.getTime()
         var date = dateObj.toISOString()
-      //  let msgUrl = this.fileUrl+messageId
+        //  let msgUrl = this.fileUrl+messageId
         /*  console.log(msgUrl)
         await solid.data[msgUrl].dct$created.add(date)
         await solid.data[msgUrl].sioc$content.add(this.message)*/

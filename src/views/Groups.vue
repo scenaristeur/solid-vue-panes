@@ -5,7 +5,7 @@
     </div>
 
     <div v-else>
-      <SolidLogin />
+      <SolidLoginButton />
     </div>
 
   </div>
@@ -21,7 +21,7 @@ export default {
 
   components: {
     'GroupsList': () => import('@/components/groups/GroupsList'),
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
   computed:{
     webId(){

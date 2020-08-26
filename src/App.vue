@@ -9,17 +9,19 @@
   <transition name="fade">
     <router-view/>
   </transition>
-  0.1.33 - log_websocket
+  <SolidTrackSession />
+  0.1.35 - split solid login
 </div>
 </template>
 
 <script>
 
-import NavBar from '@/components/layout/NavBar.vue'
+
 export default {
   name: 'App',
   components: {
-    NavBar,
+    'NavBar': () => import('@/components/layout/NavBar.vue'),
+    'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
   },
   computed: {
     progressValue(){return this.$store.state.solid.progressValue},

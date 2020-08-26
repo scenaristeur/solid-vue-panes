@@ -81,7 +81,7 @@ webId : {{ webId }}
 inbox_urls : {{ inbox_urls }}
 </div>
 <div v-else>
-  <SolidLogin />
+  <SolidLoginButton />
 </div>
 
 </div>
@@ -105,7 +105,7 @@ export default {
   components: {
     'MessageLine': () => import('@/components/inbox/MessageLine'),
     'FriendsSelection': () => import('@/components/solid/FriendsSelection'),
-    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
   },
   props: ['value'],
   data: function () {
@@ -138,7 +138,11 @@ export default {
 
   watch: {
     async webId (webId) {
-      this.inbox_urls = await this.getInbox(webId)
+      console.log("############# WEBID changed",webId)
+      if (webId != null){
+          this.inbox_urls = await this.getInbox(webId)
+      }
+
     },
     async inbox_urls(i_u){
       this.current_inbox_url = i_u[0]
@@ -223,11 +227,11 @@ export default {
           let inbox_log_file = recipient_storage+"popock/inbox_log.ttl"
           console.log(inbox_log_file)*/
           console.log("find storage of ",webId)
-        //  let recipient_storage = await solid.data[webId].storage
+          //  let recipient_storage = await solid.data[webId].storage
 
-const recipientDoc = await fetchDocument(webId);
-const rec = await recipientDoc.getSubject(webId)
-const recipient_storage = await rec.getNodeRef(space.storage)
+          const recipientDoc = await fetchDocument(webId);
+          const rec = await recipientDoc.getSubject(webId)
+          const recipient_storage = await rec.getNodeRef(space.storage)
 
 
 

@@ -10,19 +10,8 @@
 
 
             <ShapeChoose />
-            <SolidLogin />
-            <!--
-            <SolidLogin popupUri="/popup.html">
-            <div slot-scope="{ initializing, login, logout, loggedIn, webId }">
-            <button v-if="initializing">Loading...</button>
-            <button v-else-if="loggedIn" @click="logout()" :title="webId">Log out</button>
-            <button v-else @click="login()">Log In</button>
-          </div>
-        </SolidLogin>-->
+            <SolidLoginButton />
       </p>
-      <!--  <p>
-      <b-button disabled>Toggle Debug</b-button>
-    </p>-->
 
     <div class="brute-hide">
       <h5>{{ $options.name }}</h5>
@@ -59,7 +48,7 @@ export default {
   components: {
     'FormShape': () => import('@/components/crud/FormShape'),
     'FormSubmit': () => import('@/components/crud/FormSubmit'),
-    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'ShapeChoose': () => import('@/components/crud/ShapeChoose'),
 
   },

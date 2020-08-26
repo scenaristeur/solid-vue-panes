@@ -6,7 +6,7 @@
       <Editor class="col-md-6" />
     </div>
     <div v-else>
-      <SolidLogin />
+      <SolidLoginButton />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   components: {
     'Browser': () => import('@/components/explorer/Browser'),
     'Editor': () => import('@/components/explorer/Editor'),
-    'SolidLogin': () => import('@/components/solid/SolidLogin')  
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')  
   },
   data: function () {
     return {

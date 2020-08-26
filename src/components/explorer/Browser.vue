@@ -87,7 +87,7 @@
   </b-list-group>
 </div>
 <div v-else>
-  <SolidLogin />
+  <SolidLoginButton />
 </div>
 
 
@@ -145,7 +145,7 @@ const fc = new SolidFileClient(auth)
 export default {
   name: 'Browser',
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
   data: function () {
     return {

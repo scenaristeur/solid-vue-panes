@@ -69,7 +69,7 @@
 </div>
 </div>
 <div v-else>
-  <SolidLogin />
+  <SolidLoginButton />
 </div>
 
 
@@ -83,7 +83,7 @@ export default {
 
   name: 'Editor',
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
   data: function () {
     return {

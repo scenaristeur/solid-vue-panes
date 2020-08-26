@@ -11,7 +11,7 @@
 
     </div>
     <div v-else>
-      <SolidLogin />
+      <SolidLoginButton />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   name: 'Friends',
 
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'Person': () => import('@/components/layout/Person')
   },
   data: function () {

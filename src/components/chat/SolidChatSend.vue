@@ -10,7 +10,7 @@
         <b-button variant="warning" @click="send" >Send</b-button>
       </b-input-group-append>
     </b-input-group>
-    <SolidLogin class="mt-3 input" v-else />
+    <SolidLoginButton class="mt-3 input" v-else />
 
 
 
@@ -33,7 +33,7 @@ console.log("SOLID",solid)
 export default {
   name: 'SolidChatSend',
   components:{
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
 
   },
   data: function () {

@@ -6,7 +6,7 @@
       <PrivateTypeIndex :prti="indexes.prti"/>
     </div>
     <div v-else>
-      <SolidLogin />
+      <SolidLoginButton />
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 export default {
   name: 'Indexes',
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'PublicTypeIndex': () => import('@/views/PublicTypeIndex.vue'),
     'PrivateTypeIndex': () => import('@/views/PrivateTypeIndex.vue'),
   },

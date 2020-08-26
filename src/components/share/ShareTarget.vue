@@ -34,7 +34,7 @@
             <b-button class="mr-auto" variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
       </p>
       <p v-if="webId == null">
-        You need to <SolidLogin /> to your POD.
+        You need to <SolidLoginButton /> to your POD.
       </p>
 
 
@@ -73,7 +73,7 @@ const fc = new SolidFileClient(auth)
 export default {
   name: 'ShareTarget',
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
   data: function () {
     return {

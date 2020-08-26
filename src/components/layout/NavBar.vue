@@ -77,7 +77,7 @@
       </b-nav-item-dropdown>
 
 
-      <b-nav-item ><SolidLogin /></b-nav-item>
+      <b-nav-item ><SolidLoginButton /></b-nav-item>
 
 
       <b-nav-item  href="https://github.com/scenaristeur/solid-vue-panes/projects/1?add_cards_query=is%3Aopen" target="_blank">Contribute</b-nav-item>
@@ -106,8 +106,8 @@ export default {
     msg: String
   },
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin'),
-       'InboxNotif': () => import('@/components/inbox/InboxNotif')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+    'InboxNotif': () => import('@/components/inbox/InboxNotif')
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
 
-    <SolidLogin class="m-3" v-if="webId == null" />
+    <SolidLoginButton class="m-3" v-if="webId == null" />
 
     <hr>
     <ul>
@@ -147,7 +147,7 @@ Solid-vue-panes is developped around the concept of webcomponents.
 export default {
   name: 'HelloWorld',
   components: {
-    'SolidLogin': () => import('@/components/solid/SolidLogin')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
   computed:{
     webId(){
