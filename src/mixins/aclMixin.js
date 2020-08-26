@@ -93,51 +93,49 @@ export default {
           { read: false, append: true, write: false, control: false },
         );
 
-        console.log("DOSSIER, EVERYONE POSTER, DEFAULT EVERYONE SUBMITTERS",updatedAgentResourceAccess, updatedAgentResourceAccess)
+    //    console.log("DOSSIER, EVERYONE POSTER, DEFAULT EVERYONE SUBMITTERS",updatedAgentResourceAccess, updatedAgentResourceAccess)
         try{
           // Now save the ACL:
           await saveAclFor(inboxtWithAcl, updatedAgentResourceAccess);
           console.log("owner Resource")
         }catch(e){
-          console.log("todo if 409 conflict : must test if ok before patch",e)
-        }
-        try{
-          await saveAclFor(inboxtWithAcl, updatedAgentDefaultAccess);
-          console.log("owner default")
-        }catch(e){
-          console.log("todo if 409 conflict : must test if ok before patch",e)
-        }
-        try{
-          await saveAclFor(inboxtWithAcl, updatedPublicResourceAccess);
-          console.log("posters Resource")
-        }catch(e){
-          console.log("todo if 409 conflict : must test if ok before patch",e)    
-        }
-        try{
-          await saveAclFor(inboxtWithAcl, updatedPublicDefaultAccess);
-          console.log("submitters Default")
+          console.log("todo if 409 conflict : must test if ok before patch" /*,e*/)          }
+          try{
+            await saveAclFor(inboxtWithAcl, updatedAgentDefaultAccess);
+            console.log("owner default")
+          }catch(e){
+            console.log("todo if 409 conflict : must test if ok before patch" /*,e*/)          }
+            try{
+              await saveAclFor(inboxtWithAcl, updatedPublicResourceAccess);
+              console.log("posters Resource")
+            }catch(e){
+              console.log("todo if 409 conflict : must test if ok before patch" /*,e*/)
+            }
+            try{
+              await saveAclFor(inboxtWithAcl, updatedPublicDefaultAccess);
+              console.log("submitters Default")
 
-        }catch(e){
-          console.log("todo if 409 conflict : must test if ok before patch",e)
-        }
+            }catch(e){
+              console.log("todo if 409 conflict : must test if ok before patch" /*,e*/)
+            }
 
 
 
 
-        //console.log("just for block",inboxtWithAcl, updatedAcl,saveAclFor);
+            //console.log("just for block",inboxtWithAcl, updatedAcl,saveAclFor);
 
 
 
-      }catch(e){
-        alert(e)
+          }catch(e){
+            alert(e)
+          }
+
+          // cleaning for debug
+          //await fc.deleteFile(inbox_log_file)
+
+
+
+        },
+
       }
-
-      // cleaning for debug
-      //await fc.deleteFile(inbox_log_file)
-
-
-
-    },
-
-  }
-}
+    }

@@ -125,12 +125,17 @@ export default {
     this.inbox_urls = await this.getInbox(this.webId)
     if (this.webId != null){
       await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
+      this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
+      console.log("CREATED inbox_log_file",this.inbox_log_file)
+      this.subscribe()
     }
+
 
 
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
   },
+
   watch: {
     async webId (webId) {
       this.inbox_urls = await this.getInbox(webId)
@@ -140,7 +145,7 @@ export default {
       if (this.current_inbox_url != null){
         console.log(this.current_inbox_url)
         this.getMessages()
-        this.subscribe()
+
       }
     },
     reply(r){
@@ -152,7 +157,8 @@ export default {
     },
     storage(st){
       this.inbox_log_file = st+"popock/inbox_log.ttl"
-      console.log("inbox_log_file",this.inbox_log_file)
+      console.log("STORAGE WATCH inbox_log_file",this.inbox_log_file)
+      this.subscribe()
     }
   },
   methods:{
@@ -254,11 +260,12 @@ async subscribe(){
 
   var websocket = "wss://"+this.current_inbox_url.split('/')[2];
   let socket = new WebSocket(websocket, ['solid.0.1.0']);
+  let inbox_log_file = this.inbox_log_file
   socket.onopen = function() {
 
     //      var now = d.toLocaleTimeString(app.lang)
     this.send('sub '+this.inbox_log_file);
-    console.log("subscribe to INBOX",websocket, this.inbox_log_file)
+    console.log("subscribe to INBOX",websocket, inbox_log_file)
     //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
   }
 
