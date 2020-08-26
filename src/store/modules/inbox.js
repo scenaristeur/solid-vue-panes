@@ -3,7 +3,9 @@
 // initial state
 const state = () => ({
   reply : {},
-  toTrash: {}
+  toTrash: {},
+  inbox_urls: "",
+
 
 })
 
@@ -21,7 +23,9 @@ const actions = {
 
 // mutations
 const mutations = {
-
+  setInboxUrls (state, inbox_urls) {
+    state.inbox_urls = inbox_urls
+  },
   setReply (state, reply) {
     state.reply = reply
   },

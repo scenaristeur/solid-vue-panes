@@ -2,9 +2,7 @@
   <div class="inbox container">
     webId : {{ webId }}
     <div v-if="webId != null">
-      <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
-        You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
-      </p>
+
 
 
       <!--  <button @click="notification('Notifications activated')">Activate Notifications</button>-->
@@ -79,6 +77,9 @@
 webId : {{ webId }}
 
 inbox_urls : {{ inbox_urls }}
+
+<p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
+</p>
 </div>
 <div v-else>
   <SolidLoginButton />
@@ -122,9 +123,14 @@ export default {
   },
   async created() {
     this.webId = this.$store.state.solid.webId
-    this.inbox_urls = await this.getInbox(this.webId)
+    console.log("################# created inbox webid", this.webId)
     if (this.webId != null){
+      this.inbox_urls = this.$store.state.inbox.inbox_urls
+      this.storage = this.$store.state.solid.storage
       await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
+      this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
+      console.log("created inbox_log_file",this.inbox_log_file)
+      this.subscribe()
       /*this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
       console.log("CREATED inbox_log_file",this.inbox_log_file)
       this.subscribe()*/
@@ -140,7 +146,7 @@ export default {
     async webId (webId) {
       console.log("############# WEBID changed",webId)
       if (webId != null){
-          this.inbox_urls = await this.getInbox(webId)
+        this.inbox_urls = await this.getInboxUrls(webId)
       }
 
     },
@@ -161,9 +167,12 @@ export default {
       this.label = "ref: "+r.label
     },
     storage(st){
-      this.inbox_log_file = st+"popock/inbox_log.ttl"
-      console.log("STORAGE WATCH inbox_log_file",this.inbox_log_file)
-      this.subscribe()
+      if (st != null){
+        this.inbox_log_file = st+"popock/inbox_log.ttl"
+        console.log("STORAGE WATCH inbox_log_file",this.inbox_log_file)
+        this.subscribe()
+      }
+
     }
   },
   methods:{
@@ -210,13 +219,14 @@ export default {
         this.selected.push( this.r_inbox[0])
       }*/
 
-      let getInbox = this.getInbox
+      let getInboxUrls = this.getInboxUrls
 
       console.log(this.selected)
       this.selected.forEach(async function(webId) {
-        let inbox = await getInbox(webId)
-        if (inbox != undefined && inbox.length > 0){
-          message.url = inbox+message.id+".ttl"
+        let inbox_urls = await getInboxUrls(webId)
+        if (inbox_urls != undefined && inbox_urls.length > 0){
+          console.log("INBOX",inbox_urls)
+          message.url = inbox_urls[0]+message.id+".ttl"
           //  let notif = inbox_log_file+"#"+message.id
           console.log(message.url)
 
@@ -336,8 +346,10 @@ computed:{
   reply(){
     return this.$store.state.inbox.reply
   },
-  storage(){
-    return this.$store.state.solid.storage
+  storage:{
+    get: function() { return this.$store.state.solid.storage},
+    set: function() {}
+
   }
 }
 }

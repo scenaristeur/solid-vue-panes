@@ -12,11 +12,6 @@ import profileMixin from '@/mixins/profileMixin'
 export default {
   name: 'SolidLogin',
   mixins: [profileMixin],
-  data: function () {
-    return {
-      //  webId: null
-    }
-  },
   computed:{
     webId() {
       return this.$store.state.solid.webId
@@ -24,23 +19,17 @@ export default {
   },
   methods: {
     login(){
-
       console.log("login")
       this.popupLogin()
     },
     async logout(){
       await  auth.logout()
-      //  localStorage.removeItem("solid-auth-client");
     },
     async popupLogin() {
       let session = await auth.currentSession();
-      console.log("Current session before login" ,session)
-      let popupUri = './dist-popup/popup.html';
-      //  let popupUri = 'https://solid.community/common/popup.html';
+      let popupUri = './dist-popup/popup.html';  //  let popupUri = 'https://solid.community/common/popup.html';
       if (!session){
         session = await auth.popupLogin({ popupUri });
-      }else{
-        console.log(session)
       }
     }
   }

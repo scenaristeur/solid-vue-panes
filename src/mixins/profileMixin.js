@@ -33,7 +33,7 @@ export default {
       }
       return profile
     },
-    getInbox: async function(webId){
+    getInboxUrls: async function(webId){
       let inbox_urls = []
       try{
         let profileDoc = await fetchDocument(webId);
