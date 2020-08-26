@@ -123,7 +123,10 @@ export default {
   async created() {
     this.webId = this.$store.state.solid.webId
     this.inbox_urls = await this.getInbox(this.webId)
-    await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
+    if (this.webId != null){
+      await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
+    }
+
 
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
@@ -134,9 +137,11 @@ export default {
     },
     async inbox_urls(i_u){
       this.current_inbox_url = i_u[0]
-      console.log(this.current_inbox_url)
-      this.getMessages()
-      this.subscribe()
+      if (this.current_inbox_url != null){
+        console.log(this.current_inbox_url)
+        this.getMessages()
+        this.subscribe()
+      }
     },
     reply(r){
       console.log("reply",r)
@@ -204,95 +209,95 @@ export default {
           //  let notif = inbox_log_file+"#"+message.id
           console.log(message.url)
 
-            await fc.postFile( message.url, messageStr, "text/turtle")
-            //  await solid.data[notif].schema$about.add(namedNode(message.url))
-    
+          await fc.postFile( message.url, messageStr, "text/turtle")
+          //  await solid.data[notif].schema$about.add(namedNode(message.url))
+
           let recipient_storage = await solid.data[webId].storage
           let inbox_log_file = recipient_storage+"popock/inbox_log.ttl"
           console.log(inbox_log_file)
-        /*  let logDoc ={}
+          /*  let logDoc ={}
           try{
-            logDoc = await fetchDocument(inbox_log_file);
-          } catch(e){
-            logDoc = await createDocument(inbox_log_file);
-          }
-
-
-          let s = logDoc.addSubject()
-          s.addNodeRef(schema.about, message.url)
-          //  console.log(logDoc)
-          await logDoc.save()*/
-        }
-
-      })
-
-
-    }else{
-      alert("content must not be empty")
-    }
-
-  },
-  onSelected: function (selected) {
-    this.selected = selected
-    console.log(this.selected)
-  },
-  init_new(){
-    console.log("new")
-    //  this.new = true
-    this.showFriends = true
-    this.$bvModal.show("send-modal")
-    this.recipient = null
-    this.label = ""
-    this.content = ""
-  },
-  async subscribe(){
-
-    var websocket = "wss://"+this.current_inbox_url.split('/')[2];
-    let socket = new WebSocket(websocket, ['solid.0.1.0']);
-    socket.onopen = function() {
-
-      //      var now = d.toLocaleTimeString(app.lang)
-      this.send('sub '+this.inbox_log_file);
-      console.log("subscribe to INBOX",websocket, this.inbox_log_file)
-      //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
-    }
-
-    let getMessages = this.getMessages
-    socket.onmessage = function(msg) {
-      console.log(msg)
-      if (msg.data && msg.data.slice(0, 3) === 'pub') {
-        //  app.notification("nouveau message Socialid")
-        //app.openLongChat()
-        console.log(msg.data)
-        //  notification("new inbox message")
-        getMessages()
-
-        //app.todayMessages()
-        //  app.agent.send("Flux", {action: "websocketMessage", url : url})
+          logDoc = await fetchDocument(inbox_log_file);
+        } catch(e){
+        logDoc = await createDocument(inbox_log_file);
       }
-    };
 
 
-  },
-  async getMessages(){
-    this.inbox = await fc.readFolder(this.current_inbox_url)
-    this.notify(this.inbox.files.length+ " messages !!!")
-  },
-  async trash() {
-    console.log(this.toTrash)
-    //  await fc.deleteFile( this.toTrash, {withAcl:false})
+      let s = logDoc.addSubject()
+      s.addNodeRef(schema.about, message.url)
+      //  console.log(logDoc)
+      await logDoc.save()*/
+    }
 
-    await deleteFile(
-      this.toTrash
-    );
-    console.log("File deleted !");
-    const logDoc = await fetchDocument(this.current_inbox_url+"log.ttl");
-    let s = logDoc.findSubject(schema.about, this.toTrash)
-    logDoc.removeSubject(s)
-    //s.addNodeRef(schema.about, message.url)
-    //  console.log(logDoc)
-    await logDoc.save()
+  })
+
+
+}else{
+  alert("content must not be empty")
+}
+
+},
+onSelected: function (selected) {
+  this.selected = selected
+  console.log(this.selected)
+},
+init_new(){
+  console.log("new")
+  //  this.new = true
+  this.showFriends = true
+  this.$bvModal.show("send-modal")
+  this.recipient = null
+  this.label = ""
+  this.content = ""
+},
+async subscribe(){
+
+  var websocket = "wss://"+this.current_inbox_url.split('/')[2];
+  let socket = new WebSocket(websocket, ['solid.0.1.0']);
+  socket.onopen = function() {
+
+    //      var now = d.toLocaleTimeString(app.lang)
+    this.send('sub '+this.inbox_log_file);
+    console.log("subscribe to INBOX",websocket, this.inbox_log_file)
+    //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
   }
+
+  let getMessages = this.getMessages
+  socket.onmessage = function(msg) {
+    console.log(msg)
+    if (msg.data && msg.data.slice(0, 3) === 'pub') {
+      //  app.notification("nouveau message Socialid")
+      //app.openLongChat()
+      console.log(msg.data)
+      //  notification("new inbox message")
+      getMessages()
+
+      //app.todayMessages()
+      //  app.agent.send("Flux", {action: "websocketMessage", url : url})
+    }
+  };
+
+
+},
+async getMessages(){
+  this.inbox = await fc.readFolder(this.current_inbox_url)
+  this.notify(this.inbox.files.length+ " messages !!!")
+},
+async trash() {
+  console.log(this.toTrash)
+  //  await fc.deleteFile( this.toTrash, {withAcl:false})
+
+  await deleteFile(
+    this.toTrash
+  );
+  console.log("File deleted !");
+  const logDoc = await fetchDocument(this.current_inbox_url+"log.ttl");
+  let s = logDoc.findSubject(schema.about, this.toTrash)
+  logDoc.removeSubject(s)
+  //s.addNodeRef(schema.about, message.url)
+  //  console.log(logDoc)
+  await logDoc.save()
+}
 },
 computed:{
   webId: {

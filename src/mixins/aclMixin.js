@@ -8,10 +8,11 @@ import {
   //createAcl,
   createAclFromFallbackAcl,
   getResourceAcl,
-  //setAgentResourceAccess,
   getAgentAccess,
   //  getAgentAccessAll,
   //  setAgentResourceAccess,
+  setAgentResourceAccess,
+  setAgentDefaultAccess,
   setPublicResourceAccess,
   setPublicDefaultAccess,
   saveAclFor,
@@ -72,42 +73,71 @@ export default {
           resourceAcl = getResourceAcl(inboxtWithAcl);
         }
 
-        // Give someone Control access to the given Resource:
-        /*  const updatedAcl = setAgentResourceAccess(
-        resourceAcl,
-        inbox_url,
-        { read: false, append: true, write: false, control: true }
-      );*/
 
-      const updatedAclFolder = setPublicResourceAccess(
-        resourceAcl,
-        { read: true, append: true, write: false, control: false },
-      );
-      const updatedAcl = setPublicDefaultAccess(
-        resourceAcl,
-        { read: false, append: true, write: false, control: false },
-      );
+        const updatedAgentResourceAccess = setAgentResourceAccess(
+          resourceAcl,
+          webId,
+          { read: true, append: true, write: true, control: true },
+        );
+        const updatedAgentDefaultAccess = setAgentDefaultAccess(
+          resourceAcl,
+          webId,
+          { read: true, append: true, write: true, control: true },
+        );
+        const updatedPublicResourceAccess = setPublicResourceAccess(
+          resourceAcl,
+          { read: true, append: true, write: false, control: false },
+        );
+        const updatedPublicDefaultAccess = setPublicDefaultAccess(
+          resourceAcl,
+          { read: false, append: true, write: false, control: false },
+        );
 
-      // Now save the ACL:
-        await saveAclFor(inboxtWithAcl, updatedAclFolder);
-       await saveAclFor(inboxtWithAcl, updatedAcl);
-      console.log("DOSSIER, EVERYONE POSTER, DEFAULT EVERYONE SUBMITTERS",updatedAcl, updatedAclFolder, saveAclFor)
+        console.log("DOSSIER, EVERYONE POSTER, DEFAULT EVERYONE SUBMITTERS",updatedAgentResourceAccess, updatedAgentResourceAccess)
+        try{
+          // Now save the ACL:
+          await saveAclFor(inboxtWithAcl, updatedAgentResourceAccess);
+          console.log("owner Resource")
+        }catch(e){
+          console.log("todo if 409 conflict : must test if ok before patch",e)
+        }
+        try{
+          await saveAclFor(inboxtWithAcl, updatedAgentDefaultAccess);
+          console.log("owner default")
+        }catch(e){
+          console.log("todo if 409 conflict : must test if ok before patch",e)
+        }
+        try{
+          await saveAclFor(inboxtWithAcl, updatedPublicResourceAccess);
+          console.log("posters Resource")
+        }catch(e){
+          console.log("todo if 409 conflict : must test if ok before patch",e)    
+        }
+        try{
+          await saveAclFor(inboxtWithAcl, updatedPublicDefaultAccess);
+          console.log("submitters Default")
+
+        }catch(e){
+          console.log("todo if 409 conflict : must test if ok before patch",e)
+        }
 
 
-      //console.log("just for block",inboxtWithAcl, updatedAcl,saveAclFor);
+
+
+        //console.log("just for block",inboxtWithAcl, updatedAcl,saveAclFor);
 
 
 
-    }catch(e){
-      alert(e)
-    }
+      }catch(e){
+        alert(e)
+      }
 
-    // cleaning for debug
-    //await fc.deleteFile(inbox_log_file)
+      // cleaning for debug
+      //await fc.deleteFile(inbox_log_file)
 
 
 
-  },
+    },
 
-}
+  }
 }
