@@ -42,13 +42,14 @@ export default {
         logDoc = await fetchDocument(inbox_log_file);
       } catch(e){
         logDoc = await createDocument(inbox_log_file);
+        let s = logDoc.addSubject()
+        s.addNodeRef(schema.about, "init")
+        //  console.log(logDoc)
+        await logDoc.save()
       }
 
 
-      let s = logDoc.addSubject()
-      s.addNodeRef(schema.about, "init")
-      //  console.log(logDoc)
-      await logDoc.save()
+
 
 
 

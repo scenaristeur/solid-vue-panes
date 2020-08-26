@@ -94,9 +94,9 @@ import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
-import { deleteFile } from "@inrupt/solid-client";
+//import { deleteFile } from "@inrupt/solid-client";
 import { fetchDocument, createDocument } from 'tripledoc';
-import { schema } from 'rdf-namespaces'
+import { schema, space } from 'rdf-namespaces'
 //const { namedNode } = require('@rdfjs/data-model');
 
 export default {
@@ -152,6 +152,7 @@ export default {
       console.log("reply",r)
       this.showFriends = false
       this.$bvModal.show("send-modal")
+      this.selected = []
       this.recipient = r.sender
       this.label = "ref: "+r.label
     },
@@ -222,7 +223,15 @@ export default {
           let inbox_log_file = recipient_storage+"popock/inbox_log.ttl"
           console.log(inbox_log_file)*/
           console.log("find storage of ",webId)
-          let recipient_storage = await solid.data[webId].storage
+        //  let recipient_storage = await solid.data[webId].storage
+
+const recipientDoc = await fetchDocument(webId);
+const rec = await recipientDoc.getSubject(webId)
+const recipient_storage = await rec.getNodeRef(space.storage)
+
+
+
+
           console.log(`${recipient_storage}`)
           let recipient_log_file = `${recipient_storage}`+"popock/inbox_log.ttl"
           console.log(recipient_log_file)
@@ -257,6 +266,7 @@ export default {
     //  this.new = true
     this.showFriends = true
     this.$bvModal.show("send-modal")
+    this.selected = []
     this.recipient = null
     this.label = ""
     this.content = ""
@@ -299,11 +309,11 @@ export default {
     console.log(this.toTrash)
     //  await fc.deleteFile( this.toTrash, {withAcl:false})
 
-    await deleteFile(
+    await fc.deleteFile(
       this.toTrash
     );
     console.log("File deleted !");
-    const logDoc = await fetchDocument(this.current_inbox_url+"log.ttl");
+    const logDoc = await fetchDocument(this.inbox_log_file);
     let s = logDoc.findSubject(schema.about, this.toTrash)
     logDoc.removeSubject(s)
     //s.addNodeRef(schema.about, message.url)

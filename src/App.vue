@@ -9,7 +9,7 @@
   <transition name="fade">
     <router-view/>
   </transition>
-  0.1.32 - log_acl
+  0.1.33 - log_websocket
 </div>
 </template>
 
