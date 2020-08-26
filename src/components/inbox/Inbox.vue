@@ -95,7 +95,7 @@ const SolidFileClient = window.SolidFileClient
 console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
 import { deleteFile } from "@inrupt/solid-client";
-import { fetchDocument, /*createDocument*/ } from 'tripledoc';
+import { fetchDocument, createDocument } from 'tripledoc';
 import { schema } from 'rdf-namespaces'
 //const { namedNode } = require('@rdfjs/data-model');
 
@@ -125,9 +125,9 @@ export default {
     this.inbox_urls = await this.getInbox(this.webId)
     if (this.webId != null){
       await this.configureInbox(this.inbox_urls[0], this.webId, this.storage)
-      this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
+      /*this.inbox_log_file = this.storage+"popock/inbox_log.ttl"
       console.log("CREATED inbox_log_file",this.inbox_log_file)
-      this.subscribe()
+      this.subscribe()*/
     }
 
 
@@ -218,93 +218,98 @@ export default {
           await fc.postFile( message.url, messageStr, "text/turtle")
           //  await solid.data[notif].schema$about.add(namedNode(message.url))
 
-          let recipient_storage = await solid.data[webId].storage
+          /*    let recipient_storage = await solid.data[webId].storage
           let inbox_log_file = recipient_storage+"popock/inbox_log.ttl"
-          console.log(inbox_log_file)
-          /*  let logDoc ={}
+          console.log(inbox_log_file)*/
+          console.log("find storage of ",webId)
+          let recipient_storage = await solid.data[webId].storage
+          console.log(`${recipient_storage}`)
+          let recipient_log_file = `${recipient_storage}`+"popock/inbox_log.ttl"
+          console.log(recipient_log_file)
+          let logDoc ={}
           try{
-          logDoc = await fetchDocument(inbox_log_file);
-        } catch(e){
-        logDoc = await createDocument(inbox_log_file);
+            logDoc = await fetchDocument(recipient_log_file);
+          } catch(e){
+            logDoc = await createDocument(recipient_log_file);
+          }
+
+
+          let s = logDoc.addSubject()
+          s.addNodeRef(schema.about, message.url)
+          //  console.log(logDoc)
+          await logDoc.save()
+        }
+
+      })
+
+
+    }else{
+      alert("content must not be empty")
+    }
+
+  },
+  onSelected: function (selected) {
+    this.selected = selected
+    console.log(this.selected)
+  },
+  init_new(){
+    console.log("new")
+    //  this.new = true
+    this.showFriends = true
+    this.$bvModal.show("send-modal")
+    this.recipient = null
+    this.label = ""
+    this.content = ""
+  },
+  async subscribe(){
+
+    var websocket = "wss://"+this.inbox_log_file.split('/')[2];
+    let socket = new WebSocket(websocket, ['solid.0.1.0']);
+    let inbox_log_file = this.inbox_log_file
+    socket.onopen = function() {
+
+      //      var now = d.toLocaleTimeString(app.lang)
+      this.send('sub '+inbox_log_file);
+      console.log("subscribe to INBOX",websocket, inbox_log_file)
+      //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
+    }
+
+    let getMessages = this.getMessages
+    socket.onmessage = function(msg) {
+      console.log(msg)
+      if (msg.data && msg.data.slice(0, 3) === 'pub') {
+        //  app.notification("nouveau message Socialid")
+        //app.openLongChat()
+        console.log(msg.data)
+        //  notification("new inbox message")
+        getMessages()
+
+        //app.todayMessages()
+        //  app.agent.send("Flux", {action: "websocketMessage", url : url})
       }
+    };
 
 
-      let s = logDoc.addSubject()
-      s.addNodeRef(schema.about, message.url)
-      //  console.log(logDoc)
-      await logDoc.save()*/
-    }
+  },
+  async getMessages(){
+    this.inbox = await fc.readFolder(this.current_inbox_url)
+    this.notify(this.inbox.files.length+ " messages !!!")
+  },
+  async trash() {
+    console.log(this.toTrash)
+    //  await fc.deleteFile( this.toTrash, {withAcl:false})
 
-  })
-
-
-}else{
-  alert("content must not be empty")
-}
-
-},
-onSelected: function (selected) {
-  this.selected = selected
-  console.log(this.selected)
-},
-init_new(){
-  console.log("new")
-  //  this.new = true
-  this.showFriends = true
-  this.$bvModal.show("send-modal")
-  this.recipient = null
-  this.label = ""
-  this.content = ""
-},
-async subscribe(){
-
-  var websocket = "wss://"+this.current_inbox_url.split('/')[2];
-  let socket = new WebSocket(websocket, ['solid.0.1.0']);
-  let inbox_log_file = this.inbox_log_file
-  socket.onopen = function() {
-
-    //      var now = d.toLocaleTimeString(app.lang)
-    this.send('sub '+this.inbox_log_file);
-    console.log("subscribe to INBOX",websocket, inbox_log_file)
-    //  app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
+    await deleteFile(
+      this.toTrash
+    );
+    console.log("File deleted !");
+    const logDoc = await fetchDocument(this.current_inbox_url+"log.ttl");
+    let s = logDoc.findSubject(schema.about, this.toTrash)
+    logDoc.removeSubject(s)
+    //s.addNodeRef(schema.about, message.url)
+    //  console.log(logDoc)
+    await logDoc.save()
   }
-
-  let getMessages = this.getMessages
-  socket.onmessage = function(msg) {
-    console.log(msg)
-    if (msg.data && msg.data.slice(0, 3) === 'pub') {
-      //  app.notification("nouveau message Socialid")
-      //app.openLongChat()
-      console.log(msg.data)
-      //  notification("new inbox message")
-      getMessages()
-
-      //app.todayMessages()
-      //  app.agent.send("Flux", {action: "websocketMessage", url : url})
-    }
-  };
-
-
-},
-async getMessages(){
-  this.inbox = await fc.readFolder(this.current_inbox_url)
-  this.notify(this.inbox.files.length+ " messages !!!")
-},
-async trash() {
-  console.log(this.toTrash)
-  //  await fc.deleteFile( this.toTrash, {withAcl:false})
-
-  await deleteFile(
-    this.toTrash
-  );
-  console.log("File deleted !");
-  const logDoc = await fetchDocument(this.current_inbox_url+"log.ttl");
-  let s = logDoc.findSubject(schema.about, this.toTrash)
-  logDoc.removeSubject(s)
-  //s.addNodeRef(schema.about, message.url)
-  //  console.log(logDoc)
-  await logDoc.save()
-}
 },
 computed:{
   webId: {

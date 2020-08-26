@@ -9,7 +9,7 @@
   <transition name="fade">
     <router-view/>
   </transition>
-  0.1.31 - aclInbox
+  0.1.32 - log_acl
 </div>
 </template>
 

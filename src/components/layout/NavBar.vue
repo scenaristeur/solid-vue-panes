@@ -2,6 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand to="/">PoPock</b-navbar-brand>
+      <InboxNotif />
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -96,7 +97,7 @@
 </template>
 
 <script>
-import SolidLogin from '@/components/solid/SolidLogin.vue'
+//import SolidLogin from '@/components/solid/SolidLogin.vue'
 
 
 export default {
@@ -105,8 +106,8 @@ export default {
     msg: String
   },
   components: {
-    SolidLogin,
-    //    'ShareButton': () => import('@/components/share/ShareButton')
+    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+       'InboxNotif': () => import('@/components/inbox/InboxNotif')
   }
 }
 </script>
