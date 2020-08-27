@@ -31,6 +31,8 @@ const getters = {}
 const actions = {
   async setWebId (context, webId) {
     //  console.log(webId)
+    context.commit('setWebId', webId)
+  //  context.dispatch('inbox/setWebId', webId, { root: true })
     if ( webId != null ){
       context.commit('setWebId', webId)
       context.commit('setProgress', 1)
@@ -41,10 +43,13 @@ const actions = {
       context.commit('setFolder', await fc.readFolder(`${storage}`))
       context.commit('setProgress', 3)
       context.commit('setProgress', 14)
+      let user = {webId: webId, storage:storage}
+      context.dispatch('inbox/setUser', user, { root: true })
+
     }else{
-      context.commit('setWebId', null)
       context.commit('setStorage', null)
       context.commit('setFolder', null)
+      context.dispatch('inbox/setUser', null, { root: true })
     }
   },
   async updateFolder (context, url) {
@@ -88,7 +93,7 @@ async writeFile(context, file){
 // mutations
 const mutations = {
   setWebId (state, webId) {
-  ///  console.log("webId",webId)
+    ///  console.log("webId",webId)
     state.webId = webId
   },
   setProfile (state, profile){
@@ -99,11 +104,11 @@ const mutations = {
   },
 
   setStorage (state, st) {
-  //  console.log("storage",st)
+    //  console.log("storage",st)
     state.storage = st
   },
   setFolder (state, f) {
-  //  console.log("folder",f)
+    //  console.log("folder",f)
     //  console.log(f.links.meta)
     state.folder = f
   },

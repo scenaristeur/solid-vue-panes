@@ -10,7 +10,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.37 - init
+  0.1.38 - move to notif
 </div>
 </template>
 

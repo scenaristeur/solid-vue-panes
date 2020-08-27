@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import WebSocketMixin from '@/mixins/WebSocketMixin' // manage WebSocket
 import ParleMixin from '@/mixins/ParleMixin' // Manage folders & files
 import { fetchDocument } from 'tripledoc';
 //import auth from 'solid-auth-client';
@@ -87,7 +86,7 @@ export default {
   props: {
     msg: String
   },
-  mixins: [ParleMixin,  WebSocketMixin ],
+  mixins: [ParleMixin ],
   data: function () {
     return {
       date: "",
@@ -120,6 +119,16 @@ export default {
     }.bind(this)
   },
   methods: {
+    createWebSocket(){
+      let root = this.$store.state.parle.root
+      let withoutProtocol = root.split('//')[1]
+      let sock = withoutProtocol.split('/')[0]+"/"
+      let socket = new WebSocket('wss://'+sock, ['solid.0.1.0']);
+      this.$store.commit('websocket/setSocket', socket)
+    },
+    addSubscription(fileUrl){
+      this.$store.state.websocket.socket.send('sub '+fileUrl);
+    },
     bascule(p){
       console.log("Part",p)
       this.$store.commit('parle/setFileUrl', p)

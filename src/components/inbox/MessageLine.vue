@@ -17,7 +17,7 @@
 
 
       <div class="created mt-2">
-        {{dateSent}}
+        {{dateSent.toLocaleString()}}
         <b-button size="sm" variant="outline-danger" @click.stop="init_trash()">
           <b-icon-trash  variant="danger"></b-icon-trash>
         </b-button>

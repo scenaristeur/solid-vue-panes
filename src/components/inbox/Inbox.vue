@@ -3,11 +3,6 @@
     webId : {{ webId }}
     <div v-if="webId != null">
 
-
-
-      <!--  <button @click="notification('Notifications activated')">Activate Notifications</button>-->
-      <!--    <button type="button" @click="notify('Notifications activated')">Show notification</button>
-    -->
     <div>
       <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
         <b-button-group class="mx-1">
@@ -16,15 +11,6 @@
           </b-button>
 
         </b-button-group>
-        <!--  <b-dropdown class="mx-1" right text="menu">
-        <b-dropdown-item>Item 1</b-dropdown-item>
-        <b-dropdown-item>Item 2</b-dropdown-item>
-        <b-dropdown-item>Item 3</b-dropdown-item>
-      </b-dropdown>
-      <b-button-group class="mx-1">
-      <b-button>Save</b-button>
-      <b-button>Cancel</b-button>
-    </b-button-group>-->
   </b-button-toolbar>
 </div>
 
@@ -184,9 +170,6 @@ export default {
     async inbox_init(parent){
       console.log("###################################### INBOX INIT from ",parent)
       console.log("INIT WITH",this.webId, this.inbox_urls[0],  this.storage)
-
-
-
     },
     notify (message= 'This is an example!') {
       // https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification#Parameters
@@ -330,6 +313,7 @@ export default {
   async getMessages(){
     this.inbox = await fc.readFolder(this.current_inbox_url)
     this.notify(this.inbox.files.length+ " messages !!!")
+    this.$store.commit('inbox/setInbox', this.inbox)
   },
   async trash() {
     console.log(this.toTrash)
