@@ -25,7 +25,7 @@ export default {
         this.$store.commit('solid/setFriends', [])
         this.$store.commit('solid/setProfile', {})
         this.$store.commit('solid/setIndexes', {})
-        this.$store.commit('inbox/setInboxUrls', [])
+        //this.$store.commit('inbox/setInboxUrls', [])
       } else{
         this.webId = session.webId
         console.log(`The user is ${session.webId}`)
@@ -36,8 +36,8 @@ export default {
         this.$store.commit('solid/setProfile', profile)
         let indexes = await this.getIndexes(this.webId)
         this.$store.commit('solid/setIndexes', indexes)
-        let inbox_urls = await this.getInboxUrls(this.webId)
-        this.$store.commit('inbox/setInboxUrls', inbox_urls)
+      //  let inbox_urls = await this.getInboxUrls(this.webId)
+      //  this.$store.commit('inbox/setInboxUrls', inbox_urls)
       }
     })
   },

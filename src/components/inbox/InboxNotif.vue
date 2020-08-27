@@ -3,16 +3,12 @@
 
     <div class="text-center">
 
-<!--
-      webId : {{ webId }} <br>
 
-      storage : {{ storage }}<br>
-
-      log : {{ inbox_log_file}} <br>
-      urls : {{ inbox_urls}}
-      <button @click="show = !show">Permuter l'affichage</button> -->
+      <!--{{ config }}<br>
+      {{ inbox }}
+      <button @click="show = !show">Permuter l'affichage</button>-->
       <transition name="bounce">
-        <b-badge v-if="show"  variant="light" @click="open_inbox">{{inbox_cnt}}</b-badge>
+        <b-badge class="btn" v-if="show"  variant="light" @click="open_inbox">{{inbox_cnt}} messages</b-badge>
       </transition>
 
 
@@ -44,9 +40,9 @@ export default {
     //  this.updateFriends()
   },
   watch: {
-    storage (st) {
+    config (config) {
       //  '$route' (to, from) {
-      console.log(st)
+      console.log(config)
     },
     inbox(inbox){
       console.log(inbox.files.length)
@@ -54,39 +50,40 @@ export default {
         this.inbox_cnt = inbox.files.length
         this.show = true
       }
-
     }
   },
   methods:{
     open_inbox(){
-      this.$router.push({ path: '/inbox' })
+      if (this.$route.path !== "/inbox"){
+        this.$router.push({ path: '/inbox' })
+      }
       this.show = false
-      console.log(this.$router)
     }
-    /*  async updateFriends(){
-    this.friends = await this.getFriends(this.webId)
-  }*/
 },
 computed:{
-  storage(){
-    return this.$store.state.solid.storage
-  },
-  inbox: {
-    get: function() { return this.$store.state.inbox.inbox},
-    set: function() {}
-  },
-  webId: {
-    get: function() { return this.$store.state.inbox.webId},
-    set: function() {}
-  },
-  inbox_log_file: {
-    get: function() { return this.$store.state.inbox.inbox_log_file},
-    set: function() {}
-  },
-  inbox_urls: {
-    get: function() { return this.$store.state.inbox.inbox_urls},
-    set: function() {}
-  },
+  /*  storage(){
+  return this.$store.state.solid.storage
+},
+,
+webId: {
+get: function() { return this.$store.state.inbox.webId},
+set: function() {}
+},
+inbox_log_file: {
+get: function() { return this.$store.state.inbox.inbox_log_file},
+set: function() {}
+},
+inbox_urls: {
+
+},*/
+inbox: {
+  get: function() { return this.$store.state.inbox.inbox},
+  set: function() {}
+},
+config:{
+  get: function() { return this.$store.state.inbox.config},
+  set: function() {}
+}
 }
 }
 </script>

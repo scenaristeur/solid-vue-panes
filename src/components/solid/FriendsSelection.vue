@@ -19,7 +19,7 @@ export default {
   name: 'FriendsSelection',
   data() {
     return {
-      selected: ['b'], // Array reference
+      selected: [], // Array reference
       /*  options: [
       { value: 'a', text: 'Select one or more friends', disabled: true },
       { value: 'b', text: 'Default Selected Option' },

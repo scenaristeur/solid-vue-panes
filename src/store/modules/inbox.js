@@ -1,70 +1,58 @@
-//import shop from '../../api/shop'
 import { fetchDocument } from 'tripledoc';
 import { ldp } from 'rdf-namespaces'
+import auth from 'solid-auth-client';
+const SolidFileClient = window.SolidFileClient
+const fc = new SolidFileClient(auth)
 
-// initial state
+let websocket, socket
+
 const state = () => ({
-  webId: null,
-  storage: null,
-  inbox_urls: [],
-  inbox_log_file: null,
-
+  config: null,
   reply : {},
   toTrash: {},
-
-  inbox: {},
-
-
-
+  inbox: {files:[]},
 })
 
-// getters
 const getters = {}
 
-// actions
 const actions = {
   async setUser (context, user) {
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ User action IN INBOX STORE", user)
-
     if (user != null){
-      context.commit('setWebId', user.webId)
-      context.commit('setStorage', user.storage)
+      let config = {}
+      config.webId = user.webId
+      config.storage = user.storage
+      config.inbox_log_file = user.storage+"popock/inbox_log.ttl"
       let profileDoc = await fetchDocument(user.webId);
       const p = profileDoc.getSubject(user.webId)
-      let inbox_urls = await  p.getAllRefs(ldp.inbox )
-      context.commit('setInboxUrls', inbox_urls)
-      let inbox_log_file = user.storage+"popock/inbox_log.ttl"
-      context.commit('setInboxLogFile', inbox_log_file)
-
+      config.inbox_urls = await  p.getAllRefs(ldp.inbox )
+      context.commit('setInboxConfig', config)
+      let  inbox = await fc.readFolder(config.inbox_urls[0])
+      context.commit('setInbox', inbox)
+      // websocket
+      websocket = "wss://"+config.inbox_log_file.split('/')[2];
+      socket = new WebSocket(websocket, ['solid.0.1.0']);
+      socket.onopen = function() {
+        this.send('sub '+config.inbox_log_file);
+        console.log("--------- STORE SUBSCRIBE TO INBOX",websocket, config.inbox_log_file)
+      }
+      socket.onmessage = async function(msg) {
+        if (msg.data && msg.data.slice(0, 3) === 'pub') {
+          console.log(msg.data)
+          let  inbox = await fc.readFolder(config.inbox_urls[0])
+          context.commit('setInbox', inbox)
+        }
+      };
     }else{
-      context.commit('setWebId', null)
-      context.commit('setStorage', null)
-      context.commit('setInboxUrls', [])
-      context.commit('setInboxLogFile', null)
+      context.commit('setInboxConfig', null)
+      context.commit('setInbox', {files: []})
     }
-
   }
-  /*getAllProducts ({ commit }) {
-  shop.getProducts(products => {
-  commit('setProducts', products)
-})
-}*/
 }
 
-// mutations
 const mutations = {
-  setWebId(state, webId){
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$WEBID mutation IN INBOX STORE", webId)
-    state.webId = webId
-  },
-  setStorage (state, storage) {
-    state.storage = storage
-  },
-  setInboxLogFile (state, inbox_log_file) {
-    state.inbox_log_file = inbox_log_file
-  },
-  setInboxUrls (state, inbox_urls) {
-    state.inbox_urls = inbox_urls
+  setInboxConfig(state, config){
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Inbox Config mutation IN INBOX STORE", config)
+    state.config = config
   },
   setReply (state, reply) {
     state.reply = reply
@@ -75,7 +63,6 @@ const mutations = {
   setInbox (state, inbox) {
     state.inbox = inbox
   },
-
 }
 
 export default {

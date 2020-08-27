@@ -43,7 +43,7 @@ const actions = {
       context.commit('setFolder', await fc.readFolder(`${storage}`))
       context.commit('setProgress', 3)
       context.commit('setProgress', 14)
-      let user = {webId: webId, storage:storage}
+      let user = {webId: webId, storage: `${storage}`}
       context.dispatch('inbox/setUser', user, { root: true })
 
     }else{
