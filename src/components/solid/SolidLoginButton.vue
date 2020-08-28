@@ -8,11 +8,12 @@
 
 <script>
 import auth from 'solid-auth-client';
+import loginMixin from '@/mixins/loginMixin'
 import profileMixin from '@/mixins/profileMixin'
 
 export default {
   name: 'SolidLogin',
-  mixins: [profileMixin],
+  mixins: [loginMixin, profileMixin],
   computed:{
     webId() {
       return this.$store.state.solid.webId
@@ -26,13 +27,7 @@ export default {
     async logout(){
       await  auth.logout()
     },
-    async popupLogin() {
-      let session = await auth.currentSession();
-      let popupUri = './dist-popup/popup.html';  //  let popupUri = 'https://solid.community/common/popup.html';
-      if (!session){
-        session = await auth.popupLogin({ popupUri });
-      }
-    }
+
   }
 }
 </script>

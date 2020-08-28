@@ -1,7 +1,5 @@
 <template>
   <div class = "chat">
-    <h6>Solid Chat</h6>
-
     <div class="container">
       <router-link to="/indexes">Add an instance to your publicTypeIndex</router-link>
       <b-form-select  v-model="selected" :options="options"> </b-form-select>
@@ -45,7 +43,7 @@ export default  {
           { value: {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:'01/01/2020', label: 'ChatTest'} ,  text : 'ChatTest' } ,
 
 ]
-let channels = this.$store.state.solid.indexes.puti.instances
+let channels = this.$store.state.solid.indexes.puti != undefined ? this.$store.state.solid.indexes.puti.instances : []
 let optionsChannels = []
 if (channels.length > 0) {
   channels.forEach((c) => {
