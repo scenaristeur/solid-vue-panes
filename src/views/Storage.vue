@@ -16,7 +16,7 @@
 //import { fetchDocument } from 'tripledoc';
 //import { sioc, dct, foaf } from 'rdf-namespaces' //
 //const { namedNode } = require('@rdfjs/data-model');
-
+import loginMixin from '@/mixins/loginMixin'
 
 export default {
   //  store,
@@ -25,15 +25,20 @@ export default {
   components: {
     'Browser': () => import('@/components/explorer/Browser'),
     'Editor': () => import('@/components/explorer/Editor'),
-    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')  
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
+    mixins: [loginMixin],
   data: function () {
     return {
       //  storage: "",
       //folder: {}
     }
   },
-  async   created(){
+   created(){
+
+    if (this.webId == null){
+      this.popupLogin()
+    }
     //  this.solid= window.solid
     //  this.webId =
     //  this.fc = new SolidFileClient(auth)
