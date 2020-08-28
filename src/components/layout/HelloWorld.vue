@@ -1,3 +1,5 @@
+<i18n src="@/common/locales.json"></i18n>
+
 <template>
   <div class="hello">
 
@@ -10,12 +12,9 @@
             <b-card-text>
 
               <ul>
-                <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>Chat</router-link></li>
-
-
-
-                <li><router-link to="/inbox"><b-icon-mailbox class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-mailbox><br>Inbox</router-link></li>
-                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>Parle</router-link></li>
+                <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>{{ $t('chat') }}</router-link></li>
+                <li><router-link to="/inbox"><b-icon-mailbox class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-mailbox><br>{{ $t('inbox') }}</router-link></li>
+                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
 
                 <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
                 <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
@@ -28,9 +27,9 @@
             <b-card-text>
               <ul>
                 <!--<li><router-link to="/browser">Browser</router-link></li>-->
-                <li><router-link to="/storage"><b-icon-view-list class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-view-list><br>Data Browser</router-link> </li>
+                <li><router-link to="/storage"><b-icon-view-list class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-view-list><br>{{ $t('databrowser') }}</router-link> </li>
                 <!--<li><router-link to="/editor">Editor</router-link></li>-->
-                <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>Bookmarks</router-link></li>
+                <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
               </ul>
             </b-card-text>
           </b-card>
@@ -38,10 +37,10 @@
           <b-card bg-variant="dark" text-variant="white" header="Profile" class="text-center">
             <b-card-text>
               <ul>
-                <li><router-link to="/general"><b-icon-person-badge class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-person-badge><br>Profile</router-link></li>
-                <li><router-link to="/fofri"><b-icon-people class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people><br>FoFri</router-link></li>
+                <li><router-link to="/general"><b-icon-person-badge class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-person-badge><br>{{ $t('profile') }}</router-link></li>
+                <li><router-link to="/fofri"><b-icon-people class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people><br>{{ $t('fofri') }}</router-link></li>
                 <!--  <li><router-link to="/indexes">Indexes</router-link></li>-->
-                <li><router-link to="/friends"><b-icon-people-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people-fill><br>Friends</router-link></li>
+                <li><router-link to="/friends"><b-icon-people-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people-fill><br>{{ $t('friends') }}</router-link></li>
                 <!--  <li><router-link to="/profile">Profile (General + Friends)</router-link></li> -->
               </ul>
             </b-card-text>
@@ -75,7 +74,7 @@
 -->
 <b-card header="More" class="text-center">
   <b-card-text>
-<router-link to="/about"><b-icon-patch-question-fll class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question-fll><b-icon-patch-question class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question><br>About Popock</router-link>
+    <router-link to="/about"><b-icon-patch-question-fll class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question-fll><b-icon-patch-question class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question><br>About Popock</router-link>
   </b-card-text>
 </b-card>
 </b-card-group>

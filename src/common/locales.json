@@ -1,32 +1,92 @@
-{
-  "de": {
-    "hello": "Hallo Welt!",
-    "login": "Anmeldung",
-    "logout": "Ausloggen"
-  },
-  "en": {
-    "hello": "hello world!",
-    "login": "Login",
-    "logout": "Logout"
-  },
-  "es": {
-    "hello": "Hola Mundo !",
-    "login": "Iniciar sesión",
-    "logout": "Cerrar sesión"
-  },
-  "fr": {
-    "hello": "Salut tout le monde!",
-    "login": "S'identifier",
-    "logout": "Se déconnecter"
-  },
-  "ja": {
-    "hello": "こんにちは、世界！",
-    "login": "ログインする",
-    "logout": "ログアウト"
-  },
-  "ru": {
-    "hello": "Привет мир！",
-    "login": "авторизоваться",
-    "logout": "выйти!"
-  }
+{  "en": {
+  "hello": "hello world!",
+  "login": "Login",
+  "logout": "Logout",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "talk": "Talk",
+  "databrowser": "DataBrowser",
+  "bookmarks": "Bookmarks",
+  "profile": "Profile",
+  "fofri": "Follow Friends",
+  "friends": "Friends",
+  "communication": "Communication",
+  "storage": "Storage"
+},
+"fr": {
+  "hello": "Salut tout le monde!",
+  "login": "S'identifier",
+  "logout": "Se déconnecter",
+  "chat": "Chat",
+  "inbox": "Mails",
+  "talk": "Parle",
+  "databrowser": "Stockage",
+  "bookmarks": "Signets",
+  "profile": "Profil",
+  "fofri": "Suivi d'amis",
+  "friends": "Amis",
+  "communication": "Communication",
+  "storage": "Storage"
+},
+"de": {
+  "hello": "Hallo Welt!",
+  "login": "Anmeldung",
+  "logout": "Ausloggen",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "talk": "Talk",
+  "databrowser": "DataBrowser",
+  "bookmarks": "Bookmarks",
+  "profile": "Profile",
+  "fofri": "Follow Friends",
+  "friends": "Friends",
+  "communication": "Communication",
+  "storage": "Storage"
+},
+"es": {
+  "hello": "Hola Mundo !",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "talk": "Talk",
+  "databrowser": "DataBrowser",
+  "bookmarks": "Bookmarks",
+  "profile": "Profile",
+  "fofri": "Follow Friends",
+  "friends": "Friends",
+  "communication": "Communication",
+  "storage": "Storage"
+},
+
+"ja": {
+  "hello": "こんにちは、世界！",
+  "login": "ログインする",
+  "logout": "ログアウト",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "talk": "Talk",
+  "databrowser": "DataBrowser",
+  "bookmarks": "Bookmarks",
+  "profile": "Profile",
+  "fofri": "Follow Friends",
+  "friends": "Friends",
+  "communication": "Communication",
+  "storage": "Storage"
+},
+"ru": {
+  "hello": "Привет мир！",
+  "login": "авторизоваться",
+  "logout": "выйти!",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "talk": "Talk",
+  "databrowser": "DataBrowser",
+  "bookmarks": "Bookmarks",
+  "profile": "Profile",
+  "fofri": "Follow Friends",
+  "friends": "Friends",
+  "communication": "Communication",
+  "storage": "Storage"
+}
 }

@@ -5,18 +5,23 @@
     <h1>This is an translation test page</h1>
     <!--  <COMPONENET />  -->
 
+    <a href="https://github.com/scenaristeur/solid-vue-panes/blob/master/src/common/locales.json" target="_blank">Help Translating to your language</a>
+
+    <hr>
+    Translation test
     <label for="locale">locale</label>
     <select v-model="locale">
       <option>en</option>
       <option>fr</option>
       <option>de</option>
       <option>ja</option>
+      <option>es</option>
+      <option>ru</option>
     </select>
-    <p>message: {{ $t('hello') }}</p>
+    <p>hello: {{ $t('hello') }}</p>
     <p>login: {{ $t('login') }}</p>
     <p>logout: {{ $t('logout') }}</p>
 
-    <a href="https://github.com/scenaristeur/solid-vue-panes/tree/master/src/components/TranslationTest.vue" target="_blank">Help Translating to your language</a>
 
   </div>
 </template>
