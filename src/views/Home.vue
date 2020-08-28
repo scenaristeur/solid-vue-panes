@@ -1,11 +1,12 @@
 <template>
   <div class="home">
 
-    <img width="100px" alt="Vue logo" src="../assets/logo.png">
+    <img width="100px" alt="Vue logo" src="../assets/popock.png">
     <h1>PoPock</h1>
     <h4>{{ $t('POds in the POCKet') }}</h4>
-    <ShareTarget />
+
     <HelloWorld />
+    <ShareTarget />
 
   </div>
 </template>
