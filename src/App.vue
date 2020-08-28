@@ -1,3 +1,4 @@
+<i18n src="@/common/locales.json"></i18n>
 <template>
   <div id="app">
     <NavBar />

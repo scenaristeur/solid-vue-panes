@@ -13,6 +13,8 @@
       <option>ja</option>
     </select>
     <p>message: {{ $t('hello') }}</p>
+    <p>login: {{ $t('login') }}</p>
+    <p>logout: {{ $t('logout') }}</p>
 
     <a href="https://github.com/scenaristeur/solid-vue-panes/tree/master/src/components/TranslationTest.vue" target="_blank">Help Translating to your language</a>
 

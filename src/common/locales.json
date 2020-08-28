@@ -1,8 +1,32 @@
 {
+  "de": {
+    "hello": "Hallo Welt!",
+    "login": "Anmeldung",
+    "logout": "Ausloggen"
+  },
   "en": {
-    "hello": "hello world!"
+    "hello": "hello world!",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "es": {
+    "hello": "Hola Mundo !",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión"
+  },
+  "fr": {
+    "hello": "Salut tout le monde!",
+    "login": "S'identifier",
+    "logout": "Se déconnecter"
   },
   "ja": {
-    "hello": "こんにちは、世界！"
+    "hello": "こんにちは、世界！",
+    "login": "ログインする",
+    "logout": "ログアウト"
+  },
+  "ru": {
+    "hello": "Привет мир！",
+    "login": "авторизоваться",
+    "logout": "выйти!"
   }
 }

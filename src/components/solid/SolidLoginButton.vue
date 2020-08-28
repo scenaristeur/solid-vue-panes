@@ -1,7 +1,8 @@
+<i18n src="@/common/locales.json"></i18n>
 <template>
   <div class="solid-login">
-    <b-button variant="success" v-if="webId == null" @click="login">Login</b-button>
-    <b-button variant="danger" v-else @click="logout">Logout</b-button>
+    <b-button variant="success" v-if="webId == null" @click="login">{{ $t('login') }}</b-button>
+    <b-button variant="danger" v-else @click="logout">{{ $t('logout') }}</b-button>
   </div>
 </template>
 
