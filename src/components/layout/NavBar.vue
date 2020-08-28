@@ -48,6 +48,7 @@
           <b-dropdown-item to="/pod">Pod</b-dropdown-item>
           <b-dropdown-item to="/share">Share</b-dropdown-item>
 
+
         </b-nav-item-dropdown>
 
 
@@ -83,10 +84,13 @@
       <b-nav-item  href="https://github.com/scenaristeur/solid-vue-panes/projects/1?add_cards_query=is%3Aopen" target="_blank">Contribute</b-nav-item>
 
       <b-nav-item-dropdown text="Lang" right>
-        <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
+        <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
       </b-nav-item-dropdown>
 
       <b-nav-item to="/about">About</b-nav-item>
@@ -108,7 +112,18 @@ export default {
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'InboxNotif': () => import('@/components/inbox/InboxNotif')
+  },
+  methods: {
+    localeChange(loc){
+      console.log(loc)
+      this.$i18n.locale = loc
+    },
   }
+  /*watch: {
+  locale (val) {
+  this.$i18n.locale = val
+}
+}*/
 }
 </script>
 

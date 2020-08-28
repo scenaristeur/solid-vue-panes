@@ -10,7 +10,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.39 - move to notif
+  0.1.40 - i18n
 </div>
 </template>
 
