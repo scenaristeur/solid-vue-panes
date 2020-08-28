@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.40 - i18n
+  0.1.41 - i18n menu
 </div>
 </template>
 

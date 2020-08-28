@@ -1,6 +1,7 @@
 <template>
   <div class="pod container mb-5">
-
+ MUST REMOVE  THIS VIEW ? <br>
+   remove ? duplicate with storage ? keep type and file size !!! before remove
     <b-list-group>
       <b-list-group-item class="item mb-2 mt-2">
         {{ folder.url }} <!--<b-icon-upload></b-icon-upload>-->

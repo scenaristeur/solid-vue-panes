@@ -17,38 +17,41 @@
           <template v-slot:button-content>
             {{ $t('databrowser') }}
           </template>
-          <b-dropdown-item to="/storage">(Browser + Editor)</b-dropdown-item>
+          <b-dropdown-item to="/storage">{{ $t('databrowser') }}</b-dropdown-item>
           <b-dropdown-item to="/browser">Browser</b-dropdown-item>
           <b-dropdown-item to="/editor">Editor</b-dropdown-item>
           <b-dropdown-item to="/bookmarks">{{ $t('bookmarks') }}</b-dropdown-item>
         </b-nav-item-dropdown>
 
 
-        <b-nav-item-dropdown right>
-
-          <template v-slot:button-content>
-            {{ $t('User') }}
-          </template>
-          <b-dropdown-item to="/profile">  {{ $t('profile') }}</b-dropdown-item>
-          <b-dropdown-item to="/general">Profile General</b-dropdown-item>
-          <b-dropdown-item to="/fofri">{{ $t('fofri') }}</b-dropdown-item>
-          <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
-          <b-dropdown-item to="/friends">{{ $t('friends') }}</b-dropdown-item>
-        </b-nav-item-dropdown>
 
 
 
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
-            Communication
+            {{ $t('communication') }}
           </template>
-          <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
           <b-dropdown-item to="/chat">{{ $t('chat') }}</b-dropdown-item>
           <b-dropdown-item to="/inbox">{{ $t('inbox') }}</b-dropdown-item>
-          <b-dropdown-item to="/agora">Agora</b-dropdown-item>
+          <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
+
         </b-nav-item-dropdown>
 
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
+
+
+        <b-nav-item-dropdown right>
+
+          <template v-slot:button-content>
+            <em>User</em>
+          </template>
+          <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+          <b-dropdown-item to="/general">Profile General</b-dropdown-item>
+          <b-dropdown-item to="/fofri">Following Friends</b-dropdown-item>
+          <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
+          <b-dropdown-item to="/friends">Friends</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>Sign Out</b-dropdown-item>
+        </b-nav-item-dropdown>
 
         <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
@@ -60,6 +63,7 @@
           <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
         </b-nav-item-dropdown>
 
+        <b-nav-item to="/about">About</b-nav-item>
 
 
 
@@ -80,21 +84,22 @@
 
       <b-nav-item ><SolidLoginButton /></b-nav-item>
 
-
       <b-nav-item-dropdown right>
         <template v-slot:button-content>
           Misc
         </template>
-        <b-dropdown-item to="/bookmarks">{{ $t('bookmarks') }}</b-dropdown-item>
+
         <b-dropdown-item to="/groups">Groups</b-dropdown-item>
         <b-dropdown-item to="/offers">Offers</b-dropdown-item>
         <b-dropdown-item to="/forms">Forms</b-dropdown-item>
-        <b-dropdown-item to="/pod">Pod 2 </b-dropdown-item>
+        <b-dropdown-item to="/pod">Pod</b-dropdown-item>
         <b-dropdown-item to="/share">Share</b-dropdown-item>
+        <b-dropdown-item to="/agora">Agora</b-dropdown-item>
+
       </b-nav-item-dropdown>
 
 
-      <b-nav-item to="/about">About</b-nav-item>
+
     </b-navbar-nav>
   </b-collapse>
 </b-navbar>
