@@ -346,7 +346,6 @@ computed:{
   storage:{
     get: function() { return this.$store.state.solid.storage},
     set: function() {}
-
   }
 }
 }

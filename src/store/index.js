@@ -6,6 +6,7 @@ import chat from './modules/chat'
 import websocket from './modules/websocket'
 import crud from './modules/crud'
 import inbox from './modules/inbox'
+import groups from './modules/groups'
 
 Vue.use(Vuex)
 
@@ -16,5 +17,5 @@ export default new Vuex.Store({
   },
   actions: {
   },
-  modules: { solid,  websocket, parle, chat, crud, inbox }
+  modules: { solid,  websocket, parle, chat, crud, inbox, groups }
 })

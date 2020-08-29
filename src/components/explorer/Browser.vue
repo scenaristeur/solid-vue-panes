@@ -147,6 +147,9 @@ export default {
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
+  created(){
+    this.$route.query.path != undefined ? this.updateFolder(this.$route.query.path) : ""
+  },
   data: function () {
     return {
       contextTitle: "",

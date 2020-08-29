@@ -47,7 +47,6 @@ export default {
     this.$route.query.add != undefined ? this.friend = this.$route.query.add+this.$route.hash : ""
   //  console.log("TODO must use the router instead of route query for the #me!!!",this.friend)
     this.webId = this.$store.state.solid.webId
-
   },
 
   methods:{

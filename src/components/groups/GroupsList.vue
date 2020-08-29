@@ -1,41 +1,14 @@
 <template>
   <div class="groups-list">
-
+    <GroupsToolbar :path="url"/>
     <GroupCreate v-on:created="initGroups" />
 
     <!--    <b-button variant="info" @click="initGroups">Reload groups</b-button>-->
     <div>
       <b-card-group columns>
-
-
-        <b-card v-for="f in folder.files" :key="f.url" v-bind:header="f.name">
-          <blockquote class="blockquote mb-0">
-            <p>
-              {{f.url}}
-              <GroupMembers :url="f.url" />
-
-            </p>
-            <footer class="blockquote-footer">
-              <div class="created">
-                {{f.modified}}
-              </div>
-              Someone famous in <cite title="Source Title">Source Title</cite>
-            </footer>
-          </blockquote>
-        </b-card>
-
-
-
+        <GroupDisplay v-for="f in folder.files" :key="f.url" :file="f"/>
       </b-card-group>
     </div>
-
-
-
-
-
-
-
-
 
   </div>
 </template>
@@ -53,8 +26,9 @@ const fc = new SolidFileClient(auth)
 export default {
   name: 'GroupsList',
   components: {
+    'GroupsToolbar': () => import('@/components/groups/GroupsToolbar'),
     'GroupCreate': () => import('@/components/groups/GroupCreate'),
-    'GroupMembers': () => import('@/components/groups/GroupMembers'),
+    'GroupDisplay': () => import('@/components/groups/GroupDisplay'),
   },
   data: function () {
     return {
@@ -79,7 +53,6 @@ export default {
     async  initGroups(){
       if (this.storage != null && this.storage.length > 0){
         console.log("init groups : ",this.url)
-
         this.folder = await fc.readFolder(this.url)
         console.log("Folder : ", this.folder)
       }
@@ -106,58 +79,3 @@ export default {
 
 }
 </script>
-<style>
-.Asolid-chat-list{
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  min-width: 320px;
-  background: #fff;
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-  font-size: 14px;
-  line-height: 1.4285em;
-  color: rgba(0,0,0,.87);
-}
-.Bitem{
-  position: absolute;
-  /*  left: 0px;
-  top: 0px; */
-  margin-left: 0px;
-  margin-top: 0px;
-  /*  width: 722px; */
-  /*  height: 574px; */
-  background-color: rgb(255, 255, 255);
-}
-.avatar{
-  position: absolute;
-  left: 0px;
-  top: 8px;
-  width: 29px;
-  height: 29px;
-  background-image: url(no-avatar.png);
-  background-size: contain;
-  opacity: .3;
-}
-.maker{
-  position: absolute;
-  left: 35px;
-  top: 4px;
-  width: auto;
-  height: auto;
-  text-align: left;
-}
-.content{
-  position: relative;
-  padding-left: 36px;
-  padding-top: 23px;
-  padding-bottom: 5px;
-  width: 90%;
-  height: auto;
-  text-align: left;
-}
-.created{
-  color: #C5C5C5;
-  font-size: 13px;
-  font-weight: normal;
-}
-</style>

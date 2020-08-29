@@ -1,3 +1,4 @@
+<i18n src="@/common/locales.json"></i18n>
 <template>
   <div class="home">
 
@@ -12,25 +13,6 @@
   </div>
 </template>
 
-<i18n>
-  {
-    "de": {
-      "POds in the POCKet": "Dein POD in deiner Tasche!"
-    },
-    "fr": {
-      "POds in the POCKet": "Ton POd dans ta POChe!"
-    },
-    "ja": {
-      "POds in the POCKet": "あなたのポケットにあなたのPOD！"
-    },
-    "es": {
-      "POds in the POCKet": "¡Tu POD en tu bolsillo!"
-    },
-    "ru": {
-      "POds in the POCKet": "Ваш POD в кармане!"
-    }
-  }
-</i18n>
 
 <script>
 

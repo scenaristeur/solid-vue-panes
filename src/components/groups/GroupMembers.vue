@@ -1,19 +1,20 @@
 <template>
   <div class="group-members">
     <div v-if="webId != null">
-      <h4>Members :</h4>
-      <GroupAddMember  :url="url"   v-on:added="initMembers"/>
-      <GroupMember v-for="m in members" :key="m" :member="m" :url="url" />
-    </div>
 
+      <b-modal v-bind:id="'modal-members-'+url" title="Members">
+        <GroupMember v-for="m in members" :key="m" :member="m" :url="url" />
+        <GroupAddMember  :url="url" />
+      </b-modal>
+
+    </div>
 
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { fetchDocument } from 'tripledoc';
-import { vcard } from 'rdf-namespaces'
+
 
 export default {
   name: 'GroupMembers',
@@ -21,15 +22,15 @@ export default {
     'GroupMember': () => import('@/components/groups/GroupMember'),
     'GroupAddMember': () => import('@/components/groups/GroupAddMember'),
   },
-  props : ['url']
+  props : ['members', 'url']
   ,
   data: function () {
     return {
-      members: [""]
+
     }
   },
   created(){
-    this.initMembers()
+
   },
   computed:{
     webId(){
@@ -38,11 +39,8 @@ export default {
 
   },
   methods: {
-    async  initMembers(){
-      const groupDoc = await fetchDocument(this.url);
-      let index = groupDoc.findSubject()
-      this.members = index.getAllNodeRefs(vcard.hasMember)
-    }
+
+
   },
 
 

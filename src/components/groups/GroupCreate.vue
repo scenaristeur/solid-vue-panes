@@ -1,15 +1,21 @@
 <template>
   <div class="group-create">
-    <div class="container">
 
-      <b-form-group class="row">
+    <b-modal id="new-group-modal" title="New Group" @ok="add">
+      <b-form-group>
         <label for="name">Group Name</label>
         <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
+        <label for="purpose">Group Purpose</label>
+        <b-form-input id="purpose" v-model="purpose" placeholder="ex: Build Solid Cool apps..."></b-form-input>
+        <label for="parent">Parent / Supercircle</label>
+        <b-form-input id="parent" v-model="parent" placeholder="ex: Supercircle"></b-form-input>
+
         <label for="url">Group url</label>
         <b-form-input id="url" v-model="url" :placeholder="'ex: '+url"></b-form-input>
-        <b-button @click="add">Add</b-button>
       </b-form-group>
-    </div>
+    </b-modal>
+
+    <a v-bind:href="url" target="_blank">{{url}}</a>
 
   </div>
 </template>
@@ -17,7 +23,8 @@
 <script>
 // @ is an alias to /src
 import { createDocument } from 'tripledoc';
-import { vcard, dct, foaf, ldp } from 'rdf-namespaces' //
+import { vcard, dct, foaf, ldp} from 'rdf-namespaces' //
+import groupsMixin from '@/mixins/groupsMixin'
 //const { namedNode } = require('@rdfjs/data-model');
 
 export default {
@@ -27,9 +34,10 @@ export default {
 },*/
 data() {
   return {
-
-    //  url: this.$store.state.solid.storage+"public/Chat",
-    name: "Grogroup"
+    name: "CoolGroup",
+    purpose: "",
+    parent: "",
+      mixins: [groupsMixin],
   }
 },
 methods:{
@@ -38,6 +46,7 @@ methods:{
     var dateObj = new Date();
     var date = dateObj.toISOString()
     this.path = this.url+this.name+".ttl"
+    // https://www.w3.org/TR/vocab-org/#org:purpose
     let groupDoc =    await createDocument(this.path);
     let subj =   groupDoc.addSubject({identifier:"this"})
     subj.addLiteral(vcard.fn, this.name)
@@ -48,6 +57,8 @@ methods:{
     subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
     subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
     subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+    subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)
+    subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
 
     /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
     indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
@@ -72,8 +83,9 @@ computed:{
   storage(){
     return this.$store.state.solid.storage
   },
-  url(){
-    return this.$store.state.solid.storage+"public/groups/"
+  url:{
+    get: function() { return this.$store.state.solid.storage+"public/groups/"},
+    set: function() {}
   }
 },
 }

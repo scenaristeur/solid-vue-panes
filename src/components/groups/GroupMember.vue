@@ -1,9 +1,7 @@
 <template>
   <div class="group-member">
     <div v-if="webId != null">
-
-    hasMember: {{ member }}
-
+<h6>{{ member }}</h6>
 </div>
     </div>
   </template>

@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.42 - add friend
+  0.1.43 - group test
 </div>
 </template>
 

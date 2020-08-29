@@ -17,9 +17,9 @@
           <template v-slot:button-content>
             {{ $t('databrowser') }}
           </template>
-          <b-dropdown-item to="/storage">(Browser + Editor)</b-dropdown-item>
-          <b-dropdown-item to="/browser">Browser</b-dropdown-item>
-          <b-dropdown-item to="/editor">Editor</b-dropdown-item>
+          <b-dropdown-item to="/storage">{{ $t('explorer') }} + {{ $t('editor') }}</b-dropdown-item>
+          <b-dropdown-item to="/browser">{{ $t('explorer') }}</b-dropdown-item>
+          <b-dropdown-item to="/editor">{{ $t('editor') }}</b-dropdown-item>
           <b-dropdown-item to="/bookmarks">{{ $t('bookmarks') }}</b-dropdown-item>
         </b-nav-item-dropdown>
 
@@ -49,20 +49,6 @@
         </b-nav-item-dropdown>
 
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
-          <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
-        </b-nav-item-dropdown>
-
-
-
-
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -75,9 +61,7 @@
       <!--    <ShareButton /> -->
 
       <!-- Using 'button-content' slot -->
-
-
-
+      <LangChooser />
       <b-nav-item ><SolidLoginButton /></b-nav-item>
 
 
@@ -112,13 +96,10 @@ export default {
   },
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
-    'InboxNotif': () => import('@/components/inbox/InboxNotif')
+    'InboxNotif': () => import('@/components/inbox/InboxNotif'),
+    'LangChooser': () => import('@/components/translation/LangChooser')
   },
   methods: {
-    localeChange(loc){
-      console.log(loc)
-      this.$i18n.locale = loc
-    },
   }
   /*watch: {
   locale (val) {
