@@ -18,10 +18,6 @@
           <b-form-input v-model="topic" placeholder="topic/sub_topic/sub_sub_topic..."></b-form-input>
         </b-input-group>
 
-
-
-
-
         <b-form-group label="Confidentiality">
           <b-form-radio v-model="selected" name="confidential" value="private">Private</b-form-radio>
           <b-form-radio v-model="selected" name="confidential" value="public">Public</b-form-radio>

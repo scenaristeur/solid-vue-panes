@@ -1,35 +1,37 @@
 <template>
   <div>
     <b-card
-    v-bind:title="profile.name"
+
     v-bind:img-src="profile.photo"
-    img-alt="Image"
+    img-alt=""
     img-top
     tag="article"
     style="max-width: 20rem;"
     class="mb-2">
+    <b-card-title   title-tag="h6"><a v-bind:href="webId" target="_blank">{{profile.name || this.webId}}</a></b-card-title>
     <b-card-text>
-      <a v-bind:href="webId" target="_blank">{{ webId }}</a>
+
+      <p v-if="profile.organization">Organization: {{profile.organization}}</p>
+      <p v-if="profile.role">Role: {{profile.role}}</p>
+      <p v-if="profile.locality">Locality: {{profile.locality}}</p>
+      <p v-if="profile.gender">Gender: {{profile.gender}}</p>
+      <p v-if="profile.bday">Birthday: {{profile.bday}}</p>
+      <p v-if="profile.note">Note: {{profile.note}}</p>
+
+
     </b-card-text>
-
-    <p v-if="profile.organization">Organization: {{profile.organization}}</p>
-    <p v-if="profile.role">Role: {{profile.role}}</p>
-    <p v-if="profile.gender">Gender: {{profile.gender}}</p>
-    <p v-if="profile.bday">Birthday: {{profile.bday}}</p>
-    <p v-if="profile.note">Note: {{profile.note}}</p>
-    <p v-if="profile.locality">Locality: {{profile.locality}}</p>
-
+    <!--
     <div>
-      <b-button v-if="friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{friends.length}} friends</b-button>
-      <b-collapse id="collapse-1" class="mt-2" >
-        <b-card>
-          <p v-for="f in friends" :key="f" :webId="f"  class="card-text">
-            <router-link :to="{ name: 'ProfileW', params: { webId: f}}">{{f}}</router-link>
-          </p>
-        </b-card>
-      </b-collapse>
-    </div>
-  </b-card>
+    <b-button v-if="friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{friends.length}} friends</b-button>
+    <b-collapse id="collapse-1" class="mt-2" >
+    <b-card>
+    <p v-for="f in friends" :key="f" :webId="f"  class="card-text">
+    <router-link :to="{ name: 'ProfileW', params: { webId: f}}">{{f}}</router-link>
+  </p>
+</b-card>
+</b-collapse>
+</div> -->
+</b-card>
 </div>
 </template>
 

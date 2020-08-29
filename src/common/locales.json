@@ -11,7 +11,8 @@
   "fofri": "Follow Friends",
   "friends": "Friends",
   "communication": "Communication",
-  "storage": "Storage"
+  "storage": "Storage",
+  "User": "User"
 },
 "fr": {
   "hello": "Salut tout le monde!",
@@ -26,7 +27,8 @@
   "fofri": "Suivi d'amis",
   "friends": "Amis",
   "communication": "Communication",
-  "storage": "Storage"
+  "storage": "Storage",
+  "User": "User"
 },
 "de": {
   "hello": "Hallo Welt!",
@@ -41,7 +43,8 @@
   "fofri": "Follow Friends",
   "friends": "Friends",
   "communication": "Communication",
-  "storage": "Storage"
+  "storage": "Storage",
+  "User": "User"
 },
 "es": {
   "hello": "Hola Mundo !",
@@ -56,7 +59,8 @@
   "fofri": "Follow Friends",
   "friends": "Friends",
   "communication": "Communication",
-  "storage": "Storage"
+  "storage": "Storage",
+  "User": "User"
 },
 
 "ja": {
@@ -72,7 +76,8 @@
   "fofri": "Follow Friends",
   "friends": "Friends",
   "communication": "Communication",
-  "storage": "Storage"
+  "storage": "Storage",
+  "User": "User"
 },
 "ru": {
   "hello": "Привет мир！",
@@ -87,6 +92,7 @@
   "fofri": "Follow Friends",
   "friends": "Friends",
   "communication": "Communication",
-  "storage": "Storage"
+  "storage": "Storage",
+  "User": "User"  
 }
 }

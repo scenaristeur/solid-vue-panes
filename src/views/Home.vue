@@ -5,8 +5,9 @@
     <h1>PoPock</h1>
     <h4>{{ $t('POds in the POCKet') }}</h4>
 
-    <HelloWorld />
     <ShareTarget />
+    <HelloWorld />
+
 
   </div>
 </template>

@@ -183,14 +183,10 @@ export default {
           //  console.log("todo if 409 conflict : must test if ok before patch" /*,e*/)
           //}
 
-
-
           //console.log("just for block",inboxtWithAcl, updatedAcl,saveAclFor);
 
-
-
         }catch(e){
-          alert(e)
+          console.log("erreur",e)
         }
 
         // cleaning for debug

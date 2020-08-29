@@ -2,7 +2,7 @@
   <div class="profile">
     <General />
     <Indexes />
-    <Friends />
+    <FriendsView />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   components: {
     'General': () => import('@/views/General'),
     'Indexes': () => import('@/views/Indexes'),
-    'Friends': () => import('@/views/Friends'),
+    'FriendsView': () => import('@/views/FriendsView'),
   },
 }
 </script>

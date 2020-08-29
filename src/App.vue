@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.41 - i18n menu
+  0.1.42 - add friend
 </div>
 </template>
 
