@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.fed0c4df.css"
   },
   {
-    "revision": "67731885305c5b50f2e7",
+    "revision": "8f05eda9d44b8d6116c0",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -104,7 +104,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/file.802ff776.css"
   },
   {
-    "revision": "b5addfe34c91f46d2561",
+    "revision": "ef725c8fdbb559467995",
     "url": "/solid-vue-panes/css/friends_follower.f229789b.css"
   },
   {
@@ -128,7 +128,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/popock.b43b963f.png"
   },
   {
-    "revision": "638dbb8cc72b1f56bf5a6fa2c58da65d",
+    "revision": "50569ce6b2fd03f4c3e80473bfea1b48",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -136,8 +136,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/about.380c2920.js"
   },
   {
-    "revision": "67731885305c5b50f2e7",
-    "url": "/solid-vue-panes/js/app.0affac0d.js"
+    "revision": "8f05eda9d44b8d6116c0",
+    "url": "/solid-vue-panes/js/app.b4e69ccb.js"
   },
   {
     "revision": "5e642fff0e6dc47cb7b0",
@@ -240,8 +240,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-2d0c1612.73745a4e.js"
   },
   {
-    "revision": "09e857c2073367fc553a",
-    "url": "/solid-vue-panes/js/chunk-2d0c9199.b09a3629.js"
+    "revision": "e8401eda0c86b775c2bd",
+    "url": "/solid-vue-panes/js/chunk-2d0c9199.ef3443a9.js"
   },
   {
     "revision": "6f1323bbb85302890e6b",
@@ -400,8 +400,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/friends.e67757b8.js"
   },
   {
-    "revision": "b5addfe34c91f46d2561",
-    "url": "/solid-vue-panes/js/friends_follower.90821292.js"
+    "revision": "ef725c8fdbb559467995",
+    "url": "/solid-vue-panes/js/friends_follower.5c2e367b.js"
   },
   {
     "revision": "eac44be9602797761e90",
