@@ -16,13 +16,16 @@
 
       <!--  <Instancesmin :webId="webId"/> -->
     </div>
-    <b-card-footer>
+  <!--
+too lazy
+
+   <b-card-footer>
       <ul>
         <li v-for="(instance, i) in indexes.puti.instances" :key=i>
           {{ instance.classe }} : {{instance.instance}}
         </li>
       </ul>
-    </b-card-footer>
+    </b-card-footer>-->
 
 
 
@@ -44,7 +47,7 @@ data: function () {
     //  webId: {},
     friends: [],
     profile:{name: "loading profile..."},
-    indexes: {puti:[]}
+  // TOO LAZY  indexes: {puti:[]}
   }
 },
 created() {
@@ -63,8 +66,8 @@ methods:{
     this.profile = await this.getProfile(this.webId)
     //  console.log(this.profile)
     this.friends = await this.getFriends(this.webId)
-    this.indexes = await this.getIndexes(this.webId)
-    console.log("indexes",this.indexes)
+  // TOO LAZY WHEN LOT OF FRIENDS  this.indexes = await this.getIndexes(this.webId)
+  //  console.log("indexes",this.indexes)
   }
 }
 }
