@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.fed0c4df.css"
   },
   {
-    "revision": "8da57a7cb40b2d9f2727",
+    "revision": "70de6b7fea7ac69c7150",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/browser.802ff776.css"
   },
   {
-    "revision": "84cec6ea571c8d649ebc",
+    "revision": "feadeb216bfc76944c13",
     "url": "/solid-vue-panes/css/chat.3eeccf93.css"
   },
   {
@@ -92,7 +92,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-vendors.e33783dd.css"
   },
   {
-    "revision": "67d9fa6b5bbe84d20052",
+    "revision": "37e911c02a0534f7601b",
     "url": "/solid-vue-panes/css/communication.69c1e146.css"
   },
   {
@@ -128,7 +128,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/popock.b43b963f.png"
   },
   {
-    "revision": "dab9bd55f995386444f3b6ef057fd655",
+    "revision": "c15ff8ec544c306bf27bab59d9885645",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -136,8 +136,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/about.380c2920.js"
   },
   {
-    "revision": "8da57a7cb40b2d9f2727",
-    "url": "/solid-vue-panes/js/app.597cb9cb.js"
+    "revision": "70de6b7fea7ac69c7150",
+    "url": "/solid-vue-panes/js/app.cf905506.js"
   },
   {
     "revision": "5b84cde39c35b6171bb6",
@@ -148,8 +148,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/browser.5553c2d6.js"
   },
   {
-    "revision": "84cec6ea571c8d649ebc",
-    "url": "/solid-vue-panes/js/chat.db3eb215.js"
+    "revision": "feadeb216bfc76944c13",
+    "url": "/solid-vue-panes/js/chat.e6b3eea1.js"
   },
   {
     "revision": "724615936a3cbf12845e",
@@ -392,8 +392,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-vendors.a7f0a607.js"
   },
   {
-    "revision": "67d9fa6b5bbe84d20052",
-    "url": "/solid-vue-panes/js/communication.f784a102.js"
+    "revision": "37e911c02a0534f7601b",
+    "url": "/solid-vue-panes/js/communication.0aca26cf.js"
   },
   {
     "revision": "f89454a6efcf27dcd2de",
