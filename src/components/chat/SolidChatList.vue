@@ -1,7 +1,10 @@
 <template>
   <div class="solid-chat-list">
 
+
+
     <div class="container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300">
+        <div v-if="data.length == 0">Please Wait, I'm loading data ;-)</div>
       <b-list-group flush>
         <b-list-group-item v-for="m in data" :key="m.id">
           <div class="item">
@@ -72,9 +75,6 @@ import { sioc, dct, foaf } from 'rdf-namespaces'
 export default {
   name: 'SolidChatList',
   directives: {infiniteScroll},
-  props: {
-    channel: Object
-  },
   components: {
     'SolidChatSend' :  () => import ( '@/components/chat/SolidChatSend' )
 
@@ -84,20 +84,16 @@ export default {
       data: [],
       busy: true,
       title:"Select a channel",
-    //  showTop: false,
-      /*  busy: false,
-      date: {},
-      limite : {},
-      //  data :[],
-      today_messages: [],
-      old_messages: [],
-      stopped : false,
-      root :"",// "https://solidarity.inrupt.net/public/Solidarity", ChatTest
-      showTop: true,
-      title: "loading"*/
-      //  mainProps: {  }
-      //  mainProps: { blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }
     }
+  },
+  created() {
+    if( this.$route.query.instance != undefined){
+      this.instance = this.$route.query.instance
+      this.created = this.$route.query.created
+      this.label = this.$route.query.label
+      console.log(this.instance, this.created, this.label)
+    }
+    console.log("###############INSTANCE",this.instance)  //  this.webId = this.$store.state.solid.webId
   },
   methods:{
     loadMore: async function() {
@@ -113,12 +109,12 @@ export default {
         //  let messages = this.read(path)
         //this.data = this.data.concat(messages);
         this.date.setDate(this.date.getDate() -1)
-      //  this.showTop = true
+        //  this.showTop = true
         this.title = "loading "+this.date.toLocaleDateString()
         //  this.updateMessages(path, "bottom")
         await this.loadMessages(path, "bottom")
         //  this.data.push({ name: count++ , date:date});
-//this.showTop = false
+        //this.showTop = false
 
       }else{
         console.log("STOP")
@@ -264,7 +260,7 @@ initChat(url){
 },
 async updateMessages(url, sens){
   //    console.log(url, sens)
-//  this.showTop = true
+  //  this.showTop = true
   try{
 
     const chatDoc = await fetchDocument(url);
@@ -345,6 +341,14 @@ onlyUnique(value, index, self) {
 },
 },
 watch: {
+  '$route' (to) {
+    console.log(to)
+
+    this.instance = this.$route.query.instance
+    this.created = this.$route.query.created
+    this.label = this.$route.query.label
+    console.log(this.instance, this.created, this.label)
+  },
   channel: async function(channel){
     console.log(channel)
     //  this.url = channel.instance
@@ -354,11 +358,18 @@ watch: {
     console.log("LIMITE",this.limite)
     this.date = new Date()
     this.url = this.channel.instance.substr(0, this.channel.instance.lastIndexOf("/") + 1);
+    this.data = []
     /*  await this.readPublicAccess(this.url)
     let pattern = { read: true, append: true, write: false, control: false }
     await this.setPublicAccess(this.url, pattern)*/
     await   this.initChat(this.url)
   }
+},
+computed:{
+  channel: {
+    get: function() { return this.$store.state.chat.channel},
+    set: function() {}
+  },
 }
 }
 </script>

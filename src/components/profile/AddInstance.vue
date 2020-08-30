@@ -56,8 +56,7 @@ export default {
   mixins: [profileMixin, aclMixin],
   data() {
     return {
-      name: "",
-      path: "",
+      name: "Instance Name",
       type: 'http://www.w3.org/ns/pim/meeting#LongChat',
     }
   },
@@ -86,19 +85,15 @@ export default {
       //  this.name = "Chat"
     }
   },
-  watch: {
-    storage: function(storage){
-      console.log(storage)
-      this.path = storage+"public/Chat/"
-      this.name = "Instance Name"
-    }
-  },
   computed:{
     webId(){
       return this.$store.state.solid.webId
     },
     storage(){
       return this.$store.state.solid.storage
+    },
+    path(){
+      return   this.storage+"public/Chat/"
     }
   }
   /*  components: {

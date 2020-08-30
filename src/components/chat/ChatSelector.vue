@@ -1,11 +1,25 @@
 <template>
   <div class="chat-selector container">
-    <h5>Chat-SElector</h5>
-    value : {{ value }}
-
-    <div class="container fluid">
+    <b-button @click="clean" v-if="channel != null" variant="info" class="m-3">Channels</b-button>
+    <div class="container fluid" v-else>
       <div>
         <b-card-group deck>
+
+          <b-card bg-variant="dark" text-variant="white" header="Common Channels" class="text-center">
+            <b-card-text>
+
+              <ul>
+
+                <li v-for="cc in common_channels" :key="cc.instance">
+                  <a href="#" @click="open(cc)"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info">
+                  </b-icon-chat><br>
+                  {{cc.label}}</a>
+                </li>
+              </ul>
+            </b-card-text>
+
+          </b-card>
+
           <b-card bg-variant="dark" text-variant="white" header="My Channels" class="text-center">
             <b-card-text>
 
@@ -15,30 +29,18 @@
 
                 </li>
                 <li v-for="mc in my_channels" :key="mc.instance">
-                  <router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info">
+                  <a href="#" v-if="mc.classe == 'http://www.w3.org/ns/pim/meeting#LongChat'" @click="open(mc)"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info">
                   </b-icon-chat><br>
-                  {{ mc.instance}}, {{ mc.classe }}
-                </router-link>
-              </li>
-            </ul>
-          </b-card-text>
-        </b-card>
-
-        <b-card bg-variant="dark" text-variant="white" header="Common Channels" class="text-center">
-          <b-card-text>
-
-            <ul>
-
-              <li v-for="cc in common_channels" :key="cc.instance">
-                <router-link :to="'/chat?instance='+cc"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info">
+                  {{mc.label}}</a>
+                  <!--  <router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info">
                 </b-icon-chat><br>
-                {{cc}}
-              </router-link>
+                {{ mc.instance}} (, {{ mc.classe }})
+              </router-link>-->
             </li>
           </ul>
         </b-card-text>
-
       </b-card>
+
     </b-card-group>
   </div>
 </div>
@@ -65,7 +67,7 @@ let channels = this.$store.state.solid.indexes.puti != undefined ? this.$store.s
 */
 
 export default {
-  name: 'FoFri',
+  name: 'ChatSelector',
   //mixins: [profileMixin],
   components: {
     //'PeopleItem': () => import('@/components/profile/PeopleItem'),
@@ -74,6 +76,7 @@ export default {
   data: function () {
     return {
       //  my_channels : ["one", "two"],
+      channel: null,
       common_channels: [
         {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:'01/01/2020', label: 'Solidarity'},
         {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:'08/01/2020', label: 'Welcome to Solid'},
@@ -104,6 +107,14 @@ export default {
     }
   },
   methods:{
+    open(channel){
+      this.channel = channel
+      console.log(channel)
+      this.$store.commit('chat/setChannel', channel)
+    },
+    clean(){
+      this.channel = null
+    }
     /*  async updateFriends(){
     this.friends = await this.getFriends(this.webId)
   }*/

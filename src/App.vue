@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.45 - chat selector test
+  0.1.46 - chat selector
 </div>
 </template>
 

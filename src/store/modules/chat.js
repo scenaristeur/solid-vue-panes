@@ -2,13 +2,14 @@
 
 // initial state
 const state = () => ({
+  channel : {},
   users: {"https://spoggy-test3.solid.community/profile/card#me": {pic:"boo"}},
   root: "",
   //  dataDate: "",
   //  path: "",
   fileUrl: "",
   //  requests: [],
-    messages: []
+  messages: []
 })
 
 // getters
@@ -24,6 +25,9 @@ const actions = {
 
 // mutations
 const mutations = {
+  setChannel(state, channel){
+    state.channel = channel
+  },
   setUser(state, user){
     console.log("User",user)
     let webId = user.webId
@@ -38,7 +42,7 @@ const mutations = {
     state.root = root
   },
   setMessages(state,messages){
-  state.messages = messages
+    state.messages = messages
   },
   /*
   setPath(state, path){

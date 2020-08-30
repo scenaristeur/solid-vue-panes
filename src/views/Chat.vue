@@ -1,13 +1,14 @@
 <template>
   <div class = "chat">
 
-    <div class="container">
+    <!--<div class="container">
       <router-link to="/indexes">Add an instance to your publicTypeIndex</router-link>
       <b-form-select  v-model="selected" :options="options"> </b-form-select>
 
-    </div>
-    <SolidChatList  :channel="selected" />
-  <!--  <ChatSelector /> -->
+    </div>-->
+      <ChatSelector />
+    <SolidChatList />
+
   </div>
 </template>
 
@@ -19,16 +20,15 @@ export default  {
 
   components :  {
     'SolidChatList' :  () => import ( '@/components/chat/SolidChatList' ),
-  //  'ChatSelector' :  () => import ( '@/components/chat/ChatSelector' )
+    'ChatSelector' :  () => import ( '@/components/chat/ChatSelector' )
   } ,
+
   data ( )  {
     return  {
       selected :  {} ,
 
     }
-  } ,
-
-
+  },
   computed : {
 
     options () {
