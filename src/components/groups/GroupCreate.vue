@@ -28,6 +28,7 @@ import groupsMixin from '@/mixins/groupsMixin'
 //const { namedNode } = require('@rdfjs/data-model');
 
 export default {
+  // see permissions ? https://vuejsdevelopers.com/2018/01/08/vue-js-roles-permissions-casl/
   name: 'GroupCreate',
   /*  components: {
   'Component': () => import('@/components/Component'),
@@ -42,6 +43,7 @@ data() {
 },
 methods:{
   async add(){
+  this.name = this.name.trim().replace(/\s/g, '_')
     console.log(this.name, this.url)
     var dateObj = new Date();
     var date = dateObj.toISOString()

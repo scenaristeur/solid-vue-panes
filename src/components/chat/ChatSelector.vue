@@ -125,7 +125,7 @@ computed:{
     return this.$store.state.solid.storage
   },
   my_channels: {
-    get: function() { return this.$store.state.solid.indexes.puti.instances},
+    get: function() { return this.$store.state.solid.indexes.puti != undefined ? this.$store.state.solid.indexes.puti.instances : []},
     set: function() {}
   },
 

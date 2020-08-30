@@ -26,6 +26,7 @@ const actions = {
 // mutations
 const mutations = {
   setChannel(state, channel){
+    console.log(channel)
     state.channel = channel
   },
   setUser(state, user){

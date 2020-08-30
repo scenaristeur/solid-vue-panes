@@ -71,8 +71,11 @@
         </template>
         <b-dropdown-item to="/bookmarks">{{ $t('bookmarks') }}</b-dropdown-item>
         <b-dropdown-item to="/groups">Groups</b-dropdown-item>
-        <b-dropdown-item to="/offers">Offers</b-dropdown-item>
+
         <b-dropdown-item to="/forms">Forms</b-dropdown-item>
+        <b-dropdown-item to="/groups">Groups</b-dropdown-item>
+        <b-dropdown-item to="/salut">Salut</b-dropdown-item>
+        <b-dropdown-item to="/offers">Offers</b-dropdown-item>
         <b-dropdown-item to="/pod">Pod 2 </b-dropdown-item>
         <b-dropdown-item to="/share">Share</b-dropdown-item>
       </b-nav-item-dropdown>

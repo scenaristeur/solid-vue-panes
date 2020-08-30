@@ -105,7 +105,7 @@ export default {
     }
   },
   async created() {
-
+// email send template https://github.com/lethaldose/email-client
     this.webId = this.$store.state.solid.webId
     console.log("################# created inbox webid", this.webId)
     if (this.webId != null){
@@ -346,7 +346,7 @@ computed:{
   },
   link(){
     console.log("route",this.$route, location.href, location.host)
-    let path = location.host+"friends?add=https://spoggy.solid.community/profile/card#me"
+    let path = "/friends?add=https://spoggy.solid.community/profile/card#me"
     return  path //'<a href="'+path+'" target="_blank">Be my friend</a>'
   }
 }

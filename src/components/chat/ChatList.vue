@@ -2,7 +2,8 @@
   <div class="chat-list">
 
     <div class="container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="300">
-        <div v-if="data.length == 0">Please Wait, I'm loading data ;-)</div>
+      <div v-if="data.length == 0">Please Wait, I'm loading data ;-)</div>
+      <h3 v-else><a v-bind:href="channel.instance" target="_blank">{{channel.label}}</a></h3>
       <b-list-group flush>
         <b-list-group-item v-for="m in data" :key="m.id">
           <div class="item">
@@ -23,17 +24,17 @@
       </b-list-group>
     </div>
 
-<b-alert
-v-model="busy"
-class="position-fixed fixed-bottom rounded-0"
-style="z-index: 2000; bottom:30px"
-variant="info"
+    <b-alert
+    v-model="busy"
+    class="position-fixed fixed-bottom rounded-0"
+    style="z-index: 2000; bottom:30px"
+    variant="info"
 
-dismissible
->{{title}}
-</b-alert>
+    dismissible
+    >{{title}}
+  </b-alert>
 
-<SolidChatSend />
+  <SolidChatSend />
 </div>
 </template>
 
@@ -60,24 +61,36 @@ export default {
     }
   },
   created() {
-    if( this.$route.query.instance != undefined){
-      this.instance = this.$route.query.instance
-      this.created = this.$route.query.created
-      this.label = this.$route.query.label
-      console.log(this.instance, this.created, this.label)
-    }
-    console.log("###############INSTANCE",this.instance)  //  this.webId = this.$store.state.solid.webId
+    this.channel = this.$store.state.chat.channel
+    console.log("###############INSTANCE",this.channel)  //  this.webId = this.$store.state.solid.webId
+    this.channelChanged(this.channel)
+
   },
   methods:{
+    async channelChanged(channel){
+      //console.log(channel)
+      //  this.url = channel.instance
+      let d  = channel.created
+      //console.log(d)
+      this.limite =  new Date(d)
+      //console.log("LIMITE",this.limite)
+      this.date = new Date()
+      this.url = this.channel.instance.substr(0, this.channel.instance.lastIndexOf("/") + 1);
+      this.data = []
+      /*  await this.readPublicAccess(this.url)
+      let pattern = { read: true, append: true, write: false, control: false }
+      await this.setPublicAccess(this.url, pattern)*/
+      await   this.initChat(this.url)
+    },
     loadMore: async function() {
       this.busy = true;
 
       if (this.limite <= this.date ){
-        //  console.log(this.limite)
+        //  //console.log(this.limite)
         //  let date =  this.date
-        //  console.log(this.date)
+        //  //console.log(this.date)
         let path = [this.root, this.date.getFullYear(), ("0" + (this.date.getMonth() + 1)).slice(-2), ("0" + this.date.getDate()).slice(-2), "chat.ttl"].join("/")
-        //  console.log(path)
+        //  //console.log(path)
 
         //  let messages = this.read(path)
         //this.data = this.data.concat(messages);
@@ -90,7 +103,7 @@ export default {
         //this.showTop = false
 
       }else{
-        console.log("STOP")
+        //console.log("STOP")
         this.data.push({id:Math.random(), maker:"https://System.solid-vue-panes", content: "This is the end, my friend, there are no message before that date", created: this.limite.toLocaleString()})
         //alert ("No message before "+this.limite)
         this.makeToast("No message before", this.limite.toLocaleString(), 'warning')
@@ -98,22 +111,22 @@ export default {
 
     },
     async loadMessages(path, sens){
-      console.log("load",path)
+      //console.log("load",path)
 
       try{
 
         const chatDoc = await fetchDocument(path);
         let  subjects = chatDoc.findSubjects();
         subjects = subjects.filter( this.onlyUnique )
-        //  console.log(subjects)
+        //  //console.log(subjects)
         //let triples = []
         let messages = []
         var existingIds = this.data.map((obj) => obj.id);
-        //    console.log(existingIds)
+        //    //console.log(existingIds)
         for  (let s of subjects) {
-          //    console.log("Compare",s.asRef(), this.root+"/index.ttl#this")
+          //    //console.log("Compare",s.asRef(), this.root+"/index.ttl#this")
           if (s.asRef() != this.root+"/index.ttl#this" && ! existingIds.includes(s.asRef())){
-            //  console.log(s)
+            //  //console.log(s)
             //  let t = s.getTriples()
             let created = s.getString(dct.created)
             let content = s.getLiteral(sioc.content)
@@ -128,7 +141,7 @@ export default {
               //  parent: parent
             }
 
-            //  console.log(t)
+            //  //console.log(t)
             //  triples.push(t)
             messages.unshift(t)
 
@@ -136,53 +149,53 @@ export default {
 
 
         }
-        console.log("m",messages)
+        //console.log("m",messages)
         if (sens == "top"){
           this.today_messages = []
           this.today_messages = messages
-          console.log("TODAY",this.today_messages)
+          //console.log("TODAY",this.today_messages)
         }else{
           this.old_messages.push.apply(this.old_messages, messages)
-          console.log("OLD",this.old_messages)
+          //console.log("OLD",this.old_messages)
         }
-        //console.log("TODAY",this.today_messages)
-        //console.log("OLD",this.old_messages)
+        ////console.log("TODAY",this.today_messages)
+        ////console.log("OLD",this.old_messages)
         this.data = []
         this.data = this.today_messages.concat(this.old_messages)
 
-        //console.log("TODAY",this.today_messages)
-        //console.log("OLD",this.old_messages)
-        //console.log("DATA",this.data)
-        //console.log("USERS",this.$store.state.chat.users)
+        ////console.log("TODAY",this.today_messages)
+        ////console.log("OLD",this.old_messages)
+        ////console.log("DATA",this.data)
+        ////console.log("USERS",this.$store.state.chat.users)
         /*if (this.data.length == 0){
         this.loadMore()
       }*/
-      //  console.log(triples)
+      //  //console.log(triples)
       //  messages = triples.reverse()
     }catch(e){
-      //   console.log(e)
+      //   //console.log(e)
       //  this.showTop = true
       //  ! this.stopped ? this.loadMore() : ""
     }
     /*  setTimeout(() => {
     for (var i = 0, j = 10; i < j; i++) {
     this.data.push({ name: count++ });
-    console.log(this.data)
+    //console.log(this.data)
   }
   this.busy = false;
-  console.log(this.busy)
+  //console.log(this.busy)
 }, 1000);*/
 this.busy = false
-console.log("loaded")
+//console.log("loaded")
 },
 loadMore1: async function() {
   this.busy = true;
-  console.log(this.busy, this.limite, this.date)
+  //console.log(this.busy, this.limite, this.date)
   if (this.limite <= this.date ){
 
-    console.log("yes")
+    //console.log("yes")
     let path = [this.root, this.date.getFullYear(), ("0" + (this.date.getMonth() + 1)).slice(-2), ("0" + this.date.getDate()).slice(-2), "chat.ttl"].join("/")
-    //  console.log(path)
+    //  //console.log(path)
 
     //  let messages = this.read(path)
     //this.data = this.data.concat(messages);
@@ -192,13 +205,13 @@ loadMore1: async function() {
     this.busy = false
   }
   else{
-    console.log("no")
+    //console.log("no")
 
   }
 
 },
 initChat(url){
-  console.log("init : ",url)
+  //console.log("init : ",url)
   this.today_messages = []
   this.old_messages = []
   this.messages = []
@@ -206,14 +219,14 @@ initChat(url){
   this.stopped = false
 
   this.date  = new Date()
-  console.log(this.date)
+  //console.log(this.date)
 
   this.root = url
   this.root.endsWith('/') ? this.root = this.root.slice(0, -1) : ""
 
   this.fileUrl =  [this.root, this.date.getFullYear(), ("0" + (this.date.getMonth() + 1)).slice(-2), ("0" + this.date.getDate()).slice(-2), "chat.ttl"].join("/")
 
-  console.log(this.fileUrl)
+  //console.log(this.fileUrl)
   this.$store.commit('chat/setFileUrl', this.fileUrl)
   this.$store.commit('chat/setRoot', this.root)
   let withoutProtocol = this.root.split('//')[1]
@@ -314,29 +327,17 @@ onlyUnique(value, index, self) {
 },
 },
 watch: {
-  '$route' (to) {
-    console.log(to)
+  /*  '$route' (to) {
+  console.log(to)
 
-    this.instance = this.$route.query.instance
-    this.created = this.$route.query.created
-    this.label = this.$route.query.label
-    console.log(this.instance, this.created, this.label)
-  },
-  channel: async function(channel){
-    console.log(channel)
-    //  this.url = channel.instance
-    let d  = channel.created
-    console.log(d)
-    this.limite =  new Date(d)
-    console.log("LIMITE",this.limite)
-    this.date = new Date()
-    this.url = this.channel.instance.substr(0, this.channel.instance.lastIndexOf("/") + 1);
-    this.data = []
-    /*  await this.readPublicAccess(this.url)
-    let pattern = { read: true, append: true, write: false, control: false }
-    await this.setPublicAccess(this.url, pattern)*/
-    await   this.initChat(this.url)
-  }
+  this.instance = this.$route.query.instance
+  this.created = this.$route.query.created
+  this.label = this.$route.query.label
+  console.log(this.instance, this.created, this.label)
+},*/
+channel: async function(channel){
+  this.channelChanged(channel)
+}
 },
 computed:{
   channel: {

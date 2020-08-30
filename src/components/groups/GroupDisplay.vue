@@ -90,6 +90,7 @@ export default {
   },
   methods:{
     async add(){
+      this.name = this.name.trim().replace(/\s/g, '_')
       console.log(this.name, this.url)
       var dateObj = new Date();
       var date = dateObj.toISOString()
