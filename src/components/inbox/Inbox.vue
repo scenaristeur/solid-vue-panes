@@ -59,11 +59,8 @@
       </b-list-group>
     </b-modal>
 
-    webId : {{ webId }}
-
-    inbox_urls : {{ inbox_urls }}
-
-    <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
+    <p>To test the inbox, you can add me to your friends :<br>
+      <b-button :to="link" variant="outline-info">Add Popock dev to your friends</b-button>
     </p>
   </div>
   <div v-else>
@@ -346,6 +343,11 @@ computed:{
   storage:{
     get: function() { return this.$store.state.solid.storage},
     set: function() {}
+  },
+  link(){
+    console.log("route",this.$route, location.href, location.host)
+    let path = location.host+"friends?add=https://spoggy.solid.community/profile/card#me"
+    return  path //'<a href="'+path+'" target="_blank">Be my friend</a>'
   }
 }
 }

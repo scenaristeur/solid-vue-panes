@@ -2,7 +2,7 @@
 
 // initial state
 const state = () => ({
-  channel : {},
+  channel : null,
   users: {"https://spoggy-test3.solid.community/profile/card#me": {pic:"boo"}},
   root: "",
   //  dataDate: "",

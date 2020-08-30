@@ -110,10 +110,11 @@ export default {
     open(channel){
       this.channel = channel
       console.log(channel)
-      this.$store.commit('chat/setChannel', channel)
+      this.$store.commit('chat/setChannel', this.channel)
     },
     clean(){
       this.channel = null
+      this.$store.commit('chat/setChannel', this.channel)
     }
     /*  async updateFriends(){
     this.friends = await this.getFriends(this.webId)
