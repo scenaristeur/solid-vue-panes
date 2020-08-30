@@ -1,12 +1,13 @@
 <template>
   <div class="groups-list">
+    {{url}}
     <GroupsToolbar :path="url"/>
     <GroupCreate v-on:created="initGroups" />
 
     <!--    <b-button variant="info" @click="initGroups">Reload groups</b-button>-->
     <div>
       <b-card-group columns>
-        <GroupDisplay v-for="f in folder.files" :key="f.url" :file="f"/>
+        <GroupDisplay v-for="f in folder.files" :key="f.url" :file="f" v-on:created="initGroups"/>
       </b-card-group>
     </div>
 
@@ -36,6 +37,8 @@ export default {
     }
   },
   created(){
+
+    console.log(this.url)
     this.initGroups()
   },
   computed:{
@@ -45,15 +48,17 @@ export default {
     storage(){
       return this.$store.state.solid.storage
     },
-    url(){
-      return this.storage+"public/groups/"
-    }
+    url: {
+      get: function() { return this.storage+"public/groups/"},
+      set: function() {}
+    },
   },
   methods: {
-    async  initGroups(){
+    async  initGroups(url = this.url){
+      console.log(url)
       if (this.storage != null && this.storage.length > 0){
-        console.log("init groups : ",this.url)
-        this.folder = await fc.readFolder(this.url)
+        console.log("init groups : ",url)
+        this.folder = await fc.readFolder(url)
         console.log("Folder : ", this.folder)
       }
     },
@@ -72,8 +77,17 @@ export default {
       if(url != null){
         console.log(url)
         //  this.sendMessage("switched to "+url)
-        this.initGroups()
+        this.initGroups(url)
       }
+    },
+    '$route' (to) {
+      //  '$route' (to, from) {
+      console.log(to)
+      this.url = to.params.url // || this.storage+"public/groups/"
+    //  console.log(this.url)
+      this.initGroups(to.params.url)
+      //  this.updateFriends()
+      //  this.updateIndexes()
     }
   },
 

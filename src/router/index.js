@@ -165,7 +165,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "forms" */ '@/views/Forms.vue')
   },
   {
-    path: '/groups',
+    path: '/groups/:url?',
     name: 'Groups',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

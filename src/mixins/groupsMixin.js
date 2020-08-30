@@ -10,6 +10,8 @@ export default {
       group.name = index.getLiteral(vcard.fn)
       group.members = index.getAllNodeRefs(vcard.hasMember)
       group.purpose = index.getLiteral('http://www.w3.org/ns/org#purpose')
+      group.parent = index.getNodeRef("http://www.w3.org/ns/org#subOrganizationOf")
+      group.subgroups =  index.getAllNodeRefs("http://www.w3.org/ns/org#hasSubOrganization")
       return group
     },
     makeToast(title, content,variant = null) {

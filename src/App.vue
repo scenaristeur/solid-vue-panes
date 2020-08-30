@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.43 - group test
+  0.1.44 - subgroups
 </div>
 </template>
 

@@ -10,7 +10,7 @@
         <label for="parent">Parent / Supercircle</label>
         <b-form-input id="parent" v-model="parent" placeholder="ex: Supercircle"></b-form-input>
 
-        <label for="url">Group url</label>
+        <label for="url">Group location</label>
         <b-form-input id="url" v-model="url" :placeholder="'ex: '+url"></b-form-input>
       </b-form-group>
     </b-modal>
