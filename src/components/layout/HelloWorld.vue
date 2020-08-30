@@ -37,7 +37,7 @@
           <b-card bg-variant="dark" text-variant="white" header="Profile" class="text-center">
             <b-card-text>
               <ul>
-                <li><router-link to="/general"><b-icon-person-badge class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-person-badge><br>{{ $t('profile') }}</router-link></li>
+                <li><router-link to="/profile"><b-icon-person-badge class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-person-badge><br>{{ $t('profile') }}</router-link></li>
                 <li><router-link to="/fofri"><b-icon-people class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people><br>{{ $t('fofri') }}</router-link></li>
                 <!--  <li><router-link to="/indexes">Indexes</router-link></li>-->
                 <li><router-link to="/friends"><b-icon-people-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people-fill><br>{{ $t('friends') }}</router-link></li>

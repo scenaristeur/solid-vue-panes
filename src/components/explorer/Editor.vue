@@ -62,6 +62,8 @@
   @change="change"
 >
 </b-form-textarea>
+
+<Crud />
 <!--   @input="input" -->
 
 <!--  File : {{ file }}  disabled -->
@@ -84,7 +86,8 @@ export default {
 
   name: 'Editor',
   components: {
-    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+      'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {
     return {

@@ -4,37 +4,36 @@
 
     <div>
       <b-tabs content-class="mt-3">
-        <b-tab title="First" active>
+        <b-tab title="Shape selection" active>
           <p>Select a Tab to use a Form or choose
             <b-link href="https://holacratie.solid.community/public/Schema/" target="_blank">another ShEx shapes</b-link>.
 
-
             <ShapeChoose />
             <SolidLoginButton />
-      </p>
+          </p>
 
-    <div class="brute-hide">
-      <h5>{{ $options.name }}</h5>
-      currentShape : {{ currentShape}}<br>
-      shapes length ({{ shapes.length }}): {{ shapes }}<br>
-      footprint_shapes ({{ footprint_shapes.length}}): {{ footprint_shapes}}<br>
-      translate_shapes ({{ translate_shapes.length}}): {{ translate_shapes}}<br>
-    </div>
-  </b-tab>
+          <div class="brute-hide">
+            <h5>{{ $options.name }}</h5>
+            currentShape : {{ currentShape}}<br>
+            shapes length ({{ shapes.length }}): {{ shapes }}<br>
+            footprint_shapes ({{ footprint_shapes.length}}): {{ footprint_shapes}}<br>
+            translate_shapes ({{ translate_shapes.length}}): {{ translate_shapes}}<br>
+          </div>
+        </b-tab>
 
-  <!--  -->
-  <b-tab
-  v-for="shape in shapes"
-  v-bind:class="{ active: currentShape == shape.id }"
-  :key="shape.id" :title="shape.localname"
-  @click="changeCurrentShape(shape.id)">
-  <!--test {{currentShape}} & {{shape.id}} -->
-  <FormShape :shape="shape"/>
-  <FormSubmit :shape="shape"/>
+        <!--  -->
+        <b-tab
+        v-for="shape in shapes"
+        v-bind:class="{ active: currentShape == shape.id }"
+        :key="shape.id" :title="shape.localname"
+        @click="changeCurrentShape(shape.id)">
+        <!--test {{currentShape}} & {{shape.id}} -->
+        <FormShape :shape="shape"/>
+        <FormSubmit :shape="shape"/>
 
-</b-tab>
-</b-tabs>
-</div>
+      </b-tab>
+    </b-tabs>
+  </div>
 
 
 </div>

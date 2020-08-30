@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.48 - chat selector & groups
+  0.1.49 - friends flip & profil topics
 </div>
 </template>
 

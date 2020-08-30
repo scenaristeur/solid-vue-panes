@@ -2,7 +2,7 @@
   <div class="shape-remote-loader mb-3">
     <div>
       <b-input-group  class="mt-3"> <!--prepend="ShEx shape"-->
-        <b-form-input class="col-md-3" v-model="shape_url"
+        <b-form-input  v-model="shape_url"
         placeholder="see suggestions"
         ></b-form-input>
         <b-input-group-append>
