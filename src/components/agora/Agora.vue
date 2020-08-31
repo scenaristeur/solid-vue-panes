@@ -36,15 +36,6 @@
     <b-button class="mt-3" @click="send" variant="outline-info">Send</b-button>
 
 
-    <br>
-
-
-
-
-    WebId: {{ webId }}<br>
-    storage : {{ storage}}
-
-
   </div>
 </template>
 
@@ -92,6 +83,7 @@ created(){
 
   console.log(this.date)
   this.webId = this.$store.state.solid.webId
+  console.log("WWWwebId", this.webId)
   this.storage = this.$store.state.solid.storage
   this.$store.dispatch('agora/setPubPod', this.pubPod)
 },
@@ -116,7 +108,7 @@ methods: {
       activityDoc = await createDocument(fileUrl);
     }
 
-
+    console.log("webId",this.webId)
     let autoSummary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
     console.log("Musr create outbox object first, then activity !",activityDoc, messageId, date)
     let subj =   activityDoc.addSubject({identifier:messageId})

@@ -14,7 +14,8 @@ let websocket, socket
 
 const state = () => ({
   config: null,
-  activities: ["DF", "FGH","HJYY"],
+  pubPod: "",
+  activities: [],
 })
 
 const getters = {}
@@ -22,6 +23,8 @@ const getters = {}
 const actions = {
   async setPubPod (context, pubPod) {
     // websocket
+    console.log("pubPod",pubPod)
+    context.commit('setPubPod', pubPod)
     let d = new Date()
     let date =  [d.getFullYear(), ("0" + (d.getMonth() + 1)).slice(-2), ("0" + d.getDate()).slice(-2)].join("-")
     let fileUrl = pubPod+date+".ttl"
@@ -59,6 +62,28 @@ const actions = {
       }
     };
 
+    const activityResource = await getSolidDataset(
+      fileUrl
+    );
+
+    /*
+    2. Get the data entity, specified by the URL, from the Dataset.
+    */
+
+    const activities = getThingAll(
+      activityResource
+    );
+
+    // 3. Retrieve the specific data item (e.g., name) from the entity.
+
+    console.log(activities)
+    /*
+    let activityDoc = await fetchDocument(fileUrl);
+    console.log("AD",activityDoc)
+    let activities = await activityDoc.getAllSubjectsOfType("https://www.w3.org/ns/activitystreams#Create")
+    */
+    context.commit('setActivities', activities)
+
   }
 }
 
@@ -66,6 +91,10 @@ const mutations = {
   setActivities (state, activities) {
     console.log(activities)
     state.activities = activities
+  },
+  setPubPod (state, pubPod) {
+    console.log(pubPod)
+    state.pubPod = pubPod
   },
 }
 

@@ -12,7 +12,7 @@
 export default {
   name: 'General',
   components: {
-    'Profile': () => import('@/views/Profile'),
+    'Profile': () => import('@/components/profile/Profile'),
     'Indexes': () => import('@/views/Indexes'),
     'FriendsView': () => import('@/views/FriendsView'),
   },

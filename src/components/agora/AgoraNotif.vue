@@ -1,7 +1,6 @@
 <template>
   <div class="agora-notif">
     <!--    NOTIF   {{ activities }} -->
-    {{ activities.length }}
     <div class="text-center">
 
       <!--{{ config }}<br>
@@ -29,6 +28,7 @@ export default {
   },
   data: function () {
     return {
+      pubPod: "https://agora.solid.community/public/popock/inbox/",
       acitivities_cnt: 0,
       show: false,
       //  webId: {},
@@ -36,8 +36,9 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch('agora/setPubPod', this.pubPod)
     this.activities = this.$store.state.agora.activities
-    console.log("ACti",this.activities)
+    //  console.log("ACti",this.activities)
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
   },
@@ -50,6 +51,7 @@ export default {
       console.log(activities.length)
       if (this.activities_cnt != activities.length){
         this.activities_cnt = activities.length
+        this.show = false
         this.show = true
       }
     }

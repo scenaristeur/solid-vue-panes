@@ -4,8 +4,11 @@
 
       <div  v-if="sender != null">
         <div class="avatar"></div>
-        <b-button class="reply" size="sm" variant="success" @click.stop="init_reply()">
+        <b-button class="reply" size="sm" title="reply"  variant="success" @click.stop="init_reply()">
           <b-icon-reply  disabled @click.stop="init_reply()" variant="outline-success"></b-icon-reply>
+        </b-button>
+        <b-button class="add-friend" title="add friend" size="sm" variant="info" :to="'/friends?add='+sender">
+          <b-icon-person-plus></b-icon-person-plus>
         </b-button>
         <!--    <b-avatar class="mr-3" v-if="photo == undefined"></b-avatar>
         <b-avatar button v-else :src="photo" badge badge-variant="danger" class="mr-3"></b-avatar>
@@ -14,6 +17,8 @@
         {{sender.split('/').slice(2,3)[0]}}
 
       </div>
+
+
 
 
       <div class="created mt-2">
@@ -99,15 +104,15 @@ methods:{
   },
   async init_reply(){
     console.log("reply",this.message)
-  //  this.$bvModal.show("reply")
-  let reply = {}
-  reply.url = this.message.url
-  reply.sender = this.sender
-  reply.dateSend = this.dateSent
-  reply.text = this.text
-  reply.label = this.label
+    //  this.$bvModal.show("reply")
+    let reply = {}
+    reply.url = this.message.url
+    reply.sender = this.sender
+    reply.dateSend = this.dateSent
+    reply.text = this.text
+    reply.label = this.label
     this.$store.commit('inbox/setReply', reply)
-  /*  this.$store.commit('inbox/setLabel', "Ref: "+this.label)
+    /*  this.$store.commit('inbox/setLabel', "Ref: "+this.label)
     this.$store.commit('inbox/setOldContent', this.dateSent+" : "+this.text)*/
   },
   async updateLine(){
@@ -156,10 +161,17 @@ methods:{
 .reply{
   position: absolute;
   left: 0px;
-  top: 38px;
+  top: 70px;
   width: 29px;
   height: 29px;
 
+}
+.add-friend{
+  position: absolute;
+  left: 0px;
+  top: 38px;
+  width: 29px;
+  height: 29px;
 }
 .maker{
   position: absolute;

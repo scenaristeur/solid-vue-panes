@@ -1,7 +1,8 @@
 <template>
   <div class="modele">
-  
+
     <Agora />
+    <AgoraList />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ export default {
   name: 'AgoraView',
   components: {
     'Agora': () => import('@/components/agora/Agora'),
+    'AgoraList': () => import('@/components/agora/AgoraList'),
   },
 }
 </script>
