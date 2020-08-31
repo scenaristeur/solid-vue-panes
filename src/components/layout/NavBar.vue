@@ -46,7 +46,6 @@
           <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
           <b-dropdown-item to="/chat">{{ $t('chat') }}</b-dropdown-item>
           <b-dropdown-item to="/inbox">{{ $t('inbox') }}</b-dropdown-item>
-          <b-dropdown-item to="/agora">Agora</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
@@ -68,9 +67,10 @@
 
       <b-nav-item-dropdown right>
         <template v-slot:button-content>
-          Misc
+          Misc (Experimental)
         </template>
         <b-dropdown-item to="/groups">Groups</b-dropdown-item>
+        <b-dropdown-item to="/agora">Agora</b-dropdown-item>
         <b-dropdown-item to="/forms">Forms</b-dropdown-item>
         <b-dropdown-item to="/salut">Salut</b-dropdown-item>
         <b-dropdown-item to="/offers">Offers</b-dropdown-item>

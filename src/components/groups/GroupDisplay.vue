@@ -1,7 +1,7 @@
 <template>
   <div class="group-display">
     <b-card >
-      <b-card-header> <router-link v-bind:to="{ name: 'Groups', params: { url: file.parent+group.name }}">{{group.name || file.name}}</router-link></b-card-header>
+      <b-card-header> <router-link v-bind:to="file.parent+group.name">{{group.name || file.name}}</router-link></b-card-header>
       <b-card-text>
         <GroupMembers :url="file.url" :members="group.members"/>
         <b-button @click="open('modal-members-'+file.url)" variant="outline-info">{{ group.members.length }} Members</b-button>

@@ -22,11 +22,11 @@
 
 <script>
 // @ is an alias to /src
-import { createDocument } from 'tripledoc';
-import { vcard, dct, foaf, ldp} from 'rdf-namespaces' //
+import { createDocument, fetchDocument } from 'tripledoc';
+import { vcard, dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
 import groupsMixin from '@/mixins/groupsMixin'
 //const { namedNode } = require('@rdfjs/data-model');
-
+import ActivityMixin from '@/mixins/ActivityMixin.js'
 export default {
   // see permissions ? https://vuejsdevelopers.com/2018/01/08/vue-js-roles-permissions-casl/
   name: 'GroupCreate',
@@ -38,21 +38,25 @@ data() {
     name: "CoolGroup",
     purpose: "",
     parent: "",
-      mixins: [groupsMixin],
+    mixins: [groupsMixin, ActivityMixin],
+    pubPod: "https://agora.solid.community/public/popock/inbox/", // REVOIR ACTIVITY MIXIN !!!
+
   }
 },
 methods:{
   async add(){
-  this.name = this.name.trim().replace(/\s/g, '_')
+    this.name = this.name.trim()
+    let ttl_name = this.name.replace(/\s/g, '_')
     console.log(this.name, this.url)
     var dateObj = new Date();
     var date = dateObj.toISOString()
-    this.path = this.url+this.name+".ttl"
+    this.path = this.url+ttl_name+".ttl"
+    console.log(this.path)
     // https://www.w3.org/TR/vocab-org/#org:purpose
     let groupDoc =    await createDocument(this.path);
     let subj =   groupDoc.addSubject({identifier:"this"})
     subj.addLiteral(vcard.fn, this.name)
-    subj.addNodeRef(ldp.inbox, "./"+this.name+"/inbox/")
+    subj.addNodeRef(ldp.inbox, "./"+ttl_name+"/inbox/")
     subj.addLiteral(dct.created, date)
     subj.addNodeRef(foaf.maker, this.webId)
     subj.addNodeRef(vcard.hasMember, this.webId)
@@ -67,28 +71,108 @@ methods:{
 
     await groupDoc.save();
     this.$emit('created')
-    /*@prefix vcard: <http://www.w3.org/2006/vcard/ns#>.
-    @prefix ldp: <http://www.w3.org/ns/ldp#>.
 
-    <#this> a vcard:Group;
-    vcard:fn "Solid Friends";
-    ldp:inbox <./friend-requests-inbox/>;
-    vcard:hasMember <https://friend1.inrupt.net/profile/card#me>;
-    vcard:hasMember <https://friend2.inrupt.net/profile/card#me>.*/
 
-  }
-},
-computed:{
-  webId(){
-    return this.$store.state.solid.webId
+
+    this.activity=  {
+      "@context": [
+        "https://www.w3.org/ns/activitystreams",
+        {
+          "org": "http://www.w3.org/ns/org#",
+          "purpose": {
+            "@id": "org:purpose",
+            "@type": "@id"
+          },
+          "subOrganizationOf": {
+            "@id": "org:subOrganizationOf",
+            "@type": "@id"
+          }
+        }
+      ],
+      "summary": "will Be auto-generated",
+      "type": "Create",
+      "actor": {
+        "type": "webId",
+        "name": this.webId
+      },
+      "object": {
+        "type": "Group", // ["Group", "hc:Circle"],
+        "name": this.name,
+        "purpose": this.purpose,
+        "url": this.path+"#this",
+        "subOrganizationOf": this.parent
+      }
+    }
+    let autoSummary = [this.activity.actor.name,
+      this.activity.type,
+      "a",
+      this.activity.object.type,
+      "with name", this.activity.object.name,
+      "and purpose", this.activity.object.purpose, ". It is a subOrganizationOf ", this.activity.object.parent].join(" ")
+      this.activity.summary = autoSummary
+
+      console.log(this.activity)
+
+
+      // does not work from mixin ??
+      this.sendActivity()
+
+
+      /*@prefix vcard: <http://www.w3.org/2006/vcard/ns#>.
+      @prefix ldp: <http://www.w3.org/ns/ldp#>.
+
+      <#this> a vcard:Group;
+      vcard:fn "Solid Friends";
+      ldp:inbox <./friend-requests-inbox/>;
+      vcard:hasMember <https://friend1.inrupt.net/profile/card#me>;
+      vcard:hasMember <https://friend2.inrupt.net/profile/card#me>.*/
+
+    },
+    async sendActivity(){
+      console.log(this.activity)
+      console.log(this.activity.actor.name, this.activity.type, this.activity.summary, this.date)
+
+      var dateObj = new Date();
+      let d = this.formatDate(dateObj)
+      let fileUrl = this.pubPod+d+".ttl"
+      var messageId = "Activity_"+dateObj.getTime()
+      var date = dateObj.toISOString()
+      let activityDoc = {}
+      console.log(fileUrl)
+      try{
+        activityDoc = await fetchDocument(fileUrl);
+      }catch(e){
+        activityDoc = await createDocument(fileUrl);
+      }
+
+      console.log("webId",this.webId)
+      let subj =   activityDoc.addSubject({identifier:messageId})
+      //subj.addLiteral(sioc.content, this.activity)
+      subj.addLiteral(rdfs.label, this.activity.summary)
+      subj.addLiteral(dct.created, date)
+      subj.addRef(foaf.maker, this.activity.actor.name)
+      subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.activity.actor.name)
+      subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
+      subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
+      subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
+      await activityDoc.save();
+
+    },
+    formatDate(d) {
+      return [d.getFullYear(), ("0" + (d.getMonth() + 1)).slice(-2), ("0" + d.getDate()).slice(-2)].join("-")
+    },
   },
-  storage(){
-    return this.$store.state.solid.storage
+  computed:{
+    webId(){
+      return this.$store.state.solid.webId
+    },
+    storage(){
+      return this.$store.state.solid.storage
+    },
+    url:{
+      get: function() { return this.$store.state.solid.storage+"public/groups/"},
+      set: function() {}
+    }
   },
-  url:{
-    get: function() { return this.$store.state.solid.storage+"public/groups/"},
-    set: function() {}
-  }
-},
 }
 </script>
