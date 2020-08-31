@@ -1,6 +1,6 @@
 <template>
   <div class="agora-notif">
-
+    <!--    NOTIF   {{ activities }} -->
     <div class="text-center">
 
 
@@ -10,6 +10,7 @@
       <transition name="bounce">
         <b-badge class="btn" v-if="show"  variant="light" @click="open_agora">{{activities_cnt}} acitivities</b-badge>
       </transition>
+
 
 
     </div>
@@ -35,6 +36,8 @@ export default {
     }
   },
   created() {
+    this.activities = this.$store.state.agora.activities
+    console.log("ACti",this.activities)
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
   },
@@ -43,10 +46,10 @@ export default {
       //  '$route' (to, from) {
       console.log(config)
     },
-    inbox(inbox){
-      console.log(inbox.files.length)
-      if (this.inbox_cnt != inbox.files.length){
-        this.inbox_cnt = inbox.files.length
+    activities(activities){
+      console.log(activities.length)
+      if (this.activities_cnt != activities.length){
+        this.activities_cnt = activities.length
         this.show = true
       }
     }
@@ -58,15 +61,15 @@ export default {
       }
       this.show = false
     }
-},
-computed:{
-  /*  storage(){
-  return this.$store.state.solid.storage
-},
-,
-webId: {
-get: function() { return this.$store.state.inbox.webId},
-set: function() {}
+  },
+  computed:{
+    /*  storage(){
+    return this.$store.state.solid.storage
+  },
+  ,
+  webId: {
+  get: function() { return this.$store.state.inbox.webId},
+  set: function() {}
 },
 inbox_log_file: {
 get: function() { return this.$store.state.inbox.inbox_log_file},

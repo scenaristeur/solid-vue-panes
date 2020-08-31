@@ -4,6 +4,7 @@
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand to="/">PoPock</b-navbar-brand>
       <InboxNotif />
+      <AgoraNotif />
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -97,6 +98,7 @@ export default {
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'InboxNotif': () => import('@/components/inbox/InboxNotif'),
+    'AgoraNotif': () => import('@/components/agora/AgoraNotif'),
     'LangChooser': () => import('@/components/translation/LangChooser')
   },
   methods: {

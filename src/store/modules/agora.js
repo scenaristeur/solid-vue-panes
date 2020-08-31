@@ -1,67 +1,50 @@
 import { fetchDocument } from 'tripledoc';
-import { ldp } from 'rdf-namespaces'
-import auth from 'solid-auth-client';
+//import { ldp } from 'rdf-namespaces'
+/*import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
-const fc = new SolidFileClient(auth)
+const fc = new SolidFileClient(auth)*/
 
 let websocket, socket
 
 const state = () => ({
   config: null,
-  reply : {},
-  toTrash: {},
-  inbox: {files:[]},
+  acitivities: ["DF", "FGH","HJYY"],
 })
 
 const getters = {}
 
 const actions = {
-  async setUser (context, user) {
-    if (user != null){
-      let config = {}
-      config.webId = user.webId
-      config.storage = user.storage
-      config.inbox_log_file = user.storage+"popock/inbox_log.ttl"
-      let profileDoc = await fetchDocument(user.webId);
-      const p = profileDoc.getSubject(user.webId)
-      config.inbox_urls = await  p.getAllRefs(ldp.inbox )
-      context.commit('setInboxConfig', config)
-      let  inbox = await fc.readFolder(config.inbox_urls[0])
-      context.commit('setInbox', inbox)
-      // websocket
-      websocket = "wss://"+config.inbox_log_file.split('/')[2];
-      socket = new WebSocket(websocket, ['solid.0.1.0']);
-      socket.onopen = function() {
-        this.send('sub '+config.inbox_log_file);
-        console.log("--------- STORE SUBSCRIBE TO INBOX",websocket, config.inbox_log_file)
-      }
-      socket.onmessage = async function(msg) {
-        if (msg.data && msg.data.slice(0, 3) === 'pub') {
-          console.log(msg.data)
-          let  inbox = await fc.readFolder(config.inbox_urls[0])
-          context.commit('setInbox', inbox)
-        }
-      };
-    }else{
-      context.commit('setInboxConfig', null)
-      context.commit('setInbox', {files: []})
+  async setPubPod (context, pubPod) {
+    // websocket
+    let d = new Date()
+    let date =  [d.getFullYear(), ("0" + (d.getMonth() + 1)).slice(-2), ("0" + d.getDate()).slice(-2)].join("-")
+    let fileUrl = pubPod+date+".ttl"
+    websocket = "wss://"+pubPod.split('/')[2];
+    socket = new WebSocket(websocket, ['solid.0.1.0']);
+    socket.onopen = function() {
+      this.send('sub '+fileUrl);
+      console.log("--------- STORE SUBSCRIBE TO Agora",websocket, fileUrl)
     }
+    socket.onmessage = async function(msg) {
+      if (msg.data && msg.data.slice(0, 3) === 'pub') {
+        console.log(msg.data)
+      //  let  activities = await fc.readFile(fileUrl)
+
+        let activityDoc = await fetchDocument(fileUrl);
+        console.log("AD",activityDoc)
+        let activities = await activityDoc.getAllSubjectsOfType("https://www.w3.org/ns/activitystreams#Create")
+
+        context.commit('setActivities', activities)
+      }
+    };
+
   }
 }
 
 const mutations = {
-  setInboxConfig(state, config){
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Inbox Config mutation IN INBOX STORE", config)
-    state.config = config
-  },
-  setReply (state, reply) {
-    state.reply = reply
-  },
-  setToTrash (state, tt) {
-    state.toTrash = tt
-  },
-  setInbox (state, inbox) {
-    state.inbox = inbox
+  setActivities (state, activities) {
+    console.log(activities)
+    state.activities = activities
   },
 }
 

@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["agora"],{de5b:function(n,e,a){"use strict";a.r(e);var t=function(){var n=this,e=n.$createElement,a=n._self._c||e;return a("div",{staticClass:"modele"},[a("h1",[n._v("This is an Agora view page")]),a("Agora")],1)},o=[],r=(a("d3b7"),{name:"AgoraView",components:{Agora:function(){return a.e("chunk-76ca0559").then(a.bind(null,"15a4"))}}}),i=r,s=a("2877"),c=Object(s["a"])(i,t,o,!1,null,null,null);e["default"]=c.exports}}]);
-//# sourceMappingURL=agora.77ebc94b.js.map

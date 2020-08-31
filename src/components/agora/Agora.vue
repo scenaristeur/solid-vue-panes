@@ -51,7 +51,7 @@
 
 <script>
 import { fetchDocument, createDocument } from 'tripledoc';
-import {/*namedNode, sioc,*/  dct, foaf, rdfs } from 'rdf-namespaces'
+import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
 
 export default {
   name: 'Agora',
@@ -94,6 +94,13 @@ created(){
   console.log(this.date)
   this.webId = this.$store.state.solid.webId
   this.storage = this.$store.state.solid.storage
+  this.$store.dispatch('agora/setPubPod', this.pubPod)
+},
+watch: {
+
+  async activities (activities) {
+    console.log("ACTIVITIES",activities.length, activities)
+  },
 },
 methods: {
   async   send() {
@@ -119,9 +126,9 @@ methods: {
     subj.addLiteral(dct.created, date)
     subj.addRef(foaf.maker, this.webId)
     subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
-
+    subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
     subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
-    subj.addRef('https://www.w3.org/ns/activitystreams#type', this.activity.type)
+    subj.addRef('https://www.w3.org/ns/activitystreams#type', 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
     subj.addLiteral('https://www.w3.org/ns/activitystreams#object', "test"+this.activity.object)
     await activityDoc.save();
 
@@ -143,7 +150,12 @@ computed:{
   storage:{
     get: function() { return this.$store.state.solid.storage},
     set: function() {}
-  }
+  },
+  activities:{
+    get: function() { return this.$store.state.agora.activities},
+    set: function() {}
+  },
+
 }
 }
 </script>
