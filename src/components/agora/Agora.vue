@@ -1,6 +1,5 @@
 <template>
   <div class="modele container">
-    <h1>This is an test agora page</h1>
     <!--  <COMPONENET />  -->
 
 

@@ -1,8 +1,8 @@
 <template>
   <div class="agora-notif">
     <!--    NOTIF   {{ activities }} -->
+    {{ activities.length }}
     <div class="text-center">
-
 
       <!--{{ config }}<br>
       {{ inbox }}
@@ -55,7 +55,7 @@ export default {
     }
   },
   methods:{
-    open_inbox(){
+    open_agora(){
       if (this.$route.path !== "/agora"){
         this.$router.push({ path: '/agora' })
       }

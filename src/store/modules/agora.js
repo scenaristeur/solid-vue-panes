@@ -1,14 +1,20 @@
-import { fetchDocument } from 'tripledoc';
+//import { fetchDocument } from 'tripledoc';
 //import { ldp } from 'rdf-namespaces'
 /*import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)*/
+import {
+  getSolidDataset,
+  getThingAll,
+  //  getStringNoLocale,
+} from "@inrupt/solid-client";
+//import { FOAF } from "@inrupt/vocab-common-rdf";
 
 let websocket, socket
 
 const state = () => ({
   config: null,
-  acitivities: ["DF", "FGH","HJYY"],
+  activities: ["DF", "FGH","HJYY"],
 })
 
 const getters = {}
@@ -28,12 +34,27 @@ const actions = {
     socket.onmessage = async function(msg) {
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
         console.log(msg.data)
-      //  let  activities = await fc.readFile(fileUrl)
+        //  let  activities = await fc.readFile(fileUrl)
+        const activityResource = await getSolidDataset(
+          fileUrl
+        );
 
+        /*
+        2. Get the data entity, specified by the URL, from the Dataset.
+        */
+
+        const activities = getThingAll(
+          activityResource
+        );
+
+        // 3. Retrieve the specific data item (e.g., name) from the entity.
+
+        console.log(activities)
+        /*
         let activityDoc = await fetchDocument(fileUrl);
         console.log("AD",activityDoc)
         let activities = await activityDoc.getAllSubjectsOfType("https://www.w3.org/ns/activitystreams#Create")
-
+        */
         context.commit('setActivities', activities)
       }
     };

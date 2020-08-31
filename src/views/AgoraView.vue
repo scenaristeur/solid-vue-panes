@@ -1,6 +1,6 @@
 <template>
   <div class="modele">
-    <h1>This is an Agora view page</h1>
+  
     <Agora />
   </div>
 </template>

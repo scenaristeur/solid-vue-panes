@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.50 - friends flip & profil topics
+  0.1.51 - Agora
 </div>
 </template>
 
