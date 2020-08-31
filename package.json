@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.52",
+  "version": "0.1.53",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -40,7 +40,7 @@
     "@vue/cli-plugin-unit-mocha": "~4.4.0",
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
-    "@vue/test-utils": "^1.0.4",
+    "@vue/test-utils": "^1.0.5",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
     "eslint": "^6.7.2",

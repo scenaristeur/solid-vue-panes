@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.52 - AgoraNotif
+  0.1.53 - AgoraNotif
 </div>
 </template>
 

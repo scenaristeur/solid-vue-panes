@@ -46,13 +46,13 @@ import {
       console.log("Summary",this.summary)
       this.maker = getUrl(this.activity, FOAF.maker);
       console.log("maker", this.maker)
-      //  this.maker = getUrl(this.activity, FOAF.maker);
+      this.maker = getUrl(this.activity, FOAF.maker);
       this.actor = getUrl(this.activity, AS.actor);
       console.log("actor",this.actor)
       this.type = getUrl(this.activity, RDF.type);
       console.log("type", this.type)
       /* NE SEMBLE PAS FONCTIONNER VIENT DE LA CREATION AVEC TRIPLEDOC ?
-    */
+      */
       this.type2 = getUrl(this.activity, AS.type);
       console.log("type AS", this.type2)
 
