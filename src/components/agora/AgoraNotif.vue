@@ -1,5 +1,5 @@
 <template>
-  <div class="inbox-notif">
+  <div class="agora-notif">
 
     <div class="text-center">
 
@@ -8,7 +8,7 @@
       {{ inbox }}
       <button @click="show = !show">Permuter l'affichage</button>-->
       <transition name="bounce">
-        <b-badge class="btn" v-if="show"  variant="light" @click="open_inbox">{{inbox_cnt}} messages</b-badge>
+        <b-badge class="btn" v-if="show"  variant="light" @click="open_agora">{{activities_cnt}} acitivities</b-badge>
       </transition>
 
 
@@ -18,13 +18,20 @@
 </template>
 
 <script>
+//import profileMixin from '@/mixins/profileMixin'
 
 export default {
-  name: 'InboxNotif',
+  name: 'AgoraNotif',
+  //mixins: [profileMixin],
+  components: {
+    //'PeopleItem': () => import('@/components/profile/PeopleItem'),
+  },
   data: function () {
     return {
-      inbox_cnt: 0,
+      acitivities_cnt: 0,
       show: false,
+      //  webId: {},
+      //  friends: [],
     }
   },
   created() {
@@ -46,8 +53,8 @@ export default {
   },
   methods:{
     open_inbox(){
-      if (this.$route.path !== "/inbox"){
-        this.$router.push({ path: '/inbox' })
+      if (this.$route.path !== "/agora"){
+        this.$router.push({ path: '/agora' })
       }
       this.show = false
     }
@@ -68,12 +75,12 @@ set: function() {}
 inbox_urls: {
 
 },*/
-inbox: {
-  get: function() { return this.$store.state.inbox.inbox},
+activities: {
+  get: function() { return this.$store.state.agora.activities},
   set: function() {}
 },
 config:{
-  get: function() { return this.$store.state.inbox.config},
+  get: function() { return this.$store.state.agora.config},
   set: function() {}
 }
 }
