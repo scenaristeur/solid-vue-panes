@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.54 - Agora stream on group creation
+  0.1.55 - Post
 </div>
 </template>
 

@@ -73,6 +73,7 @@
         <b-dropdown-item to="/agora">Agora</b-dropdown-item>
         <b-dropdown-item to="/forms">Forms</b-dropdown-item>
         <b-dropdown-item to="/salut">Salut</b-dropdown-item>
+        <b-dropdown-item to="/post">Post</b-dropdown-item>
         <b-dropdown-item to="/offers">Offers</b-dropdown-item>
         <b-dropdown-item to="/pod">Pod 2 </b-dropdown-item>
         <b-dropdown-item to="/share">Share</b-dropdown-item>
