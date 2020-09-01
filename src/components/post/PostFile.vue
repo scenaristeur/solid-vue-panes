@@ -1,51 +1,35 @@
 <template>
   <div class="post-file container">
-    <h5>PostFile</h5>
+    <!--  <h5>PostFile</h5>
     file : {{ file }}
+    <br><br>
+    posts: {{ posts }}-->
 
-    <!--
-    <router-link :to="{ name: 'FoFri'}">Me</router-link><br>
-    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link>
-    <b-button disabled>add Spoggy to your friends</b-button><br>
-    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solid.community/profile/card#me' }}">spoggy-test6</router-link><br>
-    <hr>-->
-
-
-    <!-- avatar & badge https://bootstrap-vue.org/docs/components/avatar-->
-    <!--
     <b-list-group>
-    <b-list-group-item v-for="f in friends" :key="f" v-bind:to="{ name: 'FoFri', params: { webId: f }}" class="d-flex align-items-center">
-    <b-avatar class="mr-3"></b-avatar>
-    <b-avatar button  src="https://placekitten.com/300/300" badge badge-variant="danger" class="mr-3"></b-avatar>
-    <span class="mr-auto">{{ f }}</span>
-    <b-badge>12</b-badge>
-    <PeopleItem :webId="f" />
-  </b-list-group-item>
-</b-list-group>-->
-
-<!--  <div v-for="f in friends" :key="f"  style="font-size: 2rem;">
-<router-link v-bind:to="{ name: 'FoFri', params: { webId: f }}">
-<b-avatar rounded="lg"></b-avatar>  {{ f }}
-</router-link>
-<br>
-</div > -->
+      <b-list-group-item v-for="p in posts" :key="p.internal_url" >
+        <PostLine :post="p" />
+      </b-list-group-item>
+    </b-list-group>
 
 
-</div>
+  </div>
 </template>
 
 <script>
 //import profileMixin from '@/mixins/profileMixin'
+import { getSolidDataset, getThingAll} from "@inrupt/solid-client";
+//  import { RDFS, DCTERMS, AS, FOAF, RDF } from "@inrupt/vocab-common-rdf";
 
 export default {
   name: 'PostFile',
   //mixins: [profileMixin],
   components: {
-    //'PeopleItem': () => import('@/components/profile/PeopleItem'),
+    'PostLine': () => import('@/components/post/PostLine'),
   },
   props: ['file'],
   data: function () {
     return {
+      posts: []
       //  webId: {},
       //  friends: [],
     }
@@ -53,14 +37,32 @@ export default {
   created() {
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
+    this.getThings()
   },
   watch: {
     storage (st) {
       //  '$route' (to, from) {
       console.log(st)
+
     }
   },
   methods:{
+    async getThings(){
+
+      const postFileResource = await getSolidDataset(
+        this.file.url
+      );
+
+      /*
+      2. Get the data entity, specified by the URL, from the Dataset.
+      */
+
+      this.posts = getThingAll(
+        postFileResource,
+      );
+
+      console.log("POSTS",this.posts)
+    }
     /*  async updateFriends(){
     this.friends = await this.getFriends(this.webId)
   }*/

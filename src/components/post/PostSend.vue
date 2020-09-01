@@ -77,7 +77,7 @@ export default {
       }
 
       console.log(postDoc)
-      var postId = "Post_"+d.getTime()
+      var postId = "Article_"+d.getTime()
       let subj =   postDoc.addSubject({identifier:postId})
       //subj.addLiteral(sioc.content, this.activity)
       subj.addLiteral(rdfs.label, this.post.title)

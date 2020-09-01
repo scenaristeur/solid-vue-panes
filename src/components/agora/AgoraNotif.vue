@@ -7,7 +7,7 @@
       {{ inbox }}
       <button @click="show = !show">Permuter l'affichage</button>-->
       <transition name="bounce">
-        <b-badge class="btn" v-if="show"  variant="light" @click="open_agora">{{activities_cnt}} acitivities</b-badge>
+        <b-badge class="btn" v-if="show"  variant="light" @click="open_agora">{{activities_cnt}} activities</b-badge>
       </transition>
 
 

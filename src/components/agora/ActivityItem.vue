@@ -12,8 +12,7 @@
 
 <script>
 
-import {
-  getStringNoLocale, getUrl} from "@inrupt/solid-client";
+import { getStringNoLocale, getUrl} from "@inrupt/solid-client";
   import { RDFS, DCTERMS, AS, FOAF, RDF } from "@inrupt/vocab-common-rdf"; //https://solidproject.org/for-developers/apps/vocabularies/well-known/common#dc
   export default {
     name: 'ActivityItem',

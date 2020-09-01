@@ -1,17 +1,19 @@
 <template>
   <div class="post-list container">
-    <h5>Post List</h5>
-    {{ folder.files }}
+    <!--<h5>Post List</h5>
+    {{ folder.files }}-->
+
+    <b-button class="update-button" size="sm" variant="info" @click="updatePosts">
+      <b-icon-arrow-repeat></b-icon-arrow-repeat>
+    </b-button>
 
     <b-list-group>
-    <b-list-group-item v-for="pf in folder.files" :key="pf" >
-      {{pf}}
-    <!--  <PostFile :file="pf" /> -->
-  </b-list-group-item>
-  </b-list-group>
-
-
-</div>
+      <b-list-group-item v-for="pf in folder.files" :key="pf.url" >
+        <a v-bind:href="pf.url" target="_blank">{{pf.name}}</a>
+        <PostFile :file="pf" />
+      </b-list-group-item>
+    </b-list-group>
+  </div>
 </template>
 
 <script>
@@ -22,10 +24,10 @@ const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
 
 export default {
-  name: 'PostFile',
+  name: 'PostList',
   //mixins: [profileMixin],
   components: {
-  //  'PostFile': () => import('@/components/post/PostFile'),
+    'PostFile': () => import('@/components/post/PostFile'),
   },
   props: ['value'],
   data: function () {
@@ -77,4 +79,14 @@ computed:{
   },
 }
 }
+
 </script>
+<style scoped>
+/*.update-button {
+ position: relative;
+  right: 0px;
+  top: 38px;
+  width: 29px;
+  height: 29px;
+}*/
+</style>

@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.56 - PostList
+  0.1.57 - PostLine
 </div>
 </template>
 
