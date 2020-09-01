@@ -25,7 +25,7 @@
 <script>
 //import profileMixin from '@/mixins/profileMixin'
 import { fetchDocument, createDocument } from 'tripledoc';
-//import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
+import {/*namedNode, sioc,*/  dct, foaf, rdfs, sioc, rdf } from 'rdf-namespaces'
 
 export default {
   name: 'PostSend',
@@ -63,7 +63,7 @@ export default {
 
       let d = new Date()
       //  this.d = d
-      this.iso_date = d.toISOString()
+      let iso_date = d.toISOString()
       let filename = [d.getFullYear(), ("0" + (d.getMonth() + 1)).slice(-2), ("0" + d.getDate()).slice(-2)].join("-")
       this.path = this.storage+"public/blog/"
       let fileUrl = this.path+filename+".ttl"
@@ -81,10 +81,16 @@ export default {
       }
 
       console.log(postDoc)
-      /*  var postId = "Post_"+dateObj.getTime()
+      var postId = "Post_"+d.getTime()
+      let subj =   postDoc.addSubject({identifier:postId})
+      //subj.addLiteral(sioc.content, this.activity)
+      subj.addLiteral(rdfs.label, this.post.title)
+      subj.addLiteral(dct.created, iso_date)
+      subj.addRef(foaf.maker, this.webId)
+      subj.addRef(rdf.type, "https://www.w3.org/ns/activitystreams#Article")
+      subj.addLiteral(sioc.content, this.post.text)
 
-
-      await postDoc.save();*/
+      await postDoc.save();
 
       this.post = {}
     }
