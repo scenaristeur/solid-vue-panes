@@ -5,7 +5,7 @@ import auth from 'solid-auth-client';
 //import { vcard, foaf /*sioc, dct, foaf*/ } from 'rdf-namespaces'
 
 const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
+//console.log("SFC", SolidFileClient)
 const fc = new SolidFileClient(auth)
 // initial state
 const state = () => ({

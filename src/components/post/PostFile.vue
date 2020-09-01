@@ -1,7 +1,7 @@
 <template>
-  <div class="modele container">
-    <h5>Modele</h5>
-    value : {{ value }}
+  <div class="post-file container">
+    <h5>PostFile</h5>
+    file : {{ file }}
 
     <!--
     <router-link :to="{ name: 'FoFri'}">Me</router-link><br>
@@ -38,12 +38,12 @@
 //import profileMixin from '@/mixins/profileMixin'
 
 export default {
-  name: 'FoFri',
+  name: 'PostFile',
   //mixins: [profileMixin],
   components: {
     //'PeopleItem': () => import('@/components/profile/PeopleItem'),
   },
-  props: ['value'],
+  props: ['file'],
   data: function () {
     return {
       //  webId: {},

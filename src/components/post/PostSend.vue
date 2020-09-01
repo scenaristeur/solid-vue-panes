@@ -42,8 +42,6 @@ export default {
     }
   },
   created() {
-
-
     this.storage = this.$store.state.solid.storage
     this.webId = this.$store.state.solid.webId
 
@@ -59,8 +57,6 @@ export default {
   },
   methods:{
     async send(){
-
-
       let d = new Date()
       //  this.d = d
       let iso_date = d.toISOString()
@@ -90,7 +86,13 @@ export default {
       subj.addRef(rdf.type, "https://www.w3.org/ns/activitystreams#Article")
       subj.addLiteral(sioc.content, this.post.text)
 
-      await postDoc.save();
+      try{
+        await postDoc.save();
+      }
+      catch(e){
+        alert(e)
+      }
+
 
       this.post = {}
     }
