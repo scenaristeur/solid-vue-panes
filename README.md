@@ -1,4 +1,9 @@
-# solid-vue-panes
+# solid-vue-panes is the code of PoPock
+
+
+# How to buildyour first Popock module
+https://smag0.blogspot.com/2020/09/create-popock-module-for-holacracy40.html
+
 
 ## Project setup
 ```

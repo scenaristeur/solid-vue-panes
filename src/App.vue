@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.59 - Add Visjs
+  0.1.60 - Add Visjs & start Tension
 </div>
 </template>
 
