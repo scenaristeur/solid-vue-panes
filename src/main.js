@@ -42,6 +42,11 @@ const i18n = new VueI18n({
   }
 })
 
+
+import { Network } from "vue-vis-network";
+Vue.component('network', Network);
+//import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+
 new Vue({
   router,
   store,

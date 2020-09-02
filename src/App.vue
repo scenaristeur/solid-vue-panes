@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.58 - PostLine Clean
+  0.1.59 - Add Visjs
 </div>
 </template>
 

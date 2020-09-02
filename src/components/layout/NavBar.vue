@@ -77,6 +77,7 @@
         <b-dropdown-item to="/offers">Offers</b-dropdown-item>
         <b-dropdown-item to="/pod">Pod 2 </b-dropdown-item>
         <b-dropdown-item to="/share">Share</b-dropdown-item>
+        <b-dropdown-item to="/network">Network</b-dropdown-item>
       </b-nav-item-dropdown>
 
 

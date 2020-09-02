@@ -144,7 +144,7 @@ export default {
     }
   },
   async  created(){
-    this.profile_url = await this.$store.state.solid.storage+"salut/prifile.ttl"
+    this.profile_url = await this.$store.state.solid.storage+"salut/profile.ttl"
     this.getOrCreate(this.profile_url)
   },
   watch: {
