@@ -1,7 +1,8 @@
 <template>
   <div class="tension-view">
-<!--  <Component /> -->
-</div>
+    <h1>This is the Tension View</h1>
+    <!--  <Component /> -->
+  </div>
 </template>
 
 <script>
@@ -12,6 +13,9 @@ export default {
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
+created(){
+  console.log("TENSION VIEW LOADED")
+}
 }
 </script>
 <style>

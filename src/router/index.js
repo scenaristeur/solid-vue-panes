@@ -211,7 +211,40 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "network" */'@/views/NetworkView.vue')
+  },
+  {
+    path: '/tension',
+    name: 'Tension',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "tension" */'@/views/TensionView.vue')
+  },
+  {
+    path: '/gouvernance',
+    name: 'Gouvernance',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance/GouvernanceView.vue')
+  },
+  {
+    path: '/read',
+    name: 'CrudRead',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "crud-read" */'@/components/crud-shape/CrudRead.vue')
+  },
+  {
+    path: '/create',
+    name: 'CrudCreate',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "crud-create" */'@/components/crud-shape/CrudCreate.vue')
   }
+
 
 ]
 

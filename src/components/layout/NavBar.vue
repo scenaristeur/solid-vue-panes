@@ -69,6 +69,7 @@
         <template v-slot:button-content>
           Misc (Experimental)
         </template>
+        <b-dropdown-item to="/gouvernance">Gouvernance</b-dropdown-item>
         <b-dropdown-item to="/groups">Groups</b-dropdown-item>
         <b-dropdown-item to="/agora">Agora</b-dropdown-item>
         <b-dropdown-item to="/forms">Forms</b-dropdown-item>

@@ -10,7 +10,9 @@ const state = () => ({
   footprint_shapes: [],
   translate_shapes: [],
   formData: {},
-  all: []
+  all: [],
+  //
+  workspace: ""
 })
 
 
@@ -23,8 +25,8 @@ const actions = {
 // mutations
 const mutations = {
   fillForm(state, data){
-  //  shape,predicate,value, datatype
-  //  console.log("FILL",data.shape,data.predicate,data.value, data.datatype)
+    //  shape,predicate,value, datatype
+    //  console.log("FILL",data.shape,data.predicate,data.value, data.datatype)
     state.formData[data.shape] == undefined ? state.formData[data.shape] = {} : ""
     data.value.length > 0 ? state.formData[data.shape][data.predicate]=data.value : delete state.formData[data.shape][data.predicate]
     console.log("data", state.formData)
@@ -55,6 +57,11 @@ const mutations = {
   },
   setCurrentShape (state, shape) {
     state.currentShape = shape
+  },
+
+  ////
+  setWorkspace (state, wsp) {
+    state.workspace = wsp
   }
 }
 
