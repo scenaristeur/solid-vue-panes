@@ -6,7 +6,7 @@
       <b-input-group prepend="Workspace" class="mt-3">
     <b-form-input v-model="workspace"></b-form-input>
     <b-input-group-append>
-      <b-button variant="info">Update</b-button>
+      <b-button variant="info" disabled >Update</b-button>
     </b-input-group-append>
   </b-input-group>
 

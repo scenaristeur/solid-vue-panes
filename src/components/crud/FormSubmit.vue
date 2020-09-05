@@ -8,10 +8,11 @@
       <!--  <b-button variant="success" @click="save" disabled>Save on currentShape (footprint)</b-button>
 
       <b-button variant="info" disabled>Choose Where to save</b-button>-->
-
+      Workspace : {{ workspace}}<br>
       <b-button variant="warning" @click="download">Download</b-button>
       <b-button variant="info" @click="save">Stream that Activity</b-button>
-      <b-button variant="success" @click="savePod">Save on my POD (public/shighltest) Add me to your trusted apps</b-button>
+      <b-button variant="success" @click="saveWorkspace">Save on Workspace</b-button>
+      <b-button variant="success" @click="savePod" disabled>Save on my POD (public/shighltest) Add me to your trusted apps</b-button>
       <b-button variant="success" @click="savePublic">Save on holacratie Pod</b-button>
       <!--</b-button-group>-->
     </div>
@@ -35,10 +36,13 @@ export default {
   name: 'FormSubmit',
   mixins: [UtilMixin, TtlMixin, SolidMixin],
   components: {
-  //  SaveParameters
+    //  SaveParameters
   },
   props: {
     attribut: String
+  },
+  created(){
+    this.workspace = this.$store.state.crud.workspace
   },
 
   data: function () {
@@ -58,6 +62,10 @@ export default {
     },
     storage () {
       return this.$store.state.crud.storage
+    },
+    workspace: {
+      get: function() { return this.$store.state.crud.workspace},
+      set: function() {}
     },
   },
   methods: {
@@ -91,6 +99,35 @@ export default {
           alert(this.message)
         }
       )
+    },
+    async saveWorkspace(){
+      let data = this.$store.state.crud.formData[this.currentShape]
+      console.log(this.fc)
+      console.log(this.storage)
+
+
+      /*  let path = this.storage+"public/shighltest/test.text"
+      await this.fc.createFile(path, JSON.stringify(data), "text/plain")*/
+
+      let ttlData = {form: data, shape: this.currentShape, author: this.webId}
+      let ttlFile = this.buildTtl(ttlData)
+      console.log("TTL",ttlFile)
+      let path = this.workspace+this.localname(this.currentShape)+"/"+ttlFile.filename
+      console.log(path)
+      await this.fc.createFile(path, ttlFile.content, "text/turtle")
+      .then(
+        result =>{
+          console.log(result)
+          console.log (result.url)
+          this.message=new Date().toLocaleTimeString()+" : Saved at "+result.url
+          alert(this.message)
+        },err => {
+          console.log(err)
+          this.message =new Date().toLocaleTimeString()+" : "+ err+ " Are you sure you are logged to your pod and you have allowed this app to write on ?"
+          alert(this.message)
+        }
+      )
+
     },
     async savePod(){
       let data = this.$store.state.crud.formData[this.currentShape]

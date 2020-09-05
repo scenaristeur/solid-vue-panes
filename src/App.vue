@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.62 - Gouvernance Create
+  0.1.63 - Gouvernance Create & Read
 </div>
 </template>
 

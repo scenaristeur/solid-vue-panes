@@ -29,10 +29,10 @@ export default {
     return {
       organization_shex : "https://holacratie.solid.community/public/Schema/organization.shex",
       shapes: [
-        {name:"organization", url: "https://holacratie.solid.community/public/Schema/organization.shex"},
-        {name:"role", url: "https://holacratie.solid.community/public/Schema/role.shex"},
-        {name:"tension", url: "https://holacratie.solid.community/public/Schema/tension.shex"},
-        {name:"reunion", url: "https://holacratie.solid.community/public/Schema/todo.shex"},
+        {name:"Organization", url: "https://holacratie.solid.community/public/Schema/organization.shex"},
+        {name:"Role", url: "https://holacratie.solid.community/public/Schema/role.shex"},
+        {name:"Tension", url: "https://holacratie.solid.community/public/Schema/tension.shex"},
+        {name:"Reunion", url: "https://holacratie.solid.community/public/Schema/todo.shex"},
       ],
       path: "public/gouvernance/"
       //  webId: {},
