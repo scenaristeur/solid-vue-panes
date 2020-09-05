@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.fed0c4df.css"
   },
   {
-    "revision": "71d8c716367b0aa24e5d",
+    "revision": "001467559c0b0ebc5511",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -100,7 +100,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-7a5376f0.71b7e800.css"
   },
   {
-    "revision": "aa74bd6461ac63490947",
+    "revision": "8f4cee5f58584589a5dd",
     "url": "/solid-vue-panes/css/chunk-865904d6.3fdff82e.css"
   },
   {
@@ -132,8 +132,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-vendors.e33783dd.css"
   },
   {
-    "revision": "4359949f15769a3b1135",
-    "url": "/solid-vue-panes/css/communication.69c1e146.css"
+    "revision": "ae5f7273d8dad1237856",
+    "url": "/solid-vue-panes/css/communication.750bde80.css"
   },
   {
     "revision": "0c9e3e188b39ceb18730",
@@ -160,8 +160,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/network.1906ea12.css"
   },
   {
-    "revision": "783c96395e55d2c5dd6e",
-    "url": "/solid-vue-panes/css/parle.678f78a6.css"
+    "revision": "dbd7455ca031f1330c02",
+    "url": "/solid-vue-panes/css/parle.5a33e525.css"
   },
   {
     "revision": "67879065bc6cb7bf5e81",
@@ -244,7 +244,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "0cde1ba19f6f68b31e4ff85f134c59f7",
+    "revision": "1959fd9c5e364f7fc9326e0af4e09112",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -256,8 +256,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.4981fbef.js"
   },
   {
-    "revision": "71d8c716367b0aa24e5d",
-    "url": "/solid-vue-panes/js/app.c1b7fd08.js"
+    "revision": "001467559c0b0ebc5511",
+    "url": "/solid-vue-panes/js/app.3b7e3780.js"
   },
   {
     "revision": "9594492d0c21b827dfde",
@@ -496,8 +496,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-2d238090.8858e578.js"
   },
   {
-    "revision": "c0e9b7220a3b413f8a44",
-    "url": "/solid-vue-panes/js/chunk-3254c05f.291da713.js"
+    "revision": "3a7381f3b68910c24832",
+    "url": "/solid-vue-panes/js/chunk-3254c05f.3523239b.js"
   },
   {
     "revision": "be9b1b020514e7d0b8e7",
@@ -556,8 +556,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-6227d3b9.f72f3dfb.js"
   },
   {
-    "revision": "1b55b748e20459d241cc",
-    "url": "/solid-vue-panes/js/chunk-629f7e72.2d18d39b.js"
+    "revision": "ee25b486e19947610368",
+    "url": "/solid-vue-panes/js/chunk-629f7e72.2af7fb9d.js"
   },
   {
     "revision": "78afabc859b079512da6",
@@ -584,8 +584,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-7c300b46.e78c6edc.js"
   },
   {
-    "revision": "aa74bd6461ac63490947",
-    "url": "/solid-vue-panes/js/chunk-865904d6.a45d443c.js"
+    "revision": "8f4cee5f58584589a5dd",
+    "url": "/solid-vue-panes/js/chunk-865904d6.c411866a.js"
   },
   {
     "revision": "f45dc56e76eb04198dd3",
@@ -624,8 +624,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-vendors.4bdbdfec.js"
   },
   {
-    "revision": "4359949f15769a3b1135",
-    "url": "/solid-vue-panes/js/communication.7b4410ff.js"
+    "revision": "ae5f7273d8dad1237856",
+    "url": "/solid-vue-panes/js/communication.8e3c9bd1.js"
   },
   {
     "revision": "b3c67c0a2040a58332b7",
@@ -692,8 +692,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/offers.d4eefab0.js"
   },
   {
-    "revision": "783c96395e55d2c5dd6e",
-    "url": "/solid-vue-panes/js/parle.75b96033.js"
+    "revision": "dbd7455ca031f1330c02",
+    "url": "/solid-vue-panes/js/parle.f35899fb.js"
   },
   {
     "revision": "67879065bc6cb7bf5e81",
