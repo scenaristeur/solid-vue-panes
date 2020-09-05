@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["salut"],{d2d5:function(n,t,e){"use strict";e.r(t);var l=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div",{staticClass:"salut"},[e("SalutProfile")],1)},u=[],a=(e("d3b7"),{name:"Salut",components:{SalutProfile:function(){return e.e("chunk-2d0af10c").then(e.bind(null,"0d79"))}}}),s=a,c=e("2877"),i=Object(c["a"])(s,l,u,!1,null,null,null);t["default"]=i.exports}}]);
+//# sourceMappingURL=salut.9e98da3b.js.map
