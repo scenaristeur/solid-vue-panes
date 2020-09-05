@@ -4,10 +4,11 @@
     Display
     <b-card-group deck>
       <GroupMembers :members="members"/>
-      <GroupFiliation :parent="parent"/>
+      <GroupFiliation :parent="parent" :subgroups="subgroups"/>
     </b-card-group>
     {{ currentGroup.name}} <br>
     {{ currentGroup.url}}<br>
+    subgroups : {{ subgroups}}<br>
     purpose: {{ purpose}}<br>
   </div>
 </template>
@@ -40,6 +41,7 @@ export default {
       purpose: "",
       members: [],
       parent: "",
+      subgroups: []
 
       //  webId: {},
       //  friends: [],
@@ -48,22 +50,36 @@ export default {
 
   async created() {
     this.currentGroup = this.$store.state.gouvernance.currentGroup
-    let file = this.currentGroup.url+"index.ttl"
-    let resource =   this.currentGroup.url+"index.ttl#this"
-    console.log(file, resource)
-    const itemResource = await getSolidDataset(
-      file
-    );
-    const thing = getThing(
-      itemResource,
-      resource
-    );
+await this.update()
+  },
+  methods: {
+  async  update() {
+      let file = this.currentGroup.url+"index.ttl"
+      let resource =   this.currentGroup.url+"index.ttl#this"
+      console.log(file, resource)
+      const itemResource = await getSolidDataset(
+        file
+      );
+      const thing = getThing(
+        itemResource,
+        resource
+      );
 
-    this.dateCreated = getStringNoLocale(thing, "https://schema.org/dateCreated");
-    //  console.log("Date created",dateCreated)
-    this.purpose = getStringNoLocale(thing, "http://www.w3.org/ns/org#purpose");
-    this.parent = getUrl(thing, "http://www.w3.org/ns/org#subOrganizationOf");
-    this.members = getUrlAll(thing, VCARD.hasMember);
+      this.dateCreated = getStringNoLocale(thing, "https://schema.org/dateCreated");
+      //  console.log("Date created",dateCreated)
+      this.purpose = getStringNoLocale(thing, "http://www.w3.org/ns/org#purpose");
+      this.parent = getUrl(thing, "http://www.w3.org/ns/org#subOrganizationOf");
+      this.members = getUrlAll(thing, VCARD.hasMember);
+      this.subgroups =   getUrlAll(thing, "http://www.w3.org/ns/org#hasSubOrganization")
+
+    }
+  },
+  watch: {
+    currentGroup (cg) {
+      //  '$route' (to, from) {
+      console.log(cg)
+      this.update()
+    },
   },
   computed:{
     groups: {

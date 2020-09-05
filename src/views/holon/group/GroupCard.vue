@@ -10,7 +10,7 @@
     <!--    img-src="https://picsum.photos/600/300/?image=25" -->
     <b-card-title>{{decodeURI(item.name)}}</b-card-title>
     <b-card-text>
-      Purpose : {{purpose}}
+      Purpose : {{purpose.substring(0,100)}}
     </b-card-text>
     <b-card-text>
       Parent : {{parent}}

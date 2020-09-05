@@ -41,9 +41,11 @@ import { vcard, dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces'
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
+import toastMixin from '@/mixins/toastMixin'
 
 export default {
   name: 'GroupEdit',
+  mixins: [toastMixin],
   components: {
     //    'GroupsView': () => import('@/views/holon/GroupsView'),
 
@@ -98,18 +100,45 @@ export default {
       subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
       subj.addNodeRef('http://www.w3.org/ns/org#purpose', 'http://www.w3.org/ns/org#Organization')
       subj.addLiteral('http://www.w3.org/ns/org#purpose', this.group.purpose)
+
+
+      try{
+        await groupDoc.save();
+        this.makeToast("Group created", fileUrl, "success")
+        //  this.$emit('created')
+        //  this.init()
+      }
+      catch(e){
+        this.makeToast("Group creation error", fileUrl+e, "danger")
+      }
+
       if (this.group.parent != undefined){
-        subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", this.group.parent)
+        try{
+          let parent = this.group.parent+"index.ttl"
+          subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", parent)
+          let parentDoc =    await fetchDocument(parent);
+          let pSubj = parentDoc.getSubject(parent+"#this")
+          pSubj.addNodeRef("http://www.w3.org/ns/org#hasSubOrganization", fileUrl)
+          await parentDoc.save();
+          this.makeToast("Parent updated", parent, "success")
+        }catch(e){
+          this.makeToast("Parent update error", parent+e, "danger")
+
+        }
       }
 
       /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
 
-      await groupDoc.save();
       this.group = {}
       this.folder = await fc.readFolder(url)
       console.log("FOLDER",this.folder)
       this.$store.commit('gouvernance/setGroups', this.folder)
+
+
+
+
+
 
 
     },

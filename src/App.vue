@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.65 - Gouvernance Create & Read with purpose & groups
+  0.1.66 - subgroups
 </div>
 </template>
 
