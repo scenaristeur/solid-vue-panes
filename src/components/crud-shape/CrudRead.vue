@@ -8,7 +8,7 @@
     folder: {{ folder }}<br>
 
     folders:
-    <div v-for="fo in folder.folders" :key="fo.url">{{fo.name}}</div>
+    <div v-for="fo in folder.folders" :key="fo.url">{{decodeURI(fo.name)}}</div>
 
     <b-card-group deck>
       <CrudItemCard v-for="fo in folder.folders" :key="fo.url" :item="fo"/>

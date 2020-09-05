@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.fed0c4df.css"
   },
   {
-    "revision": "bd640679e1fd2a5bde4a",
+    "revision": "3617fe1741041088811f",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -216,7 +216,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "fe0cdbbd8e95ed65d94f759907e20722",
+    "revision": "0f23d99fc3d17b59fd97df9c4139fb57",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -228,8 +228,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.4981fbef.js"
   },
   {
-    "revision": "bd640679e1fd2a5bde4a",
-    "url": "/solid-vue-panes/js/app.be0c278b.js"
+    "revision": "3617fe1741041088811f",
+    "url": "/solid-vue-panes/js/app.4b824556.js"
   },
   {
     "revision": "9594492d0c21b827dfde",
@@ -296,8 +296,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-2d0ab8da.ba42d486.js"
   },
   {
-    "revision": "1df64dfe9d3afd6babf0",
-    "url": "/solid-vue-panes/js/chunk-2d0abc2d.6dec9aa1.js"
+    "revision": "96b1ef06fd1e1788a8c8",
+    "url": "/solid-vue-panes/js/chunk-2d0abc2d.96dd816a.js"
   },
   {
     "revision": "86e554100f069a7e3137",
@@ -364,8 +364,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-2d0de2b4.34d26355.js"
   },
   {
-    "revision": "92c7f321dcb893b182d2",
-    "url": "/solid-vue-panes/js/chunk-2d0e17a2.bc336e51.js"
+    "revision": "979cd81e6e16b25d8f1f",
+    "url": "/solid-vue-panes/js/chunk-2d0e17a2.72b795c6.js"
   },
   {
     "revision": "c036c8bb7e19855906ca",
@@ -556,8 +556,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/crud-create.73b50c0f.js"
   },
   {
-    "revision": "6c64393563dce0a3f435",
-    "url": "/solid-vue-panes/js/crud-read.9dff6707.js"
+    "revision": "9fd64f41021cbb68a8db",
+    "url": "/solid-vue-panes/js/crud-read.c3ab3896.js"
   },
   {
     "revision": "0c9e3e188b39ceb18730",
