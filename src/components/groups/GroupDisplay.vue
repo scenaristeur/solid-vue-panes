@@ -1,11 +1,11 @@
 <template>
   <div class="group-display">
     <b-card >
-      <b-card-header> <router-link v-bind:to="file.parent+group.name">{{group.name || file.name}}</router-link></b-card-header>
+      <b-card-header> <router-link v-bind:to="{ name: 'Groups', params: { url: file.parent+group.name.replace(/\s/g, '_') }}">{{group.name || file.name}}</router-link></b-card-header>
       <b-card-text>
         <GroupMembers :url="file.url" :members="group.members"/>
         <b-button @click="open('modal-members-'+file.url)" variant="outline-info">{{ group.members.length }} Members</b-button>
-        <b-button v-bind:to="{ name: 'Groups', params: { url: file.parent+group.name }}" :disabled="group.subgroups.length == 0" variant="outline-info">{{ group.subgroups.length }} subgroups</b-button>
+        <b-button v-bind:to="{ name: 'Groups', params: { url: file.parent+group.name.replace(/\s/g, '_') }}" :disabled="group.subgroups.length == 0" variant="outline-info">{{ group.subgroups.length }} subgroups</b-button>
 
         <div>
           <b-button-group >
@@ -156,7 +156,7 @@ export default {
       return this.$store.state.solid.storage
     },
     url(){
-      return this.file.parent+this.group.name+"/"
+      return this.file.parent+this.group.name.replace(/\s/g, '_')+"/"
     },
     parent(){
       return this.file.url

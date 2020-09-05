@@ -41,7 +41,7 @@ computed:{
   items(){
     let items = []
     let fil = ""
-    items.push ({text: "root", href:"/"})
+    items.push ({text: "all", href:"/parle"})
     //  console.log(this.$store.state.parle.fileUrl.split(this.root))
     let withoutRoot=this.$store.state.parle.fileUrl.split(this.root)[1]
     if (withoutRoot != undefined && withoutRoot.length > 1){

@@ -54,7 +54,7 @@ methods:{
     console.log(this.path)
     // https://www.w3.org/TR/vocab-org/#org:purpose
     let groupDoc =    await createDocument(this.path);
-    let subj =   groupDoc.addSubject({identifier:"this"})
+    let subj =  groupDoc.addSubject({identifier:"this"})
     subj.addLiteral(vcard.fn, this.name)
     subj.addNodeRef(ldp.inbox, "./"+ttl_name+"/inbox/")
     subj.addLiteral(dct.created, date)

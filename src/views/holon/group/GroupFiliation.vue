@@ -7,8 +7,9 @@
     tag="article"
     style="max-width: 20rem;"
     class="mb-2">
-    Parent : {{ parent }}
-    <b-button @click="openParent">Open Parent</b-button><br>
+    <div v-if="parent">    Parent : {{ parent }}
+      <b-button @click="openParent">Open Parent</b-button><br>
+    </div>
     Subgroups:
     <b-card-text>
       <b-list-group>
