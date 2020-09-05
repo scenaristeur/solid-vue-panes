@@ -1,7 +1,10 @@
 <template>
   <div class="crud-read">
     Read<br>
-    workspace : {{ workspace }}
+    workspace : {{ workspace }} <br>
+    shape.name : {{ shape.name}}<br>
+    shape.url: {{ shape.url }}
+
   </div>
 </template>
 
@@ -14,7 +17,6 @@ export default {
   components: {
     //  'FormTab': () => import('@/components/crud/FormTab'),
   },
-  props: ['shape'],
   data: function () {
     return {
       //  webId: {},
@@ -23,6 +25,7 @@ export default {
   },
   created() {
     this.workspace = this.$store.state.crud.workspace
+    this.shape = this.$store.state.crud.shape
     //this.load_schema()
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
@@ -60,6 +63,10 @@ computed:{
   },
   workspace: {
     get: function() { return this.$store.state.crud.workspace},
+    set: function() {}
+  },
+  shape: {
+    get: function() { return this.$store.state.crud.shape},
     set: function() {}
   },
 }

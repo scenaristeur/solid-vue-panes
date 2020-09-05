@@ -1,7 +1,15 @@
 <template>
   <div class="crud-config">
     <b-card bg-variant="secondary" text-variant="white" header="Config" class="text-center">
-      <b-card-text>Workspace: {{workspace}}</b-card-text>
+    <!--  <b-card-text>Workspace: </b-card-text> -->
+
+      <b-input-group prepend="Workspace" class="mt-3">
+    <b-form-input v-model="workspace"></b-form-input>
+    <b-input-group-append>
+      <b-button variant="info">Update</b-button>
+    </b-input-group-append>
+  </b-input-group>
+
     </b-card>
   </div>
 </template>
@@ -25,6 +33,7 @@ export default {
   },
   created() {
     this.storage = this.$store.state.solid.storage
+    this.setWorkspace()
     //this.load_schema()
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
@@ -33,8 +42,7 @@ export default {
     storage (st) {
       //  '$route' (to, from) {
       console.log(st)
-      this.workspace = st+this.path
-      this.$store.commit('crud/setWorkspace', this.workspace)
+      this.setWorkspace()
     },
     /*shape(s){
     console.log("shape changed",s)
@@ -43,7 +51,10 @@ export default {
 
 },
 methods:{
-
+  setWorkspace(){
+    this.workspace = this.storage+this.path
+    this.$store.commit('crud/setWorkspace', this.workspace)
+  }
   /*load_schema(){
   this.load_remote_schema(this.shape.url)
 

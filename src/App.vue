@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.61 - Add Visjs & start Gouvernance
+  0.1.62 - Gouvernance Create
 </div>
 </template>
 

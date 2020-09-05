@@ -1,21 +1,24 @@
 <template>
   <div class="crud-create">
     Create<br>
-    workspace : {{ workspace }}<br>
-    shape_url : {{ shape_url }}
+    workspace : {{ workspace }} <br>
+    shape.name : {{ shape.name}}<br>
+    shape.url: {{ shape.url }}<br>
+    schema: {{schema }}<br>
+
+    <FormTab />
   </div>
 </template>
 
 <script>
-//import ShexMixin from '@/mixins/crud/ShexMixin'
+import ShexMixin from '@/mixins/crud/ShexMixin'
 
 export default {
   name: 'CrudCreate',
-  //  mixins: [ShexMixin],
+  mixins: [ShexMixin],
   components: {
-    //  'FormTab': () => import('@/components/crud/FormTab'),
+    'FormTab': () => import('@/components/crud/FormTab'),
   },
-  props: ['shape'],
   data: function () {
     return {
       //  webId: {},
@@ -24,7 +27,8 @@ export default {
   },
   created() {
     this.workspace = this.$store.state.crud.workspace
-    //this.load_schema()
+    this.shape = this.$store.state.crud.shape
+    this.load_schema()
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
   },
@@ -33,9 +37,10 @@ export default {
       //  '$route' (to, from) {
       console.log(wsp)
     },
-    shape_url (shape_url) {
+    shape (shape) {
       //  '$route' (to, from) {
-      console.log(shape_url)
+      console.log(shape)
+      this.load_schema()
     },
     /*shape(s){
     console.log("shape changed",s)
@@ -44,7 +49,9 @@ export default {
 
 },
 methods:{
-
+  load_schema(){
+    this.load_remote_schema(this.shape.url)
+  }
   /*load_schema(){
   this.load_remote_schema(this.shape.url)
 
@@ -63,8 +70,12 @@ computed:{
     get: function() { return this.$store.state.crud.workspace},
     set: function() {}
   },
-  shape_url: {
-    get: function() { return this.$store.state.crud.shape_url},
+  shape: {
+    get: function() { return this.$store.state.crud.shape},
+    set: function() {}
+  },
+  schema: {
+    get: function() { return this.$store.state.crud.schema},
     set: function() {}
   },
 }

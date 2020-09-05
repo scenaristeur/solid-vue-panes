@@ -1,5 +1,6 @@
 
 const state = () => ({
+  //// crud version 1
   count: 0,
   webId: null,
   storage: "",
@@ -11,8 +12,9 @@ const state = () => ({
   translate_shapes: [],
   formData: {},
   all: [],
-  //
-  workspace: ""
+  //// crud-shape version 2
+  workspace: "",
+  shape : {}
 })
 
 
@@ -24,6 +26,7 @@ const actions = {
 
 // mutations
 const mutations = {
+  ////// crud version 1
   fillForm(state, data){
     //  shape,predicate,value, datatype
     //  console.log("FILL",data.shape,data.predicate,data.value, data.datatype)
@@ -59,9 +62,12 @@ const mutations = {
     state.currentShape = shape
   },
 
-  ////
+  //// crud-shape version 2
   setWorkspace (state, wsp) {
     state.workspace = wsp
+  },
+  setShape(state, shape) {
+    state.shape = shape
   }
 }
 
