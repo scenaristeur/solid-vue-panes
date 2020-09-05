@@ -24,10 +24,7 @@ export default {
     return {
       config: {
         folder: "https://holacratie.solid.community/public/Schema/governance/",
-        path: "public/gouvernance/",
-        complement: {
-          "group" : ["rdf:Group"]
-        }
+        path: "public/gouvernance/"
       }
 
       //  webId: {},

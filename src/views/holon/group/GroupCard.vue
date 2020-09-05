@@ -1,5 +1,5 @@
 <template>
-  <div class="crud-item-card">
+  <div class="groups-view">
     <b-card
 
     img-alt="Image"
@@ -11,31 +11,29 @@
     <b-card-title>{{decodeURI(item.name)}}</b-card-title>
     <b-card-text>
       {{purpose}}
-      {{ types }}
     </b-card-text>
     <!--    <CrudToolbar :shape="shape" />-->
     <!--<b-button href="#" variant="primary">Go somewhere</b-button>-->
     <small>
-    {{ dateCreated}} <br> {{ item.url }}
+      {{ dateCreated}} <br> {{ item.url }}
     </small>
   </b-card>
 </div>
 </template>
 
 <script>
-//import ShexMixin from '@/mixins/crud/ShexMixin'
+// @ is an alias to /src
 import {
   getSolidDataset,
   getThing,
   getStringNoLocale,
 } from "@inrupt/solid-client";
-//import { SCHEMA } from "@inrupt/vocab-common-rdf";
 
 export default {
-  name: 'CrudItemCard',
-  //mixins: [ShexMixin],
+  name: 'GroupCard',
   components: {
-    //'CrudToolbar': () => import('@/components/crud-shape/CrudToolbar'),
+    //    'GroupsView': () => import('@/views/holon/GroupsView'),
+
   },
   props: ['item'],
   data: function () {
@@ -59,9 +57,9 @@ export default {
     );
 
     this.dateCreated = getStringNoLocale(thing, "https://schema.org/dateCreated");
-  //  console.log("Date created",dateCreated)
+    //  console.log("Date created",dateCreated)
     this.purpose = getStringNoLocale(thing, "http://www.w3.org/ns/org#purpose");
-  //  console.log("PURPOSE",purpose)
+    //  console.log("PURPOSE",purpose)
     //  this.load_schema()
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()

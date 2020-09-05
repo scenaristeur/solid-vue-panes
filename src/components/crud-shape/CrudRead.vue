@@ -72,7 +72,9 @@ export default {
 },
 methods:{
   setFolderPath(){
-    this.folder_path = this.workspace+this.shape.name+"/"
+    let s_n = this.shape.name.split(".")[0]
+    let name = s_n.charAt(0).toUpperCase() + s_n.slice(1)
+    this.folder_path = this.workspace+name+"/"
   }
   /*load_schema(){
   this.load_remote_schema(this.shape.url)

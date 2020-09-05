@@ -221,12 +221,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "tension" */'@/views/TensionView.vue')
   },
   {
-    path: '/gouvernance',
-    name: 'Gouvernance',
+    path: '/holon',
+    name: 'Holon',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance/GouvernanceView.vue')
+    component: () => import(/* webpackChunkName: "holon" */'@/views/holon/HolonView.vue')
+  },
+  {
+    path: '/gouvernance1',
+    name: 'Gouvernance1',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance1/GouvernanceView1.vue')
   },
   {
     path: '/read',
@@ -243,7 +251,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "crud-create" */'@/components/crud-shape/CrudCreate.vue')
-  }
+  },
+  {
+    path: '/gouvernance',
+    name: 'Gouvernance',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance/GouvernanceView.vue')
+  },
 
 
 ]
