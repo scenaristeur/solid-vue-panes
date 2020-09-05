@@ -10,10 +10,13 @@
     <!--    img-src="https://picsum.photos/600/300/?image=25" -->
     <b-card-title>{{decodeURI(item.name)}}</b-card-title>
     <b-card-text>
-      {{purpose}}
+      Purpose : {{purpose}}
+    </b-card-text>
+    <b-card-text>
+      Parent : {{parent}}
     </b-card-text>
     <!--    <CrudToolbar :shape="shape" />-->
-    <!--<b-button href="#" variant="primary">Go somewhere</b-button>-->
+    <b-button @click="open" variant="primary">Open</b-button>
     <small>
       {{ dateCreated}} <br> {{ item.url }}
     </small>
@@ -27,6 +30,7 @@ import {
   getSolidDataset,
   getThing,
   getStringNoLocale,
+  getUrl
 } from "@inrupt/solid-client";
 
 export default {
@@ -39,7 +43,8 @@ export default {
   data: function () {
     return {
       dateCreated: "",
-      purpose: ""
+      purpose: "",
+      parent : ""
       //  webId: {},
       //  friends: [],
     }
@@ -59,6 +64,7 @@ export default {
     this.dateCreated = getStringNoLocale(thing, "https://schema.org/dateCreated");
     //  console.log("Date created",dateCreated)
     this.purpose = getStringNoLocale(thing, "http://www.w3.org/ns/org#purpose");
+    this.parent = getUrl(thing, "http://www.w3.org/ns/org#subOrganizationOf");
     //  console.log("PURPOSE",purpose)
     //  this.load_schema()
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
@@ -76,6 +82,10 @@ export default {
 
 },
 methods:{
+  open(){
+    this.$router.push('/group')
+    this.$store.commit('gouvernance/setCurrentGroup', this.item)
+  }
   /*
   load_schema(){
   this.load_remote_schema(this.shape.url)

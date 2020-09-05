@@ -1,6 +1,7 @@
 
 const state = () => ({
-  groups:[],
+  groups: [],
+  currentGroup: {},
 
 })
 
@@ -15,6 +16,9 @@ const actions = {
 const mutations = {
   setGroups(state, groups){
     state.groups = groups
+  },
+  setCurrentGroup(state, group){
+    state.currentGroup = group
   }
 }
 

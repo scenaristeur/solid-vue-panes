@@ -1,7 +1,6 @@
 <template>
   <div class="groups-view">
     <!--  <Component /> -->
-    groups create
 
     <b-input-group>
       <template v-slot:prepend>
@@ -92,13 +91,16 @@ export default {
       subj.addLiteral(dct.created, date)
       subj.addNodeRef(foaf.maker, this.webId)
       subj.addNodeRef(rdf.type, vcard.Group)
-      subj.addNodeRef(rdfs.label, name)
+      subj.addLiteral(rdfs.label, name)
       subj.addNodeRef(vcard.hasMember, this.webId)
       subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
       subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
       subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+      subj.addNodeRef('http://www.w3.org/ns/org#purpose', 'http://www.w3.org/ns/org#Organization')
       subj.addLiteral('http://www.w3.org/ns/org#purpose', this.group.purpose)
-      subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", this.group.parent)
+      if (this.group.parent != undefined){
+        subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", this.group.parent)
+      }
 
       /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
@@ -114,8 +116,8 @@ export default {
     setOptions(){
       this.options = []
       this.groups.folders.forEach((f) => {
-        console.log(f)
-        this.options.push({value:f.url, text:f.name})
+        //  console.log(f)
+        this.options.push({value:f.url, text:decodeURI(f.name)})
       });
 
     }

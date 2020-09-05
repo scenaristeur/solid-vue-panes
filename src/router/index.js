@@ -229,6 +229,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "holon" */'@/views/holon/HolonView.vue')
   },
   {
+    path: '/group',
+    name: 'Group',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "holon" */'@/views/holon/group/GroupDisplay.vue')
+  },
+  {
     path: '/gouvernance1',
     name: 'Gouvernance1',
     // route level code-splitting
