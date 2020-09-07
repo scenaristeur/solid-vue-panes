@@ -51,17 +51,17 @@ export default {
     console.log("shape changed",s)
     this.load_schema()
   }*/
-
+  
 },
 methods:{
   create(){
     console.log("create",this.shape, this.workspace)
-      this.$store.commit('crud/setShape', this.shape)
+    this.$store.commit('crud/setShape', this.shape)
     this.$router.push('create/')
   },
   read(){
     console.log("read",this.shape,this.workspace)
-      this.$store.commit('crud/setShape', this.shape)
+    this.$store.commit('crud/setShape', this.shape)
     this.$router.push('read/')
   }
   /*load_schema(){

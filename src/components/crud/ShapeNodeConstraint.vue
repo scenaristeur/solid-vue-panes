@@ -11,7 +11,14 @@
         URI TODO:  <FormInput :valueExpr="valueExpr" :predicate="predicate" :datatype="valueExpr.datatype"/>
       </div>
     </div>
+
+    <div v-else-if="valueExpr.datatype.startsWith('http://www.w3.org/ns/pim/space#storage:')">
+      select {{ workspace+valueExpr.datatype.split(":")[2] }}
+          <FormSelect :source='workspace+valueExpr.datatype.split(":")[2]' :values="valueExpr.values" :predicate="predicate" :datatype="valueExpr.datatype"/>
+    </div>
+
     <div v-else class="not-found">
+      {{ valueExpr.datatype }}
       <FormInput :valueExpr="valueExpr" :predicate="predicate" :datatype="valueExpr.datatype"/>
     </div>
 
@@ -52,7 +59,11 @@ export default {
   computed: {
     currentShape () {
       return this.$store.state.crud.currentShape
-    }
+    },
+    workspace: {
+      get: function() { return this.$store.state.crud.workspace},
+      set: function() {}
+    },
   }
 }
 </script>

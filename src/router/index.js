@@ -213,14 +213,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "network" */'@/views/NetworkView.vue')
   },
   {
-    path: '/tension',
-    name: 'Tension',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tension" */'@/views/TensionView.vue')
-  },
-  {
     path: '/holon',
     name: 'Holon',
     // route level code-splitting
@@ -268,7 +260,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance/GouvernanceView.vue')
   },
-
+  {
+    path: '/tension',
+    name: 'Tension',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "tension" */'@/views/tension/TensionView.vue')
+  },
 
 ]
 

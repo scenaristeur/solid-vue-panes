@@ -17,61 +17,65 @@ export default {
 
 
 
-    /*  for (let [shape, data] of Object.entries(data)) {
-        console.log(shape, data);*/
+      /*  for (let [shape, data] of Object.entries(data)) {
+      console.log(shape, data);*/
 
-        //  console.log(this.formData)
-        //  console.log("id" , this.shape.url)
-        var id = ttlData.shape
-        /*  this.formData[id].forEach(function(enreg){
-        if (enreg.submitted == undefined) {*/
-        var randomName = '_' + Math.random().toString(36).substr(2, 9);
-        var filename = randomName
-        //  var ttlString = app.ttlBase
+      //  console.log(this.formData)
+      //  console.log("id" , this.shape.url)
+    //  var id = ttlData.shape
+      /*  this.formData[id].forEach(function(enreg){
+      if (enreg.submitted == undefined) {*/
+      var randomName = '_' + Math.random().toString(36).substr(2, 9);
+      var filename = randomName
+      //  var ttlString = app.ttlBase
 
-        for (let [predicate, object] of Object.entries(ttlData.form)) {
-          console.log(predicate, object)
-          if( object != undefined && object.length > 0){
-            console.log("1")
-            if ((predicate == "https://schema.org/name") &&  (object.length > 0)){
-              console.log("2")
-              var underName  = object.split(' ').join('_');
-              filename = underName;
-              ttlString += ':this  rdfs:label  "'+object+'".\n'
-              ttlString += ':this  purl:title  "'+object+'".\n'
-            }
-            console.log("3")
-            console.log(predicate, object);
-          object = object.startsWith("http") ? '<'+object+'>': '"'+object+'"';
-            object = object.replace(/\n/gm,'#xA '); // retour a la ligne , new line #xD = carriage return https://www.w3.org/TR/turtle/
-
-            ttlString += ':this  <'+predicate+'>  '+object+'. \n' // # Format :'+object.type+ " "+object.format+ "\n";
+      for (let [predicate, object] of Object.entries(ttlData.form)) {
+        console.log(predicate, object)
+        if( object != undefined && object.length > 0){
+          console.log("1")
+          if ((predicate == "https://schema.org/name") &&  (object.length > 0)){
+            console.log("2")
+            var underName  = object.split(' ').join('_');
+            filename = underName;
+            ttlString += ':this  rdfs:label  "'+object+'".\n'
+            ttlString += ':this  purl:title  "'+object+'".\n'
           }
+          console.log("3")
+          console.log(predicate, object);
+          object = object.startsWith("http") ? '<'+object+'>': '"'+object+'"';
+          object = object.replace(/\n/gm,'#xA '); // retour a la ligne , new line #xD = carriage return https://www.w3.org/TR/turtle/
+
+          ttlString += ':this  <'+predicate+'>  '+object+'. \n' // # Format :'+object.type+ " "+object.format+ "\n";
         }
-        ttlString += ':this  rdf:type  <'+ttlData.shape+'>.'
+      }
+      ttlString += ':this  rdf:type  <'+ttlData.shape+'>.'
 
-        const d = new Date();
-        var now = d.toUTCString()+"\n";
-        ttlString += "\n\n# shexy made with "+id+"\n";
-        ttlString += "# from "+location.protocol + '//' + location.host + location.pathname+"\n";
-        ttlString += "# at "+now+"\n";
-        ttlString += "# by "+ttlData.webId+"\n";
-        ttlString += "# source https://github.com/scenaristeur/shighl-vuejs\n";
-
-        /*if (app.anonyme == false){
-        ttlString  += "# by "+this.shadowRoot.getElementById("solid-session").textContent+"\n";
-      }*/
-      console.log(ttlString)
-      filename = filename+'/index.ttl#this'
-
-      /* commenter POUR DEBUG */
-      return { filename: filename , content: ttlString, ttlData: ttlData}
+      let crud_shape =  this.$store.state.crud.shape
+      console.log("CRUD SHAPE", crud_shape)
 
 
+      /*  const d = new Date();
+      var now = d.toUTCString()+"\n";
+      ttlString += "\n\n# shexy made with "+id+"\n";
+      ttlString += "# from "+location.protocol + '//' + location.host + location.pathname+"\n";
+      ttlString += "# at "+now+"\n";
+      ttlString += "# by "+ttlData.webId+"\n";
+      ttlString += "# source https://github.com/scenaristeur/shighl-vuejs\n";*/
 
-    }
+      /*if (app.anonyme == false){
+      ttlString  += "# by "+this.shadowRoot.getElementById("solid-session").textContent+"\n";
+    }*/
+    console.log(ttlString)
+    filename = filename+'/'+filename+'.ttl#this'
 
-    //  this.agent.send("SolidWrite", {action: "ttlChanged", ttl: this.ttl})
+    /* commenter POUR DEBUG */
+    return { filename: filename , content: ttlString, ttlData: ttlData}
+
+
+
   }
+
+  //  this.agent.send("SolidWrite", {action: "ttlChanged", ttl: this.ttl})
+}
 
 }

@@ -11,7 +11,6 @@
     <b-card-title>{{decodeURI(item.name)}}</b-card-title>
     <b-card-text>
       {{purpose}}
-      {{ types }}
     </b-card-text>
     <!--    <CrudToolbar :shape="shape" />-->
     <!--<b-button href="#" variant="primary">Go somewhere</b-button>-->
@@ -47,8 +46,8 @@ export default {
     }
   },
   async   created() {
-    let file = this.item.url+"index.ttl"
-    let resource =   this.item.url+"index.ttl#this"
+    let file = this.item.url+this.item.name+".ttl"
+    let resource =   this.item.url+this.item.name+".ttl#this"
     console.log(file, resource)
     const itemResource = await getSolidDataset(
       file

@@ -23,7 +23,8 @@ export default {
   data: function () {
     return {
       config: {
-        folder: "https://holacratie.solid.community/public/Schema/governance/",
+      //  folder: "https://holacratie.solid.community/public/Schema/governance/",
+          folder: "https://governance.solidweb.org/public/Schema/governance/",
         path: "public/gouvernance/",
         complement: {
           "group" : ["rdf:Group"]

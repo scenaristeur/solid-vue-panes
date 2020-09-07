@@ -61,7 +61,8 @@ export default {
     }
 
     console.log("SOURCE : ",this.source)
-    if( await this.fc.itemExists(this.source)) {
+
+    if(this.source != undefined &&  await this.fc.itemExists(this.source)) {
       await this.fc.readFolder(this.source).then(folder => {
         console.log("Folder",folder.folders)
         //  store.commit('crud/setShapeUrl', this.shape_url)
@@ -69,6 +70,7 @@ export default {
       },
       err => { console.log("erreur for url : ", this.source,err) })
     }
+
 
     /*  let folder = await this.readFolder(this.source)
     let f = `${folder}`
