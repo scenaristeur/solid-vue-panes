@@ -5,12 +5,24 @@
     style="max-width: 20rem;"
     class="mb-2">
     <b-card-title>Tensions</b-card-title>
+    <b-card-header>
+
+    </b-card-header>
+
     <b-card-text>
-      Some quick example text to build on the card and make up the bulk of the card's content.
-      <br>
-      {{ config.workspace}}<br>
-      gf : {{ path}}
+      A tension is a difference between "What is" and "What should be". I'm sure there are a lot of thing that you want to change...
     </b-card-text>
+    <b-card-footer>
+      <b-button-toolbar key-nav aria-label="Toolbar with button groups">
+        <b-button-group class="mx-1" size="sm">
+          <b-button variant="outline"  to="/tension"><b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
+          <b-button variant="outline"  to="/tensions"> <b-icon icon="list" variant="info"></b-icon></b-button>
+        </b-button-group>
+      </b-button-toolbar>
+    </b-card-footer>
+    {{ config.workspace}}<br>
+    gf : {{ path}}
+
   </b-card>
 </div>
 </template>
@@ -22,7 +34,7 @@ const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
 
 export default {
-  name: 'TensionsView',
+  name: 'TensionsCard',
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
@@ -42,9 +54,9 @@ watch: {
   },
 },
 methods:{
-async  updatePath(){
+  async  updatePath(){
     this.path = this.config.workspace+"tensions/"
-      this.folder = await fc.readFolder(this.path)
+    this.folder = await fc.readFolder(this.path)
   }
 },
 computed:{

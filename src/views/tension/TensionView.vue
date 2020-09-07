@@ -1,7 +1,6 @@
 <template>
   <div class="tension-view">
 
-    <!--  <Component /> -->
     <p>A tension is a difference between what is and what should be</p>
     <b-container>
       <b-row class="my-1">
@@ -9,7 +8,7 @@
           <label for="input-none">Name:</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input v-model="tension.label" :state="true" placeholder="Name"></b-form-input>
+          <b-form-input v-model="tension.label" placeholder="Name"></b-form-input> <!-- :state="true" -->
         </b-col>
       </b-row>
 
@@ -18,7 +17,12 @@
           <label for="input-none">What is:</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input v-model="tension.wi" placeholder="What is"></b-form-input>
+          <b-form-textarea
+          id="wi"
+          v-model="tension.wi" placeholder="What is"
+          rows="3"
+          max-rows="6"
+          ></b-form-textarea>
         </b-col>
       </b-row>
 
@@ -27,17 +31,53 @@
           <label for="input-none">What should be:</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input v-model="tension.wsb" placeholder="What should be"></b-form-input>
+          <b-form-textarea
+          id="swb"
+          v-model="tension.wsb" placeholder="What should be"
+          rows="3"
+          max-rows="6"
+          ></b-form-textarea>
         </b-col>
       </b-row>
 
+      <b-row class="my-1">
+        <b-col sm="3">
+          <label for="input-none">In which role do you feel this tension:</label>
+        </b-col>
+        <b-col sm="9">
+          <b-form-input v-model="tension.role" placeholder="Role (citizen, user of some service...)"></b-form-input>
+        </b-col>
+      </b-row>
 
       <b-row class="my-1">
-        <b-button @click="createTension">Save</b-button>
+        <b-col sm="3">
+          <label for="input-none">Which domains does this tension apply:</label>
+        </b-col>
+        <b-col sm="9">
+          <b-form-input v-model="tension.domains" placeholder="society, economy, ecology, decentralization..."></b-form-input>
+        </b-col>
+      </b-row>
+
+      <b-row class="my-1">
+        <b-col sm="3">
+          <label for="radio-privacy">Privacy:</label>
+        </b-col>
+        <b-col sm="9">
+          <b-form-group>
+            <b-form-radio-group id="radio-privacy" v-model="tension.privacy" name="radio-privacy">
+              <b-form-radio value="public">Public</b-form-radio>
+              <b-form-radio value="private" disabled>Private</b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
+      <b-row class="my-1">
+        <b-button @click="create">Save</b-button>
       </b-row>
 
     </b-container>
-
+    path : {{ this.path }} [ change path button]
     TensionView
   </div>
 </template>
@@ -48,13 +88,30 @@ import TensionMixin from '@/mixins/TensionMixin'
 
 export default {
   name: 'TensionView',
-    mixins: [TensionMixin],
+  mixins: [TensionMixin],
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
+data: function () {
+  return {
+    path: "",
+  }
+},
+created(){
+  this.path = this.config.workspace+"tensions/"
+},
 
 methods: {
+  create(){
+    this.createTension()
 
+  }
+},
+computed:{
+  config: {
+    get: function() { return this.$store.state.gouvernance.config},
+    set: function() {}
+  },
 }
 }
 </script>

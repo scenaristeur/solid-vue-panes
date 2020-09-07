@@ -6,7 +6,7 @@
     <b-card-group deck>
       <GroupsView />
       <DomainsView />
-      <TensionsView />
+      <TensionsCard />
     </b-card-group>
     storage {{ storage}}
     workspace  {{ workspace}}
@@ -22,7 +22,7 @@ export default {
   components: {
     'GroupsView': () => import('@/views/simple-gouv/GroupsView'),
     'DomainsView': () => import('@/views/simple-gouv/DomainsView'),
-    'TensionsView': () => import('@/views/simple-gouv/TensionsView'),
+    'TensionsCard': () => import('@/views/simple-gouv/TensionsCard'),
   },
   created(){
     this.storage = this.$store.state.solid.storage

@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.68 - /tension
+  0.1.69 - /tension add
 </div>
 </template>
 

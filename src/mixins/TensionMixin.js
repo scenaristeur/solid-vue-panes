@@ -1,21 +1,26 @@
 import toastMixin from '@/mixins/toastMixin'
+import fileMixin from '@/mixins/fileMixin'
 
 export default {
-  mixins: [toastMixin],
+  mixins: [toastMixin, fileMixin],
   data: function () {
     return {
-      tension: {}
+      tension : {privacy:"public"}
     }
   },
   methods: {
     createTension() {
-      var dateObj = new Date();
-      var date = dateObj.toISOString()
-      this.tension.created = date  //http://purl.org/dc/terms/created
+      this.tension.displayType = "Tension"
+      // see https://vocab.org/lifecycle/schema#Task & https://noeldemartin.github.io/solid-focus/#
       this.tension.types = ["http://purl.org/vocab/lifecycle/schema#Task", "http://www.w3.org/ns/ldp#Resource"]
-      console.log(this.tension)
-      this.makeToast("Tension created", this.tension.label, "success")
-      this.tension = {}
+      this.tension.path = this.path
+      console.log(this.tension, this.path)
+
+      this.createFile(this.tension)
+
+
+      this.tension = {privacy:"public"}
+
     }
   }
 }
