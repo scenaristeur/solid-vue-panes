@@ -34,9 +34,11 @@ export default {
         data.role.split(",").forEach((r) => {
           subj.addLiteral("http://www.w3.org/ns/org#memberOf", r.trim())
         });
+        console.log("TODO: must look at existing groups & existing frineds groups & activity published groups")
         data.domains.split(",").forEach((d) => {
           subj.addLiteral("http://www.w3.org/ns/org#purpose", d.trim())
         });
+        console.log("TODO: must look at https://www.wikidata.org/w/api.php?action=wbsearchentities&language=fr&format=json&search=Ecology")
 
         await dataDoc.save();
 
@@ -52,7 +54,7 @@ export default {
       if (data.privacy == "public"){
         console.log("ACTIVITY !!")
 
-        this.makeToast("Activity published", data.label, "success")
+        this.makeToast("TODO : must Activity publish", data.label, "success")
       }
     }
   }
