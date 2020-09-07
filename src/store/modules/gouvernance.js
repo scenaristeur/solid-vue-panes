@@ -2,6 +2,7 @@
 const state = () => ({
   groups: [],
   currentGroup: {},
+  config: {}
 
 })
 
@@ -19,6 +20,9 @@ const mutations = {
   },
   setCurrentGroup(state, group){
     state.currentGroup = group
+  },
+  setWorkspace(state, ws){
+    state.config.workspace = ws
   }
 }
 

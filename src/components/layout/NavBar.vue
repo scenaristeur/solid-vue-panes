@@ -82,6 +82,7 @@
         <b-dropdown-item to="/holon">Holon</b-dropdown-item>
         <b-dropdown-item to="/gouvernance1">Gouvernance 1</b-dropdown-item>
         <b-dropdown-item to="/gouvernance">Gouvernance</b-dropdown-item>
+        <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
       </b-nav-item-dropdown>
 
 

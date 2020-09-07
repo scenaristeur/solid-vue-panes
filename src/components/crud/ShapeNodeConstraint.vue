@@ -13,8 +13,9 @@
     </div>
 
     <div v-else-if="valueExpr.datatype.startsWith('http://www.w3.org/ns/pim/space#storage:')">
-      select {{ workspace+valueExpr.datatype.split(":")[2] }}
-          <FormSelect :source='workspace+valueExpr.datatype.split(":")[2]' :values="valueExpr.values" :predicate="predicate" :datatype="valueExpr.datatype"/>
+      <small>{{ workspace+valueExpr.datatype.split(":")[2] }}</small>
+      <FormSelect :source='workspace+valueExpr.datatype.split(":")[2]' :values="valueExpr.values" :predicate="predicate" :datatype="valueExpr.datatype"/>
+
     </div>
 
     <div v-else class="not-found">

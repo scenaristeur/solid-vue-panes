@@ -51,7 +51,7 @@ import ActivityMixin from '@/mixins/ActivityMixin.js'
 
 
 export default {
-  name: 'Agora',
+  name: 'AgoraTest',
   mixins: [ ActivityMixin ],
   /*  components: {
   'Component': () => import('@/components/Component'),

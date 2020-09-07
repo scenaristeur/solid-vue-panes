@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.67 - governance with shex folder
+  0.1.68 - /tension
 </div>
 </template>
 
