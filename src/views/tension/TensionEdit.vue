@@ -32,7 +32,7 @@
         </b-col>
         <b-col sm="9">
           <b-form-textarea
-          id="swb"
+          id="wsb"
           v-model="tension.wsb" placeholder="What should be"
           rows="3"
           max-rows="6"
@@ -45,7 +45,7 @@
           <label for="input-none">In which role do you feel this tension:</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input v-model="tension.role" placeholder="Role (citizen, user of some service...)"></b-form-input>
+          <b-form-input v-model="tension.roles" placeholder="Role (citizen, user of some service...)"></b-form-input>
         </b-col>
       </b-row>
 
@@ -78,7 +78,7 @@
 
     </b-container>
     path : {{ this.path }} [ change path button]
-    TensionView
+    TensionEdit
   </div>
 </template>
 
@@ -87,7 +87,7 @@
 import TensionMixin from '@/mixins/TensionMixin'
 
 export default {
-  name: 'TensionView',
+  name: 'TensionEdit',
   mixins: [TensionMixin],
   /*  components: {
   'Component': () => import('@/components/Component'),
@@ -99,11 +99,32 @@ data: function () {
 },
 created(){
   this.path = this.config.workspace+"tensions/"
+  console.log("route",this.$route)
+  if (this.$route.params.tension != undefined ){
+    this.fillForm(this.$route.params.tension)
+  }
+
 },
 
 methods: {
   create(){
     this.createTension()
+  },
+  fillForm(t){
+    t.privacy = "public"
+    this.tension = t
+    this.tension.roles = this.tension.roles.join(', ')
+    this.tension.domains = this.tension.domains.join(', ')
+
+  }
+},
+watch: {
+  '$route' (to) {
+    //  '$route' (to, from) {
+    console.log("route to",to)
+    if (this.$route.params.tension != undefined ){
+      this.fillForm(this.$route.params.tension)
+    }
 
   }
 },

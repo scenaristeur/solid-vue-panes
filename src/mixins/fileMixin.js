@@ -1,7 +1,7 @@
 import toastMixin from '@/mixins/toastMixin'
-import { createDocument, /*fetchDocument */} from 'tripledoc';
+import { createDocument, fetchDocument } from 'tripledoc';
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
-
+import auth from 'solid-auth-client';
 
 export default {
   mixins: [toastMixin],
@@ -10,28 +10,59 @@ export default {
       //    tension : {privacy:"public"}
     }
   },
+  created(){
+    this.fc   = new SolidFileClient(auth)
+    console.log(this.fc)
+  },
   methods: {
-    async  createFile(data){
+    async createFile(data){
       data.label = data.label.trim()
       data.ttl_name = data.label.replace(/\s/g, '_')
-      var dateObj = new Date();
-      var date = dateObj.toISOString()
-      data.created = date  //http://purl.org/dc/terms/created
-      console.log(data)
-      data.url = data.path+data.ttl_name+".ttl"
-      console.log(data)
 
       try{
-        let dataDoc =    await createDocument(data.url);
+        let dataDoc = {}
+        if (data.url == undefined){
+          console.log(data)
+          data.url = data.path+data.ttl_name+".ttl"
+          dataDoc = await createDocument(data.url);
+        }else{
+          dataDoc = await fetchDocument(data.url);
+        }
+
         let subj =  dataDoc.addSubject({identifier:"this"})
+        console.log(subj)
+        var dateObj = new Date();
+        var date = dateObj.toISOString()
+        if (data.created != undefined ){
+          data.modified = date
+          subj.addLiteral(dct.modified, date)
+          subj.removeAll(rdfs.label)
+          subj.removeAll(ldp.inbox)
+
+          subj.removeAll("https://holacratie.solid.community/public/holacratie#whatis",data.wi)
+          subj.removeAll("https://holacratie.solid.community/public/holacratie#whatshouldbe",data.wsb)
+        //  subj.addRef(foaf.maker, this.$store.state.solid.webId)
+            subj.removeAll(rdf.type)
+            subj.removeAll("http://www.w3.org/ns/org#memberOf")
+
+            subj.removeAll("http://www.w3.org/ns/org#purpose")
+
+        }else{
+          data.created = date  //http://purl.org/dc/terms/created
+          subj.addLiteral(dct.created, date)
+        }
+
+        console.log(data)
         subj.addLiteral(rdfs.label, data.label)
-        subj.addNodeRef(ldp.inbox, "./"+data.ttl_name+"/inbox/")
-        subj.addLiteral(dct.created, date)
-        subj.addNodeRef(foaf.maker, this.$store.state.solid.webId)
+        subj.addRef(ldp.inbox, "./"+data.ttl_name+"/inbox/")
+
+        subj.addLiteral("https://holacratie.solid.community/public/holacratie#whatis",data.wi)
+        subj.addLiteral("https://holacratie.solid.community/public/holacratie#whatshouldbe",data.wsb)
+        subj.addRef(foaf.maker, this.$store.state.solid.webId)
         data.types.forEach((t) => {
-          subj.addNodeRef(rdf.type, t)
+          subj.addRef(rdf.type, t)
         });
-        data.role.split(",").forEach((r) => {
+        data.roles.split(",").forEach((r) => {
           subj.addLiteral("http://www.w3.org/ns/org#memberOf", r.trim())
         });
         console.log("TODO: must look at existing groups & existing frineds groups & activity published groups")
@@ -56,6 +87,11 @@ export default {
 
         this.makeToast("TODO : must Activity publish", data.label, "success")
       }
+    },
+    async  getFolder(url){
+      console.log("get folder",url)
+      let folder = await this.fc.readFolder(url)
+      return folder
     }
   }
 }

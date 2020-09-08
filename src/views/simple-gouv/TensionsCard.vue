@@ -6,19 +6,19 @@
     class="mb-2">
     <b-card-title>Tensions</b-card-title>
     <b-card-header>
-
+      A tension is a difference between "What is" and "What should be". I'm sure there are a lot of thing that you want to change...
     </b-card-header>
 
     <b-card-text>
-      A tension is a difference between "What is" and "What should be". I'm sure there are a lot of thing that you want to change...
-    </b-card-text>
-    <b-card-footer>
       <b-button-toolbar key-nav aria-label="Toolbar with button groups">
         <b-button-group class="mx-1" size="sm">
-          <b-button variant="outline"  to="/tension"><b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
+          <b-button variant="outline"  to="/tension/edit"><b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
           <b-button variant="outline"  to="/tensions"> <b-icon icon="list" variant="info"></b-icon></b-button>
         </b-button-group>
       </b-button-toolbar>
+    </b-card-text>
+    <b-card-footer>
+
     </b-card-footer>
     {{ config.workspace}}<br>
     gf : {{ path}}

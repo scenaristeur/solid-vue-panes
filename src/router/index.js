@@ -261,12 +261,28 @@ const routes = [
     component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance/GouvernanceView.vue')
   },
   {
-    path: '/tension',
-    name: 'Tension',
+    path: '/tension/edit/:tension?',
+    name: 'TensionEdit',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tension" */'@/views/tension/TensionView.vue')
+    component: () => import(/* webpackChunkName: "tension-edit" */'@/views/tension/TensionEdit.vue')
+  },
+  {
+    path: '/tension/detail/:details?',
+    name: 'TensionDetail',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "tension-view" */'@/views/tension/TensionDetail.vue')
+  },
+  {
+    path: '/tensions',
+    name: 'TensionsList',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
   },
   {
     path: '/simplegouv',
@@ -274,7 +290,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tension" */'@/views/simple-gouv/SimpleGouvView.vue')
+    component: () => import(/* webpackChunkName: "simple-gouv" */'@/views/simple-gouv/SimpleGouvView.vue')
   },
 
 ]
