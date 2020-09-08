@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.70 - /tension view with query, share & vendor root
+  0.1.70 - /tension view with query, share
 </div>
 </template>
 
