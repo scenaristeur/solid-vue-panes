@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.75 - username & date
+  0.1.76 - username & date inbox & edit
 </div>
 </template>
 

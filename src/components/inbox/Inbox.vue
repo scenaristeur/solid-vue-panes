@@ -14,7 +14,7 @@
       </div>
 
       <b-list-group>
-        <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name" class="d-flex align-items-center">
+        <b-list-group-item v-for="m in inbox.files.slice().reverse()" :key="m.name">
           <MessageLine :message="m"/>
         </b-list-group-item>
       </b-list-group>
@@ -185,8 +185,9 @@ export default {
       if (this.content.length > 0){
         let message = {}
         //
-        message.date = new Date(Date.now())
-        message.id = message.date.getTime()
+        var dateObj = new Date();
+        message.date = dateObj.toISOString()
+        message.id = dateObj.getTime()
         message.sender = this.webId
 
         message.content = this.content
@@ -200,7 +201,7 @@ export default {
 
         <>
         a sch:Message;
-        schem:dateSent "${message.date.toISOString()}";
+        schem:dateSent "${message.date}";
         schem:sender <${message.sender}>;
         schem:text "${message.content}";
         rd:label "${message.label}";
@@ -352,3 +353,8 @@ computed:{
 }
 }
 </script>
+<style>
+.inbox{
+  text-align: left;
+}
+</style>

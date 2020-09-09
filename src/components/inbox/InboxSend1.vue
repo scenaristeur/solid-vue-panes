@@ -109,7 +109,7 @@ export default {
       if (this.content.length > 0){
         let message = {}
         //
-        message.date = new Date(Date.now())
+        message.date = new Date()
         message.id = message.date.getTime()
         message.sender = this.webId
 
@@ -243,7 +243,7 @@ computed:{
   },
   label: {
        get: function() { return this.$store.state.inbox.label},
-       set: function() {}    
+       set: function() {}
   },
   oldContent(){
     return this.$store.state.inbox.oldContent

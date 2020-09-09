@@ -6,6 +6,8 @@
     <b-card class="mb-2">
       <b-card-title>{{ label }}</b-card-title>
       <UserName :webId="maker" />
+      <div class="d-inline">as roles {{ roles}} <br></div>
+
       <Date :dateIso="created"/>
       <b-card-header>
         <p><b>What Is :</b> {{wi}}</p>
@@ -14,7 +16,6 @@
       </b-card-header>
       <b-card-text><ToolbarView :url="url" /></b-card-text>
       <b-card-text>
-        {{ wsb }}
         <b-button-toolbar key-nav aria-label="Toolbar with button groups">
           <b-button-group class="mx-1" size="sm">
             <b-button variant="outline"  to="/tension/edit"><b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
@@ -25,11 +26,11 @@
 
       <b-card-footer>
 
-        as roles {{ roles}} <br>
-        domains {{ domains}} <br>
+
+        <Domains :domains="domains" />
 
         <small> {{ types}} </small><br>
-        inbox {{ inbox}}<br>
+        <router-link v-bind:to="{ name: 'Inbox', params: { inbox: inbox }}">inbox</router-link> <br>
       </b-card-footer>
     </b-card>
 
@@ -45,6 +46,7 @@ export default {
     'ToolbarView': () => import('@/components/views/ToolbarView'),
     'UserName': () => import('@/components/basic/UserName'),
     'Date': () => import('@/components/basic/Date'),
+    'Domains': () => import('@/components/basic/Domains'),
   },
   props:['subject','url'],
   created(){

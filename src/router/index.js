@@ -269,7 +269,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "gouvernance" */'@/views/gouvernance/GouvernanceView.vue')
   },
   {
-    path: '/tension/edit/:tension?',
+    path: '/tension/edit/:url?',
     name: 'TensionEdit',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

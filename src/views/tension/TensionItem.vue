@@ -2,9 +2,10 @@
   <div class="modele-view container">
     <h3>{{ details.label}}</h3>
 
-    What Is : {{details.wi}}<br>
-    What should be : {{ details.wsb}}<br>
-    domains {{ details.domains}}
+    <b>What Is :</b> {{details.wi}}<br>
+    <b>What should be :</b> {{ details.wsb}}<br>
+
+    <Domains :domains="details.domains" />
 
     <Toolbar :item="details" />
     created  {{ details.created}}<br>
@@ -31,6 +32,7 @@ export default {
   mixins: [TensionMixin],
   components: {
     'Toolbar': () => import('@/views/tension/Toolbar'),
+    'Domains': () => import('@/components/basic/Domains'),
   },
   props: ['tension'],
   data: function () {
@@ -41,13 +43,13 @@ export default {
     }
   },
   async created(){
-    console.log("tension",this.tension)
+  //  console.log("tension",this.tension)
     await  this.updateTension(this.tension)
 
   },
   watch: {
-    async  tension (t) {
-      console.log(t)
+    async  tension () {
+    //  console.log(t)
       await  this.updateTension(this.tension)
     },
   },

@@ -96,12 +96,15 @@ data: function () {
     path: "",
   }
 },
-created(){
+async created(){
   this.storage = this.$store.state.solid.storage
 
   console.log("route",this.$route)
-  if (this.$route.params.tension != undefined ){
-    this.fillForm(this.$route.params.tension)
+  if (this.$route.params.url != undefined ){
+    let t = {url: this.$route.params.url}
+    let details = await this.getTensionDetail(t)
+    console.log(details)
+    this.fillForm(details)
   }
 
 },

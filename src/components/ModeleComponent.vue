@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import {  fetchDocument } from 'tripledoc';
-import {  rdf} from 'rdf-namespaces'
+//import {  fetchDocument } from 'tripledoc';
+//import {  rdf} from 'rdf-namespaces'
 //import toastMixin from '@/mixins/toastMixin'
 
 export default {

@@ -1,21 +1,19 @@
 <template>
   <div class="">
 
-    <b-card style="max-width: 20rem;">
+    <b-card style="max-width: 20rem;" class="mb-2">
       <b-card-title>{{ label }}</b-card-title>
       <b-card-header>
+        {{ summary}}
+      </b-card-header>
+      <!--
+      <b-card-text></b-card-text>-->
+      <AgoraToolbar :url="object_url"/>
+      <b-card-footer>
         <UserName :webId="maker" />
         <Date :dateIso="created"/>
-      </b-card-header>
-
-      <b-card-text>{{ summary}}</b-card-text>
-      <b-button  v-bind:to="{ name: 'View', params: { url: object_url }}" variant="outline-info">See</b-button>
-      {{ object_url }}
-
-      <b-card-footer>
-
-        actor : {{actor}}<br>
-        type: {{ type}}<br>
+        <!--        actor : {{actor}}<br>
+        type: {{ type}}<br>-->
       </b-card-footer>
     </b-card>
 
@@ -31,6 +29,7 @@ export default {
   components: {
     'UserName': () => import('@/components/basic/UserName'),
     'Date': () => import('@/components/basic/Date'),
+    'AgoraToolbar': () => import('@/components/agora/AgoraToolbar'),
   },
   props: ['activity'],
   data: function () {
