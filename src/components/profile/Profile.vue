@@ -162,7 +162,7 @@ export default {
         this.interests = await subj.getAllLiterals(foaf.topic_interest)
         console.log(this.interests)
       }catch(e){
-        console.log(e)
+      //  console.log(e)
         this.profileDoc = await createDocument(p_u)
       }
 
@@ -173,8 +173,16 @@ export default {
       console.log(this.interest, this.profile_url)
       this.interests.push(this.interest)
       //  await solid.data[this.profile_url].foaf$topic_interest.add(this.interest)
-      this.profileDoc = await fetchDocument(this.profile_url)
-      let me = await this.profileDoc.getSubject(this.profile_url+"#me")
+      this.profileDoc = {}
+      let me = {}
+      try{
+        this.profileDoc = await fetchDocument(this.profile_url)
+           me = await this.profileDoc.getSubject(this.profile_url+"#me")
+      }
+      catch(e){
+        this.profileDoc = await createDocument(this.profile_url)
+           me = await this.profileDoc.addSubject(this.profile_url+"#me")
+      }
       //  me.addRef(foaf.topic_interest, this.interest)
       me.addLiteral(foaf.topic_interest, this.interest)
       //  me.addNodeRef(foaf.topic_interest, this.interest)

@@ -5,9 +5,11 @@
 
     <b-card class="mb-2">
       <b-card-title>{{ label }}</b-card-title>
+      <UserName :webId="maker" />  <small>{{ created}}</small>
       <b-card-header>
         <p><b>What Is :</b> {{wi}}</p>
         <p><b>What should be :</b> {{wsb}}</p>
+
       </b-card-header>
       <b-card-text><ToolbarView :url="url" /></b-card-text>
       <b-card-text>
@@ -19,16 +21,15 @@
           </b-button-group>
         </b-button-toolbar>
       </b-card-text>
+
       <b-card-footer>
 
+        as roles {{ roles}} <br>
+        domains {{ domains}} <br>
 
-        domains {{ domains}}
-        {{ created}} -
         <small> {{ types}} </small><br>
-
-        maker {{maker}}<br>
         inbox {{ inbox}}<br>
-        roles {{ roles}} <br>
+
       </b-card-footer>
 
     </b-card>
@@ -46,12 +47,14 @@ export default {
   name: 'TaskView',
   components: {
     'ToolbarView': () => import('@/components/views/ToolbarView'),
+    'UserName': () => import('@/components/profile/UserName'),
   },
   props:['subject','url'],
   created(){
     console.log("Subject", this.subject)
     this.label = this.subject.getLiteral(rdfs.label)
-    this.created = this.subject.getLiteral(dct.created)
+    let created = this.subject.getLiteral(dct.created)
+    this.created = new Date(created).toLocaleString()
     this.label = this.subject.getLiteral(rdfs.label)
     this.inbox = this.subject.getRef(ldp.inbox)
     this.wi = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatis")

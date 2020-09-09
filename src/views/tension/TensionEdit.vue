@@ -66,7 +66,7 @@
           <b-form-group>
             <b-form-radio-group id="radio-privacy" v-model="tension.privacy" name="radio-privacy">
               <b-form-radio value="public">Public</b-form-radio>
-              <b-form-radio value="private" disabled>Private</b-form-radio>
+              <b-form-radio value="private">Private</b-form-radio>
             </b-form-radio-group>
           </b-form-group>
         </b-col>
@@ -78,7 +78,6 @@
 
     </b-container>
     path : {{ this.path }} [ change path button]
-    TensionEdit
   </div>
 </template>
 
@@ -99,7 +98,7 @@ data: function () {
 },
 created(){
   this.storage = this.$store.state.solid.storage
-  this.path = this.storage+"gouvernance/tensions/"
+
   console.log("route",this.$route)
   if (this.$route.params.tension != undefined ){
     this.fillForm(this.$route.params.tension)
@@ -109,6 +108,7 @@ created(){
 
 methods: {
   create(){
+      this.path = this.storage+this.tension.privacy+"/gouvernance/tensions/"
     this.createTension()
   },
   fillForm(t){

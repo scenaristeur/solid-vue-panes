@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.73",
+  "version": "0.1.74",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -24,7 +24,7 @@
     "solid-auth-client": "^2.5.0",
     "tripledoc": "^4.3.4",
     "vis-data": "^7.0.0",
-    "vis-network": "^8.3.1",
+    "vis-network": "^8.3.2",
     "vis-util": "^4.3.4",
     "vue": "^2.6.12",
     "vue-beautiful-chat": "^2.5.0",
@@ -50,7 +50,7 @@
     "chai": "^4.1.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "solid-file-client": "^1.0.5",
+    "solid-file-client": "^1.1.0",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.12"
   }
