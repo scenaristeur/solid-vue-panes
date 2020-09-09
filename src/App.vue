@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.71 - activitypublish tension
+  0.1.72 - general view page
 </div>
 </template>
 

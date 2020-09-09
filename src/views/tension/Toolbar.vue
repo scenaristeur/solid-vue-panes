@@ -2,7 +2,7 @@
   <div class="modele-view">
     <b-button-toolbar key-nav aria-label="Toolbar with button groups">
       <b-button-group class="mx-1" size="sm">
-        <b-button variant="outline" v-bind:to="{ name: 'TensionDetail', params: { details: item }}">Details <b-icon icon="eye" aria-hidden="true" variant="info"></b-icon> </b-button>
+        <b-button variant="outline" v-bind:to="{ name: 'View', params: { url: item.url }}">View <b-icon icon="eye" aria-hidden="true" variant="info"></b-icon> </b-button>
         <b-button variant="outline"  v-bind:to="{ name: 'TensionEdit', params: { tension: item }}">Edit <b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
         <b-button variant="outline"  @click="openShareDialog"> Share <b-icon icon="list" variant="info"></b-icon></b-button>
         <b-button variant="outline"  to="/tensions">Create Group <b-icon icon="list" variant="info"></b-icon></b-button>

@@ -108,6 +108,6 @@ export default {
       console.log("get folder",url)
       let folder = await this.fc.readFolder(url)
       return folder
-    }
+    },
   }
 }

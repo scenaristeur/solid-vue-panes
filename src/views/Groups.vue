@@ -17,8 +17,6 @@
 
 export default {
   name: 'Groups',
-
-
   components: {
     'GroupsList': () => import('@/components/groups/GroupsList'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')

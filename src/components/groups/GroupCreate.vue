@@ -33,12 +33,12 @@ export default {
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
+mixins: [groupsMixin, ActivityMixin],
 data() {
   return {
     name: "CoolGroup",
     purpose: "",
     parent: "",
-    mixins: [groupsMixin, ActivityMixin],
     pubPod: "https://agora.solid.community/public/popock/inbox/", // REVOIR ACTIVITY MIXIN !!!
 
   }
@@ -71,7 +71,7 @@ methods:{
 
     await groupDoc.save();
     this.$emit('created')
-
+    
 
 
     this.activity=  {

@@ -4,11 +4,12 @@
     <b-card style="max-width: 20rem;">
       <b-card-title>{{ label }}</b-card-title>
       <b-card-header>
-      <small>{{created}} - {{maker}}</small>
+        <small>{{created}} - {{maker}}</small>
       </b-card-header>
 
       <b-card-text>{{ summary}}</b-card-text>
-      <b-button  v-bind:to="{ name: 'Groups', params: { url: object }}" variant="outline-info">See</b-button>
+      <b-button  v-bind:to="{ name: 'View', params: { url: object_url }}" variant="outline-info">See</b-button>
+      {{ object_url }}
 
       <b-card-footer>
 
@@ -16,10 +17,6 @@
         type: {{ type}}<br>
       </b-card-footer>
     </b-card>
-
-
-
-
 
   </div>
 </template>
@@ -40,7 +37,7 @@ export default {
       maker: "",
       actor:"",
       summary: "",
-      object:"",
+      object_url:"",
       type:"",
     }
   },
@@ -48,7 +45,7 @@ export default {
     this.label = getStringNoLocale(this.activity, RDFS.label);
     this.created = getStringNoLocale(this.activity, DCTERMS.created);
     this.summary = getStringNoLocale(this.activity, AS.summary);
-    this.object = getUrl(this.activity, AS.object);
+    this.object_url = getUrl(this.activity, AS.object);
     this.maker = getUrl(this.activity, FOAF.maker);
     this.maker = getUrl(this.activity, FOAF.maker);
     this.actor = getUrl(this.activity, AS.actor);

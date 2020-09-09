@@ -181,6 +181,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "groups" */'@/views/Groups.vue')
   },
   {
+    path: '/view/:url?',
+    name: 'View',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "groups" */'@/views/View.vue')
+  },
+  {
     path: '/bookmarks',
     name: 'Bookmarks',
     // route level code-splitting
@@ -226,7 +234,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "holon" */'@/views/holon/group/GroupDisplay.vue')
+    component: () => import(/* webpackChunkName: "group" */'@/views/holon/group/GroupDisplay.vue')
   },
   {
     path: '/gouvernance1',
@@ -268,14 +276,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "tension-edit" */'@/views/tension/TensionEdit.vue')
   },
-  {
+/*  {
     path: '/tension/detail/:details?',
     name: 'TensionDetail',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tension-view" */'@/views/tension/TensionDetail.vue')
-  },
+    component: () => import(@/views/tension/TensionDetail.vue')
+  },*/
   {
     path: '/tensions',
     name: 'TensionsList',
