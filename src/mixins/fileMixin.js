@@ -1,10 +1,12 @@
 import toastMixin from '@/mixins/toastMixin'
+import activityMixin from '@/mixins/ActivityMixin'
+
 import { createDocument, fetchDocument } from 'tripledoc';
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
 import auth from 'solid-auth-client';
 
 export default {
-  mixins: [toastMixin],
+  mixins: [toastMixin, activityMixin],
   data: function () {
     return {
       //    tension : {privacy:"public"}
@@ -19,18 +21,27 @@ export default {
       data.label = data.label.trim()
       data.ttl_name = data.label.replace(/\s/g, '_')
 
+      this.activity ={actor: {name: this.$store.state.solid.webId},
+      type:"Create",
+      summary: "",
+      object:{
+        name: data.label,
+        url: "",
+        type:"Tension"}
+      }
+
       try{
         let dataDoc = {}
         if (data.url == undefined){
-          console.log(data)
           data.url = data.path+data.ttl_name+".ttl"
           dataDoc = await createDocument(data.url);
+          this.activity.type = "Create"
         }else{
           dataDoc = await fetchDocument(data.url);
+          this.activity.type = "Update"
         }
 
         let subj =  dataDoc.addSubject({identifier:"this"})
-        console.log(subj)
         var dateObj = new Date();
         var date = dateObj.toISOString()
         if (data.created != undefined ){
@@ -38,15 +49,12 @@ export default {
           subj.addLiteral(dct.modified, date)
           subj.removeAll(rdfs.label)
           subj.removeAll(ldp.inbox)
-
           subj.removeAll("https://holacratie.solid.community/public/holacratie#whatis",data.wi)
           subj.removeAll("https://holacratie.solid.community/public/holacratie#whatshouldbe",data.wsb)
-        //  subj.addRef(foaf.maker, this.$store.state.solid.webId)
-            subj.removeAll(rdf.type)
-            subj.removeAll("http://www.w3.org/ns/org#memberOf")
-
-            subj.removeAll("http://www.w3.org/ns/org#purpose")
-
+          //  subj.addRef(foaf.maker, this.$store.state.solid.webId)
+          subj.removeAll(rdf.type)
+          subj.removeAll("http://www.w3.org/ns/org#memberOf")
+          subj.removeAll("http://www.w3.org/ns/org#purpose")
         }else{
           data.created = date  //http://purl.org/dc/terms/created
           subj.addLiteral(dct.created, date)
@@ -62,14 +70,18 @@ export default {
         data.types.forEach((t) => {
           subj.addRef(rdf.type, t)
         });
-        data.roles.split(",").forEach((r) => {
-          subj.addLiteral("http://www.w3.org/ns/org#memberOf", r.trim())
-        });
-        console.log("TODO: must look at existing groups & existing frineds groups & activity published groups")
-        data.domains.split(",").forEach((d) => {
-          subj.addLiteral("http://www.w3.org/ns/org#purpose", d.trim())
-        });
-        console.log("TODO: must look at https://www.wikidata.org/w/api.php?action=wbsearchentities&language=fr&format=json&search=Ecology")
+        if (data.roles != undefined){
+          data.roles.split(",").forEach((r) => {
+            subj.addLiteral("http://www.w3.org/ns/org#memberOf", r.trim())
+          });
+          console.log("TODO: must look at existing groups & existing frineds groups & activity published groups")
+        }
+        if(data.domains != undefined){
+          data.domains.split(",").forEach((d) => {
+            subj.addLiteral("http://www.w3.org/ns/org#purpose", d.trim())
+          });
+          console.log("TODO: must look at https://www.wikidata.org/w/api.php?action=wbsearchentities&language=fr&format=json&search=Ecology")
+        }
 
         await dataDoc.save();
 
@@ -84,6 +96,10 @@ export default {
 
       if (data.privacy == "public"){
         console.log("ACTIVITY !!")
+        this.activity.object.url = data.url
+        //  this.activity.summary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
+
+        this.sendActivity()
 
         this.makeToast("TODO : must Activity publish", data.label, "success")
       }

@@ -1,21 +1,26 @@
 <template>
   <div class="agora-list container">
     <h5> {{ activities.length}} Activities</h5>
-  <!--  <b-input-group class="mb-2">
-      <b-form-datepicker id="example-datepicker" v-model="date" min="2020-08-01" :max="max"></b-form-datepicker>
-      <b-input-group-append>
-        <b-button @click="sort">Sort</b-button>
-      </b-input-group-append>
-    </b-input-group>-->
+    <!--  <b-input-group class="mb-2">
+    <b-form-datepicker id="example-datepicker" v-model="date" min="2020-08-01" :max="max"></b-form-datepicker>
+    <b-input-group-append>
+    <b-button @click="sort">Sort</b-button>
+  </b-input-group-append>
+</b-input-group>-->
 
-    <b-list-group>
-      <b-list-group-item   v-for="a in activities" :key="a.id" class="flex-column align-items-start">
-        <ActivityItem :activity="a" />
-      </b-list-group-item>
+<b-card-group deck>
 
-    </b-list-group>
+  <ActivityItem v-for="a in activities.reverse()" :key="a.id" :activity="a" />
+</b-card-group>
+<!--
+<b-list-group>
+<b-list-group-item   v-for="a in activities.reverse()" :key="a.id" class="flex-column align-items-start">
+<ActivityItem :activity="a" />
+</b-list-group-item>
 
-  </div>
+</b-list-group>-->
+
+</div>
 </template>
 
 <script>
@@ -69,3 +74,8 @@ computed:{
 }
 }
 </script>
+<style>
+.container {
+  text-align: left;
+}
+</style>

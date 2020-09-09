@@ -15,11 +15,13 @@ export default {
   methods: {
     async sendActivity(){
       console.log(this.activity)
-      console.log(this.activity.actor.name, this.activity.type, this.activity.summary, this.date)
-      let fileUrl = this.pubPod+this.date+".ttl"
       var dateObj = new Date();
       var messageId = "Activity_"+dateObj.getTime()
       var date = dateObj.toISOString()
+      let d = this.formatDate(dateObj)
+      console.log(this.activity.actor.name, this.activity.type, this.activity.summary, d)
+      let fileUrl = this.pubPod+d+".ttl"
+
       let activityDoc = {}
       try{
         activityDoc = await fetchDocument(fileUrl);
@@ -28,17 +30,18 @@ export default {
       }
 
       console.log("webId",this.webId)
-      let autoSummary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
-      console.log("Musr create outbox object first, then activity !",activityDoc, messageId, date)
+      if(this.activity.summary.length <1 ){
+        this.activity.summary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
+      }
       let subj =   activityDoc.addSubject({identifier:messageId})
       //subj.addLiteral(sioc.content, this.activity)
-      subj.addLiteral(rdfs.label, autoSummary)
+      subj.addLiteral(rdfs.label, this.activity.object.name)
       subj.addLiteral(dct.created, date)
       subj.addRef(foaf.maker, this.webId)
       subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
       subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
-      subj.addLiteral('https://www.w3.org/ns/activitystreams#object', "test"+this.activity.object)
+      subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
       await activityDoc.save();
 
     },
@@ -67,7 +70,7 @@ export default {
       subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
       subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
-      subj.addLiteral('https://www.w3.org/ns/activitystreams#object', "test"+this.activity.object)
+      subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
       await activityDoc.save();
 
       // put something in outbox
