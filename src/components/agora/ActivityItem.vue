@@ -4,7 +4,8 @@
     <b-card style="max-width: 20rem;">
       <b-card-title>{{ label }}</b-card-title>
       <b-card-header>
-        <small>{{created}} - {{maker}}</small>
+        <UserName :webId="maker" />
+        <Date :dateIso="created"/>
       </b-card-header>
 
       <b-card-text>{{ summary}}</b-card-text>
@@ -28,6 +29,8 @@ import { RDFS, DCTERMS, AS, FOAF, RDF } from "@inrupt/vocab-common-rdf"; //https
 export default {
   name: 'ActivityItem',
   components: {
+    'UserName': () => import('@/components/basic/UserName'),
+    'Date': () => import('@/components/basic/Date'),
   },
   props: ['activity'],
   data: function () {

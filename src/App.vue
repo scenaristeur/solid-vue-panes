@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.74 - general view page & update public path for tension edit
+  0.1.75 - username & date
 </div>
 </template>
 

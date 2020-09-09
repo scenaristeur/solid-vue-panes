@@ -5,7 +5,8 @@
 
     <b-card class="mb-2">
       <b-card-title>{{ label }}</b-card-title>
-      <UserName :webId="maker" />  <small>{{ created}}</small>
+      <UserName :webId="maker" />
+      <Date :dateIso="created"/>
       <b-card-header>
         <p><b>What Is :</b> {{wi}}</p>
         <p><b>What should be :</b> {{wsb}}</p>
@@ -29,13 +30,8 @@
 
         <small> {{ types}} </small><br>
         inbox {{ inbox}}<br>
-
       </b-card-footer>
-
     </b-card>
-
-
-
 
   </div>
 </template>
@@ -47,14 +43,14 @@ export default {
   name: 'TaskView',
   components: {
     'ToolbarView': () => import('@/components/views/ToolbarView'),
-    'UserName': () => import('@/components/profile/UserName'),
+    'UserName': () => import('@/components/basic/UserName'),
+    'Date': () => import('@/components/basic/Date'),
   },
   props:['subject','url'],
   created(){
     console.log("Subject", this.subject)
     this.label = this.subject.getLiteral(rdfs.label)
-    let created = this.subject.getLiteral(dct.created)
-    this.created = new Date(created).toLocaleString()
+    this.created = this.subject.getLiteral(dct.created)
     this.label = this.subject.getLiteral(rdfs.label)
     this.inbox = this.subject.getRef(ldp.inbox)
     this.wi = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatis")

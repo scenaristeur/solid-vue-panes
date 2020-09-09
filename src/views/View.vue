@@ -2,6 +2,10 @@
   <div class="view container">
 
     <TaskView v-if="types.includes('http://purl.org/vocab/lifecycle/schema#Task')" :subject="subject" :url="url"/>
+    <div v-else>
+      no template for {{ url }} with types : {{ types }}
+
+    </div>
     <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/>
     view : {{ url }}
   </div>
@@ -12,7 +16,7 @@ import { fetchDocument } from 'tripledoc';
 import { rdf} from 'rdf-namespaces'
 
 export default {
-  name: 'View',
+  name: 'ViewAll',
   components: {
     'ResourceView': () => import('@/components/views/ResourceView'),
     'TaskView': () => import('@/components/views/TaskView'),
@@ -36,9 +40,9 @@ export default {
   methods: {
     async getData() {
       let dataDoc = await fetchDocument(this.url);
-      this.subject = dataDoc.getSubject(this.url+"#this")
+      this.subject = await dataDoc.getSubject(this.url+"#this")
       console.log(this.subject)
-      this.types = this.subject.getAllRefs(rdf.type)
+      this.types = await this.subject.getAllRefs(rdf.type)
       console.log(this.types)
 
     }
