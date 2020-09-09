@@ -9,7 +9,6 @@
 </b-input-group>-->
 
 <b-card-group deck>
-
   <ActivityItem v-for="a in activities" :key="a.id" :activity="a" />
 </b-card-group>
 <!--

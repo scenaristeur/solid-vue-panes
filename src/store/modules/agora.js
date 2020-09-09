@@ -37,51 +37,13 @@ const actions = {
     socket.onmessage = async function(msg) {
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
         console.log(msg.data)
-        //  let  activities = await fc.readFile(fileUrl)
-        const activityResource = await getSolidDataset(
-          fileUrl
-        );
-
-        /*
-        2. Get the data entity, specified by the URL, from the Dataset.
-        */
-
-        const activities = getThingAll(
-          activityResource
-        );
-
-        // 3. Retrieve the specific data item (e.g., name) from the entity.
-
-        console.log(activities)
-        /*
-        let activityDoc = await fetchDocument(fileUrl);
-        console.log("AD",activityDoc)
-        let activities = await activityDoc.getAllSubjectsOfType("https://www.w3.org/ns/activitystreams#Create")
-        */
-        context.commit('setActivities', activities)
+        const activityResource = await getSolidDataset(fileUrl);
+        const activities = getThingAll(activityResource);
+          context.commit('setActivities', activities)
       }
     };
-
-    const activityResource = await getSolidDataset(
-      fileUrl
-    );
-
-    /*
-    2. Get the data entity, specified by the URL, from the Dataset.
-    */
-
-    const activities = getThingAll(
-      activityResource
-    );
-
-    // 3. Retrieve the specific data item (e.g., name) from the entity.
-
-    console.log(activities)
-    /*
-    let activityDoc = await fetchDocument(fileUrl);
-    console.log("AD",activityDoc)
-    let activities = await activityDoc.getAllSubjectsOfType("https://www.w3.org/ns/activitystreams#Create")
-    */
+    const activityResource = await getSolidDataset(fileUrl);
+    const activities = getThingAll(activityResource);
     context.commit('setActivities', activities)
 
   }
@@ -89,8 +51,7 @@ const actions = {
 
 const mutations = {
   setActivities (state, activities) {
-    console.log(activities)
-    state.activities = activities
+    state.activities = activities.reverse()
   },
   setPubPod (state, pubPod) {
     console.log(pubPod)

@@ -3,16 +3,17 @@
 
     <b-button-toolbar key-nav aria-label="Toolbar with button groups">
       <b-button-group class="mx-1" size="sm">
-        <b-button variant="outline" v-bind:to="{ name: 'TensionDetail', params: { details: url }}">Details <b-icon icon="eye" aria-hidden="true" variant="info"></b-icon> </b-button>
-        <b-button variant="outline"  v-bind:to="{ name: 'TensionEdit', params: { tension: url }}">Edit <b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
-        <b-button variant="outline" v-if="navigator_share" @click="openShareDialog"> Share <b-icon icon="list" variant="info"></b-icon></b-button>
-        <b-button variant="outline"  to="/tensions">Create Group <b-icon icon="list" variant="info"></b-icon></b-button>
-        <b-button variant="outline"  to="/tensions">Fork <b-icon icon="list" variant="info"></b-icon></b-button>
-      </b-button-group><br>
-      <small>{{ url}}</small>
-    </b-button-toolbar>
-
-  </div>
+        <!--    <b-button variant="outline" v-bind:to="{ name: 'View', params: { url: url }}">View <b-icon icon="eye" aria-hidden="true" variant="info"></b-icon> </b-button>
+      -->      <b-button variant="outline"  v-bind:to="{ name: 'TensionEdit', params: { tension: url }}">Edit <b-icon icon="pen" aria-hidden="true" variant="info"></b-icon> </b-button>
+      <b-button variant="outline" v-if="navigator_share" @click="openShareDialog"> Share <b-icon icon="share" variant="info"></b-icon></b-button>
+      <b-button variant="outline"  to="/groups">Create Group <b-icon icon="people" variant="info"></b-icon></b-button>
+      <b-button variant="outline"  to="/storage">Fork <b-icon icon="back" variant="info"></b-icon></b-button>
+      <b-button variant="outline"  v-bind:to="{ name: 'Parle', params: { url: url }}">Parle <b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
+      <!--<b-button variant="outline"  to="/tensions">Fork <b-icon icon="list" variant="info"></b-icon></b-button>-->
+    </b-button-group>
+  </b-button-toolbar>
+  <small>{{ url}}</small>
+</div>
 </template>
 
 <script>
@@ -20,7 +21,7 @@
 //import toastMixin from '@/mixins/toastMixin'
 
 export default {
-  name: 'ModeleView',
+  name: 'ToolbarView',
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/

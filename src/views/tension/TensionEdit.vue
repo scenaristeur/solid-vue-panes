@@ -98,7 +98,8 @@ data: function () {
   }
 },
 created(){
-  this.path = this.config.workspace+"tensions/"
+  this.storage = this.$store.state.solid.storage
+  this.path = this.storage+"gouvernance/tensions/"
   console.log("route",this.$route)
   if (this.$route.params.tension != undefined ){
     this.fillForm(this.$route.params.tension)
