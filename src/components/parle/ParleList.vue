@@ -1,13 +1,14 @@
 <template>
   <div class="solid-chat-list">
 
+    "" {{ url }} yy
 
-      <b-input-group class="mb-2">
-        <b-form-datepicker id="example-datepicker" v-model="date" min="2020-08-01" :max="max"></b-form-datepicker>
-        <b-input-group-append>
-          <b-button @click="sort">Sort</b-button>
-        </b-input-group-append>
-      </b-input-group>
+    <b-input-group class="mb-2">
+      <b-form-datepicker id="example-datepicker" v-model="date" min="2020-08-01" :max="max"></b-form-datepicker>
+      <b-input-group-append>
+        <b-button @click="sort">Sort</b-button>
+      </b-input-group-append>
+    </b-input-group>
 
     <b-list-group>
       <b-list-group-item   v-for="m in messages" :key="m.id" class="flex-column align-items-start">
@@ -100,6 +101,14 @@ export default {
     this.path = this.$store.state.parle.root
     console.log("ROOT FROM STORE", this.$store.state.parle.root)
     await this.createWebSocket()
+    this.url = this.$store.state.parle.url
+
+    if (this.url != undefined && this.url.length > 0){
+      let fileName = this.url.substring(this.url.lastIndexOf('/') + 1);
+      console.log(fileName)
+      this.bascule(this.path+fileName)
+        this.$store.commit('parle/setFileUrl', this.path+fileName)
+    }
 
 
   },
@@ -208,6 +217,15 @@ export default {
       })
     }
   },
+  watch:{
+    url(u){
+      console.log("url changed",u)
+      let fileName = u.substring(u.lastIndexOf('/') + 1);
+      console.log(fileName)
+        this.$store.commit('parle/setFileUrl', this.path+fileName)
+      this.bascule(this.path+fileName)
+    }
+  },
   computed: {
     file(){
       let f = this.path+this.date+".ttl"
@@ -224,7 +242,11 @@ export default {
     },
     messages(){
       return this.$store.state.parle.messages
-    }
+    },
+    url: {
+      get: function() { return this.$store.state.parle.url},
+      set: function() {}
+    },
   }
 }
 </script>
