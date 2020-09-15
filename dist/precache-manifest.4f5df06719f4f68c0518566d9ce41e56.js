@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.fed0c4df.css"
   },
   {
-    "revision": "8aa5b347a88f08021564",
+    "revision": "c39227fafd393bcf2a27",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -82,6 +82,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "8e072daab65f5df03b15",
     "url": "/solid-vue-panes/css/chunk-43bc828a.09c1fb62.css"
+  },
+  {
+    "revision": "c0370e7c31897ebc9a4b",
+    "url": "/solid-vue-panes/css/chunk-4c09d5c1.09c1fb62.css"
   },
   {
     "revision": "3297f9e4e467ead3d160",
@@ -172,7 +176,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/communication.750bde80.css"
   },
   {
-    "revision": "d295c151163efcc4c7d4",
+    "revision": "cfdb8d57fd77bed6c69a",
     "url": "/solid-vue-panes/css/editor.1c8a9ee5.css"
   },
   {
@@ -288,7 +292,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "0be3abd290af05377476616b95b443b5",
+    "revision": "3040e9bc9c9acc19a6f6754d2f70d68a",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -300,8 +304,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.79f98735.js"
   },
   {
-    "revision": "8aa5b347a88f08021564",
-    "url": "/solid-vue-panes/js/app.ce56d95c.js"
+    "revision": "c39227fafd393bcf2a27",
+    "url": "/solid-vue-panes/js/app.1f27d05c.js"
   },
   {
     "revision": "ba15afa207fc6f080c09",
@@ -584,6 +588,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-457eee6c.10c2d1fb.js"
   },
   {
+    "revision": "c0370e7c31897ebc9a4b",
+    "url": "/solid-vue-panes/js/chunk-4c09d5c1.63ef85aa.js"
+  },
+  {
     "revision": "3297f9e4e467ead3d160",
     "url": "/solid-vue-panes/js/chunk-4d15e509.0af078d5.js"
   },
@@ -720,8 +728,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/crud-read.9ded2cca.js"
   },
   {
-    "revision": "d295c151163efcc4c7d4",
-    "url": "/solid-vue-panes/js/editor.c81cbbde.js"
+    "revision": "cfdb8d57fd77bed6c69a",
+    "url": "/solid-vue-panes/js/editor.ad6f1841.js"
   },
   {
     "revision": "9fa5ed1b4bb0abf23cf6",

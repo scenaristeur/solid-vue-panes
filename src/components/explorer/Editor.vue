@@ -62,6 +62,7 @@
   >
 </b-form-textarea>
 
+<EditorTtl :file="file" />
 <!-- <Crud />-->
 </div>
 </div>
@@ -81,6 +82,7 @@ export default {
   name: 'Editor',
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+    'EditorTtl': () => import('@/components/explorer/EditorTtl'),
     //  'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {

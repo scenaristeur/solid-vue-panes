@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.78 - workspaces edit in editor
+  0.1.79 - EditorTtl
 </div>
 </template>
 
