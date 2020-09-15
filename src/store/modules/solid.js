@@ -68,6 +68,7 @@ folder.acl = acl*/
 
 },
 async updateFile (context, file) {
+  console.log("FILE", file)
   context.commit('setFile', file)
   context.commit('setContent', await fc.readFile(file.url))
   /*

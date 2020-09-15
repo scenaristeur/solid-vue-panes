@@ -1,55 +1,54 @@
 <template>
   <div class="editor">
-
+    {{ url }}
     <div v-if="webId != null">
       <div>
         <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
           <b-button-group size="sm" class="mr-1">
             <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
-          <!--  <b-button size="sm" disabled>Edit</b-button>
+            <!--  <b-button size="sm" disabled>Edit</b-button>
             <b-button size="sm" disabled>Undo</b-button>-->
           </b-button-group>
-      <!--    <b-dropdown size="sm" class="mr-1" right text="menu">
-            <b-dropdown-item size="sm">Item 1</b-dropdown-item>
-            <b-dropdown-item size="sm">Item 2</b-dropdown-item>
-            <b-dropdown-item size="sm">Item 3</b-dropdown-item>
-          </b-dropdown>-->
-          <b-button-group size="sm" class="mr-1">
-            <b-button size="sm" variant="warning" v-b-modal.modal-1>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
-            <!--<b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>-->
-            <!--  <b-button size="sm">Cancel</b-button>-->
+          <!--    <b-dropdown size="sm" class="mr-1" right text="menu">
+          <b-dropdown-item size="sm">Item 1</b-dropdown-item>
+          <b-dropdown-item size="sm">Item 2</b-dropdown-item>
+          <b-dropdown-item size="sm">Item 3</b-dropdown-item>
+        </b-dropdown>-->
+        <b-button-group size="sm" class="mr-1">
+          <b-button size="sm" variant="warning" v-b-modal.modal-1>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
+          <!--<b-button size="sm" variant="warning" disabled @click="save_as">Save as...</b-button>-->
+          <!--  <b-button size="sm">Cancel</b-button>-->
 
-            <b-modal id="modal-1" title="Save" @show="fill" @ok="save">
-              <!-- <p class="my-4">Hello from modal!</p>-->
-              <b-form-group
-              label-cols-sm="3"
-              label="Path:"
-              label-align-sm="right"
-              label-for="path">
-              <b-form-input id="path" v-model="path"></b-form-input>
-            </b-form-group>
-
+          <b-modal id="modal-1" title="Save" @show="fill" @ok="save">
             <b-form-group
             label-cols-sm="3"
-            label="Filename:"
+            label="Path:"
             label-align-sm="right"
-            label-for="name">
-            <b-form-input id="name" v-model="name"></b-form-input>
+            label-for="path">
+            <b-form-input id="path" v-model="path"></b-form-input>
           </b-form-group>
 
           <b-form-group
           label-cols-sm="3"
-          label="Mimetype:"
+          label="Filename:"
           label-align-sm="right"
-          placeholder="text/plain ? text/turtle ? application/json ?"
-          label-for="type">
-          <b-form-input id="type" v-model="type"></b-form-input>
+          label-for="name">
+          <b-form-input id="name" v-model="name"></b-form-input>
         </b-form-group>
 
+        <b-form-group
+        label-cols-sm="3"
+        label="Mimetype:"
+        label-align-sm="right"
+        placeholder="text/plain ? text/turtle ? application/json ?"
+        label-for="type">
+        <b-form-input id="type" v-model="type"></b-form-input>
+      </b-form-group>
 
-      </b-modal>
-    </b-button-group>
-  </b-button-toolbar>
+
+    </b-modal>
+  </b-button-group>
+</b-button-toolbar>
 </div>
 
 <div>
@@ -60,15 +59,10 @@
   rows="3"
   max-rows="15"
   @change="change"
->
+  >
 </b-form-textarea>
 
-<Crud />
-<!--   @input="input" -->
-
-<!--  File : {{ file }}  disabled -->
-
-<!--  <pre class="mt-3 mb-0">{{ file.content }}</pre>     File : {{ file }}<br>-->
+<!-- <Crud />-->
 </div>
 </div>
 <div v-else>
@@ -87,26 +81,26 @@ export default {
   name: 'Editor',
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
-      'Crud': () => import('@/components/crud/Crud')
+    //  'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {
     return {
       name: "",
       type: "",
-      path: ""
-      //  storage: "",
-      //folder: {}
+      path: "",
+      url: ""
     }
   },
   async   created(){
-    this.name = "new_file.txt"
-    this.type = "text/plain"
-    this.path = this.storage
-    //  this.solid= window.solid
-    //  this.webId =
-    //  this.fc = new SolidFileClient(auth)
-    //  example     await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
-
+    this.url = this.$route.query.url
+    if (this.url != undefined){
+      console.log("created", this.url)
+      this.updateFile()
+    }else{
+      this.name = "new_file.txt"
+      this.type = "text/plain"
+      this.path = this.storage
+    }
   },
   methods: {
     clean(){
@@ -118,29 +112,40 @@ export default {
     change(e){
       console.log("change",e)
     },
-  /*  input(e){
-      console.log("input",e)
-    },*/
-    fill(){
-      this.name = this.file.name
-      this.type = this.file.type
-      this.path = this.file.parent
-    },
-    save(){
-      console.log("text", this.text)
-      this.path =   this.path.endsWith("/") ? this.path : this.path+"/"
-      console.log('File',this.type, this.path, this.name)
-      let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
-      this.$store.dispatch('solid/writeFile', file)
-      this.$store.dispatch('solid/updateFolder', this.path)
-    }
-    /*    selected(item){
-    console.log(item)
-    item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.openFile(item)
-    //  this.folder =  this.$store.state.solid.folder
+    /*  input(e){
+    console.log("input",e)
+  },*/
+  fill(){
+    this.name = this.file.name
+    this.type = this.file.type
+    this.path = this.file.parent
   },
-  openFile(item){
-  console.log("Open",item.url)
+  save(){
+    console.log("text", this.text)
+    this.path =   this.path.endsWith("/") ? this.path : this.path+"/"
+    console.log('File',this.type, this.path, this.name)
+    let file = {path: this.path, name: this.name, content: this.text, contentType: this.type}
+    this.$store.dispatch('solid/writeFile', file)
+    this.$store.dispatch('solid/updateFolder', this.path)
+  },
+  updateFile(){
+
+    let url_splitted = this.url.split('/')
+    let name = url_splitted.pop()
+    let parent = url_splitted.join('/')+"/"
+    let type = "text/turtle"
+    let file = {url: this.url, name: name, parent: parent, type: type}
+    console.log(file)
+    this.$store.dispatch('solid/updateFile', file)
+    console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",this.name, this.path, this.type)
+  }
+  /*    selected(item){
+  console.log(item)
+  item.type == "folder" ?   this.$store.dispatch('solid/updateFolder', item.url) : this.openFile(item)
+  //  this.folder =  this.$store.state.solid.folder
+},
+openFile(item){
+console.log("Open",item.url)
 },
 goUp(){
 console.log(this.folder)
@@ -176,6 +181,12 @@ computed:{
 
 },
 watch: {
+  url() {
+    if(this.url != undefined){
+      console.log("url", this.url)
+      this.updateFile()
+    }
+  }
   // whenever question changes, this function will run
   /*  text: async function (text) {
 

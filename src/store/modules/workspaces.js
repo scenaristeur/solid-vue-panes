@@ -1,6 +1,5 @@
-
 import { createDocument, fetchDocument } from 'tripledoc';
-import { rdf, rdfs, /* sioc, dct, foaf, schema*/ } from 'rdf-namespaces'
+import { rdf, rdfs } from 'rdf-namespaces'
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
@@ -16,14 +15,13 @@ const getters = {}
 // actions
 const actions = {
   async getUserWorkspaces(context){
-    let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
+    let indexFile = context.rootState.solid.storage+"popock/workspaces.ttl"
     let workspacesDoc = {}
     let workspaces = []
     try{
       workspacesDoc = await fetchDocument(indexFile)
       let subjects = workspacesDoc.getAllSubjectsOfType("http://www.w3.org/ns/pim/space#Workspace")
-      console.log(subjects)
-      for  (let s of subjects) {
+          for  (let s of subjects) {
         let name = s.getLiteral(rdf.label)
         let path = s.getRef("http://www.w3.org/ns/pim/space#storage")
         let pod = s.getRef("http://www.w3.org/ns/solid/terms#webId")
@@ -32,14 +30,14 @@ const actions = {
       }
 
     }catch(e){
-      console.log(e)
+    //  console.log(e)
       //  workspacesDoc = await createDocument(indexFile)
     }
 
 
   },
   async addWorkspace(context, workspace) {
-    let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
+    let indexFile = context.rootState.solid.storage+"popock/workspaces.ttl"
     let workspacesDoc = {}
     try{
       workspacesDoc = await fetchDocument(indexFile)
@@ -57,7 +55,7 @@ const actions = {
     context.commit("addWorkspace",workspace)
   },
   async updateWorkspaces(context, workspaces){
-    let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
+    let indexFile = context.rootState.solid.storage+"popock/workspaces.ttl"
     console.log(indexFile)
     fc.delete(indexFile)
     let workspacesDoc = await createDocument(indexFile)
