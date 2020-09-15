@@ -78,7 +78,7 @@
 
 <script>
 import ParleMixin from '@/mixins/ParleMixin' // Manage folders & files
-import { fetchDocument } from 'tripledoc';
+import { fetchDocument, createDocument } from 'tripledoc';
 //import auth from 'solid-auth-client';
 import {/* sioc,*/ dct, foaf, schema } from 'rdf-namespaces'
 
@@ -187,7 +187,13 @@ export default {
           console.log("File exist",child_url)
         }
 
-        const newDoc = await fetchDocument(child_url);
+        let newDoc = {}
+        try{
+          newDoc = await fetchDocument(child_url);
+        } catch(e){
+          newDoc = await createDocument(child_url);
+        }
+
         //  console.log(newDoc)
         newDoc.addSubject
         let subj =   newDoc.addSubject({identifier: "this" })
@@ -199,7 +205,12 @@ export default {
         //  console.log(path, messageId)
 
         //
-        const referDoc = await await fetchDocument(parent)
+        let referDoc = {}
+        try{
+          referDoc = await fetchDocument(parent);
+        } catch(e){
+          referDoc = await createDocument(parent);
+        }
         let p_id = referDoc.getSubject(parent)
         p_id.addRef(schema.hasPart, child_url)
         await referDoc.save();

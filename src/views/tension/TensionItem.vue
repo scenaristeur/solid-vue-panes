@@ -59,7 +59,7 @@ export default {
       console.log("updateTension")
       if (t != undefined){
         this.details = await this.getTensionDetail(t)
-        console.log(this.details)
+      //  console.log(this.details)
       }
 
     }

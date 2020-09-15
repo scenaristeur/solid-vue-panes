@@ -32,7 +32,7 @@ const actions = {
   async setWebId (context, webId) {
     //  console.log(webId)
     context.commit('setWebId', webId)
-  //  context.dispatch('inbox/setWebId', webId, { root: true })
+    //  context.dispatch('inbox/setWebId', webId, { root: true })
     if ( webId != null ){
       context.commit('setWebId', webId)
       context.commit('setProgress', 1)
@@ -45,7 +45,7 @@ const actions = {
       context.commit('setProgress', 14)
       let user = {webId: webId, storage: `${storage}`}
       context.dispatch('inbox/setUser', user, { root: true })
-
+      context.dispatch('workspaces/getUserWorkspaces', null,  { root: true })
     }else{
       context.commit('setStorage', null)
       context.commit('setFolder', null)

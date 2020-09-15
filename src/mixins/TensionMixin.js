@@ -45,7 +45,7 @@ export default {
       details.roles = t_subj.getAllLiterals("http://www.w3.org/ns/org#memberOf")
       details.domains = t_subj.getAllLiterals("http://www.w3.org/ns/org#purpose")
 
-      console.log(details)
+    //  console.log(details)
       return details
     }
 

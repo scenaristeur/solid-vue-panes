@@ -9,6 +9,7 @@ import inbox from './modules/inbox'
 import groups from './modules/groups'
 import agora from './modules/agora'
 import gouvernance from './modules/gouvernance'
+import workspaces from './modules/workspaces'
 
 Vue.use(Vuex)
 
@@ -19,5 +20,5 @@ export default new Vuex.Store({
   },
   actions: {
   },
-  modules: { solid,  websocket, parle, chat, crud, inbox, groups, agora, gouvernance }
+  modules: { solid,  websocket, parle, chat, crud, inbox, groups, agora, gouvernance, workspaces}
 })
