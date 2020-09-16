@@ -22,6 +22,7 @@
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item>Item 3</b-dropdown-item>-->
           </b-dropdown>
+          <b-button @click="join">Join/Invite</b-button>
         </b-button-group>
       </div>
 
@@ -56,14 +57,14 @@
 
 <script>
 import groupsMixin from '@/mixins/groupsMixin'
-import toastMixin from '@/mixins/toastMixin'
+import ToastMixin from '@/mixins/ToastMixin'
 
 import { createDocument, fetchDocument } from 'tripledoc';
 import { vcard, dct, foaf, ldp} from 'rdf-namespaces'
 
 export default {
   name: 'GroupDisplay',
-  mixins: [groupsMixin, toastMixin],
+  mixins: [groupsMixin, ToastMixin],
   components: {
     'GroupMembers': () => import('@/components/groups/GroupMembers'),
   },
@@ -90,6 +91,10 @@ export default {
     }
   },
   methods:{
+    async join(){
+      console.log("join")
+      this.open('modal-members-'+this.file.url)
+    },
     async add(){
       this.name = this.name.trim().replace(/\s/g, '_')
       console.log(this.name, this.url)
@@ -143,6 +148,7 @@ export default {
     async  init(){
       //  console.log(this.url)
       this.group= await this.getGroup(this.file.url)
+      console.log("group",this.group)
       if (this.group.name != undefined){
         this.ttlName = this.group.name.replace(/\s/g, '_')
       }
@@ -161,7 +167,7 @@ export default {
       return this.$store.state.solid.storage
     },
     url(){
-      return this.file.parent+this.group.name.replace(/\s/g, '_')+"/"
+      return this.group.name != undefined ? this.file.parent+this.group.name.replace(/\s/g, '_')+"/" : ""
     },
     parent(){
       return this.file.url

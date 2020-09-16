@@ -7,14 +7,14 @@
 <script>
 //import {  fetchDocument } from 'tripledoc';
 //import {  rdf} from 'rdf-namespaces'
-//import toastMixin from '@/mixins/toastMixin'
+//import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: 'ModeleView',
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
-//  mixins: [toastMixin],
+//  mixins: [ToastMixin],
 props:['value'],
 data() {
   return {

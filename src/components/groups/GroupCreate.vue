@@ -71,7 +71,7 @@ methods:{
 
     await groupDoc.save();
     this.$emit('created')
-    
+
 
 
     this.activity=  {
@@ -160,11 +160,13 @@ methods:{
     },
   },
   computed:{
-    webId(){
-      return this.$store.state.solid.webId
+      webId:{
+      get: function() { return this.$store.state.solid.webId},
+      set: function() {}
     },
-    storage(){
-      return this.$store.state.solid.storage
+    storage:{
+      get: function() { return this.$store.state.solid.storage},
+      set: function() {}
     },
     url:{
       get: function() { return this.$store.state.solid.storage+"public/groups/"},

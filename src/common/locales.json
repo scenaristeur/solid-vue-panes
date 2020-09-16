@@ -16,7 +16,14 @@
     "User": "User",
     "explorer": "Explorer",
     "editor": "Editor",
-    "POds in the POCKet": "POds in the POCKet!"
+    "POds in the POCKet": "POds in the POCKet!",
+    "tension_annonce": "A Tension is a difference between WHAT IS is and WHAT SHOULD BE",
+    "NameQuestion": "Please give a name to your worst Tension ?",
+    "WhatIs": "What is ?",
+    "WhatShouldBe": "What should be ?",
+    "what_role": "In which role do you feel this tension ?",
+    "which_domains": "Which domains does this tension apply ?",
+    "Save": "Save"
   },
   "fr": {
     "hello": "Salut tout le monde!",
@@ -35,7 +42,14 @@
     "User": "Utilisateur",
     "explorer": "Explorateur",
     "editor": "Editeur",
-    "POds in the POCKet": "Ton POd dans ta POChe!"
+    "POds in the POCKet": "Ton POd dans ta POChe!",
+    "tension_annonce": "Une TENSION est la différence entre CE QUI EST et CE QUI DEVRAIT ÊTRE",
+    "NameQuestion": "S'il te plaît, donne un nom à ta pire Tension",
+    "WhatIs": "Ce qui est ?",
+    "WhatShouldBe": "Ce qui devrait être ?",
+    "what_role" : "Dans quel Rôle ressens-tu cette tension ?",
+    "which_domains": "A quels domaines s'applique cette Tension ?",
+    "Save": "Enregistrer"
   },
   "de": {
     "hello": "Hallo Welt!",

@@ -19,14 +19,17 @@
 
 <script>
 import { fetchDocument, createDocument } from 'tripledoc';
-import {/*namedNode,*/ sioc, dct, foaf } from 'rdf-namespaces'
+import { sioc, dct, foaf } from 'rdf-namespaces'
+import ToastMixin from '@/mixins/ToastMixin'
+import ActivityMixin from '@/mixins/ActivityMixin'
+
 
 export default {
   name: 'ParleSend',
   components:{
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
-
+  mixins: [ToastMixin, ActivityMixin],
   data: function () {
     return {
       message: "",
@@ -47,6 +50,18 @@ export default {
   },
 
   methods: {
+    createActivity(){
+      this.activity = {
+        actor: {name: this.$store.state.solid.webId},
+      type:"Create",
+      summary: "",
+      object:{
+        name: this.message,
+        url: this.fileUrl,
+        type:"Parle"}
+      }
+      this.sendActivity()
+    },
     async send(){
       // please refer to https://github.com/scenaristeur/shighl/blob/9b4b61d06d8a20f55de3f2aa580cbc5fb840d584/src/Shighl-chat.js#L214
       // and https://github.com/LDflex/LDflex/issues/53
@@ -83,6 +98,7 @@ export default {
       }else{
         alert ( "You must login before posting ;-)")
       }
+      this.createActivity()
       //  await solid.data[msgUrl].foaf$maker.add(namedNode('https://www.test.com')) // namedNode(`${webid}`)
       //  await solid.data.from(this.url)[messageId]['http://www.w3.org/2005/01/wf/flow#message'].add(this.url)
       //this.message = ""

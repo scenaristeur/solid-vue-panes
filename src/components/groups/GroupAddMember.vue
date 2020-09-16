@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      member: "",
+      //member: "",
       selected: []
     }
   },
@@ -37,6 +37,9 @@ export default {
     webId(){
       return this.$store.state.solid.webId
     },
+     member(){
+          return this.$store.state.solid.webId
+        },
   },
   methods:{
     onSelected: function (selected) {

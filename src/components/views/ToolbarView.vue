@@ -18,14 +18,14 @@
 
 <script>
 
-//import toastMixin from '@/mixins/toastMixin'
+//import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: 'ToolbarView',
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
-//  mixins: [toastMixin],
+//  mixins: [ToastMixin],
 props:['url'],
 data() {
   return {

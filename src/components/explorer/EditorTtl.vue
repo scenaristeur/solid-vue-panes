@@ -4,8 +4,7 @@
     EditorTtl {{ file.url }}
 
     <b-list-group>
-      <b-list-group-item v-for="t in triples" :key="t">
-
+      <b-list-group-item v-for="(t,i) in triples" :key="i">
         <div class="row">
           <div class="col rounded">
             <b><a :href="t.subject.id" target="_blank">{{t.subject.id }}</a></b>
@@ -20,31 +19,18 @@
             <span v-else>
               {{ t.object.id }}
             </span>
-
           </div>
-
         </div>
-
       </b-list-group-item>
     </b-list-group>
-
   </div>
 </template>
 
 <script>
-//import {  fetchDocument } from 'tripledoc';
-//import {  rdf} from 'rdf-namespaces'
-//import toastMixin from '@/mixins/toastMixin'
 import {  fetchDocument } from 'tripledoc';
-import { /*vcard, dct, foaf, ldp, rdfs, rdf*/} from 'rdf-namespaces' //
-//import auth from 'solid-auth-client';
 
 export default {
   name: 'EditorTtl',
-  /*  components: {
-  'Component': () => import('@/components/Component'),
-},*/
-//  mixins: [toastMixin],
 props:['file'],
 data() {
   return {
@@ -53,50 +39,28 @@ data() {
 },
 async created(){
   this.update()
-  //  console.log("route",this.$route)
-  //  this.url = this.$route.params.url
-  //  this.getData()
 },
-computed:{
-  /*storage: {
-  get: function() { return this.$store.state.solid.storage},
-  set: function() {}
-},*/
-},
+
 methods: {
   async update(){
-    console.log(this.file)
-    let fileDoc = await fetchDocument(this.file.url)
-    console.log("fileDoc",fileDoc)
-    this.triples = fileDoc.getTriples()
-    console.log(this.triples)
+    this.triples = []
+    console.log(this.file.url)
+    if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
+      let fileDoc = await fetchDocument(this.file.url)
+      console.log("fileDoc",fileDoc)
+      this.triples = fileDoc.getTriples()
+      console.log(this.triples)
+    }else{
+      console.log(this.file.url)
+    }
+
   }
-  /*async getData() {
-  let dataDoc = await fetchDocument(this.url);
-  let subj = dataDoc.getSubject(this.url+"#this")
-  console.log(subj)
-  let types = subj.getAllRefs(rdf.type)
-  console.log(types)
-}*/
 },
 watch:{
   file(){
     console.log("watch")
     this.update()
   }
-  /*'$route' (to) {
-  //  '$route' (to, from) {
-  console.log(to)
-  this.url = to.params.url // || this.storage+"public/groups/"
-  this.getData()
-  //  console.log(this.url)
-  //  this.initGroups(to.params.url)
-  //  this.updateFriends()
-  //  this.updateIndexes()
-},
-url(url){
-console.log("URL CHANGED",url)
-}*/
 }
 }
 </script>

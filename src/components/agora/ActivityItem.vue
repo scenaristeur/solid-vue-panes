@@ -6,6 +6,8 @@
       <b-card-header>
         {{ summary}}
       </b-card-header>
+
+
       <!--
       <b-card-text></b-card-text>-->
       <AgoraToolbar :url="object_url"/>
@@ -14,6 +16,7 @@
         <Date :dateIso="created"/>
         <!--        actor : {{actor}}<br>
         type: {{ type}}<br>-->
+          <p><a :href="object_url" target="_blank">link</a></p>
       </b-card-footer>
     </b-card>
 
@@ -48,7 +51,6 @@ export default {
     this.created = getStringNoLocale(this.activity, DCTERMS.created);
     this.summary = getStringNoLocale(this.activity, AS.summary);
     this.object_url = getUrl(this.activity, AS.object);
-    this.maker = getUrl(this.activity, FOAF.maker);
     this.maker = getUrl(this.activity, FOAF.maker);
     this.actor = getUrl(this.activity, AS.actor);
     this.type = getUrl(this.activity, RDF.type);

@@ -1,8 +1,6 @@
 <template>
   <div class="solid-chat-list">
 
-    "" {{ url }} yy
-
     <b-input-group class="mb-2">
       <b-form-datepicker id="example-datepicker" v-model="date" min="2020-08-01" :max="max"></b-form-datepicker>
       <b-input-group-append>

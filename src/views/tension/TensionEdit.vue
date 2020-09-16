@@ -1,25 +1,26 @@
+<i18n src="@/common/locales.json"></i18n>
 <template>
   <div class="tension-view">
 
-    <p>A tension is a difference between what is and what should be</p>
+    <h3><i>{{ $t('tension_annonce') }}</i></h3>
     <b-container>
       <b-row class="my-1">
         <b-col sm="3">
-          <label for="input-none">Name:</label>
+          <label for="input-none">{{ $t('NameQuestion') }}</label>
         </b-col>
         <b-col sm="9">
-          <b-form-input v-model="tension.label" placeholder="Name"></b-form-input> <!-- :state="true" -->
+          <b-form-input v-model="tension.label" :placeholder="$t('Name')"></b-form-input> <!-- :state="true" -->
         </b-col>
       </b-row>
 
       <b-row class="my-1">
         <b-col sm="3">
-          <label for="input-none">What is:</label>
+          <label for="input-none">{{ $t('WhatIs') }}</label>
         </b-col>
         <b-col sm="9">
           <b-form-textarea
           id="wi"
-          v-model="tension.wi" placeholder="What is"
+          v-model="tension.wi" :placeholder="$t('WhatIs')"
           rows="3"
           max-rows="6"
           ></b-form-textarea>
@@ -28,12 +29,12 @@
 
       <b-row class="my-1">
         <b-col sm="3">
-          <label for="input-none">What should be:</label>
+          <label for="input-none">{{ $t('WhatShouldBe') }}</label>
         </b-col>
         <b-col sm="9">
           <b-form-textarea
           id="wsb"
-          v-model="tension.wsb" placeholder="What should be"
+          v-model="tension.wsb" :placeholder="$t('WhatShouldBe')"
           rows="3"
           max-rows="6"
           ></b-form-textarea>
@@ -42,7 +43,7 @@
 
       <b-row class="my-1">
         <b-col sm="3">
-          <label for="input-none">In which role do you feel this tension:</label>
+          <label for="input-none">{{$t('what_role')}}</label>
         </b-col>
         <b-col sm="9">
           <b-form-input v-model="tension.roles" placeholder="Role (citizen, user of some service...)"></b-form-input>
@@ -73,7 +74,7 @@
       </b-row>
 
       <b-row class="my-1">
-        <b-button @click="create">Save</b-button>
+        <b-button @click="create" variant="info">{{ $t('Save') }}</b-button>
       </b-row>
 
     </b-container>

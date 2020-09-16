@@ -141,9 +141,11 @@ import { deleteFile } from "@inrupt/solid-client";
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
+import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: 'Browser',
+  mixins: [ToastMixin],
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
@@ -224,8 +226,15 @@ export default {
     },
     async  move(){
       console.log("Move",this.currentItem.type, this.currentItem.url, "to", this.new_location)
-      this.currentItem.type == "folder" ? await fc.move( this.currentItem.url, this.new_location ) : await fc.move( this.currentItem.url, this.new_location )
-      this.updateFolder(this.folder.url)
+      try{
+        this.currentItem.type == "folder" ? await fc.move( this.currentItem.url, this.new_location ) : await fc.move( this.currentItem.url, this.new_location )
+        this.updateFolder(this.folder.url)
+      }
+      catch(e){
+
+        this.makeToast("Error", e, "danger")
+      }
+
 
     },
     async  trash(){
@@ -235,6 +244,7 @@ export default {
           this.currentItem.url
         );
         console.log("File deleted !");
+        this.makeToast("success !", "File deleted !", "success") 
       }else{
         await  fc.deleteFolder(this.currentItem.url)
       }

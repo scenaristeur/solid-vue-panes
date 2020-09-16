@@ -23,6 +23,25 @@
             </b-card-text>
           </b-card>
 
+
+          <b-card bg-variant="dark" text-variant="white" header="Gouvernance" class="text-center">
+            <b-card-text>
+
+              <ul>
+                <li><router-link to="/tension/edit"><b-icon-lightning class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-lightning><br>{{ $t('Tension') }}</router-link></li>
+                <li><router-link to="/tensions"><b-icon-card-checklist class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-card-checklist><br>{{ $t('Tensions') }}</router-link></li>
+
+                <li><router-link to="/groups"><b-icon-building class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-building><br>{{ $t('Groups') }}</router-link></li>
+                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
+
+                <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
+                <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
+                <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
+              </ul>
+            </b-card-text>
+          </b-card>
+
+
           <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center">
             <b-card-text>
               <ul>

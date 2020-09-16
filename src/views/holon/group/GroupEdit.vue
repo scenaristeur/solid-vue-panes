@@ -41,11 +41,11 @@ import { vcard, dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces'
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
-import toastMixin from '@/mixins/toastMixin'
+import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: 'GroupEdit',
-  mixins: [toastMixin],
+  mixins: [ToastMixin],
   components: {
     //    'GroupsView': () => import('@/views/holon/GroupsView'),
 
