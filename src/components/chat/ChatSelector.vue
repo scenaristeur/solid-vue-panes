@@ -25,7 +25,7 @@
 
               <ul>
                 <li>
-                  <router-link to="/indexes">  <b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>New channel</router-link>
+                  <router-link to="/indexes">  <b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>Add channel</router-link>
 
                 </li>
                 <li v-for="mc in my_channels" :key="mc.instance">
