@@ -26,7 +26,6 @@
         Path : {{ path }} !! <br>
         webId : {{ webId}} <br>
         <p >
-          <b-button variant="outline-info" @click="valid = false">Cancel</b-button>
           <b-button variant="outline-info" @click="saveBm">Save Bookmark</b-button>
           <b-button class="mr-auto" variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
         </p>
