@@ -11,7 +11,7 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.81 - card in EditorTtl & tension icon
+  0.1.82 - card in EditorTtl & tension icon
 </div>
 </template>
 

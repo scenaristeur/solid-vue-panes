@@ -4,7 +4,6 @@
   <div class="parle">
     PARLE
     <BreadCrumb />
-    -{{ url }}-
     <!--    <SolidChatRooms :root="this.base" :index="this.index" /> -->
     <ParleList />
     <ParleSend />
