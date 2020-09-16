@@ -10,13 +10,15 @@
 
             <div class="avatar"></div>
             <div class="maker text-info">
-              {{m.maker.split('/').slice(2,3)[0]}}
+<!--              {{m.maker.split('/').slice(2,3)[0]}}-->
+              <UserName :webId="m.maker" />
             </div>
             <div class="content">
               {{m.content}}
             </div>
             <div class="created">
               {{m.created}}
+                <!--  <Date  :dateIso="m.created" /> -->
             </div>
           </div>
         </b-list-group-item>
@@ -50,8 +52,9 @@ export default {
   name: 'SolidChatList',
   directives: {infiniteScroll},
   components: {
-    'SolidChatSend' :  () => import ( '@/components/chat/SolidChatSend' )
-
+    'SolidChatSend' :  () => import ( '@/components/chat/SolidChatSend' ),
+    'UserName': () => import('@/components/basic/UserName'),
+  //  'Date': () => import('@/components/basic/Date')
   },
   data: function () {
     return {

@@ -1,6 +1,6 @@
 <template>
-  <div class="d-inline m-2">
-    <b-button title="add friend" size="sm" variant="info" :to="'/friends?add='+webId">
+  <div class="container-fluid">
+    <b-button title="add friend" size="sm" variant="outline-info" :to="'/friends?add='+webId">
       <b-icon-person-plus></b-icon-person-plus>
     </b-button>
     <router-link :to="'/profile?url='+webId" class="text-info m-2">{{ name }}</router-link>
