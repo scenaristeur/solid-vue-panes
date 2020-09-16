@@ -38,18 +38,13 @@ export default {
   data: function () {
     return {
       details:{}
-      //  path: "",
-      //  tensions:[]
     }
   },
   async created(){
-  //  console.log("tension",this.tension)
     await  this.updateTension(this.tension)
-
   },
   watch: {
     async  tension () {
-    //  console.log(t)
       await  this.updateTension(this.tension)
     },
   },
@@ -59,9 +54,7 @@ export default {
       console.log("updateTension")
       if (t != undefined){
         this.details = await this.getTensionDetail(t)
-      //  console.log(this.details)
       }
-
     }
   },
   computed:{

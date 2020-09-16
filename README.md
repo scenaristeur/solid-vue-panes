@@ -1,5 +1,10 @@
 # solid-vue-panes is the code of PoPock
+[Popock DEMO](https://scenaristeur.github.io/solid-vue-panes/)
 
+# rapid git commit
+```
+npm run git -- "0.1.83 workspaces edition"
+```
 
 # How to buildyour first Popock module
 https://smag0.blogspot.com/2020/09/create-popock-module-for-holacracy40.html

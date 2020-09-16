@@ -3,8 +3,11 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand to="/">PoPock</b-navbar-brand>
-      <InboxNotif />
-      <AgoraNotif />
+      <div class="col p-0 m-0">
+        <InboxNotif />
+        <AgoraNotif />
+      </div>
+      <b-button size="sm" to="/workspaces" variant="outline-warning"><span v-if="currentWorkspace.name != undefined">{{ currentWorkspace.name}}</span> <span v-else>Workspaces </span></b-button>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -110,6 +113,12 @@ export default {
     'LangChooser': () => import('@/components/translation/LangChooser')
   },
   methods: {
+  },
+  computed:{
+    currentWorkspace: {
+      get: function() { return this.$store.state.workspaces.currentWorkspace},
+      set: function() {}
+    },
   }
   /*watch: {
   locale (val) {

@@ -1,13 +1,15 @@
 <template>
   <div class="modele-view">
     <b-list-group>
-      <b-list-group-item v-for="w in workspaces" :key="w.name">
-        <h3>{{ w.name }}</h3>
+      <b-list-group-item v-for="w in workspaces" :key="w.subject">
+        <b-form-input v-model="w.name" placeholder="Name"></b-form-input>
+        <b-form-input v-model="w.subject" placeholder="Subject"></b-form-input>
         <b-form-input v-model="w.pod" placeholder="webId / POD"></b-form-input>
         <b-form-input v-model="w.path" placeholder="path"></b-form-input>
-        <b-button @click="update">Update</b-button>
+
       </b-list-group-item>
     </b-list-group>
+    <b-button @click="update">Update Workspaces</b-button>
   </div>
 </template>
 <script>

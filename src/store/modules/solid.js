@@ -50,6 +50,7 @@ const actions = {
       context.commit('setStorage', null)
       context.commit('setFolder', null)
       context.dispatch('inbox/setUser', null, { root: true })
+      context.commit('workspaces/setCurrentWorkspace', {})
     }
   },
   async updateFolder (context, url) {

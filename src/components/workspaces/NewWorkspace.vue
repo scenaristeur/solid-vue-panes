@@ -28,7 +28,7 @@ export default {
   methods: {
     add(){
       console.log(this.workspace)
-      this.workspace.path = this.storage
+
       this.workspace.pod = this.webId
       this.$store.dispatch('workspaces/addWorkspace', this.workspace)
       this.workspace = {}
