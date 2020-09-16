@@ -1,49 +1,41 @@
 <template>
   <div class="modele">
     <div>
-      <b-form-select v-model="selected"
+      <b-form-group
+      id="fieldset-1"
+      description="To send a mail to their inbox."
+      label="Select one or more friends"
+      label-for="selector">
+      <b-form-select id="selector" v-model="selected"
       :options="options"
       multiple :select-size="4"
       v-on:change="$emit('selected', selected)"
       ></b-form-select>
-      <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
-    </div>
-    <!--  <COMPONENET />  -->
+    </b-form-group>
+    <div class="mt-3">Selected: <br><small>{{ selected }}</small></div>
   </div>
+</div>
 </template>
 
 <script>
-// @ is an alias to /src
+
 
 export default {
   name: 'FriendsSelection',
   data() {
     return {
-      selected: [], // Array reference
-      /*  options: [
-      { value: 'a', text: 'Select one or more friends', disabled: true },
-      { value: 'b', text: 'Default Selected Option' },
-      { value: 'c', text: 'This is another option' },
-      { value: 'd', text: 'This one is disabled'},
-      { value: 'e', text: 'This is option e' },
-      { value: 'f', text: 'This is option f' },
-      { value: 'g', text: 'This is option g' }
-    ]*/
+      selected: [],
   }
 },
 computed: {
   options(){
     let friends = this.$store.state.solid.friends
     let options =[]
-    options.push({ value: 'null', text: 'Select one or more friends', disabled: true })
     friends.forEach((f) => {
-      options.push({value: f, text: f})
+      options.push({value: f, text: f.split('/').slice(2,3)[0]})
     });
     return options
   },
 },
-/*  components: {
-'Component': () => import('@/components/Component'),
-},*/
 }
 </script>

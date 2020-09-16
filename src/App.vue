@@ -11,7 +11,9 @@
     <router-view/>
   </transition>
   <SolidTrackSession />
-  0.1.83 - workspaces editon
+  <small><i>
+    0.1.84 - short names in friendselection
+  </i></small>
 </div>
 </template>
 

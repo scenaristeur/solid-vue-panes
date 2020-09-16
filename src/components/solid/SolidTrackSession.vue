@@ -1,6 +1,6 @@
 <template>
-  <div class="solid-track-session">
-    WebId : {{ webId }}
+  <div class="solid-track-session" v-if="user != null">
+<i><small>Logged as : <a v-bind:href="webId" target="_blank">{{ user }}</a></small></i>
   </div>
 </template>
 
@@ -13,13 +13,14 @@ export default {
   mixins: [profileMixin],
   data: function () {
     return {
+      user: null,
       webId: null
     }
   },
   created(){
     auth.trackSession(async session => {
       if (!session){
-        this.webId = null
+        this.user = null
         console.log('The user is not logged in')
         this.$store.dispatch('solid/setWebId', null)
         this.$store.commit('solid/setFriends', [])
@@ -28,6 +29,7 @@ export default {
         //this.$store.commit('inbox/setInboxUrls', [])
       } else{
         this.webId = session.webId
+        this.user = session.webId.split('/').slice(2,3)[0]
         console.log(`The user is ${session.webId}`)
         this.$store.dispatch('solid/setWebId', this.webId)
         let friends = await this.getFriends(this.webId)
