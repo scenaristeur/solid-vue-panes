@@ -1,8 +1,13 @@
 <template>
   <div class="friends-view">
-    <h3>Friends vue</h3>
-    <FriendAdd />
-    <Friends />
+    <div v-if="webId != null">
+      <h3>Friends vue</h3>
+      <FriendAdd />
+      <Friends />
+    </div>
+    <div v-else>
+      <SolidLoginButton />
+    </div>
   </div>
 </template>
 
@@ -14,7 +19,8 @@ export default {
 
   components: {
     'FriendAdd': () => import('@/components/friends/FriendAdd'),
-    'Friends': () => import('@/components/friends/Friends')
+    'Friends': () => import('@/components/friends/Friends'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
   data: function () {
     return {

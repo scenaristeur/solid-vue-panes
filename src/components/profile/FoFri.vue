@@ -1,36 +1,37 @@
 <template>
   <div class="fofri container">
-    <h5>FoFri ! The following friends tool...</h5>
-    Current :  <small>{{ webId }}</small><br>
-    {{ friends.length }} friends<br>
-    <!--{{ indexes }} instances<br>-->
+    <div v-if="webId != null" >
+      <h5>FoFri ! The following friends tool...</h5>
+      Current :  <small>{{ webId }}</small><br>
+      {{ friends.length }} friends<br>
+      <!--{{ indexes }} instances<br>-->
 
-    <div class="row">
-      <!--  <div class="col">-->
-      Public Instances 
-      <b-list-group>
-        <div v-for="i in indexes.puti.instances" :key="i.instance" class="container fluid mb-3">
-          <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { instance: i }}">
-            label : {{i.label}}<br>
-            instance : {{i.instance}}<br>
-            classe : {{i.classe}}<br>
-            created : {{i.created}}<br>
+      <div class="row">
+        <!--  <div class="col">-->
+        Public Instances
+        <b-list-group>
+          <div v-for="i in indexes.puti.instances" :key="i.instance" class="container fluid mb-3">
+            <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { instance: i }}">
+              label : {{i.label}}<br>
+              instance : {{i.instance}}<br>
+              classe : {{i.classe}}<br>
+              created : {{i.created}}<br>
 
-            <!--  <div><PeopleItem :webId="f" /></div>-->
-          </b-list-group-item>
-          <small class="row"><a :href="i.instance" target="_blank">{{ i.instance }}</a></small>
-        </div>
-      </b-list-group>
-      <!--  </div>
-      <div class="col">
-      <b-list-group>
-      <div v-for="f in friends" :key="f" class="container fluid mb-3">
-      <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { webId: f }}">
-      <div><PeopleItem :webId="f" /></div>
-    </b-list-group-item>
-    <small class="row"><a :href="f" target="_blank">{{ f }}</a></small>
-  </div>
-</b-list-group>
+              <!--  <div><PeopleItem :webId="f" /></div>-->
+            </b-list-group-item>
+            <small class="row"><a :href="i.instance" target="_blank">{{ i.instance }}</a></small>
+          </div>
+        </b-list-group>
+        <!--  </div>
+        <div class="col">
+        <b-list-group>
+        <div v-for="f in friends" :key="f" class="container fluid mb-3">
+        <b-list-group-item  v-bind:to="{ name: 'FoFri', params: { webId: f }}">
+        <div><PeopleItem :webId="f" /></div>
+      </b-list-group-item>
+      <small class="row"><a :href="f" target="_blank">{{ f }}</a></small>
+    </div>
+  </b-list-group>
 
 </div>-->
 </div>
@@ -58,6 +59,10 @@
 </router-link>
 <br>
 </div > -->
+</div>
+<div v-else>
+  <SolidLoginButton />
+</div>
 
 
 </div>
@@ -71,6 +76,7 @@ export default {
   mixins: [profileMixin],
   components: {
     'PeopleItem': () => import('@/components/profile/PeopleItem'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
   },
   data: function () {
     return {
