@@ -86,6 +86,7 @@
         <b-dropdown-item to="/gouvernance1">Gouvernance 1</b-dropdown-item>
         <b-dropdown-item to="/gouvernance">Gouvernance</b-dropdown-item>
         <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
+        <b-dropdown-item to="/semapps">SemApps</b-dropdown-item>
         <b-dropdown-item to="/workspaces">WorkSpaces</b-dropdown-item>
       </b-nav-item-dropdown>
 

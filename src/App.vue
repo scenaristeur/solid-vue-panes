@@ -21,7 +21,7 @@
     <router-link to="/about">About</router-link>
   </div>
 
-    <small><i>0.1.89 - profile & login for friends</i></small>
+    <small><i>0.1.90 - semapps</i></small>
 
 </div>
 </template>
