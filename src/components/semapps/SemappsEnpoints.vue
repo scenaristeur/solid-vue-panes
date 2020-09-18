@@ -1,6 +1,6 @@
 <template>
-  <div class="modele-view col-lg-6">
-    <h3>Endpoints</h3>
+  <div class="modele-view">
+    <h5>Endpoints</h5>
     <b-list-group>
       <b-list-group-item button v-for="e in endpoints" :key="e.name" @click="changeEndpoint(e)" variant="success" :disabled="e.disabled">
         <b>{{ e.name}} : </b>{{ e.url}}

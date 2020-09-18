@@ -1,19 +1,14 @@
 <template>
-  <div class="modele-view">
-    <!--  <Component /> -->
-    SemApps {{ endpoints }}
-    https://data.virtual-assembly.org/projects
-
-    <br >
-    https://data.virtual-assembly.org/persons
-    <br>
-    skills, themas, organizations
-    <SemappsProjects />
-    <SemappsPersons />
-    <SemappsSkills />
-    <SemappsThemas />
-    <SemappsOrganizations />
-    <SemappsEnpoints :endpoints="endpoints" />
+  <div class="modele-view container row">
+    <h2>SemApps</h2>
+    <div class="col-lg-7">
+      <SemappsComponent path="organizations/" type="Organization" variant="outline-info"/>
+      <SemappsComponent path="projects/" type="Project" variant="outline-info"/>
+      <SemappsComponent path="persons/" type="Person" variant="outline-info"/>
+      <SemappsComponent path="skills/" type="Skill" variant="outline-info"/>
+      <SemappsComponent path="themas/" type="Thema" variant="outline-info"/>
+    </div>
+    <SemappsEnpoints class="col-lg-3" :endpoints="endpoints" />
 
 
 
@@ -26,12 +21,14 @@
 export default {
   name: 'SemApps',
   components: {
-    'SemappsProjects': () => import('@/components/semapps/SemappsProjects'),
+    'SemappsEnpoints': () => import('@/components/semapps/SemappsEnpoints'),
+    'SemappsComponent': () => import('@/components/semapps/SemappsComponent'),
+    /*    'SemappsProjects': () => import('@/components/semapps/SemappsProjects'),
     'SemappsPersons': () => import('@/components/semapps/SemappsPersons'),
     'SemappsSkills': () => import('@/components/semapps/SemappsSkills'),
     'SemappsThemas': () => import('@/components/semapps/SemappsThemas'),
-    'SemappsOrganizations': () => import('@/components/semapps/SemappsOrganizations'),
-    'SemappsEnpoints': () => import('@/components/semapps/SemappsEnpoints'),
+    'SemappsOrganizations': () => import('@/components/semapps/SemappsOrganizations'),*/
+
   },
 
   data() {

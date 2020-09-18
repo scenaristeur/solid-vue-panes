@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.90",
+  "version": "0.1.91",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -14,6 +14,7 @@
     "@inrupt/solid-client": "^0.1.0",
     "@inrupt/vocab-common-rdf": "^0.5.5",
     "@rdfjs/data-model": "^1.1.2",
+    "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
