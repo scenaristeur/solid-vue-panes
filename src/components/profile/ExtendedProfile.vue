@@ -27,20 +27,13 @@
   </template>
 
   <script>
-  //import {  fetchDocument } from 'tripledoc';
-  //import {  rdf} from 'rdf-namespaces'
   import ToastMixin from '@/mixins/ToastMixin'
   import { fetchDocument, createDocument } from 'tripledoc';
   import { foaf } from 'rdf-namespaces'
 
-
   export default {
     name: 'ExtendedProfile',
-    /*  components: {
-    'Component': () => import('@/components/Component'),
-  },*/
    mixins: [ToastMixin],
-  props:['value'],
   data() {
     return {
       interests: [],
@@ -48,7 +41,7 @@
       editTopic: false
     }
   },
-  async  created(){
+  async created(){
     this.profile_url = await this.$store.state.solid.storage+"popock/profile.ttl"
     this.getOrCreate(this.profile_url)
   },
@@ -59,25 +52,19 @@
   },
   methods:{
     async getOrCreate(p_u){
-      console.log(p_u)
-    //  this.makeToast("Get Or Create", p_u)
       try{
         this.makeToast("Get", p_u)
         this.profileDoc = await fetchDocument(p_u)
         let subj = await this.profileDoc.getSubject(this.profile_url+"#me")
         this.interests = await subj.getAllLiterals(foaf.topic_interest)
-        console.log(this.interests)
       }catch(e){
         this.makeToast("Create", p_u)
-        //  console.log(e)
         this.profileDoc = await createDocument(p_u)
       }
-
-      console.log("PD",this.profileDoc)
     },
     async  addInterest(){
       //https://github.com/scenaristeur/salut/blob/master/src/interests-element.js
-      console.log(this.interest, this.profile_url)
+  //    console.log(this.interest, this.profile_url)
       this.interests.push(this.interest)
       //  await solid.data[this.profile_url].foaf$topic_interest.add(this.interest)
       this.profileDoc = {}

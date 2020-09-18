@@ -8,99 +8,67 @@
     <div class="container fluid">
       <div>
         <b-card-group deck>
-          <b-card bg-variant="dark" text-variant="white" header="Communication" class="text-center">
-            <b-card-text>
-
-              <ul>
-                <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>{{ $t('chat') }}</router-link></li>
-                <li><router-link to="/inbox"><b-icon-mailbox class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-mailbox><br>{{ $t('inbox') }}</router-link></li>
-                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
-
-                <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
-                <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
-                <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
-              </ul>
-            </b-card-text>
-          </b-card>
-
-
-          <b-card bg-variant="dark" text-variant="white" header="Gouvernance" class="text-center">
-            <b-card-text>
-
-              <ul>
-                <li><router-link to="/tension/edit"><b-icon-lightning class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-lightning><br>{{ $t('Tension') }}</router-link></li>
-                <li><router-link to="/tensions"><b-icon-card-checklist class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-card-checklist><br>{{ $t('Tensions') }}</router-link></li>
-
-                <li><router-link to="/groups"><b-icon-building class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-building><br>{{ $t('Groups') }}</router-link></li>
-                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
-
-                <!--  <li><router-link to="/inbox">Inbox : todo</router-link></li>
-                <li><router-link to="/communication">Communication (Parle/Chat/Inbox)</router-link></li>-->
-                <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
-              </ul>
-            </b-card-text>
-          </b-card>
-
-
-          <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center">
-            <b-card-text>
-              <ul>
-                <!--<li><router-link to="/browser">Browser</router-link></li>-->
-                <li><router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link> </li>
-                <!--<li><router-link to="/editor">Editor</router-link></li>-->
-                <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
-              </ul>
-            </b-card-text>
-          </b-card>
 
           <b-card bg-variant="dark" text-variant="white" header="Profile" class="text-center">
             <b-card-text>
               <ul>
                 <li><router-link to="/profile"><b-icon-person-badge class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-person-badge><br>{{ $t('profile') }}</router-link></li>
+                <li><router-link to="/friends"><b-icon-people-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people-fill><br>{{ $t('friends') }}</router-link></li>
                 <li><router-link to="/fofri"><b-icon-people class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people><br>{{ $t('fofri') }}</router-link></li>
                 <!--  <li><router-link to="/indexes">Indexes</router-link></li>-->
-                <li><router-link to="/friends"><b-icon-people-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-people-fill><br>{{ $t('friends') }}</router-link></li>
                 <!--  <li><router-link to="/profile">Profile (General + Friends)</router-link></li> -->
               </ul>
             </b-card-text>
           </b-card>
+
+          <b-card bg-variant="dark" text-variant="white" header="Communication" class="text-center">
+            <b-card-text>
+              <ul>
+                <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>{{ $t('chat') }}</router-link></li>
+                <li><router-link to="/inbox"><b-icon-mailbox class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-mailbox><br>{{ $t('inbox') }}</router-link></li>
+                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
+                <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
+              </ul>
+            </b-card-text>
+          </b-card>
+
+          <b-card bg-variant="dark" text-variant="white" header="Gouvernance" class="text-center">
+            <b-card-text>
+              <ul>
+                <li><router-link to="/tension/edit"><b-icon-lightning class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-lightning><br>{{ $t('Tension') }}</router-link></li>
+                <li><router-link to="/tensions"><b-icon-card-checklist class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-card-checklist><br>{{ $t('Tensions') }}</router-link></li>
+                <li><router-link to="/groups"><b-icon-building class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-building><br>{{ $t('Groups') }}</router-link></li>
+                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
+              </ul>
+            </b-card-text>
+          </b-card>
+
+          <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center">
+            <b-card-text>
+              <ul>
+                <li><router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link> </li>
+                <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
+              </ul>
+            </b-card-text>
+          </b-card>
+
+
         </b-card-group>
       </div>
-      <!--        <div class="mt-3">
-      <b-card-group deck>
-      <b-card bg-variant="info" text-variant="white" header="Info" class="text-center">
-      <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-    </b-card>
 
-    <b-card bg-variant="warning" text-variant="white" header="Warning" class="text-center">
-    <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-  </b-card>
+      <div class="mt-3">
+        <b-card-group deck>
+          <b-card header="More" class="text-center">
+            <b-card-text>
+              <router-link to="/about"><b-icon-patch-question-fll class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question-fll><b-icon-patch-question class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question><br>About Popock</router-link>
+            </b-card-text>
+          </b-card>
+        </b-card-group>
+      </div>
 
-  <b-card bg-variant="danger" text-variant="white" header="Danger" class="text-center">
-  <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-</b-card>
-</b-card-group>
-</div>-->
-<div class="mt-3">
-  <b-card-group deck>
-    <!--          <b-card bg-variant="light" header="Light" class="text-center">
-    <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-  </b-card>
+    </div>
 
-  <b-card bg-variant="dark" header="Dark" text-variant="white" class="text-center">
-  <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-</b-card>
--->
-<b-card header="More" class="text-center">
-  <b-card-text>
-    <router-link to="/about"><b-icon-patch-question-fll class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question-fll><b-icon-patch-question class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-patch-question><br>About Popock</router-link>
-  </b-card-text>
-</b-card>
-</b-card-group>
-</div>
-</div>
-
-</div>
+  </div>
 </template>
 
 <script>

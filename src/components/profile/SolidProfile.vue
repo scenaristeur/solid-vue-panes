@@ -5,7 +5,7 @@
       <hr>
 
 
-        <b-alert class="row m-2" variant="success" show>
+        <b-alert class="row" variant="success" show>
         <EditableDiv v-model="profile.name" placeholder="your NAME" @input="update"></EditableDiv>
         <ul>
           <small>
@@ -24,7 +24,7 @@
       </b-alert>
 
       <small>
-        <b-alert class="row m-2" variant="success" show>
+        <b-alert class="row" variant="success" show>
           <ul>
             <li>
               Located at

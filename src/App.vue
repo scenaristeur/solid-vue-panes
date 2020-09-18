@@ -12,7 +12,7 @@
   </transition>
   <SolidTrackSession />
   <small><i>
-    0.1.86 - new Profile
+    0.1.87 - new Profile on top home
   </i></small>
 </div>
 </template>
