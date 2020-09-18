@@ -1,6 +1,6 @@
 import { fetchDocument } from 'tripledoc';
 import { vcard, foaf, dct, rdfs, ldp } from 'rdf-namespaces'
-const solid= window.solid
+//const solid= window.solid
 
 export default {
   methods: {
@@ -9,28 +9,38 @@ export default {
       profile.webId = webId
       try{
         let profileDoc = await fetchDocument(webId);
-
         const p = profileDoc.getSubject(webId)
-
-        profile.name = await  p.getString(vcard.fn)
-
-        profile.organization = await  p.getString("http://www.w3.org/2006/vcard/ns#organization-name")
-        profile.role = await  p.getString(vcard.role)
+        profile.name = p.getString(vcard.fn)
+        profile.organization = p.getString("http://www.w3.org/2006/vcard/ns#organization-name")
+        profile.role = p.getString(vcard.role)
+        profile.photo = p.getString(vcard.hasPhoto)
+        profile.bday = p.getString(vcard.bday)
+        profile.gender = p.getString(vcard.hasGender)
+        profile.note = p.getString(vcard.note)
+        profile.friends = p.getAllRefs(foaf.knows)
+        //profile.trustedApps = p.getAllLiterals("http://www.w3.org/ns/auth/acl#trustedApp")
+      //  console.log(p)
+      //  console.log(acl)
 
         //must check if there are many addressUrl
-        let addressUrl = await  p.getRef(vcard.hasAddress)
+        let addressUrl = p.getRef(vcard.hasAddress)
         //    console.log("Address Node ",addressUrl)
         if (addressUrl != null){
           let add = profileDoc.getSubject(addressUrl);
-          profile.locality = await add.getString(vcard.locality)
+          profile.locality = add.getString(vcard.locality)
+          profile.country = add.getString("http://www.w3.org/2006/vcard/ns#country-name")
+          profile.postal = add.getString("http://www.w3.org/2006/vcard/ns#postal-code")
+          profile.region = add.getString(vcard.region)
+          profile.address = add.getString("http://www.w3.org/2006/vcard/ns#street-address")
         }
         // ???  Does not work profile.photo = await p.getString(vcard.hasPhoto)
-        let photo = await solid.data.[webId].vcard$hasPhoto
-        profile.photo = `${photo}`
+      /*  let photo = await solid.data.[webId].vcard$hasPhoto
+        profile.photo = `${photo}`*/
       }catch(e){
         //console.log(e)
         this.makeToast(e.message, webId, 'warning')
       }
+      console.log(profile)
       return profile
     },
     getInboxUrls: async function(webId){
@@ -89,11 +99,11 @@ export default {
         indexes.puti.url = puti
         indexes.prti.url = prti
         let putiDoc = await fetchDocument(puti)
-      //  let prtiDoc = await fetchDocument(prti)
+        //  let prtiDoc = await fetchDocument(prti)
         //    console.log(putiDoc)
         //    console.log(prtiDoc)
         let puIndexes = await putiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
-      //  let prIndexes = await prtiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
+        //  let prIndexes = await prtiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")
         //    console.log(puIndexes,prIndexes)
 
         puIndexes.forEach( async function(index) {
@@ -107,33 +117,33 @@ export default {
           indexes.puti.classes[classe].push(instance)
         });
 
-      /*  prIndexes.forEach( async function(index) {
-          let classe = await index.getRef("http://www.w3.org/ns/solid/terms#forClass")
-          let instance = await index.getRef("http://www.w3.org/ns/solid/terms#instance")
-          let created = await index.getString(dct.created)
-          let label = await index.getString(rdfs.label)
-          //    console.log(instance, classe)
-          indexes.prti.instances.push({instance: instance, classe: classe, label: label, created: created})
-          indexes.prti.classes[classe] ==  undefined ? indexes.prti.classes[classe] = [] : ""
-          indexes.prti.classes[classe].push(instance)
-        });*/
+        /*  prIndexes.forEach( async function(index) {
+        let classe = await index.getRef("http://www.w3.org/ns/solid/terms#forClass")
+        let instance = await index.getRef("http://www.w3.org/ns/solid/terms#instance")
+        let created = await index.getString(dct.created)
+        let label = await index.getString(rdfs.label)
+        //    console.log(instance, classe)
+        indexes.prti.instances.push({instance: instance, classe: classe, label: label, created: created})
+        indexes.prti.classes[classe] ==  undefined ? indexes.prti.classes[classe] = [] : ""
+        indexes.prti.classes[classe].push(instance)
+      });*/
 
 
 
-      }catch(e){
-        //  console.log(e)
-      }
-      console.log(webId, indexes)
-      return indexes
-    },
-    makeToast(title, content,variant = null) {
-      this.$bvToast.toast(content , {
-        title: title,
-        variant: variant,
-        solid: true
-      })
+    }catch(e){
+      //  console.log(e)
     }
+    console.log(webId, indexes)
+    return indexes
+  },
+  makeToast(title, content,variant = null) {
+    this.$bvToast.toast(content , {
+      title: title,
+      variant: variant,
+      solid: true
+    })
   }
+}
 
 
 }

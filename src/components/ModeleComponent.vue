@@ -26,12 +26,6 @@ created(){
 //  this.url = this.$route.params.url
 //  this.getData()
 },
-computed:{
-  /*storage: {
-    get: function() { return this.$store.state.solid.storage},
-    set: function() {}
-  },*/
-},
 methods: {
   /*async getData() {
     let dataDoc = await fetchDocument(this.url);
@@ -41,21 +35,22 @@ methods: {
     console.log(types)
   }*/
 },
+
 watch:{
   /*'$route' (to) {
     //  '$route' (to, from) {
     console.log(to)
-    this.url = to.params.url // || this.storage+"public/groups/"
-    this.getData()
-    //  console.log(this.url)
-    //  this.initGroups(to.params.url)
-    //  this.updateFriends()
-    //  this.updateIndexes()
   },
   url(url){
-    console.log("URL CHANGED",url)
+    console.log("URL CHANGE",url)
   }*/
-}
+},
+computed:{
+  /*storage: {
+    get: function() { return this.$store.state.solid.storage},
+    set: function() {}
+  },*/
+},
 }
 </script>
 <style>

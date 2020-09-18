@@ -12,7 +12,7 @@
   </transition>
   <SolidTrackSession />
   <small><i>
-    0.1.85 - short names in friendselection
+    0.1.86 - new Profile
   </i></small>
 </div>
 </template>
