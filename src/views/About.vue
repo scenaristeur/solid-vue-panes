@@ -5,6 +5,8 @@
     <p>If you don't find answers to your questions about Popock, the best way is to use <a href="https://forum.solidproject.org/t/popock-the-pod-in-the-pocket/3378" target="_blank">Solid Community Forum</a></p>
     <p>If you think Popock is what you need, you can share your opinion, impove & <a href="https://github.com/scenaristeur/solid-vue-panes/projects/1?add_cards_query=is%3Aopen" target="_blank">contribute</a> too.</p>
 
+  <h3>Where is the source code of Popock?</h3>
+    <p>Git repository at <a href="https://github.com/scenaristeur/solid-vue-panes/blob/master/README.md" target="_blank">https://github.com/scenaristeur/solid-vue-panes</a>.</p>
 
     <h3>Where are my data ?</h3>
     <p>With PoPock, your data are stored on your <a href="https://solidproject.org/" target="_blank">Solid Pod</a>.</p>

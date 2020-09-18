@@ -3,17 +3,26 @@
   <div id="app">
     <NavBar />
     <b-progress v-if=" progressValue < progressMax" :value="progressValue" :max="progressMax" show-progress animated></b-progress>
-    <!--  <div id="nav">
+    <!--  -->
+    <transition name="fade">
+      <router-view/>
+    </transition>
+    <SolidTrackSession />
+
+  <div id="nav">
     <router-link to="/">Home</router-link> |
+    <router-link to="/simplegouv">Gouvernance</router-link> |
+    <router-link to="/profile">Profile</router-link> |
+    <router-link to="/workspaces">Worspaces</router-link> |
+    <router-link to="/storage">Storage</router-link> |
+    <router-link to="/inbox">Inbox</router-link> |
+    <router-link to="/chat">Chat</router-link> |
+    <router-link to="/parle">Parle</router-link> |
     <router-link to="/about">About</router-link>
-  </div>-->
-  <transition name="fade">
-    <router-view/>
-  </transition>
-  <SolidTrackSession />
-  <small><i>
-    0.1.87 - new Profile on top home
-  </i></small>
+  </div>
+
+    <small><i>0.1.88 - new profile & bottom menu</i></small>
+
 </div>
 </template>
 
