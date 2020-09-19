@@ -1,9 +1,10 @@
 <template>
   <div class="modele-view">
-    <h5>Endpoints</h5>
+    <h5>Choose your source</h5>
     <b-list-group>
       <b-list-group-item button v-for="e in endpoints" :key="e.name" @click="changeEndpoint(e)" variant="success" :disabled="e.disabled">
         <b>{{ e.name}} : </b>{{ e.url}}
+
       </b-list-group-item>
     </b-list-group>
 
@@ -18,7 +19,7 @@
 export default {
   name: 'SemappsEnpoints',
   /*  components: {
-  'Component': () => import('@/components/Component'),
+  'Thing': () => import('@/components/basic/Thing'),
 },*/
 //  mixins: [ToastMixin],
 props:['endpoints'],

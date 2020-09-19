@@ -21,7 +21,7 @@
     <router-link to="/about">About</router-link>
   </div>
 
-    <small><i>0.1.91 - semapps req</i></small>
+    <small><i>0.1.92 - semapps & spoggy</i></small>
 
 </div>
 </template>

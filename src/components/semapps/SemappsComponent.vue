@@ -1,9 +1,11 @@
 <template>
   <div class="modele-view mt-5">
     <h3>{{ type }}</h3>
-    <b-button size="sm" v-for="d in donnees" :key="d['@id']" :variant="variant">
+    <Thing  v-for="d in donnees" :key="d['@id']" :thing="d" />
+    <b-button size="sm" v-for="d in donnees" :key="d['@id']+'_1'" :variant="variant">
       {{ d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] }}
     </b-button>
+
 
     <br>
     path :   {{path}} /
@@ -21,32 +23,32 @@ import axios from 'axios';
 
 export default {
   name: 'SemappsComponent',
-  /*  components: {
-  'Component': () => import('@/components/Component'),
-},*/
-//  mixins: [ToastMixin],
-props:['path', 'type', 'variant'],
-data() {
-  return {
-    source: null,
-    donnees: []
-    //  type: null
-  }
-},
-created(){
-  //  this.currentEndpoint = this.$store.state.semapps.currentEndpoint
-  //  console.log("route",this.$route)
-  //  this.url = this.$route.params.url
-  //  this.getData()
-},
-methods: {
-  /*async getData() {
-  let dataDoc = await fetchDocument(this.url);
-  let subj = dataDoc.getSubject(this.url+"#this")
-  console.log(subj)
-  let types = subj.getAllRefs(rdf.type)
-  console.log(types)
-}*/
+  components: {
+    'Thing': () => import('@/components/basic/Thing'),
+  },
+  //  mixins: [ToastMixin],
+  props:['path', 'type', 'variant'],
+  data() {
+    return {
+      source: null,
+      donnees: []
+      //  type: null
+    }
+  },
+  created(){
+    //  this.currentEndpoint = this.$store.state.semapps.currentEndpoint
+    //  console.log("route",this.$route)
+    //  this.url = this.$route.params.url
+    //  this.getData()
+  },
+  methods: {
+    /*async getData() {
+    let dataDoc = await fetchDocument(this.url);
+    let subj = dataDoc.getSubject(this.url+"#this")
+    console.log(subj)
+    let types = subj.getAllRefs(rdf.type)
+    console.log(types)
+  }*/
 },
 
 watch:{
@@ -60,11 +62,14 @@ currentEndpoint(e){
 
 },
 source(source){
-  axios
-  .get(source)
+  axios({
+  method: 'get',
+  url: source,
+  responseType: 'application/ld+json'
+})
   .then(response => {
     this.response = response
-    this.donnees = response.data.["ldp:contains"]
+    this.donnees = response.data["ldp:contains"]
     //  console.log(this.response)
     console.log(this.donnees);
     //  console.log(response.status);
@@ -73,8 +78,8 @@ source(source){
     //  console.log(response.config);
 
   })
-  .catch(error => {
-    console.log(error);
+  .catch(/*error*/() => {
+  //  console.log(error);
     this.donnees = []
   })
   /*axios.get('/user', {

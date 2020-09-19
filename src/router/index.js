@@ -309,7 +309,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "workspaces" */ '@/views/WorkSpaces.vue')
   },
   {
-    path: '/semapps',
+    path: '/semapps/:url?',
     name: 'Semapps',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
