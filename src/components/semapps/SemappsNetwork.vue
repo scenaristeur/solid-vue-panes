@@ -11,7 +11,10 @@
     class="wrapper"
     :nodes="nodes"
     :edges="edges"
-    :options="options">
+    :options="options"
+    :events="['selectNode', 'hoverNode']"
+     @selectNode="onNodeSelected"
+     @hoverNode="onNodeHovered">
   </network>
 
   <div id="node-popUp">
@@ -140,6 +143,10 @@ export default {
     this.friends  = this.$store.state.solid.friends
     this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push({ id: this.webId, label: this.webId }) : ""
     this.addInterests(this.webId)
+    console.log("4444444444444444444444",this.$refs.network)
+    this.$refs.network.on('select', function(e){
+      console.log(e)
+    })
     //  this.updateFriends()
   },
   computed:{
@@ -210,6 +217,12 @@ export default {
 
 },
 methods:{
+ onNodeHovered(e){console.log(e)},
+  onNodeSelected(e){
+    console.log(e)
+  },
+
+
   search(){
     //  console.log(this.input)
     //  console.log(this.visData)//.findNode(this.input))
@@ -400,7 +413,7 @@ async retrieveData(source){
     this.donnees = []
   }).then(function () {
     //console.log("END")
-    this.input.subject = "P"
+
   });
 },
 async addInterests(webId){
