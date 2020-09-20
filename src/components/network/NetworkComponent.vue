@@ -6,7 +6,11 @@
     class="wrapper"
     :nodes="nodes"
     :edges="edges"
-    :options="options">
+    :options="options"
+    @select="networkEvent('select')"
+        @select-node="networkEvent('selectNode')"
+        @select-edge="networkEvent('selectEdge')"
+    >
   </network>
 
   <div id="node-popUp">
@@ -37,6 +41,7 @@
 </template>
 
 <script>
+// Network Event https://github.com/r3code/vue-vis-network/blob/master/example/src/App.vue
 //import profileMixin from '@/mixins/profileMixin'
 import { fetchDocument, /*createDocument*/ } from 'tripledoc';
 import { foaf } from 'rdf-namespaces'
@@ -188,6 +193,9 @@ export default {
     }
   },
   methods:{
+    networkEvent(e){
+      console.log(e)
+    },
     async addInterests(webId){
       let storage =  await solid.data[webId].storage
       let p_u = storage+"public/salut/profile.ttl"

@@ -12,9 +12,7 @@
     :nodes="nodes"
     :edges="edges"
     :options="options"
-    :events="['selectNode', 'hoverNode']"
-     @selectNode="onNodeSelected"
-     @hoverNode="onNodeHovered">
+    @select-node="selectNode">
   </network>
 
   <div id="node-popUp">
@@ -82,6 +80,10 @@ export default {
         {from: 5, to: 7},
         {from: 6, to: 8}*/
       ],
+      edges_non: [],
+      caches: [],
+      visibles: [],
+      old: [],
       options: {
         locale: navigator.language,
         nodes: {
@@ -217,53 +219,218 @@ export default {
 
 },
 methods:{
- onNodeHovered(e){console.log(e)},
-  onNodeSelected(e){
-    console.log(e)
-  },
+
+  selectNode2(selected){
+    /*    let node_id = selected.nodes[0]
+    this.all = this.nodes
+    let edge_ids = selected.edges
+    let edges = []*/
+    /*  this.alledges =
+
+    edge_ids.forEach((e_id) => {
+    console.warn(e_id)
+
+    this.edges.forEach((edge) => {
+
+    if (edge.id == e_id  ){
+    if(  edges.indexOf(edge) < 0) {
+    edges.push(edge)
+    console.warn("LABEL",edge.label)
+  }
+  //  console.log(edges)
+}
+});
+})
+console.log(node_id, edge_ids, edges)*/
+let edges_ids = []
+
+let edges = []
+let nodes_ids = []
+let nodes = []
+this.edges_non = []
+this.edges.forEach((e) => {
+  //  console.log(e.from, e.to)
+  edges_ids.lastIndexOf(e.id) < 0 && (selected.nodes[0]== e.from || selected.nodes[0] == e.to) ? edges_ids.push(e.id) && edges.push(e) : ""; this.edges_non.push(e);
+
+})
+console.log(edges_ids, this.edges_non, edges)
+
+this.nodes.forEach((node) => {
+  //  console.log(node.label, node.id)
+  this.edges.concat(this.edges_non)
+  edges.forEach((ed) => {
+
+    nodes_ids.lastIndexOf(node.id) < 0 && (node.id == ed.from || node.id == ed.to) ? nodes_ids.push(node.id)  : "";
+
+  });
+
+});
+console.log(nodes_ids)
+this.nodes.forEach((node) => {
+  nodes_ids.includes(node.id) ? nodes.push(node) :""
+});
+
+console.log(nodes)
+this.nodes = nodes
 
 
-  search(){
-    //  console.log(this.input)
-    //  console.log(this.visData)//.findNode(this.input))
-    //  console.log(this.$refs.network)
-    let input = this.input
-
-    // MUST REVIEW THIS LINE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    this.old == undefined || this.old.length < this.nodes.length ? this.old = this.nodes : this.nodes = this.old
 
 
 
-    this.visibles = this.old.filter(function(el) {
-      return (input.subject.length > 0 && el.label.includes(input.subject)) ||
-      (input.property.length > 0 && el.label.includes(input.property)) ||
-      (input.object.length > 0 && el.label.includes(input.object))
+
+
+
+},
+selectNode1(e){
+  console.log(e.nodes[0])
+  console.warn(this.all)
+  this.nodes = this.all != undefined ? this.all : this.nodes
+  this.caches = []
+  console.log(e, this.nodes.length)
+  let visibles = [], caches = []
+  let edges = []
+  e.edges.forEach((e_id) => {
+    console.warn(e_id)
+
+    this.edges.forEach((edge) => {
+
+      if (edge.id == e_id  ){
+        if(  edges.indexOf(edge) < 0) {
+          edges.push(edge)
+          console.warn("LABEL",edge.label)
+        }
+        //  console.log(edges)
+      }
     });
-    /*this.caches = this.nodes.filter(function(el) {
-    return !el.id.includes(input)
-  });*/
-  //this.$refs.network.selecNodes(this.visibles)
-  this.nodes = this.visibles
+    console.log("EDGES",edges)
+    let network_nodes = this.nodes
 
-  //
-  //  let nodes = this.filterNodes()
-  //  let result = []
-  /*for (const [key, value] of Object.entries(this.visData.nodes._data)) {
-  if (key.includes(this.input)){
-  //  console.log(key, value)
-  value.hidden = false
-  result[key] = value
-  value.label = false
-  console.log(key, " hidden ",value.hidden)
-  this.visData.nodes._data[key] = value
-  let v = {}
-  v[key] = value
-  //  console.log(v)
-  //  delete this.nodes[key]
-  nodes = nodes.filter(function(el) { return el.id.includes(input) });
-  console.log("IN",nodes)
+    edges.forEach((edge) => {
+      console.log(edge.label,"LABEL EDGE",edge.label)
+      this.nodes.forEach((node) => {
+        //  console.warn(node.id)
+        //  console.log("NNNN", node.id, edge.from, edge.to)
+        /*  if (node.id == e.nodes[0]){
+        console.log("++ok", node.id, edge.from, edge.to)
+        visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
+        //  visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
+        console.log(visibles, caches)
+      }else{
+      caches.lastIndexOf(edge.to) < 0 ?    caches.push(node.id) : "";
+      //  caches.lastIndexOf(node.id) < 0 ? caches.push(node.id) : "";
+      //  console.log(visibles, caches)
+      //  console.log("--ko")
+      //  console.log
+    }*/
+    if (node.id == edge.from){
+      console.log("++ok", node.id, edge.from, edge.to)
+      visibles.lastIndexOf(edge.from) < 0 ? visibles.push(node.id) : "";
+      //  visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
+      console.log(visibles, caches)
+    }else{
+      caches.lastIndexOf(edge.from) < 0 ?    caches.push(node.id) : "";
+      //  caches.lastIndexOf(node.id) < 0 ? caches.push(node.id) : "";
+      //  console.log(visibles, caches)
+      //  console.log("--ko")
+      //  console.log
+    }
+    if (node.id == edge.to){
+      console.log("++ok", node.id, edge.from, edge.to)
+      visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
+      //  visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
+      console.log(visibles, caches)
+    }else{
+      caches.lastIndexOf(edge.to) < 0 ?    caches.push(node.id) : "";
+      //  caches.lastIndexOf(node.id) < 0 ? caches.push(node.id) : "";
+      //  console.log(visibles, caches)
+      //  console.log("--ko")
+      //  console.log
+    }
+    //
+  });
+  //  console.log(visibles, caches)
 
-  //  this.nodes.push(v)
+
+
+
+  //  let visibles = this.visibles
+  //  this.nodes = this.visibles
+  /*  let nodes = this.nodes.filter(function(n){
+  return visibles.includes(n.id)
+})*/
+//  console.log(this.nodes)
+/*  this.nodes = nodes
+console.log(this.nodes)*/
+});
+network_nodes.forEach((node) => {
+  if ( visibles.includes(node.id)){
+    this.visibles.push(node)
+  }else{
+    this.caches.push(node)
+  }
+});
+this.all = this.nodes
+this.nodes = this.visibles
+console.log(this.all, this.nodes, this.visibles, this.caches)
+this.visibles = []
+//  this.caches = []
+})
+}
+
+/*
+});
+console.log(this.visibles, this.caches)
+let visibles = this.visibles
+this.nodes.filter(function(n){
+visibles.includes(n.id)
+})
+console.log(this.nodes)
+*/
+
+,
+
+
+search(){
+  //  console.log(this.input)
+  //  console.log(this.visData)//.findNode(this.input))
+  //  console.log(this.$refs.network)
+  let input = this.input
+
+  // MUST REVIEW THIS LINE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  this.old == undefined || this.old.length < this.nodes.length ? this.old = this.nodes : this.nodes = this.old
+
+
+
+  this.visibles = this.old.filter(function(el) {
+    return (input.subject.length > 0 && el.label.includes(input.subject)) ||
+    (input.property.length > 0 && el.label.includes(input.property)) ||
+    (input.object.length > 0 && el.label.includes(input.object))
+  });
+  /*this.caches = this.nodes.filter(function(el) {
+  return !el.id.includes(input)
+});*/
+//this.$refs.network.selecNodes(this.visibles)
+this.nodes = this.visibles
+
+//
+//  let nodes = this.filterNodes()
+//  let result = []
+/*for (const [key, value] of Object.entries(this.visData.nodes._data)) {
+if (key.includes(this.input)){
+//  console.log(key, value)
+value.hidden = false
+result[key] = value
+value.label = false
+console.log(key, " hidden ",value.hidden)
+this.visData.nodes._data[key] = value
+let v = {}
+v[key] = value
+//  console.log(v)
+//  delete this.nodes[key]
+nodes = nodes.filter(function(el) { return el.id.includes(input) });
+console.log("IN",nodes)
+
+//  this.nodes.push(v)
 }else{
 value.hidden = true
 value.label = true
@@ -330,79 +497,79 @@ random_rgba() {
   return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 },
 add2network(donnees){
-//  console.log(donnees)
+  //  console.log(donnees)
   for (let don in donnees){
     let d = donnees[don]
     let color = this.random_rgba()
-  /*  if(    this.color[d['@type']] == undefined ){
-      this.color[d['@type']] = this.random_rgba()
-      color = this.color[d['@type']]
-    }else{
-      color = this.color[d['@type']]
-    }
-    console.log(color)*/
+    /*  if(    this.color[d['@type']] == undefined ){
+    this.color[d['@type']] = this.random_rgba()
+    color = this.color[d['@type']]
+  }else{
+  color = this.color[d['@type']]
+}
+console.log(color)*/
 
-    let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
-    this.addOrNothingNode({ id:d['@id'], label: label, shape: "star", color:color })
-    //let added =  console.log(added)
-    for (const [key, value] of Object.entries(d)) {
+let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
+this.addOrNothingNode({ id:d['@id'], label: label, shape: "star", color:color })
+//let added =  console.log(added)
+for (const [key, value] of Object.entries(d)) {
 
-      switch (key) {
-        case "@type":
-        this.addOrNothingNode({ id:d['@type'], label: this.lastPart(d['@type']), shape: "circle",  color: color })
-        this.edges.push({
-          from: d['@id'],
-          to: d['@type'],
-          label: "a",
-        });
-        break;
-        // NE rien faire déjà traité ou traité differemment
-        case "pair:label":
-        case 'pair:firstName':
-        case 'pair:lastName':
-        case "@id":
-        //console.log(key, value);
-        break;
-        // autres propriétés
-        case "pair:involves":
-        case 'pair:offeredBy':
-        case 'pair:hasMember':
-        case 'pair:memberOf':
-        case 'pair:hasInterest':
-        case 'pair:offers':
-        case 'pair:involvedIn':
-        case 'pair:interestOf':
+  switch (key) {
+    case "@type":
+    this.addOrNothingNode({ id:d['@type'], label: this.lastPart(d['@type']), shape: "circle",  color: color })
+    this.edges.push({
+      from: d['@id'],
+      to: d['@type'],
+      label: "a",
+    });
+    break;
+    // NE rien faire déjà traité ou traité differemment
+    case "pair:label":
+    case 'pair:firstName':
+    case 'pair:lastName':
+    case "@id":
+    //console.log(key, value);
+    break;
+    // autres propriétés
+    case "pair:involves":
+    case 'pair:offeredBy':
+    case 'pair:hasMember':
+    case 'pair:memberOf':
+    case 'pair:hasInterest':
+    case 'pair:offers':
+    case 'pair:involvedIn':
+    case 'pair:interestOf':
 
-        //  console.log("_______________",key, value);
-        this.stringOrArray(value).forEach((v) => {
-          this.addOrNothingNode({ id:v, label: this.lastPart(v), shape: "box", color: color  })
-          this.edges.push({from: d['@id'], to: v.replace('pair:',''), label: key});
-        });
-        //  console.log(this.stringToColour(key))
-        break;
+    //  console.log("_______________",key, value);
+    this.stringOrArray(value).forEach((v) => {
+      this.addOrNothingNode({ id:v, label: this.lastPart(v), shape: "box", color: color  })
+      this.edges.push({from: d['@id'], to: v.replace('pair:',''), label: key});
+    });
+    //  console.log(this.stringToColour(key))
+    break;
 
-        default:
-        console.warn("TODO : ---------------",key, value);
-        this.stringOrArray(value).forEach((v) => {
-          this.addOrNothingNode({ id:v, label: this.lastPart(v), shape: "box",  color: color })
-          this.edges.push({from: d['@id'], to: v.replace('pair:',''), label: key});
-        });
+    default:
+    console.warn("TODO : ---------------",key, value);
+    this.stringOrArray(value).forEach((v) => {
+      this.addOrNothingNode({ id:v, label: this.lastPart(v), shape: "box",  color: color })
+      this.edges.push({from: d['@id'], to: v.replace('pair:',''), label: key});
+    });
 
-      }
-      color = this.random_rgba()
-    }
   }
+  color = this.random_rgba()
+}
+}
 },
 async retrieveData(source){
-//  console.log(source)
+  //  console.log(source)
   axios({
     method: 'get',
     url: source,
     responseType: 'application/ld+json'
   })
   .then(response => {
-     //this.response = response
-  //   console.log(response.data["ldp:contains"])
+    //this.response = response
+    //   console.log(response.data["ldp:contains"])
     //  console.log(this.response)
     //console.log(this.donnees);
     this.add2network(response.data["ldp:contains"])
