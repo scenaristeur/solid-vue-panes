@@ -70,7 +70,7 @@
 
       <b-nav-item-dropdown right>
         <template v-slot:button-content>
-          Misc (Experimental)
+          Experiments
         </template>
 
         <b-dropdown-item to="/groups">Groups</b-dropdown-item>

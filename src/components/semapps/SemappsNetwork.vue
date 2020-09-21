@@ -3,12 +3,11 @@
   <div class="network container">
     <h5>Type a search to filter</h5>
 
-    <b-input @input="search" v-model="input.subject" placeholder="Subject" />
-    <b-input @input="search" v-model="input.property" placeholder="property" />
-    <b-input @input="search" v-model="input.object" placeholder="Object" />
-<!--
-    <b-button v-for="c in containers" :key="c" @click="containerIs(c)">{{c}}</b-button>
-    <b-button  @click="containerIs">All</b-button>-->
+    <b-input @input="search" size="sm" v-model="input.subject" placeholder="Subject" />
+    <b-input @input="search" size="sm" v-model="input.property" placeholder="property" />
+    <b-input @input="search" size="sm" v-model="input.object" placeholder="Object" />
+
+    <b-button  @click="showTypes" size="sm" variant="outline-info">All types</b-button>
 
 
     <network ref="network"
@@ -69,7 +68,9 @@ export default {
       ],
       edges: [
       ],
-      dataset: {nodes: [], edges: []},
+      dataset: {nodes: [], edges: [], types: []},
+      buttons: [],
+      //  buttonsList: [],
       edges_non: [],
       caches: [],
       visibles: [],
@@ -95,164 +96,164 @@ export default {
           navigationButtons: true,
           keyboard: true
         },
-        manipulation: {
-          addNode: function (data, callback) {
-            // filling in the popup DOM elements
-            document.getElementById('node-operation').innerHTML = "Add Node";
-            this.editNode(data, this.clearNodePopUp, callback);
-            console.log(data,callback)
-          },
-          editNode: function (data, callback) {
-            // filling in the popup DOM elements
-            document.getElementById('node-operation').innerHTML = "Edit Node";
-            this.editNode(data, this.cancelNodeEdit, callback);
-            console.log(data,callback)
-          },
-          addEdge: function (data, callback) {
-            if (data.from == data.to) {
-              var r = confirm("Do you want to connect the node to itself?");
-              if (r != true) {
-                callback(null);
-                return;
-              }
-            }
-            document.getElementById('edge-operation').innerHTML = "Add Edge";
-            this.editEdgeWithoutDrag(data, callback);
-          },
-          editEdge: {
-            editWithoutDrag: function(data, callback) {
-              document.getElementById('edge-operation').innerHTML = "Edit Edge";
-              this.editEdgeWithoutDrag(data,callback);
-              console.log(data,callback)
-            }
-          }
-        },
-        physics:{
-   enabled: true,
-   barnesHut: {
-  //   theta: 0.5,
-     gravitationalConstant: -2000,
-     centralGravity: 0.3,
-     springLength: 95,
-     springConstant: 0.04,
-     damping: 0.09,
-     avoidOverlap: 0
-   },
-   forceAtlas2Based: {
-    // theta: 0.5,
-     gravitationalConstant: -50,
-     centralGravity: 0.01,
-     springConstant: 0.08,
-     springLength: 100,
-     damping: 0.4,
-     avoidOverlap: 0
-   },
-   repulsion: {
-     centralGravity: 0.2,
-     springLength: 200,
-     springConstant: 0.05,
-     nodeDistance: 100,
-     damping: 0.09
-   },
-   hierarchicalRepulsion: {
-     centralGravity: 0.0,
-     springLength: 100,
-     springConstant: 0.01,
-     nodeDistance: 120,
-     damping: 0.09,
-  //   avoidOverlap: 0
-   },
-   maxVelocity: 50,
-   minVelocity: 0.1,
-   solver: 'repulsion',
-   stabilization: {
-     enabled: true,
-     iterations: 1000,
-     updateInterval: 100,
-     onlyDynamicEdges: false,
-     fit: true
-   },
-   timestep: 0.5,
-   adaptiveTimestep: true,
-  // wind: { x: 0, y: 0 }
- }
-      }
-    }
+        /*  manipulation: {
+        addNode: function (data, callback) {
+        // filling in the popup DOM elements
+        document.getElementById('node-operation').innerHTML = "Add Node";
+        this.editNode(data, this.clearNodePopUp, callback);
+        console.log(data,callback)
+      },
+      editNode: function (data, callback) {
+      // filling in the popup DOM elements
+      document.getElementById('node-operation').innerHTML = "Edit Node";
+      this.editNode(data, this.cancelNodeEdit, callback);
+      console.log(data,callback)
+    },
+    addEdge: function (data, callback) {
+    if (data.from == data.to) {
+    var r = confirm("Do you want to connect the node to itself?");
+    if (r != true) {
+    callback(null);
+    return;
+  }
+}
+document.getElementById('edge-operation').innerHTML = "Add Edge";
+this.editEdgeWithoutDrag(data, callback);
+},
+editEdge: {
+editWithoutDrag: function(data, callback) {
+document.getElementById('edge-operation').innerHTML = "Edit Edge";
+this.editEdgeWithoutDrag(data,callback);
+console.log(data,callback)
+}
+}
+},*/
+physics:{
+  enabled: true,
+  barnesHut: {
+    //   theta: 0.5,
+    gravitationalConstant: -2000,
+    centralGravity: 0.3,
+    springLength: 95,
+    springConstant: 0.04,
+    damping: 0.09,
+    avoidOverlap: 0
   },
-  mounted() {
-    this.webId = this.$route.params.webId || this.$store.state.solid.webId
-    this.friends  = this.$store.state.solid.friends
-    this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push({ id: this.webId, label: this.webId }) : ""
-    this.addInterests(this.webId)
+  forceAtlas2Based: {
+    // theta: 0.5,
+    gravitationalConstant: -50,
+    centralGravity: 0.01,
+    springConstant: 0.08,
+    springLength: 100,
+    damping: 0.4,
+    avoidOverlap: 0
+  },
+  repulsion: {
+    centralGravity: 0.2,
+    springLength: 200,
+    springConstant: 0.05,
+    nodeDistance: 100,
+    damping: 0.09
+  },
+  hierarchicalRepulsion: {
+    centralGravity: 0.0,
+    springLength: 100,
+    springConstant: 0.01,
+    nodeDistance: 120,
+    damping: 0.09,
+    //   avoidOverlap: 0
+  },
+  maxVelocity: 50,
+  minVelocity: 0.1,
+  solver: 'repulsion',
+  stabilization: {
+    enabled: true,
+    iterations: 1000,
+    updateInterval: 100,
+    onlyDynamicEdges: false,
+    fit: true
+  },
+  timestep: 0.5,
+  adaptiveTimestep: true,
+  // wind: { x: 0, y: 0 }
+}
+}
+}
+},
+mounted() {
+  this.webId = this.$route.params.webId || this.$store.state.solid.webId
+  this.friends  = this.$store.state.solid.friends
+  this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push({ id: this.webId, label: this.webId }) : ""
+  this.addInterests(this.webId)
   //  console.log("4444444444444444444444",this.$refs.network)
 
-    //  this.updateFriends()
+  //  this.updateFriends()
+},
+computed:{
+
+  currentEndpoint: {
+    get: function() { return this.$store.state.semapps.currentEndpoint},
+    set: function() {}
   },
-  computed:{
 
-    currentEndpoint: {
-      get: function() { return this.$store.state.semapps.currentEndpoint},
-      set: function() {}
-    },
-
-    profile_url:{
-      get: function() { return this.$store.state.solid.storage+"public/salut/profile.ttl"},
-      set: function() {}
-    },
-    storage:{
-      get: function() { return this.$store.state.solid.storage},
-      set: function() {}
-    },
-    webId:{
-      get: function() { return this.$store.state.solid.webId},
-      set: function() {}
-    },
-    friends:{
-      get: function() { return this.$store.state.solid.friends},
-      set: function() {}
-    },
+  profile_url:{
+    get: function() { return this.$store.state.solid.storage+"public/salut/profile.ttl"},
+    set: function() {}
   },
-  watch: {
-    $route(to, from) {
-      console.log(to, from, this.$route)
-      // react to route changes...
-    },
-    storage (st) {
-      //  '$route' (to, from) {
-      console.log(st)
-    },
-    friends(friends){
-      console.log(friends)
-      friends.forEach((f) => {
-        //  console.log(f,i)
-        this.nodes.find(x => x.id === f) == undefined ?   this.nodes.push({ id:f, label: f , shape: "dot", color: "yellow"}) : ""
-        this.edges.push({
-          from: this.webId,
-          to: f,
-          label: "friend"
-        });
-        this.addInterests(f)
-
+  storage:{
+    get: function() { return this.$store.state.solid.storage},
+    set: function() {}
+  },
+  webId:{
+    get: function() { return this.$store.state.solid.webId},
+    set: function() {}
+  },
+  friends:{
+    get: function() { return this.$store.state.solid.friends},
+    set: function() {}
+  },
+},
+watch: {
+  $route(to, from) {
+    console.log(to, from, this.$route)
+    // react to route changes...
+  },
+  storage (st) {
+    //  '$route' (to, from) {
+    console.log(st)
+  },
+  friends(friends){
+    console.log(friends)
+    friends.forEach((f) => {
+      //  console.log(f,i)
+      this.nodes.find(x => x.id === f) == undefined ?   this.nodes.push({ id:f, label: f , shape: "dot", color: "yellow"}) : ""
+      this.edges.push({
+        from: this.webId,
+        to: f,
+        label: "friend"
       });
+      this.addInterests(f)
 
-    },
-    webId(webId){
-      console.log(webId)
-      this.nodes.find(x => x.id === webId) == undefined ?   this.nodes.push({ id:webId, label: webId ,/*   "shape": "icon",
-      "icon": {
-      face: '"Font Awesome 5 Brands"',
-      code: '\uf36e'
-    }*/}) : ""
-    this.addInterests(webId)
-  },
-  async currentEndpoint(e){
-    this.donnees = []
-    for ( let c in this.containers){
-      await this.retrieveData(e.url+this.containers[c])
-    }
-
+    });
 
   },
+  webId(webId){
+    console.log(webId)
+    this.nodes.find(x => x.id === webId) == undefined ?   this.nodes.push({ id:webId, label: webId ,/*   "shape": "icon",
+    "icon": {
+    face: '"Font Awesome 5 Brands"',
+    code: '\uf36e'
+  }*/}) : ""
+  this.addInterests(webId)
+},
+async currentEndpoint(e){
+  this.donnees = []
+  for ( let c in this.containers){
+    await this.retrieveData(e.url+this.containers[c])
+  }
+
+
+},
 
 },
 methods:{
@@ -273,11 +274,11 @@ methods:{
     if(edge.from == selected_id || edge.to == selected_id){
       this.edges.push(edge)
       edges_ids.push(edge.id)
-      if ((nodes_ids.lastIndexOf(edge.from)) < 0){
+      if ((nodes_ids.indexOf(edge.from)) < 0){
         nodes_ids.push(edge.from)
         this.nodes.push(this.dataset.nodes[edge.from])
       }
-      if ((nodes_ids.lastIndexOf(edge.to)) < 0){
+      if ((nodes_ids.indexOf(edge.to)) < 0){
         nodes_ids.push(edge.to)
         this.nodes.push(this.dataset.nodes[edge.to])
 
@@ -294,189 +295,29 @@ methods:{
 
 
 },
-containerIs(c){
-  console.log(c)
+showTypes(){
+//  console.log(this.dataset.types)
+  this.nodes = []
+  for (const node of Object.values(this.dataset.nodes)) {
+    this.dataset.types.includes(node.id) ? this.nodes.push(node) : ""
+  //  console.log(this.nodes)
+}
+
+
   /*
-TODO Utilisation de la couleur
+  TODO Utilisation de la couleur
   var color = colorize(nom)
-        //console.log(color)
-        //var red = ''+Math.floor(Math.random() * 255);
-        //var green = ''+Math.floor(Math.random() * 255);
-        //var blue = ''+Math.floor(Math.random() * 255);
-        var ds = {
-          label: nom,
-          backgroundColor: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.01)',
-          borderColor: 'rgb('+color.red+', '+color.green+', '+color.blue+')',
+  //console.log(color)
+  //var red = ''+Math.floor(Math.random() * 255);
+  //var green = ''+Math.floor(Math.random() * 255);
+  //var blue = ''+Math.floor(Math.random() * 255);
+  var ds = {
+  label: nom,
+  backgroundColor: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.01)',
+  borderColor: 'rgb('+color.red+', '+color.green+', '+color.blue+')',
 
-*/
+  */
 },
-
-
-selectNode2(selected){
-
-  /*    let node_id = selected.nodes[0]
-  this.all = this.nodes
-  let edge_ids = selected.edges
-  let edges = []*/
-  /*  this.alledges =
-
-  edge_ids.forEach((e_id) => {
-  console.warn(e_id)
-
-  this.edges.forEach((edge) => {
-
-  if (edge.id == e_id  ){
-  if(  edges.indexOf(edge) < 0) {
-  edges.push(edge)
-  console.warn("LABEL",edge.label)
-}
-//  console.log(edges)
-}
-});
-})
-console.log(node_id, edge_ids, edges)*/
-let edges_ids = []
-
-let edges = []
-let nodes_ids = []
-let nodes = []
-this.edges_non = []
-this.edges.forEach((e) => {
-  //  console.log(e.from, e.to)
-  edges_ids.lastIndexOf(e.id) < 0 && (selected.nodes[0]== e.from || selected.nodes[0] == e.to) ? edges_ids.push(e.id) && edges.push(e) : ""; this.edges_non.push(e);
-
-})
-console.log(edges_ids, this.edges_non, edges)
-
-this.nodes.forEach((node) => {
-  //  console.log(node.label, node.id)
-  this.edges.concat(this.edges_non)
-  edges.forEach((ed) => {
-
-    nodes_ids.lastIndexOf(node.id) < 0 && (node.id == ed.from || node.id == ed.to) ? nodes_ids.push(node.id)  : "";
-
-  });
-
-});
-console.log(nodes_ids)
-this.nodes.forEach((node) => {
-  nodes_ids.includes(node.id) ? nodes.push(node) :""
-});
-
-console.log(nodes)
-this.nodes = nodes
-
-
-},
-
-selectNode1(e){
-  console.log(e.nodes[0])
-  console.warn(this.all)
-  this.nodes = this.all != undefined ? this.all : this.nodes
-  this.caches = []
-  console.log(e, this.nodes.length)
-  let visibles = [], caches = []
-  let edges = []
-  e.edges.forEach((e_id) => {
-    console.warn(e_id)
-
-    this.edges.forEach((edge) => {
-
-      if (edge.id == e_id  ){
-        if(  edges.indexOf(edge) < 0) {
-          edges.push(edge)
-          console.warn("LABEL",edge.label)
-        }
-        //  console.log(edges)
-      }
-    });
-    console.log("EDGES",edges)
-    let network_nodes = this.nodes
-
-    edges.forEach((edge) => {
-      console.log(edge.label,"LABEL EDGE",edge.label)
-      this.nodes.forEach((node) => {
-        //  console.warn(node.id)
-        //  console.log("NNNN", node.id, edge.from, edge.to)
-        /*  if (node.id == e.nodes[0]){
-        console.log("++ok", node.id, edge.from, edge.to)
-        visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
-        //  visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
-        console.log(visibles, caches)
-      }else{
-      caches.lastIndexOf(edge.to) < 0 ?    caches.push(node.id) : "";
-      //  caches.lastIndexOf(node.id) < 0 ? caches.push(node.id) : "";
-      //  console.log(visibles, caches)
-      //  console.log("--ko")
-      //  console.log
-    }*/
-    if (node.id == edge.from){
-      console.log("++ok", node.id, edge.from, edge.to)
-      visibles.lastIndexOf(edge.from) < 0 ? visibles.push(node.id) : "";
-      //  visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
-      console.log(visibles, caches)
-    }else{
-      caches.lastIndexOf(edge.from) < 0 ?    caches.push(node.id) : "";
-      //  caches.lastIndexOf(node.id) < 0 ? caches.push(node.id) : "";
-      //  console.log(visibles, caches)
-      //  console.log("--ko")
-      //  console.log
-    }
-    if (node.id == edge.to){
-      console.log("++ok", node.id, edge.from, edge.to)
-      visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
-      //  visibles.lastIndexOf(edge.to) < 0 ? visibles.push(node.id) : "";
-      console.log(visibles, caches)
-    }else{
-      caches.lastIndexOf(edge.to) < 0 ?    caches.push(node.id) : "";
-      //  caches.lastIndexOf(node.id) < 0 ? caches.push(node.id) : "";
-      //  console.log(visibles, caches)
-      //  console.log("--ko")
-      //  console.log
-    }
-    //
-  });
-  //  console.log(visibles, caches)
-
-
-
-
-  //  let visibles = this.visibles
-  //  this.nodes = this.visibles
-  /*  let nodes = this.nodes.filter(function(n){
-  return visibles.includes(n.id)
-})*/
-//  console.log(this.nodes)
-/*  this.nodes = nodes
-console.log(this.nodes)*/
-});
-network_nodes.forEach((node) => {
-  if ( visibles.includes(node.id)){
-    this.visibles.push(node)
-  }else{
-    this.caches.push(node)
-  }
-});
-this.all = this.nodes
-this.nodes = this.visibles
-console.log(this.all, this.nodes, this.visibles, this.caches)
-this.visibles = []
-//  this.caches = []
-})
-}
-
-/*
-});
-console.log(this.visibles, this.caches)
-let visibles = this.visibles
-this.nodes.filter(function(n){
-visibles.includes(n.id)
-})
-console.log(this.nodes)
-*/
-
-,
-
 
 search(){
   //  console.log(this.input)
@@ -610,62 +451,71 @@ for (const [key, value] of Object.entries(d)) {
   //console.log("FOR")
   switch (key) {
     case "@type":
-    typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle",  color: color, size: 100 }
+    typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: color, size: 100 }
     this.addOrNothingNode(typeNode)
     typeEdge = {
       from: d['@id'],
       to: d['@type'],
       label: "a",
     }
-  //  this.edges.push(typeEdge);
+    //  this.edges.push(typeEdge);
     this.dataset.nodes[typeNode.id] = typeNode
     this.dataset.edges.push(typeEdge)
-    //  console.log(typeEdge.id)
-    break;
-    // NE rien faire déjà traité ou traité differemment
-    case "pair:label":
-    case 'pair:firstName':
-    case 'pair:lastName':
-    case "@id":
-    //console.log(key, value);
-    break;
-    // autres propriétés
-    case "pair:involves":
-    case 'pair:offeredBy':
-    case 'pair:hasMember':
-    case 'pair:memberOf':
-    case 'pair:hasInterest':
-    case 'pair:offers':
-    case 'pair:involvedIn':
-    case 'pair:interestOf':
+    this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
 
-    //  console.log("_______________",key, value);
-    this.stringOrArray(value).forEach((v) => {
-      objectNode = { id:v, label: this.lastPart(v), shape: "box", color: color, x:Math.random(-500,500) , y:Math.random(-500,500)  }
-      propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-    //  this.addOrNothingNode(objectNode)
-    //  this.edges.push(propertyEdge);
-
-      this.dataset.nodes[objectNode.id] = objectNode
-      this.dataset.edges.push(propertyEdge)
-    });
-    //  console.log(this.stringToColour(key))
-    break;
-
-    default:
-    console.warn("TODO : ---------------",key, value);
-    this.stringOrArray(value).forEach((v) => {
-      objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: color,x:Math.random(500,1000) , y:Math.random(500,1000)  }
-      propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-    //  this.addOrNothingNode(objectNode)
-    //  this.edges.push(propertyEdge);
-      this.dataset.nodes[objectNode.id] = objectNode
-      this.dataset.edges.push(propertyEdge)
-    });
-
+    /*  if (
+    this.buttonsList.indexOf(d['@type']) < 0 )
+    {
+    this.buttons.push({label:d['@type'], classe: d['@type']})
+    this.buttonsList.push(d['@type'])
   }
-  //  console.log("END switch")
-  //  color = this.random_rgba()
+  console.log(this.buttons)*/
+  //  console.log(typeEdge.id)
+  break;
+  // NE rien faire déjà traité ou traité differemment
+  case "pair:label":
+  case 'pair:firstName':
+  case 'pair:lastName':
+  case "@id":
+  //console.log(key, value);
+  break;
+  // autres propriétés
+  case "pair:involves":
+  case 'pair:offeredBy':
+  case 'pair:hasMember':
+  case 'pair:memberOf':
+  case 'pair:hasInterest':
+  case 'pair:offers':
+  case 'pair:involvedIn':
+  case 'pair:interestOf':
+
+  //  console.log("_______________",key, value);
+  this.stringOrArray(value).forEach((v) => {
+    objectNode = { id:v, label: this.lastPart(v), shape: "box", color: color, x:Math.random(-500,500) , y:Math.random(-500,500)  }
+    propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+    //  this.addOrNothingNode(objectNode)
+    //  this.edges.push(propertyEdge);
+
+    this.dataset.nodes[objectNode.id] = objectNode
+    this.dataset.edges.push(propertyEdge)
+  });
+  //  console.log(this.stringToColour(key))
+  break;
+
+  default:
+  console.warn("TODO : ---------------",key, value);
+  this.stringOrArray(value).forEach((v) => {
+    objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: color,x:Math.random(500,1000) , y:Math.random(500,1000)  }
+    propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+    //  this.addOrNothingNode(objectNode)
+    //  this.edges.push(propertyEdge);
+    this.dataset.nodes[objectNode.id] = objectNode
+    this.dataset.edges.push(propertyEdge)
+  });
+
+}
+//  console.log("END switch")
+//  color = this.random_rgba()
 }
 //console.log(this.dataset.nodes, this.dataset.edges)
 }
