@@ -42,7 +42,7 @@ export default {
         {name: "Nouvelle Source", url: "https://blabla.virtual-assembly.org/", disabled: false},
         {name: "Another One", url: "https://Nothing.virtual-assembly.org/", disabled: true}
       ],
-      containers: ["projects", "persons", "skills", "themas","organizations"] //
+      containers: [ "skills", "themas","organizations", "projects", "persons"] // "projects", "persons",
     }
   },
 

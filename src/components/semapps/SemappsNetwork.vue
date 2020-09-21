@@ -6,6 +6,10 @@
     <b-input @input="search" v-model="input.subject" placeholder="Subject" />
     <b-input @input="search" v-model="input.property" placeholder="property" />
     <b-input @input="search" v-model="input.object" placeholder="Object" />
+<!--
+    <b-button v-for="c in containers" :key="c" @click="containerIs(c)">{{c}}</b-button>
+    <b-button  @click="containerIs">All</b-button>-->
+
 
     <network ref="network"
     class="wrapper"
@@ -43,7 +47,7 @@
 </template>
 
 <script>
-//import profileMixin from '@/mixins/profileMixin'
+import networkMixin from '@/mixins/networkMixin'
 import { fetchDocument, /*createDocument*/ } from 'tripledoc';
 import { foaf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
@@ -51,7 +55,7 @@ import axios from 'axios';
 
 export default {
   name: 'SemappsNetWork',
-  //mixins: [profileMixin],
+  mixins: [networkMixin],
   components: {
     //  'network': () => import("vue-vis-network")
     //'PeopleItem': () => import('@/components/profile/PeopleItem'),
@@ -62,24 +66,10 @@ export default {
     return {
       input: {subject:"", property:"", object:""},
       nodes: [
-        /*  {id: 1,  label: 'circle',  shape: 'circle' },
-        {id: 2,  label: 'ellipse', shape: 'ellipse'},
-        {id: 3,  label: 'database',shape: 'database'},
-        {id: 4,  label: 'box',     shape: 'box'    },
-        {id: 5,  label: 'diamond', shape: 'diamond'},
-        {id: 6,  label: 'dot',     shape: 'dot'},
-        {id: 7,  label: 'square',  shape: 'square'},
-        {id: 8,  label: 'triangle',shape: 'triangle'},*/
       ],
       edges: [
-        /*  {from: 1, to: 2},
-        {from: 2, to: 3},
-        {from: 2, to: 4},
-        {from: 2, to: 5},
-        {from: 5, to: 6},
-        {from: 5, to: 7},
-        {from: 6, to: 8}*/
       ],
+      dataset: {nodes: [], edges: []},
       edges_non: [],
       caches: [],
       visibles: [],
@@ -136,7 +126,56 @@ export default {
               console.log(data,callback)
             }
           }
-        }
+        },
+        physics:{
+   enabled: true,
+   barnesHut: {
+  //   theta: 0.5,
+     gravitationalConstant: -2000,
+     centralGravity: 0.3,
+     springLength: 95,
+     springConstant: 0.04,
+     damping: 0.09,
+     avoidOverlap: 0
+   },
+   forceAtlas2Based: {
+    // theta: 0.5,
+     gravitationalConstant: -50,
+     centralGravity: 0.01,
+     springConstant: 0.08,
+     springLength: 100,
+     damping: 0.4,
+     avoidOverlap: 0
+   },
+   repulsion: {
+     centralGravity: 0.2,
+     springLength: 200,
+     springConstant: 0.05,
+     nodeDistance: 100,
+     damping: 0.09
+   },
+   hierarchicalRepulsion: {
+     centralGravity: 0.0,
+     springLength: 100,
+     springConstant: 0.01,
+     nodeDistance: 120,
+     damping: 0.09,
+  //   avoidOverlap: 0
+   },
+   maxVelocity: 50,
+   minVelocity: 0.1,
+   solver: 'repulsion',
+   stabilization: {
+     enabled: true,
+     iterations: 1000,
+     updateInterval: 100,
+     onlyDynamicEdges: false,
+     fit: true
+   },
+   timestep: 0.5,
+   adaptiveTimestep: true,
+  // wind: { x: 0, y: 0 }
+ }
       }
     }
   },
@@ -145,10 +184,8 @@ export default {
     this.friends  = this.$store.state.solid.friends
     this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push({ id: this.webId, label: this.webId }) : ""
     this.addInterests(this.webId)
-    console.log("4444444444444444444444",this.$refs.network)
-    this.$refs.network.on('select', function(e){
-      console.log(e)
-    })
+  //  console.log("4444444444444444444444",this.$refs.network)
+
     //  this.updateFriends()
   },
   computed:{
@@ -219,25 +256,81 @@ export default {
 
 },
 methods:{
+  selectNode(selected){
+    //https://www.npmjs.com/package/@marklogic-community/grove-react-visjs-graph
+    console.log("event",selected)
+    let selected_id = selected.nodes[0]
+    console.log("dataset",this.dataset)
+    /*  let edges = this.dataset.edges.filter(function(edge) {
+    return edge.from == selected_id || edge.to == selected_id
+  });
+  console.log(edges)*/
+  let edges_ids = []
+  let nodes_ids = []
+  this.edges = []
+  this.nodes = []
+  this.dataset.edges.forEach((edge) => {
+    if(edge.from == selected_id || edge.to == selected_id){
+      this.edges.push(edge)
+      edges_ids.push(edge.id)
+      if ((nodes_ids.lastIndexOf(edge.from)) < 0){
+        nodes_ids.push(edge.from)
+        this.nodes.push(this.dataset.nodes[edge.from])
+      }
+      if ((nodes_ids.lastIndexOf(edge.to)) < 0){
+        nodes_ids.push(edge.to)
+        this.nodes.push(this.dataset.nodes[edge.to])
 
-  selectNode2(selected){
-    /*    let node_id = selected.nodes[0]
-    this.all = this.nodes
-    let edge_ids = selected.edges
-    let edges = []*/
-    /*  this.alledges =
+      }
 
-    edge_ids.forEach((e_id) => {
-    console.warn(e_id)
 
-    this.edges.forEach((edge) => {
+    }
+  });
 
-    if (edge.id == e_id  ){
-    if(  edges.indexOf(edge) < 0) {
-    edges.push(edge)
-    console.warn("LABEL",edge.label)
-  }
-  //  console.log(edges)
+
+
+
+
+
+
+},
+containerIs(c){
+  console.log(c)
+  /*
+TODO Utilisation de la couleur
+  var color = colorize(nom)
+        //console.log(color)
+        //var red = ''+Math.floor(Math.random() * 255);
+        //var green = ''+Math.floor(Math.random() * 255);
+        //var blue = ''+Math.floor(Math.random() * 255);
+        var ds = {
+          label: nom,
+          backgroundColor: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.01)',
+          borderColor: 'rgb('+color.red+', '+color.green+', '+color.blue+')',
+
+*/
+},
+
+
+selectNode2(selected){
+
+  /*    let node_id = selected.nodes[0]
+  this.all = this.nodes
+  let edge_ids = selected.edges
+  let edges = []*/
+  /*  this.alledges =
+
+  edge_ids.forEach((e_id) => {
+  console.warn(e_id)
+
+  this.edges.forEach((edge) => {
+
+  if (edge.id == e_id  ){
+  if(  edges.indexOf(edge) < 0) {
+  edges.push(edge)
+  console.warn("LABEL",edge.label)
+}
+//  console.log(edges)
 }
 });
 })
@@ -274,13 +367,8 @@ console.log(nodes)
 this.nodes = nodes
 
 
-
-
-
-
-
-
 },
+
 selectNode1(e){
   console.log(e.nodes[0])
   console.warn(this.all)
@@ -497,7 +585,7 @@ random_rgba() {
   return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 },
 add2network(donnees){
-  //  console.log(donnees)
+  console.log(donnees)
   for (let don in donnees){
     let d = donnees[don]
     let color = this.random_rgba()
@@ -510,18 +598,29 @@ add2network(donnees){
 console.log(color)*/
 
 let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
-this.addOrNothingNode({ id:d['@id'], label: label, shape: "star", color:color })
-//let added =  console.log(added)
-for (const [key, value] of Object.entries(d)) {
+let subjectNode = { id:d['@id'], label: label, shape: "star", color:color ,x:Math.random(-500, 500) , y:Math.random(-500,500)  }
+//this.addOrNothingNode(subjectNode)
+this.dataset.nodes[subjectNode.id] = subjectNode
 
+for (const [key, value] of Object.entries(d)) {
+  let typeNode = {}
+  let propertyEdge = {}
+  let objectNode = {}
+  let typeEdge = {}
+  //console.log("FOR")
   switch (key) {
     case "@type":
-    this.addOrNothingNode({ id:d['@type'], label: this.lastPart(d['@type']), shape: "circle",  color: color })
-    this.edges.push({
+    typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle",  color: color, size: 100 }
+    this.addOrNothingNode(typeNode)
+    typeEdge = {
       from: d['@id'],
       to: d['@type'],
       label: "a",
-    });
+    }
+  //  this.edges.push(typeEdge);
+    this.dataset.nodes[typeNode.id] = typeNode
+    this.dataset.edges.push(typeEdge)
+    //  console.log(typeEdge.id)
     break;
     // NE rien faire déjà traité ou traité differemment
     case "pair:label":
@@ -542,8 +641,13 @@ for (const [key, value] of Object.entries(d)) {
 
     //  console.log("_______________",key, value);
     this.stringOrArray(value).forEach((v) => {
-      this.addOrNothingNode({ id:v, label: this.lastPart(v), shape: "box", color: color  })
-      this.edges.push({from: d['@id'], to: v.replace('pair:',''), label: key});
+      objectNode = { id:v, label: this.lastPart(v), shape: "box", color: color, x:Math.random(-500,500) , y:Math.random(-500,500)  }
+      propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+    //  this.addOrNothingNode(objectNode)
+    //  this.edges.push(propertyEdge);
+
+      this.dataset.nodes[objectNode.id] = objectNode
+      this.dataset.edges.push(propertyEdge)
     });
     //  console.log(this.stringToColour(key))
     break;
@@ -551,13 +655,19 @@ for (const [key, value] of Object.entries(d)) {
     default:
     console.warn("TODO : ---------------",key, value);
     this.stringOrArray(value).forEach((v) => {
-      this.addOrNothingNode({ id:v, label: this.lastPart(v), shape: "box",  color: color })
-      this.edges.push({from: d['@id'], to: v.replace('pair:',''), label: key});
+      objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: color,x:Math.random(500,1000) , y:Math.random(500,1000)  }
+      propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+    //  this.addOrNothingNode(objectNode)
+    //  this.edges.push(propertyEdge);
+      this.dataset.nodes[objectNode.id] = objectNode
+      this.dataset.edges.push(propertyEdge)
     });
 
   }
-  color = this.random_rgba()
+  //  console.log("END switch")
+  //  color = this.random_rgba()
 }
+//console.log(this.dataset.nodes, this.dataset.edges)
 }
 },
 async retrieveData(source){
