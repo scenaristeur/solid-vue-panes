@@ -8,11 +8,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/about.1d5e4038.css"
   },
   {
-    "revision": "60d53b8f2b4e60d12b91",
+    "revision": "4c7369d6d201a8347af2",
     "url": "/solid-vue-panes/css/agora.09c1fb62.css"
   },
   {
-    "revision": "adb0a8c3c427ca871389",
+    "revision": "5ffcce3ec61987e4b1a0",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -176,7 +176,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-987b31c8.09c1fb62.css"
   },
   {
-    "revision": "e4720481da61035bc07b",
+    "revision": "721d8ea686f21282902b",
     "url": "/solid-vue-panes/css/chunk-a1b18f30.6581ba98.css"
   },
   {
@@ -316,7 +316,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "4180fd8be0c61048648e56dc455b1824",
+    "revision": "242fcb2474635a6237c8e55572e0c65c",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -324,12 +324,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/about.36f09d04.js"
   },
   {
-    "revision": "60d53b8f2b4e60d12b91",
-    "url": "/solid-vue-panes/js/agora.229c27c1.js"
+    "revision": "4c7369d6d201a8347af2",
+    "url": "/solid-vue-panes/js/agora.72ec9026.js"
   },
   {
-    "revision": "adb0a8c3c427ca871389",
-    "url": "/solid-vue-panes/js/app.6ffa8691.js"
+    "revision": "5ffcce3ec61987e4b1a0",
+    "url": "/solid-vue-panes/js/app.b1ac2941.js"
   },
   {
     "revision": "3f8a48f02633e6a14f24",
@@ -732,8 +732,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-987b31c8.c539c9ca.js"
   },
   {
-    "revision": "e4720481da61035bc07b",
-    "url": "/solid-vue-panes/js/chunk-a1b18f30.eaffe3f5.js"
+    "revision": "721d8ea686f21282902b",
+    "url": "/solid-vue-panes/js/chunk-a1b18f30.117ba3e4.js"
   },
   {
     "revision": "3794575a11831488e5bc",
