@@ -10,6 +10,7 @@
     <b-button  @click="showTypes" size="sm" variant="outline-info">All types</b-button>
 
 
+
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
@@ -17,6 +18,18 @@
     :options="options"
     @select-node="selectNode">
   </network>
+
+
+  <b-list-group v-if="historic.length > 0">
+    <b-list-group-item v-for='h in historic' :key="h.id">
+      {{ h.label }}
+      <b-button-group>
+        <b-button variant="outline-info" size="sm" @click="see(h)">See</b-button>
+        <b-button variant="outline-info" size="sm" v-bind:to="{ name: 'Profile', params: { interest: h.id }}">Add to my inyterests</b-button>
+        <!--<b-button>Button 3</b-button>-->
+      </b-button-group>
+    </b-list-group-item>
+  </b-list-group>
 
   <div id="node-popUp">
     <span id="node-operation">node</span> <br>
@@ -69,12 +82,14 @@ export default {
       edges: [
       ],
       dataset: {nodes: [], edges: [], types: []},
-      buttons: [],
+      historic: [],
+      //  buttons: [],
+
       //  buttonsList: [],
-      edges_non: [],
-      caches: [],
-      visibles: [],
-      old: [],
+      //  edges_non: [],
+      //  caches: [],
+      //  visibles: [],
+      //  old: [],
       options: {
         locale: navigator.language,
         nodes: {
@@ -259,10 +274,14 @@ async currentEndpoint(e){
 
 },
 methods:{
+  see(node){
+    console.log(node)
+  },
   selectNode(selected){
     //https://www.npmjs.com/package/@marklogic-community/grove-react-visjs-graph
     console.log("event",selected)
     let selected_id = selected.nodes[0]
+    this.historic.push(this.dataset.nodes[selected_id])
     console.log("dataset",this.dataset)
     /*  let edges = this.dataset.edges.filter(function(edge) {
     return edge.from == selected_id || edge.to == selected_id
@@ -283,19 +302,9 @@ methods:{
       if ((nodes_ids.indexOf(edge.to)) < 0){
         nodes_ids.push(edge.to)
         this.nodes.push(this.dataset.nodes[edge.to])
-
       }
-
-
     }
   });
-
-
-
-
-
-
-
 },
 showTypes(){
   //  console.log(this.dataset.types)
@@ -304,21 +313,6 @@ showTypes(){
     this.dataset.types.includes(node.id) ? this.nodes.push(node) : ""
     //  console.log(this.nodes)
   }
-
-
-  /*
-  TODO Utilisation de la couleur
-  var color = colorize(nom)
-  //console.log(color)
-  //var red = ''+Math.floor(Math.random() * 255);
-  //var green = ''+Math.floor(Math.random() * 255);
-  //var blue = ''+Math.floor(Math.random() * 255);
-  var ds = {
-  label: nom,
-  backgroundColor: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.01)',
-  borderColor: 'rgb('+color.red+', '+color.green+', '+color.blue+')',
-
-  */
 },
 
 search(){
@@ -423,103 +417,91 @@ stringOrArray(entries){
 lastPart(url){
   return url.substr(url.lastIndexOf('/') + 1)
 },
-random_rgba() {
-  var o = Math.round, r = Math.random, s = 255;
-  return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
-},
 add2network(donnees){
   console.log(donnees)
   for (let don in donnees){
     let d = donnees[don]
-    let color = this.random_rgba()
-    /*  if(    this.color[d['@type']] == undefined ){
-    this.color[d['@type']] = this.random_rgba()
-    color = this.color[d['@type']]
-  }else{
-  color = this.color[d['@type']]
-}
-console.log(color)*/
+    //  let color = this.random_rgba()
+    var color = this.colorize(d['@id'])
 
-let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
-let subjectNode = { id:d['@id'], label: label, shape: "star", color:color ,x:Math.random(-500, 500) , y:Math.random(-500,500)  }
-//this.addOrNothingNode(subjectNode)
-this.dataset.nodes[subjectNode.id] = subjectNode
 
-for (const [key, value] of Object.entries(d)) {
-  let typeNode = {}
-  let propertyEdge = {}
-  let objectNode = {}
-  let typeEdge = {}
-  //console.log("FOR")
-  switch (key) {
-    case "@type":
-    typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: color, size: 100 }
-    this.addOrNothingNode(typeNode)
-    typeEdge = {
-      from: d['@id'],
-      to: d['@type'],
-      label: "a",
+    let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
+    let subjectNode = { id:d['@id'], label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(-500, 500) , y:Math.random(-500,500)  }
+    //this.addOrNothingNode(subjectNode)
+    this.dataset.nodes[subjectNode.id] = subjectNode
+
+    for (const [key, value] of Object.entries(d)) {
+      let typeNode = {}
+      let propertyEdge = {}
+      let objectNode = {}
+      let typeEdge = {}
+      //console.log("FOR")
+      switch (key) {
+        case "@type":
+        typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100 }
+        this.addOrNothingNode(typeNode)
+        typeEdge = {
+          from: d['@id'],
+          to: d['@type'],
+          label: "a",
+        }
+        //  this.edges.push(typeEdge);
+        this.dataset.nodes[typeNode.id] = typeNode
+        this.dataset.edges.push(typeEdge)
+        this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+
+        /*  if (
+        this.buttonsList.indexOf(d['@type']) < 0 )
+        {
+        this.buttons.push({label:d['@type'], classe: d['@type']})
+        this.buttonsList.push(d['@type'])
+      }
+      console.log(this.buttons)*/
+      //  console.log(typeEdge.id)
+      break;
+      // NE rien faire déjà traité ou traité differemment
+      case "pair:label":
+      case 'pair:firstName':
+      case 'pair:lastName':
+      case "@id":
+      //console.log(key, value);
+      break;
+      // autres propriétés
+      case "pair:involves":
+      case 'pair:offeredBy':
+      case 'pair:hasMember':
+      case 'pair:memberOf':
+      case 'pair:hasInterest':
+      case 'pair:offers':
+      case 'pair:involvedIn':
+      case 'pair:interestOf':
+
+      //  console.log("_______________",key, value);
+      this.stringOrArray(value).forEach((v) => {
+        objectNode = { id:v, label: this.lastPart(v), shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:Math.random(-500,500) , y:Math.random(-500,500)  }
+        propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+        //  this.addOrNothingNode(objectNode)
+        //  this.edges.push(propertyEdge);
+
+        this.dataset.nodes[objectNode.id] = objectNode
+        this.dataset.edges.push(propertyEdge)
+      });
+      //  console.log(this.stringToColour(key))
+      break;
+
+      default:
+      console.warn("TODO : ---------------",key, value);
+      this.stringOrArray(value).forEach((v) => {
+        objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(500,1000) , y:Math.random(500,1000)  }
+        propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+        //  this.addOrNothingNode(objectNode)
+        //  this.edges.push(propertyEdge);
+        this.dataset.nodes[objectNode.id] = objectNode
+        this.dataset.edges.push(propertyEdge)
+      });
+
     }
-    //  this.edges.push(typeEdge);
-    this.dataset.nodes[typeNode.id] = typeNode
-    this.dataset.edges.push(typeEdge)
-    this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
-
-    /*  if (
-    this.buttonsList.indexOf(d['@type']) < 0 )
-    {
-    this.buttons.push({label:d['@type'], classe: d['@type']})
-    this.buttonsList.push(d['@type'])
   }
-  console.log(this.buttons)*/
-  //  console.log(typeEdge.id)
-  break;
-  // NE rien faire déjà traité ou traité differemment
-  case "pair:label":
-  case 'pair:firstName':
-  case 'pair:lastName':
-  case "@id":
-  //console.log(key, value);
-  break;
-  // autres propriétés
-  case "pair:involves":
-  case 'pair:offeredBy':
-  case 'pair:hasMember':
-  case 'pair:memberOf':
-  case 'pair:hasInterest':
-  case 'pair:offers':
-  case 'pair:involvedIn':
-  case 'pair:interestOf':
-
-  //  console.log("_______________",key, value);
-  this.stringOrArray(value).forEach((v) => {
-    objectNode = { id:v, label: this.lastPart(v), shape: "box", color: color, x:Math.random(-500,500) , y:Math.random(-500,500)  }
-    propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-    //  this.addOrNothingNode(objectNode)
-    //  this.edges.push(propertyEdge);
-
-    this.dataset.nodes[objectNode.id] = objectNode
-    this.dataset.edges.push(propertyEdge)
-  });
-  //  console.log(this.stringToColour(key))
-  break;
-
-  default:
-  console.warn("TODO : ---------------",key, value);
-  this.stringOrArray(value).forEach((v) => {
-    objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: color,x:Math.random(500,1000) , y:Math.random(500,1000)  }
-    propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-    //  this.addOrNothingNode(objectNode)
-    //  this.edges.push(propertyEdge);
-    this.dataset.nodes[objectNode.id] = objectNode
-    this.dataset.edges.push(propertyEdge)
-  });
-
-}
-//  console.log("END switch")
-//  color = this.random_rgba()
-}
-//console.log(this.dataset.nodes, this.dataset.edges)
 }
 },
 async retrieveData(source){

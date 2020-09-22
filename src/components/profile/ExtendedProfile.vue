@@ -44,6 +44,10 @@
   async created(){
     this.profile_url = await this.$store.state.solid.storage+"popock/profile.ttl"
     this.getOrCreate(this.profile_url)
+    this.interest = this.$route.params.interest
+    console.log(this.interest)
+    this.editTopic = this.interest.length > 0
+
   },
   watch: {
     async profile_url(p_u){

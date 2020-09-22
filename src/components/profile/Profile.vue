@@ -6,7 +6,7 @@
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button block v-b-toggle.accordion-1 variant="info">Solid Profile</b-button>
         </b-card-header>
-        <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <b-collapse id="accordion-1" :visible="interest.length == 0" accordion="my-accordion" role="tabpanel">
           <b-card-body>
             <b-card-text><SolidProfile /></b-card-text>
           </b-card-body>
@@ -17,7 +17,7 @@
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button block v-b-toggle.accordion-2 variant="info">Extended Profile</b-button>
         </b-card-header>
-        <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-collapse id="accordion-2" :visible="interest.length > 0" accordion="my-accordion" role="tabpanel">
           <b-card-body>
             <b-card-text><ExtendedProfile /></b-card-text>
           </b-card-body>
@@ -106,7 +106,9 @@ export default {
 
     }
   },
-  async  created(){
+  created(){
+    this.interest = this.$route.params.interest
+    console.log(this.interest)
 
   },
   watch: {
