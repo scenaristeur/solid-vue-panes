@@ -21,7 +21,7 @@
     <router-link to="/about">About</router-link>
   </div>
 
-    <small><i>0.1.94 - semapps show types</i></small>
+    <small><i>0.1.95 - startinblox</i></small>
 
 </div>
 </template>

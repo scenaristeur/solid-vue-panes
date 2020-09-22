@@ -2,7 +2,7 @@
   <div class="modele-view container row">
     <h2>SemApps</h2>
     <SemappsEnpoints :endpoints="endpoints" />
-      <SemappsNetwork :containers="containers" variant="outline-info" />
+      <SemappsNetwork variant="outline-info" />
   <!--  <div class="col-lg-7">
       <SemappsComponent path="projects/" type="Project" variant="outline-info"/>
       <SemappsComponent path="persons/" type="Person" variant="outline-info"/>
@@ -38,11 +38,12 @@ export default {
   data() {
     return {
       endpoints : [
-        {name: "Assemblée Virtuelle", url: "https://data.virtual-assembly.org/", disabled: false},
-        {name: "Nouvelle Source", url: "https://blabla.virtual-assembly.org/", disabled: false},
-        {name: "Another One", url: "https://Nothing.virtual-assembly.org/", disabled: true}
+        {name: "Assemblée Virtuelle", url: "https://data.virtual-assembly.org/", disabled: false,   containers: [ "skills", "themas","organizations", "projects", "persons"]},
+        {name: "Startinblox", url: "https://api.startinblox.com/", disabled: false,   containers: [ "users"]},
+          {name: "Startinblox Community", url: "https://api.community.startinblox.com/", disabled: false,   containers: [ "users"]},
+      //  {name: "Another One", url: "https://Nothing.virtual-assembly.org/", disabled: true}
       ],
-      containers: [ "skills", "themas","organizations", "projects", "persons"] // "projects", "persons",
+    //  containers: [/* "skills", "themas","organizations", "projects", "persons",*/ "users"] // "projects", "persons",
     }
   },
 

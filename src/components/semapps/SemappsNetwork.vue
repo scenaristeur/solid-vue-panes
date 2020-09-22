@@ -59,7 +59,7 @@ export default {
     //  'network': () => import("vue-vis-network")
     //'PeopleItem': () => import('@/components/profile/PeopleItem'),
   },
-  props: ['containers'],
+  //props: ['containers'],
   data: function () {
     //  data() {
     return {
@@ -248,6 +248,8 @@ watch: {
 },
 async currentEndpoint(e){
   this.donnees = []
+  this.containers = e.containers
+  console.log(e)
   for ( let c in this.containers){
     await this.retrieveData(e.url+this.containers[c])
   }
@@ -296,12 +298,12 @@ methods:{
 
 },
 showTypes(){
-//  console.log(this.dataset.types)
+  //  console.log(this.dataset.types)
   this.nodes = []
   for (const node of Object.values(this.dataset.nodes)) {
     this.dataset.types.includes(node.id) ? this.nodes.push(node) : ""
-  //  console.log(this.nodes)
-}
+    //  console.log(this.nodes)
+  }
 
 
   /*
