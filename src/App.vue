@@ -21,7 +21,7 @@
     <router-link to="/about">About</router-link>
   </div>
 
-    <small><i>0.1.96 - startinblox + historik & add to interests</i></small>
+    <small><i>0.1.97 - startinblox + historik & add to interests interest in popock</i></small>
 
 </div>
 </template>

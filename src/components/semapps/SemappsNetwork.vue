@@ -198,7 +198,10 @@ physics:{
 mounted() {
   this.webId = this.$route.params.webId || this.$store.state.solid.webId
   this.friends  = this.$store.state.solid.friends
-  this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push({ id: this.webId, label: this.webId }) : ""
+  let webIdNode = { id: this.webId, label: this.webId }
+  this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push(webIdNode) : ""
+  this.dataset.nodes[webIdNode.id] = webIdNode
+//  this.dataset.edges.push(interestProperty)
   this.addInterests(this.webId)
   //  console.log("4444444444444444444444",this.$refs.network)
 
@@ -212,7 +215,7 @@ computed:{
   },
 
   profile_url:{
-    get: function() { return this.$store.state.solid.storage+"public/salut/profile.ttl"},
+    get: function() { return this.$store.state.solid.storage+"public/popock/profile.ttl"},
     set: function() {}
   },
   storage:{
@@ -241,12 +244,19 @@ watch: {
     console.log(friends)
     friends.forEach((f) => {
       //  console.log(f,i)
-      this.nodes.find(x => x.id === f) == undefined ?   this.nodes.push({ id:f, label: f , shape: "dot", color: "yellow"}) : ""
-      this.edges.push({
+      let friendNode = { id:f, label: f , shape: "dot", color: "yellow"}
+      let edgeNode = {
         from: this.webId,
         to: f,
         label: "friend"
-      });
+      }
+      this.nodes.find(x => x.id === f) == undefined ?   this.nodes.push(friendNode) : ""
+      this.edges.push(edgeNode);
+
+      this.dataset.nodes[friendNode.id] = friendNode
+      this.dataset.edges.push(edgeNode)
+    //  this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+
       this.addInterests(f)
 
     });
@@ -529,7 +539,7 @@ async retrieveData(source){
 },
 async addInterests(webId){
   let storage =  await solid.data[webId].storage
-  let p_u = storage+"public/salut/profile.ttl"
+  let p_u = storage+"public/popock/profile.ttl"
   console.log("P8U",p_u)
   try{
     this.profileDoc = await fetchDocument(p_u)
@@ -537,12 +547,14 @@ async addInterests(webId){
     this.interests = await subj.getAllLiterals(foaf.topic_interest)
     console.log(this.interests)
     this.interests.forEach((interest) => {
-      this.nodes.find(x => x.id === interest) == undefined ?   this.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" }) : ""
-      this.edges.push({
-        from: webId,
-        to: interest,
-        label: "topic_interest"
-      });
+      let interestNode = { id:interest, label: interest, shape: "triangle", color: "green" }
+      let interestProperty = {from: webId, to: interest, label: "topic_interest"}
+      this.nodes.find(x => x.id === interest) == undefined ?   this.nodes.push(interestNode) : ""
+      this.edges.push(interestProperty);
+
+      this.dataset.nodes[interestNode.id] = interestNode
+      this.dataset.edges.push(interestProperty)
+
     });
 
   }catch(e){
