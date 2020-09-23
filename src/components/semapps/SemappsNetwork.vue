@@ -201,7 +201,7 @@ mounted() {
   let webIdNode = { id: this.webId, label: this.webId }
   this.nodes.find(x => x.id === this.webId) == undefined ?   this.nodes.push(webIdNode) : ""
   this.dataset.nodes[webIdNode.id] = webIdNode
-//  this.dataset.edges.push(interestProperty)
+  //  this.dataset.edges.push(interestProperty)
   this.addInterests(this.webId)
   //  console.log("4444444444444444444444",this.$refs.network)
 
@@ -255,7 +255,7 @@ watch: {
 
       this.dataset.nodes[friendNode.id] = friendNode
       this.dataset.edges.push(edgeNode)
-    //  this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+      //  this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
 
       this.addInterests(f)
 
@@ -276,7 +276,7 @@ async currentEndpoint(e){
   this.containers = e.containers
   console.log(e)
   for ( let c in this.containers){
-    await this.retrieveData(e.url+this.containers[c])
+    await this.retrieveData(e.url+this.containers[c]+"/")
   }
 
 
@@ -427,7 +427,8 @@ stringOrArray(entries){
 lastPart(url){
   return url.substr(url.lastIndexOf('/') + 1)
 },
-add2network(donnees){
+add2network(response_data){
+  let donnees = response_data["ldp:contains"]
   console.log(donnees)
   for (let don in donnees){
     let d = donnees[don]
@@ -442,11 +443,18 @@ add2network(donnees){
 
     for (const [key, value] of Object.entries(d)) {
       let typeNode = {}
+      let typeEdge = {}
       let propertyEdge = {}
       let objectNode = {}
-      let typeEdge = {}
       //console.log("FOR")
       switch (key) {
+        // NE rien faire déjà traité ou traité differemment
+        case "pair:label":
+        case 'pair:firstName':
+        case 'pair:lastName':
+        case "@id":
+        //console.log(key, value);
+        break;
         case "@type":
         typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100 }
         this.addOrNothingNode(typeNode)
@@ -460,21 +468,6 @@ add2network(donnees){
         this.dataset.edges.push(typeEdge)
         this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
 
-        /*  if (
-        this.buttonsList.indexOf(d['@type']) < 0 )
-        {
-        this.buttons.push({label:d['@type'], classe: d['@type']})
-        this.buttonsList.push(d['@type'])
-      }
-      console.log(this.buttons)*/
-      //  console.log(typeEdge.id)
-      break;
-      // NE rien faire déjà traité ou traité differemment
-      case "pair:label":
-      case 'pair:firstName':
-      case 'pair:lastName':
-      case "@id":
-      //console.log(key, value);
       break;
       // autres propriétés
       case "pair:involves":
@@ -526,7 +519,9 @@ async retrieveData(source){
     //   console.log(response.data["ldp:contains"])
     //  console.log(this.response)
     //console.log(this.donnees);
-    this.add2network(response.data["ldp:contains"])
+    this.currentEndpoint.model == "semapps" ?
+    this.add2network(response.data)
+    : this.add2networkSartinblox(response.data)
     //  console.log(response.status);    //  console.log(response.statusText);    //  console.log(response.headers); //  console.log(response.config);
   })
   .catch(() /*error*/ => {
@@ -537,10 +532,112 @@ async retrieveData(source){
 
   });
 },
+
+add2networkSartinblox(response_data){
+  let donnees = response_data["ldp:contains"]
+  console.log("SIB",donnees)
+  console.log(donnees)
+  for (let don in donnees){
+    let d = donnees[don]
+    console.log(d)
+    let id = d['@id']
+
+    var color = this.colorize(id)
+
+    let label =  d.name || d.first_name+' '+d.last_name || d.username ||  this.lastPart(d['@id'])
+    let subjectNode = { id:id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(-500, 500) , y:Math.random(-500,500)  }
+    console.log(subjectNode)
+    this.dataset.nodes[subjectNode.id] = subjectNode
+    //  this.nodes.push(subjectNode)
+
+    for (const [key, value] of Object.entries(d)) {
+
+      let typeNode = {}
+      let typeEdge = {}
+      let propertyEdge = {}
+      let objectNode = {}
+      //console.log("FOR")
+      switch (key) {
+        // NOTHING TO DO, ALREADY TREATED NE rien faire déjà traité ou traité differemment
+        case "@id":
+        case '@context':
+        case 'permissions':
+        case "password":
+        //console.log(key, value);
+        break;
+        case "@type":
+        typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100 }
+        this.addOrNothingNode(typeNode)
+        typeEdge = {
+          from: id,
+          to: d['@type'],
+          label: "a",
+        }
+        //  this.edges.push(typeEdge);
+        this.dataset.nodes[typeNode.id] = typeNode
+        this.dataset.edges.push(typeEdge)
+        this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+      break;
+
+      // autres propriétés
+      case 'first_name':
+      case 'last_name':
+      case "username":
+      case "name":
+      case "email":
+      case "is_staff":
+      case "is_active":
+    //  case "account":
+      //  console.log("_______________",key, value);
+      this.stringOrArray(value).forEach((v) => {
+        objectNode = { id:v, label: v, shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:Math.random(-500,500) , y:Math.random(-500,500)  }
+        propertyEdge = {from: d['@id'], to: v, label: key}
+        //  this.addOrNothingNode(objectNode)
+        //  this.edges.push(propertyEdge);
+
+        this.dataset.nodes[objectNode.id] = objectNode
+        this.dataset.edges.push(propertyEdge)
+      });
+      //  console.log(this.stringToColour(key))
+      break;
+      case "chatProfile":
+      case "jobOffers":
+      case "inbox":
+      case "profile":
+      case "circles":
+      case "groups":
+
+      console.log(key+" -> "+value['@id'])
+      break;
+      default:
+      console.warn("TODO : ---------------",key, value);
+      /*  try{
+      this.stringOrArray(value).forEach((v) => {
+      objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(500,1000) , y:Math.random(500,1000)  }
+      propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+      //  this.addOrNothingNode(objectNode)
+      //  this.edges.push(propertyEdge);
+      this.dataset.nodes[objectNode.id] = objectNode
+      this.dataset.edges.push(propertyEdge)
+    });
+  }catch(e){
+  //console.log(e)
+}*/
+
+}
+}
+console.log(this.nodes)
+
+}
+
+
+
+
+},
 async addInterests(webId){
   let storage =  await solid.data[webId].storage
   let p_u = storage+"public/popock/profile.ttl"
-  console.log("P8U",p_u)
+  //console.log("P8U",p_u)
   try{
     this.profileDoc = await fetchDocument(p_u)
     let subj = await this.profileDoc.getSubject(p_u+"#me")

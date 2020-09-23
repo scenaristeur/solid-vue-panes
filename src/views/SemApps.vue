@@ -38,12 +38,30 @@ export default {
   data() {
     return {
       endpoints : [
-        {name: "Assemblée Virtuelle", url: "https://data.virtual-assembly.org/", disabled: false,   containers: [ "skills", "themas","organizations", "projects", "persons"]},
-        {name: "Fake url for test", url: "https://popock-test.virtual-assembly.org/", disabled: false,    containers: [ "test"]},
-        {name: "Startinblox", url: "https://api.startinblox.com/", disabled: false,   containers: [ "users"]},
-        {name: "Startinblox Community", url: "https://api.community.startinblox.com/", disabled: false,   containers: [ "users"]},
-        {name: "Happy Dev", url: "https://api.paris.happy-dev.fr/", disabled: false,   containers: [ "users"]},
-
+        {name: "Assemblée Virtuelle",
+        url: "https://data.virtual-assembly.org/",
+        disabled: false, containers: [ "skills", "themas","organizations", "projects", "persons"],
+        model: "semapps"},
+        {name: "Fake url for test",
+        url: "https://popock-test.virtual-assembly.org/",
+        disabled: false,
+        containers: [ "test"],
+        model: "semapps"},
+      /*  {name: "Startinblox",
+        url: "https://api.startinblox.com/",
+        disabled: false,
+        containers: [  "users"],
+        model: "startinblox"},*/
+        {name: "Startinblox Community",
+        url: "https://api.community.startinblox.com/",
+        disabled: false,
+        containers: [/*"accounts",*/ "users"],
+        model: "startinblox"},
+        {name: "Happy Dev",
+        url: "https://api.paris.happy-dev.fr/",
+        disabled: false,
+        containers: [ /*"accounts",*/ "users"],
+        model: "startinblox"},
       ],
       //  containers: [/* "skills", "themas","organizations", "projects", "persons",*/ "users"] // "projects", "persons",
     }
