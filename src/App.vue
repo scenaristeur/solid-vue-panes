@@ -21,7 +21,9 @@
     <router-link to="/about">About</router-link>
   </div>
 
-    <small><i>0.1.98 - startinblox users -</i></small>
+    <small><i>
+      0.1.99 - profile / interest
+    </i></small>
 
 </div>
 </template>

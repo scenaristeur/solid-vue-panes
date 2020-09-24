@@ -103,12 +103,12 @@ export default {
 
   data: function () {
     return {
-
+      interest: ""
     }
   },
   created(){
-    this.interest = this.$route.params.interest
-    console.log(this.interest)
+  this.$route.params.interest != undefined ?   this.interest = this.$route.params.interest :""
+  //  console.log(this.interest)
 
   },
   watch: {

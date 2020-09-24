@@ -1,39 +1,39 @@
 <template>
   <div class="modele-view">
-  <!--  <a href="https://scenaristeur.github.io/salut" target="_blank">
-      Temporary external Edit on Salut App</a>-->
-      <hr style="margin:8px auto">
-      <b-button @click="editTopic = !editTopic" variant="info"> <b-icon-pen></b-icon-pen> Interest Topics</b-button>
+    <!--  <a href="https://scenaristeur.github.io/salut" target="_blank">
+    Temporary external Edit on Salut App</a>-->
     <hr style="margin:8px auto">
-      <div  v-if="editTopic == true">
-        <div class="input-group mb-3">
-          <input id="interest" v-model="interest" type="text" class="form-control"
-          placeholder="I'm intersted in..." aria-label="Interest"
-          aria-describedby="interest-label">
-          <div class="input-group-append">
-            <button id="submit_btn" class="btn btn-primary" type="button" @click="addInterest">Add
-              <span id="submit_spinner" class="spinner-border spinner-border-sm" hidden role="status" aria-hidden="true"></span>
-            </button>
-          </div>
+    <b-button @click="editTopic = !editTopic" variant="info"> <b-icon-pen></b-icon-pen> Interest Topics</b-button>
+    <hr style="margin:8px auto">
+    <div  v-if="editTopic == true">
+      <div class="input-group mb-3">
+        <input id="interest" v-model="interest" type="text" class="form-control"
+        placeholder="I'm intersted in..." aria-label="Interest"
+        aria-describedby="interest-label">
+        <div class="input-group-append">
+          <button id="submit_btn" class="btn btn-primary" type="button" @click="addInterest">Add
+            <span id="submit_spinner" class="spinner-border spinner-border-sm" hidden role="status" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
-
-      <button type="button" v-for="interest in interests" :key="interest" class="btn btn-outline-info btn-sm">
-        {{interest}}
-        <b-icon-trash-fill @click.stop="delInterest(interest)" v-if="editTopic == true"></b-icon-trash-fill>
-      </button>
-
     </div>
-  </template>
 
-  <script>
-  import ToastMixin from '@/mixins/ToastMixin'
-  import { fetchDocument, createDocument } from 'tripledoc';
-  import { foaf } from 'rdf-namespaces'
+    <button type="button" v-for="interest in interests" :key="interest" class="btn btn-outline-info btn-sm">
+      {{interest}}
+      <b-icon-trash-fill @click.stop="delInterest(interest)" v-if="editTopic == true"></b-icon-trash-fill>
+    </button>
 
-  export default {
-    name: 'ExtendedProfile',
-   mixins: [ToastMixin],
+  </div>
+</template>
+
+<script>
+import ToastMixin from '@/mixins/ToastMixin'
+import { fetchDocument, createDocument } from 'tripledoc';
+import { foaf } from 'rdf-namespaces'
+
+export default {
+  name: 'ExtendedProfile',
+  mixins: [ToastMixin],
   data() {
     return {
       interests: [],
@@ -44,8 +44,7 @@
   async created(){
     this.profile_url = await this.$store.state.solid.storage+"popock/profile.ttl"
     this.getOrCreate(this.profile_url)
-    this.interest = this.$route.params.interest
-    console.log(this.interest)
+    this.$route.params.interest != undefined ?   this.interest = this.$route.params.interest :""
     this.editTopic = this.interest.length > 0
 
   },
@@ -68,7 +67,7 @@
     },
     async  addInterest(){
       //https://github.com/scenaristeur/salut/blob/master/src/interests-element.js
-  //    console.log(this.interest, this.profile_url)
+      //    console.log(this.interest, this.profile_url)
       this.interests.push(this.interest)
       //  await solid.data[this.profile_url].foaf$topic_interest.add(this.interest)
       this.profileDoc = {}
