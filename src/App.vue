@@ -22,7 +22,7 @@
   </div>
 
     <small><i>
-      0.1.99 - profile / interest
+      0.1.100 - profile / note scroll
     </i></small>
 
 </div>

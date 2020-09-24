@@ -6,54 +6,39 @@
         <div class="frontside">
           <div class="card">
             <div class="card-body text-center">
-              <p><img class=" img-fluid" v-bind:src="profile.photo" alt="card image"></p>
-              <h4 class="card-title">{{profile.name || this.webId}}</h4>
-              <p class="card-text" v-if="profile.organization">Organization: {{profile.organization}}</p>
-              <p class="card-text" v-if="profile.role">Role: {{profile.role}}</p>
+              <p><img class=" img-fluid" v-bind:src="'https://images.weserv.nl/?url='+profile.photo+'&w100&h=100'" alt="card image"></p>
+              <h5 class="card-title">{{profile.name || this.webId}}</h5>
+              <small> <span class="card-text" v-if="profile.organization"><b>Organization:</b> {{profile.organization}}<br></span>
+                <span class="card-text" v-if="profile.role"> <b>Role:</b> {{profile.role}}<br></span></small>
 
-              <!--
-              <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
 
-            <b-button v-if="friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{friends.length}} friends</b-button>
-    -->
+                <!--
+                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+
+                <b-button v-if="friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{friends.length}} friends</b-button>
+              -->
+            </div>
           </div>
         </div>
-      </div>
-      <div class="backside container fluid">
-        <div class="card">
-          <div class="card-body text-center mt-4">
-            <h4 class="card-title"><a v-bind:href="webId" target="_blank">{{profile.name || this.webId}}</a></h4>
-            <p class="card-text" v-if="profile.locality">Locality: {{profile.locality}}</p>
-            <p class="card-text" v-if="profile.gender">Gender: {{profile.gender}}</p>
-            <p class="card-text" v-if="profile.bday">Birthday: {{profile.bday}}</p>
-            <p class="card-text" v-if="profile.note">Note: {{profile.note}}</p>
-            <ul class="list-inline">
-          <li class="list-inline-item">
-                <b-button v-if="friends.length > 0"  v-b-toggle.collapse-1 variant="primary">{{friends.length}} friends</b-button>
-              </li>
-              <!--    <li class="list-inline-item">
-                <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                  <i class="fa fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                  <i class="fa fa-skype"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                  <i class="fa fa-google"></i>
-                </a>
-              </li> -->
-            </ul>
+        <div class="backside container fluid">
+          <div class="card">
+            <h6 class="card-title mt-2"><a v-bind:href="webId" target="_blank">{{profile.name || this.webId}}</a></h6>
+            <b-button size="sm" v-if="friends.length > 0" class="mx-auto" variant="primary">{{friends.length}} friends</b-button>
+
+            <div class="card-body text-center mt-4" style="overflow-y: auto;height: 100px;">
+              <p class="card-text" v-if="profile.locality">Locality: {{profile.locality}}</p>
+              <p class="card-text" v-if="profile.gender">Gender: {{profile.gender}}</p>
+              <p class="card-text" v-if="profile.bday">Birthday: {{profile.bday}}</p>
+              <p class="card-text" v-if="profile.note">Note: {{profile.note}}</p>
+
+
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- ./Team member -->
+  <!-- ./Team member -->
 </template>
 
 <script>
