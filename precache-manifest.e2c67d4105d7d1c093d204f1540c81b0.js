@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/agora.09c1fb62.css"
   },
   {
-    "revision": "9053e6cba5792630e6f7",
+    "revision": "73babd4c3536ab25ed8a",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -172,7 +172,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-8d9a5e66.72189c22.css"
   },
   {
-    "revision": "d19e03f5348b29872cf1",
+    "revision": "98ce26b9be4909e4ee5a",
     "url": "/solid-vue-panes/css/chunk-987b31c8.09c1fb62.css"
   },
   {
@@ -316,7 +316,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "5d471be2704a8b86b0002ee577911b11",
+    "revision": "7a4f249d0ca792593ab82759d2f4d6f1",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -328,8 +328,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.1a3caabb.js"
   },
   {
-    "revision": "9053e6cba5792630e6f7",
-    "url": "/solid-vue-panes/js/app.86d5f782.js"
+    "revision": "73babd4c3536ab25ed8a",
+    "url": "/solid-vue-panes/js/app.e56ca8bf.js"
   },
   {
     "revision": "3f8a48f02633e6a14f24",
@@ -728,8 +728,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-96cf5244.cd79e019.js"
   },
   {
-    "revision": "d19e03f5348b29872cf1",
-    "url": "/solid-vue-panes/js/chunk-987b31c8.f08a8ffe.js"
+    "revision": "98ce26b9be4909e4ee5a",
+    "url": "/solid-vue-panes/js/chunk-987b31c8.69be471d.js"
   },
   {
     "revision": "c53373e1657b8dd2be08",
@@ -848,8 +848,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/post.f6f32e21.js"
   },
   {
-    "revision": "528bd9c5091d11ed85aa",
-    "url": "/solid-vue-panes/js/profile.3f46a0be.js"
+    "revision": "0d73c017b1a514577c78",
+    "url": "/solid-vue-panes/js/profile.0948827e.js"
   },
   {
     "revision": "3b5a1ccf809ccaf3ec0a",
