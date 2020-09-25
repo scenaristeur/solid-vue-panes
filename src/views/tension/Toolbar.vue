@@ -5,7 +5,7 @@
         <b-button variant="outline" v-bind:to="{ name: 'View', params: { url: item.url }}">View <b-icon icon="eye" aria-hidden="true" variant="info"></b-icon> </b-button>
         <b-button variant="outline"  v-bind:to="{ name: 'TensionEdit', params: { url: item.url }}">Edit <b-icon icon="pen" aria-hidden="true" variant="info"></b-icon> </b-button>
         <b-button variant="outline"  @click="openShareDialog"> Share <b-icon icon="list" variant="info"></b-icon></b-button>
-        <b-button variant="outline"  to="/tensions">Create Group <b-icon icon="list" variant="info"></b-icon></b-button>
+        <b-button variant="outline"  v-bind:to="{ name: 'GroupsTension', params: { tension: item.url }}">Create Group <b-icon icon="list" variant="info"></b-icon></b-button>
           <b-button variant="outline"  v-bind:to="{ name: 'Parle', params: { url: item.url }}">Parle<b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
       </b-button-group><br>
       <small>item {{ item.url}}</small>

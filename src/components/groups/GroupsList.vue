@@ -1,6 +1,7 @@
 <template>
   <div class="groups-list">
-    {{url}}
+    {{url}}<br>
+    {{ tension }}
     <GroupsToolbar :path="url"/>
     <GroupCreate v-on:created="initGroups" />
 
@@ -33,12 +34,13 @@ export default {
   },
   data: function () {
     return {
-      folder: {}
+      folder: {},
+      tension : ""
     }
   },
   created(){
-
-    console.log(this.url)
+    this.$route.params.tension != undefined ?   this.tension = this.$route.params.tension :""
+    console.log("TEnsion", this.tension)
     this.initGroups()
   },
   computed:{
@@ -84,8 +86,10 @@ export default {
       //  '$route' (to, from) {
       console.log(to)
       this.url = to.params.url // || this.storage+"public/groups/"
-    //  console.log(this.url)
+      //  console.log(this.url)
       this.initGroups(to.params.url)
+      this.tension = to.params.tension
+      console.log("tension",this.tension)
       //  this.updateFriends()
       //  this.updateIndexes()
     }

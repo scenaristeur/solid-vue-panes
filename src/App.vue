@@ -22,7 +22,7 @@
   </div>
 
     <small><i>
-      0.1.100 - profile / note scroll
+      0.1.101 - create group from tension
     </i></small>
 
 </div>

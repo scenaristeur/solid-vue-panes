@@ -43,6 +43,33 @@ data() {
 
   }
 },
+created(){
+  this.$route.params.tension != undefined ?   this.tension = this.$route.params.tension :""
+  console.log("TEnsion", this.tension)
+  if (this.tension.length > 0 ){
+    this.$bvModal.show("new-group-modal")
+    this.purpose = "This group aims to treat "+this.tension
+  }
+
+
+},
+watch: {
+  '$route' (to) {
+    //  '$route' (to, from) {
+    //  console.log(to)
+    //  this.url = to.params.url // || this.storage+"public/groups/"
+    //  console.log(this.url)
+    //  this.initGroups(to.params.url)
+    this.tension = to.params.tension
+    console.log("tension",this.tension)
+    if (this.tension.length > 0 ){
+      this.$bvModal.show("new-group-modal")
+      this.purpose = "This group aims to treat "+this.tension
+    }
+    //  this.updateFriends()
+    //  this.updateIndexes()
+  }
+},
 methods:{
   async add(){
     this.name = this.name.trim()
@@ -160,7 +187,7 @@ methods:{
     },
   },
   computed:{
-      webId:{
+    webId:{
       get: function() { return this.$store.state.solid.webId},
       set: function() {}
     },
