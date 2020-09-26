@@ -3,59 +3,244 @@
   <div class="network container">
     <h5>Type a search to filter</h5>
 
-    <b-input @input="search" size="sm" v-model="input.subject" placeholder="Subject" />
-    <b-input @input="search" size="sm" v-model="input.property" placeholder="property" />
-    <b-input @input="search" size="sm" v-model="input.object" placeholder="Object" />
+    <div class="row">
+      <div class="col">
+        <b-input @input="search" size="sm" v-model="input.subject" placeholder="Subject" />
+        <b-input @input="search" size="sm" v-model="input.property" placeholder="property" />
+        <b-input @input="search" size="sm" v-model="input.object" placeholder="Object" />
 
-    <b-button  @click="showTypes" size="sm" variant="outline-info">All types</b-button>
+        <b-button  @click="showTypes" size="sm" variant="outline-info">All types</b-button>
+        <b-button  @click="showNodes" size="sm" variant="outline-info">All Nodes</b-button>
+        <!--https://visjs.github.io/vis-network/examples/network/physics/physicsConfiguration.html-->
+        <b-button v-b-toggle.collapse-1 variant="primary">Network Settings</b-button>
+        <a href="https://visjs.github.io/vis-network/docs/network/physics.html" target="_blank"><b>?</b></a>
+
+      </div>
+      <div class="col">
 
 
 
-    <network ref="network"
-    class="wrapper"
-    :nodes="nodes"
-    :edges="edges"
-    :options="options"
-    @select-node="selectNode">
-  </network>
+
+        <b-collapse id="collapse-1" class="mt-2">
+          <b-card>
+
+            <b-button v-b-toggle.collapse-1-inner size="sm">Edges</b-button>
+            <b-collapse id="collapse-1-inner" class="mt-2">
+              <b-card>
+
+                - smooth : <br>
+                <b-row>
+                  <b-col sm="3">
+                    <label for="smooth-enabled">Enabled</label>
+                  </b-col>
+                  <b-col sm="9">
+                    <b-form-checkbox
+                    id="smooth-enabled"
+                    v-model="options.edges.smooth">
+
+                  </b-form-checkbox>
+                </b-col>
+              </b-row>
+
+              <!--        <b-row>
+              <b-col sm="3">
+              <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+            </b-col>
+            <b-col sm="9">
+            <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+          </b-col>
+        </b-row>
 
 
-  <b-list-group v-if="historic.length > 0">
-    <b-list-group-item v-for='h in historic' :key="h.id">
-      {{ h.label }}
-      <b-button-group>
-        <b-button variant="outline-info" size="sm" @click="see(h)">See</b-button>
-        <b-button variant="outline-info" size="sm" v-bind:to="{ name: 'Profile', params: { interest: h.id }}">Add to my inyterests</b-button>
-        <!--<b-button>Button 3</b-button>-->
-      </b-button-group>
-    </b-list-group-item>
-  </b-list-group>
+        <b-row>
+        <b-col sm="3">
+        <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+      </b-col>
+      <b-col sm="9">
+      <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+    </b-col>
+  </b-row>
 
-  <div id="node-popUp">
-    <span id="node-operation">node</span> <br>
-    <table style="margin:auto;">
-      <tr>
-        <td>id</td><td><input id="node-id" value="new value" /></td>
-      </tr>
-      <tr>
-        <td>label</td><td><input id="node-label" value="new value" /></td>
-      </tr>
-    </table>
-    <input type="button" value="save" id="node-saveButton" />
-    <input type="button" value="cancel" id="node-cancelButton" />
+  <b-row>
+  <b-col sm="3">
+  <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+</b-col>
+<b-col sm="9">
+<b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+</b-col>
+</b-row>
+
+
+
+
+
+
+<b-form-select v-model="selected" :options="options" size="sm" class="mt-3"></b-form-select>
+<div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+
+<label for="range-1">Example range with min and max</label>
+<b-form-input id="range-1" v-model="value" type="range" min="0" max="5"></b-form-input>
+<div class="mt-2">Value: {{ value }}</div>
+
+-->
+
+</b-card>
+</b-collapse>
+
+
+
+<b-button v-b-toggle.collapse-2-inner size="sm">Physics</b-button>
+<b-collapse id="collapse-2-inner" class="mt-2">
+  <b-card>
+
+
+    <b-row>
+      <b-col sm="4">
+        <label for="physics-enabled">Enabled</label>
+      </b-col>
+      <b-col sm="8">
+        <b-form-checkbox
+        id="physics-enabled"
+        v-model="options.physics.enabled">
+      </b-form-checkbox>
+    </b-col>
+  </b-row>
+
+
+
+    <b-row>
+      <b-col sm="4">
+        <label for="max-velocity">Max velocity : {{ options.physics.maxVelocity }}</label>
+      </b-col>
+      <b-col sm="8">
+        <b-form-input id="range-1" v-model.number="options.physics.maxVelocity" type="range" min=1 max=100></b-form-input>
+      </b-col>
+    </b-row>
+
+
+    <b-row>
+      <b-col sm="4">
+        <label for="solver">Min velocity : {{ options.physics.minVelocity }}</label>
+      </b-col>
+      <b-col sm="8">
+        <b-form-input id="range-1" v-model.number="options.physics.minVelocity" type="range" step=0.1 min=0 max=1></b-form-input>
+
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col sm="4">
+        <label for="solver">Time step : {{ options.physics.timestep }}</label>
+      </b-col>
+      <b-col sm="8">
+
+        <b-form-input id="range-1" v-model.number="options.physics.timestep" type="range" step=0.1 min=0 max=1></b-form-input>
+
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col>
+        <label for="adaptive-timestep">Adaptive Timestep</label>
+      </b-col>
+      <b-col>
+        <b-form-checkbox
+        id="adaptive-timestep"
+        v-model="options.physics.adaptiveTimestep">
+      </b-form-checkbox>
+    </b-col>
+  </b-row>
+
+
+  </b-card>
+  <b-card>
+
+  <b-row>
+    <b-col sm="4">
+      <label for="solver">Solver</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-select id="solver" v-model="solver" :options="optionsSolver" size="sm" class="mt-3"></b-form-select>
+    </b-col>
+  </b-row>
+
+
+  <b-row v-for="(param, i) in Object.entries(options.physics[solver])" :key=i>
+    <b-col>
+      <label for="param">{{ param[0] }}  : {{param[1]}}</label>
+    </b-col>
+    <b-col>
+      <b-form-input v-if="param[0] == 'gravitationalConstant'" id="param" v-model.number="options.physics[solver].gravitationalConstant" type="range" min="-50000" max="0"></b-form-input>
+      <b-form-input v-if="param[0] == 'centralGravity'" id="param" v-model.number="options.physics[solver].centralGravity" type="range" min="0" max="1" step="0.01"></b-form-input>
+      <b-form-input v-if="param[0] == 'springLength'" id="param" v-model.number="options.physics[solver].springLength" type="range" min="1" max="500"></b-form-input>
+      <b-form-input v-if="param[0] == 'springConstant'" id="param" v-model.number="options.physics[solver].springConstant" type="range" min="0" max="1" step="0.01"></b-form-input>
+      <b-form-input v-if="param[0] == 'nodeDistance'" id="param" v-model.number="options.physics[solver].nodeDistance" type="range" min="0" max="500"></b-form-input>
+
+      <b-form-input v-if="param[0] == 'damping'" id="param" v-model.number="options.physics[solver].damping" type="range" min="0" max="1" step="0.01"></b-form-input>
+      <b-form-input v-if="param[0] == 'avoidOverlap'" id="param" v-model.number="options.physics[solver].avoidOverlap" type="range" min="0" max="1" step="0.01"></b-form-input>
+
+    </b-col>
+  </b-row>
+
+
+
+</b-card>
+
+</b-collapse>
+
+</b-card>
+</b-collapse>
+
+
+</div>
+</div>
+
+
+<network ref="network"
+class="wrapper"
+:nodes="nodes"
+:edges="edges"
+:options="options"
+@select-node="selectNode">
+</network>
+
+
+<b-list-group v-if="historic.length > 0">
+  <b-list-group-item v-for='h in historic' :key="h.id">
+    {{ h.label }}
+    <b-button-group>
+      <b-button variant="outline-info" size="sm" @click="see(h)">See</b-button>
+      <b-button variant="outline-info" size="sm" v-bind:to="{ name: 'Profile', params: { interest: h.id }}">Add to my inyterests</b-button>
+      <!--<b-button>Button 3</b-button>-->
+    </b-button-group>
+  </b-list-group-item>
+</b-list-group>
+
+<div id="node-popUp">
+  <span id="node-operation">node</span> <br>
+  <table style="margin:auto;">
+    <tr>
+      <td>id</td><td><input id="node-id" value="new value" /></td>
+    </tr>
+    <tr>
+      <td>label</td><td><input id="node-label" value="new value" /></td>
+    </tr>
+  </table>
+  <input type="button" value="save" id="node-saveButton" />
+  <input type="button" value="cancel" id="node-cancelButton" />
+</div>
+
+<div id="edge-popUp">
+  <span id="edge-operation">edge</span> <br>
+  <table style="margin:auto;">
+    <tr>
+      <td>label</td><td><input id="edge-label" value="new value" /></td>
+    </tr></table>
+    <input type="button" value="save" id="edge-saveButton" />
+    <input type="button" value="cancel" id="edge-cancelButton" />
   </div>
 
-  <div id="edge-popUp">
-    <span id="edge-operation">edge</span> <br>
-    <table style="margin:auto;">
-      <tr>
-        <td>label</td><td><input id="edge-label" value="new value" /></td>
-      </tr></table>
-      <input type="button" value="save" id="edge-saveButton" />
-      <input type="button" value="cancel" id="edge-cancelButton" />
-    </div>
-
-  </div>
+</div>
 </template>
 
 <script>
@@ -76,6 +261,8 @@ export default {
   data: function () {
     //  data() {
     return {
+      lastX : 0,
+      lastY : 0,
       input: {subject:"", property:"", object:""},
       nodes: [
       ],
@@ -83,13 +270,10 @@ export default {
       ],
       dataset: {nodes: [], edges: [], types: []},
       historic: [],
-      //  buttons: [],
-
-      //  buttonsList: [],
-      //  edges_non: [],
-      //  caches: [],
-      //  visibles: [],
-      //  old: [],
+      optionsSolver: [
+        'barnesHut', 'repulsion', 'hierarchicalRepulsion', 'forceAtlas2Based'
+      ],
+      solver: "barnesHut",
       options: {
         locale: navigator.language,
         nodes: {
@@ -105,7 +289,7 @@ export default {
           scaling:{
             label: true,
           },
-          smooth: true,
+          smooth: false // true,
         },
         interaction: {
           navigationButtons: true,
@@ -146,7 +330,7 @@ console.log(data,callback)
 physics:{
   enabled: true,
   barnesHut: {
-    //   theta: 0.5,
+    //  theta: 0.5,
     gravitationalConstant: -2000,
     centralGravity: 0.3,
     springLength: 95,
@@ -155,7 +339,7 @@ physics:{
     avoidOverlap: 0
   },
   forceAtlas2Based: {
-    // theta: 0.5,
+    //  theta: 0.5,
     gravitationalConstant: -50,
     centralGravity: 0.01,
     springConstant: 0.08,
@@ -176,7 +360,7 @@ physics:{
     springConstant: 0.01,
     nodeDistance: 120,
     damping: 0.09,
-    //   avoidOverlap: 0
+    //  avoidOverlap: 0
   },
   maxVelocity: 50,
   minVelocity: 0.1,
@@ -184,9 +368,9 @@ physics:{
   stabilization: {
     enabled: true,
     iterations: 1000,
-    updateInterval: 100,
-    onlyDynamicEdges: false,
-    fit: true
+    updateInterval: 500,
+    //onlyDynamicEdges: true,
+  //  fit: true
   },
   timestep: 0.5,
   adaptiveTimestep: true,
@@ -232,6 +416,66 @@ computed:{
   },
 },
 watch: {
+  solver(solver){
+    console.log("SOLVER",solver)
+    this.options.physics.solver = solver
+
+    switch (this.solver) {
+      case "barnesHut":
+      this.options.physics.barnesHut = {
+        //  theta: 0.5,
+        gravitationalConstant: -2000,
+        centralGravity: 0.3,
+        springLength: 95,
+        springConstant: 0.04,
+        damping: 0.09,
+        avoidOverlap: 0
+      }
+      break;
+      case "forceAtlas2Based":
+      this.options.physics.forceAtlas2Based = {
+        //  theta: 0.5,
+        gravitationalConstant: -50,
+        centralGravity: 0.01,
+        springConstant: 0.08,
+        springLength: 100,
+        damping: 0.4,
+        avoidOverlap: 0
+      }
+      break;
+      case "repulsion":
+      this.options.physics.repulsion = {
+        centralGravity: 0.2,
+        springLength: 200,
+        springConstant: 0.05,
+        nodeDistance: 100,
+        damping: 0.09
+      }
+      break;
+      case "hierarchicalRepulsion":
+      this.options.physics.hierarchicalRepulsion = {
+        centralGravity: 0.0,
+        springLength: 100,
+        springConstant: 0.01,
+        nodeDistance: 120,
+        damping: 0.09,
+        //  avoidOverlap: 0
+      }
+      break;
+
+
+
+
+      default:
+
+    }
+
+
+
+
+
+
+  },
   $route(to, from) {
     console.log(to, from, this.$route)
     // react to route changes...
@@ -325,6 +569,24 @@ showTypes(){
   }
 },
 
+showNodes(){
+  //  console.log(this.dataset.types)
+
+  this.nodes = []
+  this.edges = []
+  for (const node of Object.values(this.dataset.nodes)) {
+    this.nodes.push(node)
+    //  console.log(this.nodes)
+  }
+
+  for (const edge of Object.values(this.dataset.edges)) {
+    this.edges.push(edge)
+    //  console.log(this.nodes)
+  }
+
+  console.log(this.nodes, this.edges)
+},
+
 search(){
   //  console.log(this.input)
   //  console.log(this.visData)//.findNode(this.input))
@@ -405,9 +667,13 @@ return null;
 addOrNothingNode(n){
   let found = this.nodes.find(x => x.id === n.id)
   if( found == undefined){
+    n.mass=1
     this.nodes.push(n)
     return n
   }else{
+    found.mass < 50 ? found.mass++ :""
+    this.lastX = found.x
+    this.lastY = found.y
     return found
   }
 },
@@ -437,7 +703,7 @@ add2network(response_data){
 
 
     let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
-    let subjectNode = { id:d['@id'], label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(-500, 500) , y:Math.random(-500,500)  }
+    let subjectNode = { id:d['@id'], label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' , x:this.lastX , y:this.lastY  }
     //this.addOrNothingNode(subjectNode)
     this.dataset.nodes[subjectNode.id] = subjectNode
 
@@ -456,7 +722,7 @@ add2network(response_data){
         //console.log(key, value);
         break;
         case "@type":
-        typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100 }
+        typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100,  }
         this.addOrNothingNode(typeNode)
         typeEdge = {
           from: d['@id'],
@@ -468,44 +734,44 @@ add2network(response_data){
         this.dataset.edges.push(typeEdge)
         this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
 
-      break;
-      // autres propriétés
-      case "pair:involves":
-      case 'pair:offeredBy':
-      case 'pair:hasMember':
-      case 'pair:memberOf':
-      case 'pair:hasInterest':
-      case 'pair:offers':
-      case 'pair:involvedIn':
-      case 'pair:interestOf':
+        break;
+        // autres propriétés
+        case "pair:involves":
+        case 'pair:offeredBy':
+        case 'pair:hasMember':
+        case 'pair:memberOf':
+        case 'pair:hasInterest':
+        case 'pair:offers':
+        case 'pair:involvedIn':
+        case 'pair:interestOf':
 
-      //  console.log("_______________",key, value);
-      this.stringOrArray(value).forEach((v) => {
-        objectNode = { id:v, label: this.lastPart(v), shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:Math.random(-500,500) , y:Math.random(-500,500)  }
-        propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-        //  this.addOrNothingNode(objectNode)
-        //  this.edges.push(propertyEdge);
+        //  console.log("_______________",key, value);
+        this.stringOrArray(value).forEach((v) => {
+          objectNode = { id:v, label: this.lastPart(v), shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:this.lastX , y:this.lastY  }
+          propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+          //  this.addOrNothingNode(objectNode)
+          //  this.edges.push(propertyEdge);
 
-        this.dataset.nodes[objectNode.id] = objectNode
-        this.dataset.edges.push(propertyEdge)
-      });
-      //  console.log(this.stringToColour(key))
-      break;
+          this.dataset.nodes[objectNode.id] = objectNode
+          this.dataset.edges.push(propertyEdge)
+        });
+        //  console.log(this.stringToColour(key))
+        break;
 
-      default:
-      console.warn("TODO : ---------------",key, value);
-      this.stringOrArray(value).forEach((v) => {
-        objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(500,1000) , y:Math.random(500,1000)  }
-        propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-        //  this.addOrNothingNode(objectNode)
-        //  this.edges.push(propertyEdge);
-        this.dataset.nodes[objectNode.id] = objectNode
-        this.dataset.edges.push(propertyEdge)
-      });
+        default:
+        console.warn("TODO : ---------------",key, value);
+        this.stringOrArray(value).forEach((v) => {
+          objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' , x:this.lastX , y:this.lastY  }
+          propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+          //  this.addOrNothingNode(objectNode)
+          //  this.edges.push(propertyEdge);
+          this.dataset.nodes[objectNode.id] = objectNode
+          this.dataset.edges.push(propertyEdge)
+        });
 
+      }
     }
   }
-}
 },
 async retrieveData(source){
   //  console.log(source)
@@ -577,52 +843,52 @@ add2networkSartinblox(response_data){
         this.dataset.nodes[typeNode.id] = typeNode
         this.dataset.edges.push(typeEdge)
         this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
-      break;
+        break;
 
-      // autres propriétés
-      case 'first_name':
-      case 'last_name':
-      case "username":
-      case "name":
-      case "email":
-      case "is_staff":
-      case "is_active":
-    //  case "account":
-      //  console.log("_______________",key, value);
-      this.stringOrArray(value).forEach((v) => {
-        objectNode = { id:v, label: v, shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:Math.random(-500,500) , y:Math.random(-500,500)  }
-        propertyEdge = {from: d['@id'], to: v, label: key}
+        // autres propriétés
+        case 'first_name':
+        case 'last_name':
+        case "username":
+        case "name":
+        case "email":
+        case "is_staff":
+        case "is_active":
+        //  case "account":
+        //  console.log("_______________",key, value);
+        this.stringOrArray(value).forEach((v) => {
+          objectNode = { id:v, label: v, shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:this.lastX , y:this.lastY  }
+          propertyEdge = {from: d['@id'], to: v, label: key}
+          //  this.addOrNothingNode(objectNode)
+          //  this.edges.push(propertyEdge);
+
+          this.dataset.nodes[objectNode.id] = objectNode
+          this.dataset.edges.push(propertyEdge)
+        });
+        //  console.log(this.stringToColour(key))
+        break;
+        case "chatProfile":
+        case "jobOffers":
+        case "inbox":
+        case "profile":
+        case "circles":
+        case "groups":
+
+        console.log(key+" -> "+value['@id'])
+        break;
+        default:
+        console.warn("TODO : ---------------",key, value);
+        /*  try{
+        this.stringOrArray(value).forEach((v) => {
+        objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(500,1000) , y:Math.random(500,1000)  }
+        propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
         //  this.addOrNothingNode(objectNode)
         //  this.edges.push(propertyEdge);
-
         this.dataset.nodes[objectNode.id] = objectNode
         this.dataset.edges.push(propertyEdge)
       });
-      //  console.log(this.stringToColour(key))
-      break;
-      case "chatProfile":
-      case "jobOffers":
-      case "inbox":
-      case "profile":
-      case "circles":
-      case "groups":
-
-      console.log(key+" -> "+value['@id'])
-      break;
-      default:
-      console.warn("TODO : ---------------",key, value);
-      /*  try{
-      this.stringOrArray(value).forEach((v) => {
-      objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' ,x:Math.random(500,1000) , y:Math.random(500,1000)  }
-      propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
-      //  this.addOrNothingNode(objectNode)
-      //  this.edges.push(propertyEdge);
-      this.dataset.nodes[objectNode.id] = objectNode
-      this.dataset.edges.push(propertyEdge)
-    });
-  }catch(e){
-  //console.log(e)
-}*/
+    }catch(e){
+    //console.log(e)
+  }*/
 
 }
 }

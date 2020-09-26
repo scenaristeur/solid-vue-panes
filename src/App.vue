@@ -22,7 +22,7 @@
   </div>
 
     <small><i>
-      0.1.101 - create group from tension
+      0.1.102 - SemApps pictures in doc folder
     </i></small>
 
 </div>
