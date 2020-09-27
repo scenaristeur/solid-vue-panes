@@ -7,6 +7,11 @@
         <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
         <label for="purpose">Group Purpose</label>
         <b-form-input id="purpose" v-model="purpose" placeholder="ex: Build Solid Cool apps..."></b-form-input>
+
+        <div v-if="this.tension.length > 0">
+          <label for="parent">Dedicated to </label>
+          <b-form-input id="tension" v-model="this.tension" placeholder="attached to tension"></b-form-input>
+        </div>
         <label for="parent">Parent / Supercircle</label>
         <b-form-input id="parent" v-model="parent" placeholder="ex: Supercircle"></b-form-input>
 
@@ -80,18 +85,29 @@ methods:{
     this.path = this.url+ttl_name+".ttl"
     console.log(this.path)
     // https://www.w3.org/TR/vocab-org/#org:purpose
+    //http://ipocore.sourceforge.net/1.2.0/ipo-1.2.0.html#Task
     let groupDoc =    await createDocument(this.path);
     let subj =  groupDoc.addSubject({identifier:"this"})
     subj.addLiteral(vcard.fn, this.name)
-    subj.addNodeRef(ldp.inbox, "./"+ttl_name+"/inbox/")
+    subj.addRef(ldp.inbox, "./"+ttl_name+"/inbox/")
     subj.addLiteral(dct.created, date)
-    subj.addNodeRef(foaf.maker, this.webId)
-    subj.addNodeRef(vcard.hasMember, this.webId)
-    subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
-    subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
-    subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+    subj.addRef(foaf.maker, this.webId)
+    subj.addRef(vcard.hasMember, this.webId)
+    subj.addRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
+    subj.addRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
+    subj.addRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
     subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)
-    subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
+    subj.addRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
+    if (this.tension.length > 0){
+      subj.addRef('https://www.w3.org/ns/activitystreams#object', this.tension+"#this")
+      subj.addRef(foaf.topic_interest, this.tension)
+      // add the group to the tension
+      let tensionDoc = await fetchDocument(this.tension);
+      let tensionSubj = tensionDoc.getSubject(this.tension+"#this")
+      tensionSubj.addRef("https://www.w3.org/ns/activitystreams#actor", this.path+"#this")
+      await tensionDoc.save();
+
+    }
 
     /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
     indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/

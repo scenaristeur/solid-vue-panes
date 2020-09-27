@@ -3,7 +3,6 @@
   <div id="app">
     <NavBar />
     <b-progress v-if=" progressValue < progressMax" :value="progressValue" :max="progressMax" show-progress animated></b-progress>
-    <!--  -->
     <transition name="fade">
       <router-view/>
     </transition>
@@ -22,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.102 - SemApps pictures in doc folder
+      0.1.103 - Groups from tension
     </i></small>
 
 </div>

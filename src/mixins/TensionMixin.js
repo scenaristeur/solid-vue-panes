@@ -26,7 +26,7 @@ export default {
         console.log("Result",result)
         this.tension = {privacy:"public"}
         this.makeToast("success !", this.tension.label+" created !", "success")
-        this.$router.push({ name: 'Parle', params: { url: result.url } })
+        this.$router.push({ name: 'TensionsList', params: { url: result.url } })
       }
       catch(e){
         this.makeToast("Error !", e, "danger")

@@ -23,7 +23,11 @@
     "WhatShouldBe": "What should be ?",
     "what_role": "In which role do you feel this tension ?",
     "which_domains": "Which domains does this tension apply ?",
-    "Save": "Save"
+    "Save": "Save",
+    "Tension": "Tension",
+    "Tensions": "Tensions",
+    "Groups": "Groups",
+    "Name": "Name"
   },
   "fr": {
     "hello": "Salut tout le monde!",
@@ -49,7 +53,11 @@
     "WhatShouldBe": "Ce qui devrait être ?",
     "what_role" : "Dans quel Rôle ressens-tu cette tension ?",
     "which_domains": "A quels domaines s'applique cette Tension ?",
-    "Save": "Enregistrer"
+    "Save": "Enregistrer",
+    "Tension": "Tension",
+    "Tensions": "Tensions",
+    "Groups": "Groupes",
+    "Name": "Nom"
   },
   "de": {
     "hello": "Hallo Welt!",
@@ -68,7 +76,11 @@
     "User": "User",
     "explorer": "Explorer",
     "editor": "Editor",
-    "POds in the POCKet": "Dein POD in deiner Tasche!"
+    "POds in the POCKet": "Dein POD in deiner Tasche!",
+    "Tension": "Tension",
+    "Tensions": "Tensions",
+    "Groups": "Groups",
+    "Name": "Name"
   },
   "es": {
     "hello": "Hola Mundo !",
@@ -87,9 +99,12 @@
     "User": "User",
     "explorer": "Explorer",
     "editor": "Editor",
-    "POds in the POCKet": "¡Tu POD en tu bolsillo!"
+    "POds in the POCKet": "¡Tu POD en tu bolsillo!",
+    "Tension": "Tension",
+    "Tensions": "Tensions",
+    "Groups": "Groups",
+    "Name": "Name"
   },
-
   "ja": {
     "hello": "こんにちは、世界！",
     "login": "ログインする",
@@ -107,7 +122,11 @@
     "User": "User",
     "explorer": "Explorer",
     "editor": "Editor",
-    "POds in the POCKet": "あなたのポケットにあなたのPOD！"
+    "POds in the POCKet": "あなたのポケットにあなたのPOD！",
+    "Tension": "Tension",
+    "Tensions": "Tensions",
+    "Groups": "Groups",
+    "Name": "Name"
   },
   "ru": {
     "hello": "Привет мир！",
@@ -126,6 +145,10 @@
     "User": "User",
     "explorer": "Explorer",
     "editor": "Editor",
-    "POds in the POCKet": "Ваш POD в кармане!"
+    "POds in the POCKet": "Ваш POD в кармане!",
+    "Tension": "Tension",
+    "Tensions": "Tensions",
+    "Groups": "Groups",
+    "Name": "Name"
   }
 }

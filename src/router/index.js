@@ -301,6 +301,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
   },
   {
+    path: '/tensions/:url?',
+    name: 'TensionsList',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
+  },
+  {
     path: '/simplegouv',
     name: 'SimpleGouv',
     // route level code-splitting
