@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.105 - Move groups to gouvernance workspace
+      0.1.106 - Parle from Group
     </i></small>
 
 </div>

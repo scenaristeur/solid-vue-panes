@@ -14,7 +14,7 @@ export default {
   },
   created(){
     this.fc   = new SolidFileClient(auth)
-    console.log(this.fc)
+  //  console.log(this.fc)
   },
   methods: {
     async createFile(data){
@@ -61,7 +61,7 @@ export default {
             subj.addLiteral(dct.created, date)
           }
 
-          console.log(data)
+    //      console.log(data)
           subj.addLiteral(rdfs.label, data.label)
           subj.addRef(ldp.inbox, "./"+data.ttl_name+"/inbox/")
 
@@ -96,7 +96,7 @@ export default {
 
 
         if (data.privacy == "public"){
-          console.log("ACTIVITY !!")
+      //    console.log("ACTIVITY !!")
           this.activity.object.url = data.url
           //  this.activity.summary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
 
@@ -107,7 +107,7 @@ export default {
         return data
       },
       async  getFolder(url){
-        console.log("get folder",url)
+        //console.log("get folder",url)
         let folder = await this.fc.readFolder(url)
         return folder
       },

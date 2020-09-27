@@ -1,14 +1,24 @@
 <template>
   <div class="groups-list">
-    {{url}}<br>
-    <GroupsToolbar :path="url"/>
-    <GroupCreate v-on:created="initGroups" />
 
-    <!--    <b-button variant="info" @click="initGroups">Reload groups</b-button>-->
-    <div>
-      <b-card-group columns>
-        <GroupDisplay v-for="f in folder.files" :key="f.url" :file="f" v-on:created="initGroups"/>
-      </b-card-group>
+
+    <div  v-if="currentWorkspace.name == 'gouvernance'">
+        {{url}}<br>
+      <GroupsToolbar :path="url"/>
+      <GroupCreate v-on:created="initGroups" />
+
+      <!--    <b-button variant="info" @click="initGroups">Reload groups</b-button>-->
+      <div>
+        <b-card-group columns>
+          <GroupDisplay v-for="f in folder.files" :key="f.url" :file="f" v-on:created="initGroups"/>
+        </b-card-group>
+      </div>
+
+    </div>
+    <div v-else>
+      To use this part of Popock, you need to choose a workspace with name "gouvernance".<br>
+      <b-button size="sm" to="/workspaces" variant="outline-warning"><span v-if="currentWorkspace.name != undefined">{{ currentWorkspace.name}}</span> <span v-else>Workspaces </span></b-button>
+
     </div>
 
   </div>
@@ -42,7 +52,7 @@ export default {
     this.update()
     this.$route.params.tension != undefined ?   this.tension = this.$route.params.tension :""
     console.log("TEnsion", this.tension)
-    this.initGroups()
+
   },
   computed:{
     webId(){
@@ -75,15 +85,19 @@ export default {
       }
     },
     update(){
-          console.log("CURRENT WORKSPACE", this.currentWorkspace)
-          this.url = this.currentWorkspace.path+'groups/'
+          if (this.currentWorkspace.path != undefined && this.currentWorkspace.name == "gouvernance"){
+      console.log("CURRENT WORKSPACE", this.currentWorkspace)
+      this.url = this.currentWorkspace.path+'groups/'
+      this.initGroups()
+
+    }
     }
 
   },
   watch: {
     url: function (url) {
       if(url != null){
-        console.log(url)
+    //    console.log(url)
         //  this.sendMessage("switched to "+url)
         this.initGroups(url)
       }
@@ -93,13 +107,13 @@ export default {
     },
     '$route' (to) {
       //  '$route' (to, from) {
-      console.log(to)
+  //    console.log(to)
       this.url = to.params.url // || this.storage+"public/groups/"
       //  console.log(this.url)
       this.initGroups(to.params.url)
       if(to.params.tension != undefined ){
         this.tension = to.params.tension
-        console.log("tension",this.tension)
+      //  console.log("tension",this.tension)
       }
       //  this.updateFriends()
       //  this.updateIndexes()

@@ -24,6 +24,12 @@
           </b-dropdown>
           <b-button @click="join">Join/Invite</b-button>
         </b-button-group>
+        <b-button-group >
+          <b-button variant="outline-info"  v-bind:to="{ name: 'Chat', params: { url: file.url }}">Chat <b-icon icon="chat-fill" variant="info"></b-icon></b-button>
+
+          <b-button variant="outline-info"  v-bind:to="{ name: 'Parle', params: { url: file.url }}">Parle <b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
+
+        </b-button-group>
       </div>
 
     </b-card-text>
@@ -148,7 +154,7 @@ export default {
     async  init(){
       //  console.log(this.url)
       this.group= await this.getGroup(this.file.url)
-    //  console.log("group",this.group)
+      //  console.log("group",this.group)
       if (this.group.name != undefined){
         this.ttlName = this.group.name.replace(/\s/g, '_')
       }

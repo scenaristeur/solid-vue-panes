@@ -22,6 +22,7 @@ import { fetchDocument, createDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces'
 import ToastMixin from '@/mixins/ToastMixin'
 import ActivityMixin from '@/mixins/ActivityMixin'
+import ParleMixin from '@/mixins/ParleMixin'
 
 
 export default {
@@ -29,7 +30,7 @@ export default {
   components:{
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
-  mixins: [ToastMixin, ActivityMixin],
+  mixins: [ToastMixin, ActivityMixin, ParleMixin],
   data: function () {
     return {
       message: "",
@@ -44,7 +45,11 @@ export default {
       let fileName = this.url.substring(this.url.lastIndexOf('/') + 1);
       console.log(fileName)
       this.message = "New chat started from "+this.url+" at "+this.root+fileName
-      this.send()
+      this.$store.commit('parle/setFileUrl', this.root+fileName)
+      console.log("FILEURL : ",this.root+fileName)
+      this.bascule(this.root+fileName)
+
+      //  this.send()
       //    this.$store.commit('parle/setFileUrl', this.path+fileName)
     }
   },
@@ -53,84 +58,85 @@ export default {
     createActivity(){
       this.activity = {
         actor: {name: this.$store.state.solid.webId},
-      type:"Create",
-      summary: "",
-      object:{
-        name: this.message,
-        url: this.fileUrl,
-        type:"Parle"}
-      }
-      this.sendActivity()
-    },
-    async send(){
-      // please refer to https://github.com/scenaristeur/shighl/blob/9b4b61d06d8a20f55de3f2aa580cbc5fb840d584/src/Shighl-chat.js#L214
-      // and https://github.com/LDflex/LDflex/issues/53
-      let webId= this.$store.state.solid.webId
-
-      console.log(this.fileUrl)
-      if (this.message.length > 0 && webId != null)    {
-        console.log(this.message)
-        var dateObj = new Date();
-        var messageId = "Msg"+dateObj.getTime()
-        var date = dateObj.toISOString()
-        //  let msgUrl = this.fileUrl+messageId
-        /*  console.log(msgUrl)
-        await solid.data[msgUrl].dct$created.add(date)
-        await solid.data[msgUrl].sioc$content.add(this.message)*/
-        console.log("WEBID",this.$store.state.solid.webId, this.$store.state.count)
-
-        let chatDoc = {}
-
-        try{
-          chatDoc = await fetchDocument(this.fileUrl);
-        } catch(e){
-          chatDoc = await createDocument(this.fileUrl);
+        type:"Create",
+        summary: "",
+        object:{
+          name: this.message,
+          url: this.fileUrl,
+          type:"Parle"}
         }
+        this.sendActivity()
+      },
+      async send(){
+        // please refer to https://github.com/scenaristeur/shighl/blob/9b4b61d06d8a20f55de3f2aa580cbc5fb840d584/src/Shighl-chat.js#L214
+        // and https://github.com/LDflex/LDflex/issues/53
+        let webId= this.$store.state.solid.webId
 
-        //        console.log(chatDoc)
-        let subj =   chatDoc.addSubject({identifier:messageId})
-        subj.addLiteral(sioc.content, this.message)
-        subj.addLiteral(dct.created, date)
-        subj.addNodeRef(foaf.maker, webId)
-        await chatDoc.save();
+        console.log(this.fileUrl)
+        if (this.message.length > 0 && webId != null)    {
+          console.log(this.message)
+          var dateObj = new Date();
+          var messageId = "Msg"+dateObj.getTime()
+          var date = dateObj.toISOString()
+          //  let msgUrl = this.fileUrl+messageId
+          /*  console.log(msgUrl)
+          await solid.data[msgUrl].dct$created.add(date)
+          await solid.data[msgUrl].sioc$content.add(this.message)*/
+          console.log("WEBID",this.$store.state.solid.webId)
 
-        this.message=""
-      }else{
-        alert ( "You must login before posting ;-)")
+          let chatDoc = {}
+
+          try{
+            chatDoc = await fetchDocument(this.fileUrl);
+          } catch(e){
+            chatDoc = await createDocument(this.fileUrl);
+          }
+
+          //        console.log(chatDoc)
+          let subj =   chatDoc.addSubject({identifier:messageId})
+          subj.addLiteral(sioc.content, this.message)
+          subj.addLiteral(dct.created, date)
+          subj.addNodeRef(foaf.maker, webId)
+          await chatDoc.save();
+
+          this.message=""
+        }else{
+          alert ( "You must login before posting ;-)")
+        }
+        this.createActivity()
+        //  await solid.data[msgUrl].foaf$maker.add(namedNode('https://www.test.com')) // namedNode(`${webid}`)
+        //  await solid.data.from(this.url)[messageId]['http://www.w3.org/2005/01/wf/flow#message'].add(this.url)
+        //this.message = ""
+        //  await solid.data.from(this.url)[this.subject]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(this.url))
       }
-      this.createActivity()
-      //  await solid.data[msgUrl].foaf$maker.add(namedNode('https://www.test.com')) // namedNode(`${webid}`)
-      //  await solid.data.from(this.url)[messageId]['http://www.w3.org/2005/01/wf/flow#message'].add(this.url)
-      //this.message = ""
-      //  await solid.data.from(this.url)[this.subject]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(this.url))
-    }
-  },
-  watch:{
-    url(u){
-      console.log("url changed",u)
-      let fileName = u.substring(u.lastIndexOf('/') + 1);
-      console.log(fileName)
-      this.$store.commit('parle/setFileUrl', this.path+fileName)
-      this.bascule(this.path+fileName)
-    }
-  },
-  computed:{
-    webId(){
-      return this.$store.state.solid.webId
     },
-    url: {
-      get: function() { return this.$store.state.parle.url},
-      set: function() {}
+    watch:{
+      url(u){
+        console.log("url changed",u)
+        let fileName = u.substring(u.lastIndexOf('/') + 1);
+        console.log(fileName)
+        this.$store.commit('parle/setFileUrl', this.path+fileName)
+        this.bascule(this.path+fileName)
+      }
     },
+    computed:{
+      webId:{
+        get: function() { return this.$store.state.solid.webId},
+        set: function() {}
+      },
+      url: {
+        get: function() { return this.$store.state.parle.url},
+        set: function() {}
+      },
+    }
   }
-}
-</script>
+  </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.input {
-  position: fixed;
-  bottom:0;
-  z-index: 999;
-}
-</style>
+  <!-- Add "scoped" attribute to limit CSS to this component only -->
+  <style scoped>
+  .input {
+    position: fixed;
+    bottom:0;
+    z-index: 999;
+  }
+  </style>

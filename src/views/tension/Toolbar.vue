@@ -13,12 +13,7 @@
         <div v-else>
           <GroupNameButton v-for="actor in item.actors" :key="actor" :url="actor"/>
         </div>
-
-
-        <b-button variant="outline-info"  v-bind:to="{ name: 'Chat', params: { url: item.url }}">Chat <b-icon icon="chat-fill" variant="info"></b-icon></b-button>
-
-        <b-button variant="outline-info"  v-bind:to="{ name: 'Parle', params: { url: item.url }}">Parle <b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
-      </b-button-group><br>
+    </b-button-group><br>
       <small>item {{ item.url}}</small>
     </b-button-toolbar>
   </div>

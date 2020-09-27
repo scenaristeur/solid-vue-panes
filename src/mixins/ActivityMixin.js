@@ -3,23 +3,23 @@ import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
 export default {
   created(){
     this.webId = this.$store.state.solid.webId
-    console.log("ActivityMixin WEBID CREATED",this.webId)
+  //  console.log("ActivityMixin WEBID CREATED",this.webId)
     this.config(this.webId)
     let d = new Date()
     this.date = this.formatDate(d)
-    console.log(this.as)
-    console.log(this.date)
+  //  console.log(this.as)
+  //  console.log(this.date)
     //  this.$store.dispatch('agora/setPubPod', this.pubPod)
   },
 
   methods: {
     async sendActivity(){
-      console.log(this.activity)
+     console.log(this.activity)
       var dateObj = new Date();
       var messageId = "Activity_"+dateObj.getTime()
       var date = dateObj.toISOString()
       let d = this.formatDate(dateObj)
-      console.log(this.activity.actor.name, this.activity.type, this.activity.summary, d)
+      //console.log(this.activity.actor.name, this.activity.type, this.activity.summary, d)
       let fileUrl = this.pubPod+d+".ttl"
 
       let activityDoc = {}
@@ -29,7 +29,7 @@ export default {
         activityDoc = await createDocument(fileUrl);
       }
 
-      console.log("webId",this.webId)
+    //  console.log("webId",this.webId)
       if(this.activity.summary.length <1 ){
         this.activity.summary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
       }
@@ -47,7 +47,7 @@ export default {
     },
     async   send() {
       console.log(this.activity)
-      console.log(this.activity.actor.name, this.activity.type, this.activity.summary, this.date)
+      //console.log(this.activity.actor.name, this.activity.type, this.activity.summary, this.date)
       let fileUrl = this.pubPod+this.date+".ttl"
       var dateObj = new Date();
       var messageId = "Activity_"+dateObj.getTime()
@@ -59,9 +59,9 @@ export default {
         activityDoc = await createDocument(fileUrl);
       }
 
-      console.log("webId",this.webId)
+      //console.log("webId",this.webId)
       let autoSummary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
-      console.log("Musr create outbox object first, then activity !",activityDoc, messageId, date)
+      //console.log("Musr create outbox object first, then activity !",activityDoc, messageId, date)
       let subj =   activityDoc.addSubject({identifier:messageId})
       //subj.addLiteral(sioc.content, this.activity)
       subj.addLiteral(rdfs.label, autoSummary)
@@ -88,7 +88,7 @@ export default {
       this.config = {}
       this.config.webId = webId
 
-      console.log("ActivityMixin config", this.config)
+      //console.log("ActivityMixin config", this.config)
     }
   },
   webId: {

@@ -31,7 +31,23 @@ export default {
         console.log("File exist",fileUrl)
       }
     },
+    bascule(p){
+      console.log("BASCULE",p)
+      this.$store.commit('parle/setFileUrl', p)
+      this.path = p.substr(0, p.lastIndexOf("/") + 1)
+      console.log(this.path)
+      if (this.$store.state.websocket.socket != undefined){
+        console.log("subscribe")
+      //  this.$store.state.websocket.socket.send('sub '+p);
+      }
+      console.log("mt")
+      this.makeToast('We have switched to',p,'info')
+          console.log("mt 2")
+      this.getMessages(p)
+          console.log("getmess")
+    },
     async getMessages(uri){
+      console.log("URI",uri)
       let messages = []
       if( !await this.fc.itemExists( uri )) {
         await this.fc.postFile(uri, "", "text/turtle")

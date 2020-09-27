@@ -136,17 +136,7 @@ export default {
     addSubscription(fileUrl){
       this.$store.state.websocket.socket.send('sub '+fileUrl);
     },
-    bascule(p){
-      console.log("Part",p)
-      this.$store.commit('parle/setFileUrl', p)
-      this.path = p.substr(0, p.lastIndexOf("/") + 1)
-      console.log(this.path)
-      if (this.$store.state.websocket.socket != undefined){
-        this.$store.state.websocket.socket.send('sub '+p);
-      }
-      this.makeToast('We have switched to',p,'info')
-      this.getMessages(p)
-    },
+
     sort(){
       this.messages.reverse()
     },
@@ -170,9 +160,7 @@ export default {
         let child_url = child_path+child_filename
         console.log("Child",child_path, child_filename)
         this.$store.commit('parle/setFileUrl', child_url)
-        if (this.$store.state.websocket.socket != undefined){
-          this.$store.state.websocket.socket.send('sub '+child_url);
-        }
+
         // create Doc
 
         if( !await this.fc.itemExists( child_url )) {
@@ -184,6 +172,7 @@ export default {
         }else{
           console.log("File exist",child_url)
         }
+
 
         let newDoc = {}
         try{
@@ -212,7 +201,14 @@ export default {
         let p_id = referDoc.getSubject(parent)
         p_id.addRef(schema.hasPart, child_url)
         await referDoc.save();
+
         this.bascule(child_url)
+
+
+        if (this.$store.state.websocket.socket != undefined){
+          this.$store.state.websocket.socket.send('sub '+child_url);
+        }
+
         //
       }else{
         alert ("You must provide a name to create a sub Channel")

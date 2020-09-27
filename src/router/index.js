@@ -173,6 +173,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "forms" */ '@/views/Forms.vue')
   },
   {
+    path: '/groups/',
+    name: 'GroupsBasic',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "groups" */'@/views/Groups.vue')
+  },
+  {
     path: '/groups/:url?',
     name: 'Groups',
     // route level code-splitting

@@ -11,7 +11,7 @@
 
     <Toolbar :item="details" />
     created  {{ details.created}}<br>
-      <!--
+    <!--
     <small> {{ details.types}} </small><br>
 
     Tension : {{ tension.name }}, {{tension.url}}<br>
@@ -44,33 +44,33 @@ export default {
   },
   async created(){
     this.currentWorkspace = this.$store.state.workspaces.currentWorkspace
-        if (this.currentWorkspace.path != undefined){
-    await  this.updateTension(this.tension)
-  }
-  },
-  watch: {
-  /*  async  tension () {
+    if (this.currentWorkspace.path != undefined){
       await  this.updateTension(this.tension)
-    },*/
-  },
-
-  methods: {
-    async updateTension(t){
-      console.log("updateTension")
-      if (t != undefined){
-        this.details = await this.getTensionDetail(t)
-      }
     }
   },
-  computed:{
-  /*  config: {
-      get: function() { return this.$store.state.gouvernance.config},
-      set: function() {}
-    },*/
-    currentWorkspace: {
-      get: function() { return this.$store.state.workspaces.currentWorkspace},
-      set: function() {}
-    },
+  watch: {
+    /*  async  tension () {
+    await  this.updateTension(this.tension)
+  },*/
+},
+
+methods: {
+  async updateTension(t){
+    //    console.log("updateTension")
+    if (t != undefined){
+      this.details = await this.getTensionDetail(t)
+    }
   }
+},
+computed:{
+  /*  config: {
+  get: function() { return this.$store.state.gouvernance.config},
+  set: function() {}
+},*/
+currentWorkspace: {
+  get: function() { return this.$store.state.workspaces.currentWorkspace},
+  set: function() {}
+},
+}
 }
 </script>

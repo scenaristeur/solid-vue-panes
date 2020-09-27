@@ -45,7 +45,8 @@ data() {
     purpose: "",
     parent: "",
     pubPod: "https://agora.solid.community/public/popock/inbox/", // REVOIR ACTIVITY MIXIN !!!
-    tension:""
+    tension:"",
+    url:""
   }
 },
 created(){
