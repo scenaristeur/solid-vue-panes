@@ -16,6 +16,7 @@ const state = () => ({
   config: null,
   pubPod: "",
   activities: [],
+  activitiesUrl:""
 })
 
 const getters = {}
@@ -45,11 +46,15 @@ const actions = {
     const activityResource = await getSolidDataset(fileUrl);
     const activities = getThingAll(activityResource);
     context.commit('setActivities', activities)
+      context.commit('setActivitiesUrl', fileUrl)
 
   }
 }
 
 const mutations = {
+  setActivitiesUrl (state, url) {
+    state.activitiesUrl = url
+  },
   setActivities (state, activities) {
     state.activities = activities.reverse()
   },

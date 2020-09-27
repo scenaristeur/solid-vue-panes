@@ -2,6 +2,13 @@
   <div class="modele-view">
     <!--  <Component /> -->
 
+subj : {{ subject }}<br>
+url : {{ url }}
+
+
+
+<GroupDisplay :file="file"/>
+
 
     <b-card class="mb-2">
       <b-card-title>{{ label }}</b-card-title>
@@ -38,20 +45,27 @@
 </template>
 
 <script>
-import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
+import { vcard, dct, foaf, ldp, /*rdfs,*/ rdf} from 'rdf-namespaces' //
 
 export default {
-  name: 'TaskView',
+  name: 'GroupView',
   components: {
     'ToolbarView': () => import('@/components/views/ToolbarView'),
     'UserName': () => import('@/components/basic/UserName'),
     'Date': () => import('@/components/basic/Date'),
     'Domains': () => import('@/components/basic/Domains'),
+        'GroupDisplay': () => import('@/components/groups/GroupDisplay'),
   },
   props:['subject','url'],
+  data: function () {
+    return {
+    file: {}
+    }
+  },
   created(){
+    this.file = {url: this.url}
     console.log("Subject", this.subject)
-    this.label = this.subject.getLiteral(rdfs.label)
+    this.label = this.subject.getLiteral(vcard.fn)
     this.created = this.subject.getLiteral(dct.created)
     this.inbox = this.subject.getRef(ldp.inbox)
     this.wi = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatis")

@@ -2,6 +2,7 @@
   <div class="view container">
 
     <TaskView v-if="types.includes('http://purl.org/vocab/lifecycle/schema#Task')" :subject="subject" :url="url"/>
+      <GroupView v-if="types.includes( 'http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
     <div v-else>
       no template for {{ url }} with types : {{ types }}
 
@@ -20,6 +21,7 @@ export default {
   components: {
     'ResourceView': () => import('@/components/views/ResourceView'),
     'TaskView': () => import('@/components/views/TaskView'),
+    'GroupView': () => import('@/components/views/GroupView'),
   },
   data() {
     return {
@@ -40,7 +42,9 @@ export default {
   methods: {
     async getData() {
       let dataDoc = await fetchDocument(this.url);
-      this.subject = await dataDoc.getSubject(this.url+"#this")
+    let url =  this.url.endsWith("#this") ? this.url : this.url+"#this"
+    console.log(url)
+      this.subject = await dataDoc.getSubject(url)
       console.log(this.subject)
       this.types = await this.subject.getAllRefs(rdf.type)
       console.log(this.types)

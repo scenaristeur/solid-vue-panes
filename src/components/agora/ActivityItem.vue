@@ -14,9 +14,9 @@
       <b-card-footer>
         <UserName :webId="maker" />
         <Date :dateIso="created"/>
-        <!--        actor : {{actor}}<br>
-        type: {{ type}}<br>-->
-          <p><a :href="object_url" target="_blank">link</a></p>
+        actor : {{actor }}<br>
+        types: {{ types }}<br>
+        <p><a :href="object_url" target="_blank">link</a></p>
       </b-card-footer>
     </b-card>
 
@@ -25,7 +25,7 @@
 
 <script>
 
-import { getStringNoLocale, getUrl} from "@inrupt/solid-client";
+import { getStringNoLocale, getUrl, getUrlAll} from "@inrupt/solid-client";
 import { RDFS, DCTERMS, AS, FOAF, RDF } from "@inrupt/vocab-common-rdf"; //https://solidproject.org/for-developers/apps/vocabularies/well-known/common#dc
 export default {
   name: 'ActivityItem',
@@ -43,17 +43,27 @@ export default {
       actor:"",
       summary: "",
       object_url:"",
-      type:"",
+      types: [],
     }
   },
   created() {
+  //  console.log(this.activity)
     this.label = getStringNoLocale(this.activity, RDFS.label);
     this.created = getStringNoLocale(this.activity, DCTERMS.created);
     this.summary = getStringNoLocale(this.activity, AS.summary);
     this.object_url = getUrl(this.activity, AS.object);
     this.maker = getUrl(this.activity, FOAF.maker);
     this.actor = getUrl(this.activity, AS.actor);
-    this.type = getUrl(this.activity, RDF.type);
+  //  this.type = getUrl(this.activity, RDF.type);
+    this.types = getUrlAll(this.activity, RDF.type);
+
+    this.activitiesUrl = this.$store.state.agora.activitiesUrl
+  //  console.log("ACTIVITIES URL",this.activitiesUrl)
+  //  console.log("LITERAL TYPE",this.LiteralType)
+
+
+
+    //  console.log(this.object_type)
   },
 }
 </script>

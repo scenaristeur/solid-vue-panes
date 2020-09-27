@@ -3,7 +3,7 @@
 
 
     <AgoraList />
-    <AgoraTest />
+<!--    <AgoraTest />-->
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 export default {
   name: 'AgoraView',
   components: {
-    'AgoraTest': () => import('@/components/agora/AgoraTest'),
+  //  'AgoraTest': () => import('@/components/agora/AgoraTest'),
     'AgoraList': () => import('@/components/agora/AgoraList'),
   },
 }

@@ -82,13 +82,13 @@ watch: {
 },
 methods:{
   update(){
-  if (this.currentWorkspace.path != undefined && this.currentWorkspace.name == "gouvernance"){
-    console.log(this.currentWorkspace)
-    this.url = this.currentWorkspace.path+"groups/"
-  //  this.tensions = await this.getTensions()
-  //  console.log(this.tensions)
-  }
-},
+    if (this.currentWorkspace.path != undefined && this.currentWorkspace.name == "gouvernance"){
+      console.log(this.currentWorkspace)
+      this.url = this.currentWorkspace.path+"groups/"
+      //  this.tensions = await this.getTensions()
+      //  console.log(this.tensions)
+    }
+  },
   async add(){
     this.name = this.name.trim()
     let ttl_name = this.name.replace(/\s/g, '_')
@@ -109,6 +109,8 @@ methods:{
     subj.addRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
     subj.addRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
     subj.addRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+    subj.addRef(rdf.type, this.currentWorkspace.path+'Group')
+      subj.addRef(rdf.type, vcard.Group) ////////////////////////////////////////////
     subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)
     subj.addRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
     if (this.tension != undefined &&  this.tension.length > 0){
@@ -159,13 +161,12 @@ methods:{
         "subOrganizationOf": this.parent
       }
     }
-    let autoSummary = [this.activity.actor.name,
+
+    this.activity.summary  = [this.activity.actor.name,
       this.activity.type,
       "a",
       this.activity.object.type,
-      "with name", this.activity.object.name,
-      "and purpose", this.activity.object.purpose, ". It is a subOrganizationOf ", this.activity.object.parent].join(" ")
-      this.activity.summary = autoSummary
+      "with name", this.activity.object.name].join(" ")
 
       console.log(this.activity)
 
@@ -204,13 +205,14 @@ methods:{
       console.log("webId",this.webId)
       let subj =   activityDoc.addSubject({identifier:messageId})
       //subj.addLiteral(sioc.content, this.activity)
-      subj.addLiteral(rdfs.label, this.activity.summary)
+      subj.addLiteral(rdfs.label, this.activity.object.name)
       subj.addLiteral(dct.created, date)
       subj.addRef(foaf.maker, this.activity.actor.name)
       subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.activity.actor.name)
       subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
+      subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type)
       await activityDoc.save();
 
     },
@@ -224,14 +226,14 @@ methods:{
       get: function() { return this.$store.state.workspaces.currentWorkspace},
       set: function() {}
     },
-  /*  storage:{
-      get: function() { return this.$store.state.solid.storage},
-      set: function() {}
-    },
-    url:{
-      get: function() { return this.$store.state.solid.storage+"public/groups/"},
-      set: function() {}
-    }*/
+    /*  storage:{
+    get: function() { return this.$store.state.solid.storage},
+    set: function() {}
   },
+  url:{
+  get: function() { return this.$store.state.solid.storage+"public/groups/"},
+  set: function() {}
+}*/
+},
 }
 </script>

@@ -3,23 +3,23 @@ import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
 export default {
   created(){
     this.webId = this.$store.state.solid.webId
-  //  console.log("ActivityMixin WEBID CREATED",this.webId)
+    //  console.log("ActivityMixin WEBID CREATED",this.webId)
     this.config(this.webId)
     let d = new Date()
     this.date = this.formatDate(d)
-  //  console.log(this.as)
-  //  console.log(this.date)
+    //  console.log(this.as)
+    //  console.log(this.date)
     //  this.$store.dispatch('agora/setPubPod', this.pubPod)
   },
 
   methods: {
     async sendActivity(){
-     console.log(this.activity)
+      console.log(this.activity)
       var dateObj = new Date();
       var messageId = "Activity_"+dateObj.getTime()
       var date = dateObj.toISOString()
       let d = this.formatDate(dateObj)
-      //console.log(this.activity.actor.name, this.activity.type, this.activity.summary, d)
+      console.log(this.activity.actor.name, this.activity.type, this.activity.summary, d)
       let fileUrl = this.pubPod+d+".ttl"
 
       let activityDoc = {}
@@ -29,7 +29,7 @@ export default {
         activityDoc = await createDocument(fileUrl);
       }
 
-    //  console.log("webId",this.webId)
+      console.log("webId",this.webId)
       if(this.activity.summary.length <1 ){
         this.activity.summary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
       }
@@ -42,6 +42,13 @@ export default {
       subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
+      subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type)
+      /*  console.log("PART1 OK")
+      let object_subj =   activityDoc.addSubject({identifier:this.activity.object.url})
+      object_subj.addLiteral(rdf.type, this.activity.object.type)
+      object_subj.addLiteral(rdfs.label, this.activity.object.name)
+      console.log("PART2 OK")*/
+
       await activityDoc.save();
 
     },

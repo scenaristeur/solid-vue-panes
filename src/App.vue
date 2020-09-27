@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.106 - Parle from Group
+      0.1.107 - Group View from Agora
     </i></small>
 
 </div>
