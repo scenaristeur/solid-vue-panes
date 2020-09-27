@@ -1,7 +1,6 @@
 <template>
   <div class="groups-list">
     {{url}}<br>
-    {{ tension }}
     <GroupsToolbar :path="url"/>
     <GroupCreate v-on:created="initGroups" />
 
@@ -35,10 +34,12 @@ export default {
   data: function () {
     return {
       folder: {},
-      tension : ""
     }
   },
   created(){
+    this.currentWorkspace = this.$store.state.workspaces.currentWorkspace
+
+    this.update()
     this.$route.params.tension != undefined ?   this.tension = this.$route.params.tension :""
     console.log("TEnsion", this.tension)
     this.initGroups()
@@ -50,8 +51,8 @@ export default {
     storage(){
       return this.$store.state.solid.storage
     },
-    url: {
-      get: function() { return this.storage+"public/groups/"},
+    currentWorkspace: {
+      get: function() { return this.$store.state.workspaces.currentWorkspace},
       set: function() {}
     },
   },
@@ -72,7 +73,12 @@ export default {
       }else {
         return []
       }
+    },
+    update(){
+          console.log("CURRENT WORKSPACE", this.currentWorkspace)
+          this.url = this.currentWorkspace.path+'groups/'
     }
+
   },
   watch: {
     url: function (url) {
@@ -82,16 +88,19 @@ export default {
         this.initGroups(url)
       }
     },
+    currentWorkspace(){
+      this.update()
+    },
     '$route' (to) {
       //  '$route' (to, from) {
       console.log(to)
       this.url = to.params.url // || this.storage+"public/groups/"
       //  console.log(this.url)
       this.initGroups(to.params.url)
-    if(to.params.tension != undefined ){
-      this.tension = to.params.tension
-      console.log("tension",this.tension)
-    }
+      if(to.params.tension != undefined ){
+        this.tension = to.params.tension
+        console.log("tension",this.tension)
+      }
       //  this.updateFriends()
       //  this.updateIndexes()
     }

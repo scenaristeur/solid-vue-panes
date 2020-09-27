@@ -8,7 +8,7 @@
         <label for="purpose">Group Purpose</label>
         <b-form-input id="purpose" v-model="purpose" placeholder="ex: Build Solid Cool apps..."></b-form-input>
 
-        <div v-if="this.tension.length > 0">
+        <div v-if="tension != undefined && tension.length > 0">
           <label for="parent">Dedicated to </label>
           <b-form-input id="tension" v-model="this.tension" placeholder="attached to tension"></b-form-input>
         </div>
@@ -45,16 +45,17 @@ data() {
     purpose: "",
     parent: "",
     pubPod: "https://agora.solid.community/public/popock/inbox/", // REVOIR ACTIVITY MIXIN !!!
-
+    tension:""
   }
 },
 created(){
   this.$route.params.tension != undefined ?   this.tension = this.$route.params.tension :""
   console.log("TEnsion", this.tension)
-  if (this.tension.length > 0 ){
+  if (this.tension != undefined && this.tension.length > 0 ){
     this.$bvModal.show("new-group-modal")
     this.purpose = "This group aims to treat "+this.tension
   }
+  this.update()
 
 
 },
@@ -67,15 +68,26 @@ watch: {
     //  this.initGroups(to.params.url)
     this.tension = to.params.tension
     console.log("tension",this.tension)
-    if (this.tension.length > 0 ){
+    if (this.tension != undefined && this.tension.length > 0 ){
       this.$bvModal.show("new-group-modal")
       this.purpose = "This group aims to treat "+this.tension
     }
     //  this.updateFriends()
     //  this.updateIndexes()
+  },
+  currentWorkspace(){
+    this.update()
   }
 },
 methods:{
+  update(){
+  if (this.currentWorkspace.path != undefined && this.currentWorkspace.name == "gouvernance"){
+    console.log(this.currentWorkspace)
+    this.url = this.currentWorkspace.path+"groups/"
+  //  this.tensions = await this.getTensions()
+  //  console.log(this.tensions)
+  }
+},
   async add(){
     this.name = this.name.trim()
     let ttl_name = this.name.replace(/\s/g, '_')
@@ -98,7 +110,7 @@ methods:{
     subj.addRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
     subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)
     subj.addRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
-    if (this.tension.length > 0){
+    if (this.tension != undefined &&  this.tension.length > 0){
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.tension+"#this")
       subj.addRef(foaf.topic_interest, this.tension)
       // add the group to the tension
@@ -207,14 +219,18 @@ methods:{
       get: function() { return this.$store.state.solid.webId},
       set: function() {}
     },
-    storage:{
+    currentWorkspace: {
+      get: function() { return this.$store.state.workspaces.currentWorkspace},
+      set: function() {}
+    },
+  /*  storage:{
       get: function() { return this.$store.state.solid.storage},
       set: function() {}
     },
     url:{
       get: function() { return this.$store.state.solid.storage+"public/groups/"},
       set: function() {}
-    }
+    }*/
   },
 }
 </script>

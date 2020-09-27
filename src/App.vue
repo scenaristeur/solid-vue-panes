@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.104 - Group linked to tension
+      0.1.105 - Move groups to gouvernance workspace
     </i></small>
 
 </div>
