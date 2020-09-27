@@ -7,9 +7,11 @@
 
     <Domains :domains="details.domains" />
 
+
+
     <Toolbar :item="details" />
     created  {{ details.created}}<br>
-    <!--
+      <!--
     <small> {{ details.types}} </small><br>
 
     Tension : {{ tension.name }}, {{tension.url}}<br>
@@ -41,12 +43,15 @@ export default {
     }
   },
   async created(){
+    this.currentWorkspace = this.$store.state.workspaces.currentWorkspace
+        if (this.currentWorkspace.path != undefined){
     await  this.updateTension(this.tension)
+  }
   },
   watch: {
-    async  tension () {
+  /*  async  tension () {
       await  this.updateTension(this.tension)
-    },
+    },*/
   },
 
   methods: {
@@ -58,8 +63,12 @@ export default {
     }
   },
   computed:{
-    config: {
+  /*  config: {
       get: function() { return this.$store.state.gouvernance.config},
+      set: function() {}
+    },*/
+    currentWorkspace: {
+      get: function() { return this.$store.state.workspaces.currentWorkspace},
       set: function() {}
     },
   }

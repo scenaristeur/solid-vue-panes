@@ -28,6 +28,7 @@ export default {
     //  'WorkspaceChoose': () => import('@/components/workspaces/WorkspaceChoose'),
   },
   created(){
+        console.log("TTTTTTTTTTTTTTTT currentWorkspace", this.currentWorkspace)
     this.storage = this.$store.state.solid.storage
     this.setWorkspace()
   },

@@ -88,8 +88,10 @@ export default {
       this.url = to.params.url // || this.storage+"public/groups/"
       //  console.log(this.url)
       this.initGroups(to.params.url)
+    if(to.params.tension != undefined ){
       this.tension = to.params.tension
       console.log("tension",this.tension)
+    }
       //  this.updateFriends()
       //  this.updateIndexes()
     }

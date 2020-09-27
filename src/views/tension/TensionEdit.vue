@@ -2,6 +2,7 @@
 <template>
   <div class="tension-view">
 
+<div  v-if="currentWorkspace.name == 'gouvernance'">
     <h3><i>{{ $t('tension_annonce') }}</i></h3>
     <b-container>
       <b-row class="my-1">
@@ -61,7 +62,7 @@
 
       <b-row class="my-1">
         <b-col sm="3">
-          <label for="radio-privacy">Privacy:</label>
+          <label for="radio-privacy">Privacy: (<small>not implemented yet</small>)</label>
         </b-col>
         <b-col sm="9">
           <b-form-group>
@@ -78,8 +79,21 @@
       </b-row>
 
     </b-container>
-    path : {{ this.path }} [ change path button]
+
+</div>
+<div v-else>
+  To use this part of Popock, you need to choose a workspace with name "gouvernance".<br>
+  <b-button size="sm" to="/workspaces" variant="outline-warning"><span v-if="currentWorkspace.name != undefined">{{ currentWorkspace.name}}</span> <span v-else>Workspaces </span></b-button>
+
+</div>
+
+
   </div>
+
+
+
+
+
 </template>
 
 <script>
@@ -95,9 +109,11 @@ export default {
 data: function () {
   return {
     path: "",
+     tension : {privacy:"public"}
   }
 },
 async created(){
+      console.log("TTTTTTTTTTTTTTTT currentWorkspace", this.currentWorkspace)
   this.storage = this.$store.state.solid.storage
 
   console.log("route",this.$route)
@@ -112,7 +128,9 @@ async created(){
 
 methods: {
   create(){
-      this.path = this.storage+this.tension.privacy+"/gouvernance/tensions/"
+    console.log("TTTTTTTTTTTTTTTT currentWorkspace", this.currentWorkspace)
+    //  this.path = this.storage+this.tension.privacy+"/gouvernance/tensions/"
+    this.path = this.currentWorkspace.path+"tensions/"
     this.createTension()
   },
   fillForm(t){
@@ -134,8 +152,12 @@ watch: {
   }
 },
 computed:{
-  config: {
+/*  config: {
     get: function() { return this.$store.state.gouvernance.config},
+    set: function() {}
+  },*/
+  currentWorkspace: {
+    get: function() { return this.$store.state.workspaces.currentWorkspace},
     set: function() {}
   },
 }

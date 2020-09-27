@@ -148,7 +148,7 @@ export default {
     async  init(){
       //  console.log(this.url)
       this.group= await this.getGroup(this.file.url)
-      console.log("group",this.group)
+    //  console.log("group",this.group)
       if (this.group.name != undefined){
         this.ttlName = this.group.name.replace(/\s/g, '_')
       }
