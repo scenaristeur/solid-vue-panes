@@ -28,7 +28,7 @@
                   <router-link to="/indexes">  <b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>Add channel</router-link>
 
                 </li>
-                <li v-for="mc in my_channels" :key="mc.instance">
+                <li v-for="mc in my_c" :key="mc.instance">
                   <a href="#" v-if="mc.classe == 'http://www.w3.org/ns/pim/meeting#LongChat'" @click="open(mc)"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info">
                   </b-icon-chat><br>
                   {{mc.label}}</a>
@@ -86,39 +86,59 @@ export default {
         {instance:'https://parle.inrupt.net/public/chat/solid/francais/', created:'08/01/2020', label: 'Français'} ,
         {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:'01/01/2020', label: 'Popock'} ,
         {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:'01/01/2020', label: 'ChatTest'} ,
-      ]
+      ],
+      my_c : []
       //  webId: {},
       //  friends: [],
     }
   },
   created() {
     this.my_channels = this.$store.state.solid.indexes.puti != undefined ? this.$store.state.solid.indexes.puti.instances : []
-    //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
-    //  this.updateFriends()
+    /*
+    this.my_channels.forEach((c) => {
+    console.log(this.my_channels[c])
+  });*/
+
+
+
+  //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
+  //  this.updateFriends()
+},
+watch: {
+  storage (st) {
+    //  '$route' (to, from) {
+    console.log(st)
   },
-  watch: {
-    storage (st) {
-      //  '$route' (to, from) {
-      console.log(st)
-    },
-    selected(selected){
-      this.selected = selected
-      console.log(selected)
-    }
+  selected(selected){
+    this.selected = selected
+    console.log(selected)
   },
-  methods:{
-    open(channel){
-      this.channel = channel
-      console.log(channel)
-      this.$store.commit('chat/setChannel', this.channel)
-    },
-    clean(){
-      this.channel = null
-      this.$store.commit('chat/setChannel', this.channel)
-    }
-    /*  async updateFriends(){
-    this.friends = await this.getFriends(this.webId)
-  }*/
+  my_channels(){
+    console.log(this.my_channels)
+    let my_c = []
+    this.my_channels.forEach((c) => {
+      console.log(c.classe)
+      if (c.classe == "http://www.w3.org/ns/pim/meeting#LongChat"){
+        my_c.push(c)
+      }
+    });
+    this.my_c = my_c
+  }
+
+},
+methods:{
+  open(channel){
+    this.channel = channel
+    console.log(channel)
+    this.$store.commit('chat/setChannel', this.channel)
+  },
+  clean(){
+    this.channel = null
+    this.$store.commit('chat/setChannel', this.channel)
+  }
+  /*  async updateFriends(){
+  this.friends = await this.getFriends(this.webId)
+}*/
 },
 computed:{
   storage(){

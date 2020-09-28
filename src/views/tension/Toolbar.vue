@@ -14,7 +14,7 @@
           <GroupNameButton v-for="actor in item.actors" :key="actor" :url="actor"/>
         </div>
     </b-button-group><br>
-      <small>item {{ item.url}}</small>
+  <!--    <small>item {{ item.url}}</small>-->
     </b-button-toolbar>
   </div>
 </template>

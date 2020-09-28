@@ -25,7 +25,7 @@
           <b-button @click="join">Join/Invite</b-button>
         </b-button-group>
         <b-button-group >
-          <b-button variant="outline-info"  v-bind:to="{ name: 'Chat', params: { url: file.url }}">Chat <b-icon icon="chat-fill" variant="info"></b-icon></b-button>
+          <b-button variant="outline-info"  v-bind:to="{ name: 'ChatUrl', params: { group: file.url }}">Chat <b-icon icon="chat-fill" variant="info"></b-icon></b-button>
 
           <b-button variant="outline-info"  v-bind:to="{ name: 'Parle', params: { url: file.url }}">Parle <b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
 
@@ -111,15 +111,15 @@ export default {
       let groupDoc =    await createDocument(this.path);
       let subj =   groupDoc.addSubject({identifier:"this"})
       subj.addLiteral(vcard.fn, this.name)
-      subj.addNodeRef(ldp.inbox, "./"+this.name+"/inbox/")
+      subj.addRef(ldp.inbox, "./"+this.name+"/inbox/")
       subj.addLiteral(dct.created, date)
-      subj.addNodeRef(foaf.maker, this.webId)
-      subj.addNodeRef(vcard.hasMember, this.webId)
-      subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
-      subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
-      subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+      subj.addRef(foaf.maker, this.webId)
+      subj.addRef(vcard.hasMember, this.webId)
+      subj.addRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
+      subj.addRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
+      subj.addRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
       subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)
-      subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
+      subj.addRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
 
       /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/

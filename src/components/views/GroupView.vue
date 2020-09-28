@@ -10,7 +10,7 @@ url : {{ url }}
 <GroupDisplay :file="file"/>
 
 
-    <b-card class="mb-2">
+  <!--  <b-card class="mb-2">
       <b-card-title>{{ label }}</b-card-title>
       <UserName :webId="maker" />
       <div class="d-inline">as roles {{ roles}} <br></div>
@@ -40,20 +40,21 @@ url : {{ url }}
         <router-link v-bind:to="{ name: 'Inbox', params: { inbox: inbox }}">inbox</router-link> <br>
       </b-card-footer>
     </b-card>
+-->
 
   </div>
 </template>
 
 <script>
-import { vcard, dct, foaf, ldp, /*rdfs,*/ rdf} from 'rdf-namespaces' //
+import { vcard, /*dct, foaf, ldp, rdfs,*/ rdf} from 'rdf-namespaces' //
 
 export default {
   name: 'GroupView',
   components: {
-    'ToolbarView': () => import('@/components/views/ToolbarView'),
-    'UserName': () => import('@/components/basic/UserName'),
-    'Date': () => import('@/components/basic/Date'),
-    'Domains': () => import('@/components/basic/Domains'),
+  //  'ToolbarView': () => import('@/components/views/ToolbarView'),
+  //  'UserName': () => import('@/components/basic/UserName'),
+  //  'Date': () => import('@/components/basic/Date'),
+    //'Domains': () => import('@/components/basic/Domains'),
         'GroupDisplay': () => import('@/components/groups/GroupDisplay'),
   },
   props:['subject','url'],
@@ -66,14 +67,15 @@ export default {
     this.file = {url: this.url}
     console.log("Subject", this.subject)
     this.label = this.subject.getLiteral(vcard.fn)
-    this.created = this.subject.getLiteral(dct.created)
+    /*this.created = this.subject.getLiteral(dct.created)
     this.inbox = this.subject.getRef(ldp.inbox)
     this.wi = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatis")
     this.wsb = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatshouldbe")
     this.maker = this.subject.getRef(foaf.maker)
-    this.types = this.subject.getAllRefs(rdf.type)
-    this.roles = this.subject.getAllLiterals("http://www.w3.org/ns/org#memberOf")
-    this.domains = this.subject.getAllLiterals("http://www.w3.org/ns/org#purpose")
+
+    this.roles = this.subject.getAllLiterals("http://www.w3.org/ns/org#memberOf")*/
+      this.types = this.subject.getAllRefs(rdf.type)
+    this.purpose = this.subject.getAllLiterals("http://www.w3.org/ns/org#purpose")
 
   }
 }
