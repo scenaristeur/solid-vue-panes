@@ -5,9 +5,9 @@
 
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle="'accordion-3'" variant="info">{{group.name || file.name}}</b-button>
+          <b-button block v-b-toggle="'accordion-'+ttlName" variant="info">{{group.name || file.name}}</b-button>
         </b-card-header>
-        <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <b-collapse :id="'accordion-'+ttlName" accordion="my-accordion" role="tabpanel">
           <b-card-body>
             <b-card-text>
               <cite title="Purpose">{{group.purpose}}</cite>
@@ -44,7 +44,7 @@
           </b-card-body>
         </b-collapse>
       </b-card>
-      
+
       <b-modal v-bind:id="'modal-subgroups-'+file.url" title="SubGroups" @ok="add">
         <b-form-group>
           <label for="name">Group Name</label>

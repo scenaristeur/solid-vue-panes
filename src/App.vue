@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.109 - GroupCollapse
+      0.1.110 - GroupCollapse fix
     </i></small>
 
 </div>

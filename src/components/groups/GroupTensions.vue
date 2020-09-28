@@ -2,7 +2,7 @@
   <div class="modele-view">
     GroupTensions
     <b-list-group class="list-group">
-  <b-list-group-item>Cras justo odio</b-list-group-item>
+  <b-list-group-item v-for="tension in tensions" :key="tension">{{tension}}</b-list-group-item>
   <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item>
   <b-list-group-item>Morbi leo risus</b-list-group-item>
   <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
@@ -28,6 +28,7 @@ props:['value'],
 data() {
   return {
   //
+  tensions: ["first tension", "2nd tension", "Number 3", "Fourmi d'arbre"]
   }
 },
 created(){
