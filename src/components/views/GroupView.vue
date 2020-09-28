@@ -1,47 +1,7 @@
 <template>
   <div class="modele-view">
-    <!--  <Component /> -->
-<!--
-subj : {{ subject }}<br>
-url : {{ url }}-->
-
-
 
 <GroupDisplay :file="file"/>
-
-
-  <!--  <b-card class="mb-2">
-      <b-card-title>{{ label }}</b-card-title>
-      <UserName :webId="maker" />
-      <div class="d-inline">as roles {{ roles}} <br></div>
-
-      <Date :dateIso="created"/>
-      <b-card-header>
-        <p><b>What Is :</b> {{wi}}</p>
-        <p><b>What should be :</b> {{wsb}}</p>
-
-      </b-card-header>
-      <b-card-text><ToolbarView :url="url" /></b-card-text>
-      <b-card-text>
-        <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-          <b-button-group class="mx-1" size="sm">
-            <b-button variant="outline"  to="/tension/edit"><b-icon icon="plus-square" aria-hidden="true" variant="info"></b-icon> </b-button>
-            <b-button variant="outline"  to="/tensions"> <b-icon icon="list" variant="info"></b-icon></b-button>
-          </b-button-group>
-        </b-button-toolbar>
-      </b-card-text>
-
-      <b-card-footer>
-
-
-        <Domains :domains="domains" />
-
-        <small> {{ types}} </small><br>
-        <router-link v-bind:to="{ name: 'Inbox', params: { inbox: inbox }}">inbox</router-link> <br>
-      </b-card-footer>
-    </b-card>
--->
-
   </div>
 </template>
 

@@ -6,7 +6,7 @@
         <div class="frontside">
           <div class="card">
             <div class="card-body text-center">
-              <p><img class=" img-fluid" v-bind:src="'https://images.weserv.nl/?url='+profile.photo+'&w100&h=100'" alt="card image"></p>
+              <p><img  v-if="profile.photo != undefined && profile.photo!= 'null'" class=" img-fluid" v-bind:src="'https://images.weserv.nl/?url='+profile.photo+'&w100&h=100'" alt="card image"></p>
               <h5 class="card-title">{{profile.name || this.webId}}</h5>
               <small> <span class="card-text" v-if="profile.organization"><b>Organization:</b> {{profile.organization}}<br></span>
                 <span class="card-text" v-if="profile.role"> <b>Role:</b> {{profile.role}}<br></span></small>
@@ -24,6 +24,12 @@
           <div class="card">
             <h6 class="card-title mt-2"><a v-bind:href="webId" target="_blank">{{profile.name || this.webId}}</a></h6>
             <b-button size="sm" v-if="friends.length > 0" class="mx-auto" variant="primary">{{friends.length}} friends</b-button>
+
+            <b-button size="sm" v-if="profile.workspaces != undefined && profile.workspaces.length > 0" class="mx-auto" variant="outline-primary">{{profile.workspaces.length}} workspaces</b-button>
+            <b-button size="sm" v-if="profile.groups != undefined && profile.groups.length > 0" class="mx-auto" variant="outline-primary">{{profile.groups.length}} groups</b-button>
+            <b-button size="sm" v-if="profile.tensions != undefined && profile.tensions.length > 0" class="mx-auto" variant="outline-primary">{{profile.tensions.length}} tensions</b-button>
+
+
 
             <div class="card-body text-center mt-4" style="overflow-y: auto;height: 100px;">
               <p class="card-text" v-if="profile.locality">Locality: {{profile.locality}}</p>
@@ -53,12 +59,19 @@ export default {
   data: function () {
     return {
       profile: {},
-      friends: []
+      friends: [],
+      //  workspaces: [],
+      //  groups: [],
+      //  tensions: [],
     }
   },
   async  created(){
     this.profile = await this.getProfile(this.webId)
     this.friends = await this.getFriends(this.webId)
+    //  this.workspaces = await this.getWorkspaces(this.webId)
+    //  this.groups = await this.getGroups(this.webId)
+
+    //  this.tensions = await this.getTensions(this.webId)
   },
 }
 </script>

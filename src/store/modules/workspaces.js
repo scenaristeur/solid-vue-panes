@@ -16,7 +16,7 @@ const getters = {}
 // actions
 const actions = {
   async getUserWorkspaces(context){
-    let indexFile = context.rootState.solid.storage+"popock/workspaces.ttl"
+    let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
     let workspacesDoc = {}
     let workspaces = []
     try{
@@ -35,7 +35,7 @@ const actions = {
     }
   },
   async addWorkspace(context, workspace) {
-    let indexFile = context.rootState.solid.storage+"popock/workspaces.ttl"
+    let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
     let ttl_name =  workspace.name.replace(/\s/g, '_')
     workspace.subject = ttl_name
     workspace.path = context.rootState.solid.storage+"public/"+ttl_name+"/"
@@ -56,7 +56,7 @@ const actions = {
     context.commit("addWorkspace",workspace)
   },
   async updateWorkspaces(context, workspaces){
-    let indexFile = context.rootState.solid.storage+"popock/workspaces.ttl"
+    let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
     console.log(indexFile)
     fc.delete(indexFile)
     let workspacesDoc = await createDocument(indexFile)

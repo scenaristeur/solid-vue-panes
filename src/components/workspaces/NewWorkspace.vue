@@ -1,7 +1,7 @@
 <template>
   <div class="modele-view">
     <b-form-input v-model="workspace.name" placeholder="Enter the name of the new workspace"></b-form-input>
-    <b-button @click="add">Add</b-button>  <b-button :to="'/editor?url='+storage+'popock/workspaces.ttl'">Edit</b-button>
+    <b-button @click="add">Add</b-button>  <b-button :to="'/editor?url='+storage+'public.popock/workspaces.ttl'">Edit</b-button>
   </div>
 </template>
 

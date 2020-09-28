@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.110 - GroupCollapse fix
+      0.1.111 - friend's workspaces, groups & tensions
     </i></small>
 
 </div>

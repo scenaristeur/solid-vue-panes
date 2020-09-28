@@ -1,5 +1,11 @@
 import { fetchDocument } from 'tripledoc';
-import { vcard, foaf, dct, rdfs, ldp } from 'rdf-namespaces'
+import { vcard, foaf, dct, rdfs, ldp , rdf} from 'rdf-namespaces'
+import auth from 'solid-auth-client';
+
+const SolidFileClient = window.SolidFileClient
+//console.log("SFC", SolidFileClient)
+const fc = new SolidFileClient(auth)
+
 //const solid= window.solid
 
 export default {
@@ -14,14 +20,13 @@ export default {
         profile.organization = p.getString("http://www.w3.org/2006/vcard/ns#organization-name")
         profile.role = p.getString(vcard.role)
         profile.photo = p.getRef(vcard.hasPhoto)
-        console.log(profile.photo)
         profile.bday = p.getString(vcard.bday)
         profile.gender = p.getString(vcard.hasGender)
         profile.note = p.getString(vcard.note)
         profile.friends = p.getAllRefs(foaf.knows)
         //profile.trustedApps = p.getAllLiterals("http://www.w3.org/ns/auth/acl#trustedApp")
-      //  console.log(p)
-      //  console.log(acl)
+        //  console.log(p)
+        //  console.log(acl)
 
         //must check if there are many addressUrl
         let addressUrl = p.getRef(vcard.hasAddress)
@@ -34,14 +39,43 @@ export default {
           profile.region = add.getString(vcard.region)
           profile.address = add.getString("http://www.w3.org/2006/vcard/ns#street-address")
         }
+
+        profile.workspaces = await this.getWorkspaces(webId)
+
+        if (profile.workspaces.length > 0 ){
+          console.log("PF",profile.workspaces)
+          for(let i in profile.workspaces){
+            let w = profile.workspaces[i]
+            if(w.name == "gouvernance"){
+              let groups_folder = w.path+"groups"
+              let tensions_folder = w.path+"tensions"
+              console.log("ww",w, groups_folder, tensions_folder)
+              let g_folder = await fc.readFolder(groups_folder)
+              let t_folder = await fc.readFolder(groups_folder)
+              let g_urls = g_folder.files
+              let t_urls = t_folder.files
+              console.log(g_urls, t_urls)
+              profile.groups = g_urls
+              profile.tensions = t_urls
+
+
+            }
+
+
+          }
+          //  profile.groups = await this.getGroups(webId)
+          //  profile.tensions = await this.getTensions(webId)
+          console.log("PROFILE",webId, profile)
+        }
+
         // ???  Does not work profile.photo = await p.getString(vcard.hasPhoto)
-      /*  let photo = await solid.data.[webId].vcard$hasPhoto
+        /*  let photo = await solid.data.[webId].vcard$hasPhoto
         profile.photo = `${photo}`*/
       }catch(e){
         //console.log(e)
         this.makeToast(e.message, webId, 'warning')
       }
-      console.log(profile)
+      //  console.log(profile)
       return profile
     },
     getInboxUrls: async function(webId){
@@ -68,6 +102,85 @@ export default {
       }
       return friends
     },
+
+
+
+    getWorkspaces: async function(webId){
+
+      let workspaces = []
+      let storage =  await solid.data[webId].storage
+      let indexFile = storage+"public/popock/workspaces.ttl"
+      //  console.log(webId, storage, indexFile)
+      if ( fc.itemExists(indexFile)){
+        let workspacesDoc = {}
+        try{
+          workspacesDoc = await fetchDocument(indexFile)
+          let subjects = workspacesDoc.getAllSubjectsOfType("http://www.w3.org/ns/pim/space#Workspace")
+          for  (let s of subjects) {
+            let name = s.getLiteral(rdf.label)
+            let path = s.getRef("http://www.w3.org/ns/pim/space#storage")
+            let pod = s.getRef("http://www.w3.org/ns/solid/terms#webId")
+            workspaces.push({name: name, path: path, pod: pod, subject: s.asRef().split('#')[1]})
+          }
+        }catch(e){
+          //  console.log(e)
+          //  workspacesDoc = await createDocument(indexFile)
+        }
+      }
+
+
+      //console.log("WWWW workspaces",workspaces)
+      return workspaces
+    },
+    getGroups: async function(webId){
+      let groups = []
+      let   workspaces = await this.getWorkspaces(webId)
+
+      if (workspaces.length > 0){
+        console.log(webId, workspaces)
+        workspaces.forEach(async function (w) {
+
+          if(w.name == 'gouvernance'){
+            console.log(w.name, w.path, w.subject)
+            let folder = w.path+'groups'
+            console.log("groups_folder", folder)
+            let f = await fc.readFolder(folder)
+            groups = f.files
+            console.log("GGGGGGGRRRRoups 2",groups)
+            return groups
+          }
+        });
+
+      }
+
+    },
+
+    getTensions: async function(webId){
+      let tensions = []
+      let   workspaces = await this.getWorkspaces(webId)
+
+      if (workspaces.length > 0){
+        console.log(webId, workspaces)
+        workspaces.forEach(async function (w) {
+          console.log(w.name, w.path, w.subject)
+          if(w.name == 'gouvernance'){
+            let folder = w.path+'tensions'
+            console.log("TTTTTTTTTension folder", folder)
+            let f = await fc.readFolder(folder)
+            tensions = f.files
+            console.log("TTTTTENSIONS",tensions)
+          }
+        });
+      }
+      return tensions
+    },
+
+
+
+
+
+
+
     addIndex: async function(fullpath, classe, name){
       let inst  =  fullpath+"/index.ttl#this"
       var dateObj = new Date();
