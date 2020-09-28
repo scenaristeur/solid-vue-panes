@@ -38,62 +38,62 @@ export default {
   },
   data: function () {
     return {
-    instances:[],
-    chat_url:"test"
+      instances:[],
+      chat_url:"test"
     }
   },
   watch:{
     group(){
       this.update()
     },
-      '$route' (to) {
-    console.log(to)
-
-  console.log(this.$route)
+    '$route' (to) {
+      console.log(to)
+      
+      console.log(this.$route)
+    },
   },
-},
   methods:{
     open(inst){
       let folder = inst.substring(0,inst.lastIndexOf("/")+1) //inst.substring(inst.lastIndexOf('/') + 1)
       let channel = {instance: folder, created: "09/27/2020", label: "unknown"}
       console.log(channel)
-        this.$store.commit('chat/setChannel', channel)
+      this.$store.commit('chat/setChannel', channel)
 
-        console.log(this.$route)
-        this.$route.params.group = undefined
-  //  this.$route.push({ name: 'ChatUrl', params: { group: undefined } })
+      console.log(this.$route)
+      this.$route.params.group = undefined
+      //  this.$route.push({ name: 'ChatUrl', params: { group: undefined } })
     },
-  async  create(){
+    async  create(){
       console.log(this.chat_url)
-        var dateObj = new Date();
-        console.log(dateObj)
-          var date = dateObj.toISOString()
-          let timestamp = Date.now()
-console.log(timestamp)
-  let chatDoc = await createDocument(this.chat_url);
-  let subj =   chatDoc.addSubject({identifier: "this"})
-  //subj.addLiteral(sioc.content, this.activity)
-  subj.addRef(rdf.type, "http://www.w3.org/ns/pim/meeting#LongChat")
-  subj.addLiteral(dct.created, date)
-//  subj.addRef(dct.author, "webid")
-  subj.addLiteral(dct.title, "chat")
-  subj.addRef("http://www.w3.org/2005/01/wf/flow#participation", this.chat_url+"#"+timestamp)
-  subj.addRef("http://www.w3.org/ns/ui#sharedPreferences", this.chat_url+"#SharedPreferences")
+      var dateObj = new Date();
+      console.log(dateObj)
+      var date = dateObj.toISOString()
+      let timestamp = Date.now()
+      console.log(timestamp)
+      let chatDoc = await createDocument(this.chat_url);
+      let subj =   chatDoc.addSubject({identifier: "this"})
+      //subj.addLiteral(sioc.content, this.activity)
+      subj.addRef(rdf.type, "http://www.w3.org/ns/pim/meeting#LongChat")
+      subj.addLiteral(dct.created, date)
+      //  subj.addRef(dct.author, "webid")
+      subj.addLiteral(dct.title, "chat")
+      subj.addRef("http://www.w3.org/2005/01/wf/flow#participation", this.chat_url+"#"+timestamp)
+      subj.addRef("http://www.w3.org/ns/ui#sharedPreferences", this.chat_url+"#SharedPreferences")
 
-  let instance =  chatDoc.addSubject({identifier: timestamp})
-  instance.addLiteral("http://www.w3.org/ns/ui#backgroundColor", "#c0d2fe")
+      let instance =  chatDoc.addSubject({identifier: timestamp})
+      instance.addLiteral("http://www.w3.org/ns/ui#backgroundColor", "#c0d2fe")
 
-  await chatDoc.save();
+      await chatDoc.save();
 
-  let groupDoc = await fetchDocument(this.group);
-  let group_instance =  groupDoc.addSubject({identifier: timestamp})
-  group_instance.addRef("http://www.w3.org/ns/solid/terms#forClass", "http://www.w3.org/ns/pim/meeting#LongChat")
-  group_instance.addRef("http://www.w3.org/ns/solid/terms#instance", this.chat_url+"#this")
+      let groupDoc = await fetchDocument(this.group);
+      let group_instance =  groupDoc.addSubject({identifier: timestamp})
+      group_instance.addRef("http://www.w3.org/ns/solid/terms#forClass", "http://www.w3.org/ns/pim/meeting#LongChat")
+      group_instance.addRef("http://www.w3.org/ns/solid/terms#instance", this.chat_url+"#this")
 
-  await groupDoc.save();
+      await groupDoc.save();
 
 
-/*
+      /*
       </long-chat/index.ttl#this>            a                    mee:LongChat .
       </long-chat/index.ttl#this>            dc:author            </profile/card#me> .
       </long-chat/index.ttl#this>            dc:created           "2018-07-06T21:36:04Z"^^XML:dateTime .
@@ -116,31 +116,31 @@ console.log(timestamp)
       console.log(gSubj)
       console.log(groupDoc)
       let chats = groupDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass", "http://www.w3.org/ns/pim/meeting#LongChat")
-console.log(chats.length, chats)
-let instances = []
-chats.forEach((chat) => {
-  let inst = chat.getRef('http://www.w3.org/ns/solid/terms#instance')
-  console.log("INST",inst)
-  if ( inst != null ){
-    instances.push(inst)
-  }
+      console.log(chats.length, chats)
+      let instances = []
+      chats.forEach((chat) => {
+        let inst = chat.getRef('http://www.w3.org/ns/solid/terms#instance')
+        console.log("INST",inst)
+        if ( inst != null ){
+          instances.push(inst)
+        }
 
-});
-this.instances = instances
+      });
+      this.instances = instances
 
-//"http://www.w3.org/ns/solid/terms#instance"
+      //"http://www.w3.org/ns/solid/terms#instance"
 
-//https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#long-chat
-//let part = this.group.substring(this.group.lastIndexOf('/') + 1).split(".ttl")[0]
-/*let parts = this.group.split("/") //.lastIndexOf('/')
-console.log(parts)
-console.log(parts.pop())
-let root = parts.join("/")
-console.log(root)*/
+      //https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#long-chat
+      //let part = this.group.substring(this.group.lastIndexOf('/') + 1).split(".ttl")[0]
+      /*let parts = this.group.split("/") //.lastIndexOf('/')
+      console.log(parts)
+      console.log(parts.pop())
+      let root = parts.join("/")
+      console.log(root)*/
 
-let folder = this.group.split(".ttl")[0]
-let index = folder+"/index.ttl"
-this.chat_url = index
+      let folder = this.group.split(".ttl")[0]
+      let index = folder+"/index.ttl"
+      this.chat_url = index
 
 
 

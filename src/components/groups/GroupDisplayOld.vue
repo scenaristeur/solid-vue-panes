@@ -1,67 +1,78 @@
 <template>
   <div class="group-display">
+    <b-card >
+      <b-card-header> <router-link v-bind:to="{ name: 'Groups', params: { url: file.parent+ttlName }}">{{group.name || file.name}}</router-link></b-card-header>
+      <b-card-text>
+        <GroupMembers :url="file.url" :members="group.members"/>
+        <b-button @click="open('modal-members-'+file.url)" variant="outline-info">{{ group.members.length }} Members</b-button>
+        <b-button v-bind:to="{ name: 'Groups', params: { url: file.parent+ttlName }}" :disabled="group.subgroups.length == 0" variant="outline-info">{{ group.subgroups.length }} subgroups</b-button>
 
-    <div>
+        <div>
+          <b-button-group >
+            <!--  <b-button>Button</b-button>
+            <b-dropdown right text="Menu">
+            <b-dropdown-item>Item 1</b-dropdown-item>
+            <b-dropdown-item>Item 2</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item>Item 3</b-dropdown-item>
+          </b-dropdown>-->
+          <b-dropdown variant="outline-info" right split text="menu">
+            <b-dropdown-item @click="open('modal-subgroups-'+file.url)">New subgroup</b-dropdown-item>
+            <!--  <b-dropdown-item>Item 2</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item>Item 3</b-dropdown-item>-->
+          </b-dropdown>
+          <b-button @click="join">Join/Invite</b-button>
+        </b-button-group>
+        <b-button-group >
+          <b-button variant="outline-info"  v-bind:to="{ name: 'ChatUrl', params: { group: file.url }}">Chat <b-icon icon="chat-fill" variant="info"></b-icon></b-button>
 
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle="'accordion-3'" variant="info">{{group.name || file.name}}</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-          <b-card-body>
-            <b-card-text>
-              <cite title="Purpose">{{group.purpose}}</cite>
+          <b-button variant="outline-info"  v-bind:to="{ name: 'Parle', params: { url: file.url }}">Parle <b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
 
-              <div class="row">
-                <div class="col-sm-6">
-                  <GroupChat />
-                </div>
-                <div class="col-sm-6">
+        </b-button-group>
+      </div>
 
-                  <GroupTensions />
-                </div>
-              </div>
-              <div class="row">
-                <GroupParle />
-              </div>
-
-              <hr>
-              <GroupMembers :url="file.url" :members="group.members"/>
-              <b-button @click="open('modal-members-'+file.url)" variant="outline-info">{{ group.members.length }} Members</b-button>
-              <b-button v-bind:to="{ name: 'Groups', params: { url: file.parent+ttlName }}" :disabled="group.subgroups.length == 0" variant="outline-info">{{ group.subgroups.length }} subgroups</b-button>
-
-              <div>
-                <b-button-group >
-                  <b-dropdown variant="outline-info" right split text="menu">
-                    <b-dropdown-item @click="open('modal-subgroups-'+file.url)">New subgroup</b-dropdown-item>
-                  </b-dropdown>
-                  <b-button @click="join">Join/Invite</b-button>
-                </b-button-group>
-              </div>
-
-
-            </b-card-text>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
-      
-      <b-modal v-bind:id="'modal-subgroups-'+file.url" title="SubGroups" @ok="add">
-        <b-form-group>
-          <label for="name">Group Name</label>
-          <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
-          <label for="purpose">Group Purpose</label>
-          <b-form-input id="purpose" v-model="purpose" placeholder="ex: Build Solid Cool apps..."></b-form-input>
-          <label for="parent">Parent / Supercircle</label>
-          <b-form-input id="parent" v-model="parent" placeholder="ex: Supercircle"></b-form-input>
-
-          <label for="url">Group location</label>
-          <b-form-input id="url" v-model="url" :placeholder="'ex: '+url"></b-form-input>
-        </b-form-group>
-      </b-modal>
-
-    </div>
+<div class="row">
+  <div class="col-sm-12">
+      <GroupChat />
   </div>
+  <div class="col-sm-12">
 
+        <GroupTensions />
+  </div>
+</div>
+<div class="row">
+<GroupParle />
+</div>
+
+
+    </b-card-text>
+
+    <blockquote class="blockquote mb-0">
+      <footer class="blockquote-footer">
+        <div class="created">
+          {{file.modified}}
+        </div>
+        <cite title="Purpose">{{group.purpose}}</cite>
+      </footer>
+    </blockquote>
+  </b-card>
+
+  <b-modal v-bind:id="'modal-subgroups-'+file.url" title="SubGroups" @ok="add">
+    <b-form-group>
+      <label for="name">Group Name</label>
+      <b-form-input id="name" v-model="name" :placeholder="'ex: '+name"></b-form-input>
+      <label for="purpose">Group Purpose</label>
+      <b-form-input id="purpose" v-model="purpose" placeholder="ex: Build Solid Cool apps..."></b-form-input>
+      <label for="parent">Parent / Supercircle</label>
+      <b-form-input id="parent" v-model="parent" placeholder="ex: Supercircle"></b-form-input>
+
+      <label for="url">Group location</label>
+      <b-form-input id="url" v-model="url" :placeholder="'ex: '+url"></b-form-input>
+    </b-form-group>
+  </b-modal>
+
+</div>
 </template>
 
 <script>
@@ -78,7 +89,7 @@ export default {
     'GroupMembers': () => import('@/components/groups/GroupMembers'),
     'GroupChat': () => import('@/components/groups/GroupChat'),
     'GroupTensions': () => import('@/components/groups/GroupTensions'),
-    'GroupParle': () => import('@/components/groups/GroupParle'),
+      'GroupParle': () => import('@/components/groups/GroupParle'),
   },
   props: ['file'],
   data: function () {
@@ -87,7 +98,6 @@ export default {
       name: "",
       purpose: "",
       ttlName : ""
-
       //  webId: {},
       //  friends: [],
     }

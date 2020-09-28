@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.108 - Chat from group
+      0.1.109 - GroupCollapse
     </i></small>
 
 </div>
