@@ -1,9 +1,9 @@
 <template>
   <div class="modele-view">
     <!--  <Component /> -->
-
+<!--
 subj : {{ subject }}<br>
-url : {{ url }}
+url : {{ url }}-->
 
 
 
