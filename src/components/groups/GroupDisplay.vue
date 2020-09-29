@@ -14,7 +14,7 @@
 
               <div class="row">
                 <div class="col-sm-6">
-                  <GroupChat />
+                  <GroupChat :instance="group.chat_instance" />
                 </div>
                 <div class="col-sm-6">
 
@@ -38,7 +38,7 @@
                   <b-button @click="join">Join/Invite</b-button>
                 </b-button-group>
               </div>
-
+<b-card-footer><small><a v-bind:href="file.url" target="_blank">{{ file.url }}</a></small></b-card-footer>
 
             </b-card-text>
           </b-card-body>

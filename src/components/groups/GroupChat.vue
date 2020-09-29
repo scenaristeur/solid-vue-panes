@@ -1,6 +1,6 @@
 <template>
   <div class="modele-view">
-    GroupChat
+    GroupChat {{ instance }}.
     <b-list-group class="list-group">
   <b-list-group-item>Cras justo odio</b-list-group-item>
   <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item>
@@ -33,7 +33,7 @@ export default {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
-props:['value'],
+props:['instance'],
 data() {
   return {
   //
