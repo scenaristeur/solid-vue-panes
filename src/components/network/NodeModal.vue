@@ -5,10 +5,10 @@
     <span id="node-operation">node</span> <br>
     <table style="margin:auto;">
       <tr>
-        <td>id</td><td><input v-model="node.id" /></td>
+        <td>id</td><td><input v-model="value.id" /></td>
       </tr>
       <tr>
-        <td>label</td><td><input v-model="node.label" /></td>
+        <td>label</td><td><input v-model="value.label" /></td>
       </tr>
     </table>
 
@@ -28,7 +28,7 @@ export default {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
-props:['node'],
+ props: ['value'],
 data() {
   return {
     //
@@ -41,7 +41,11 @@ created(){
 },
 methods: {
   addNode(){
-    console.log(this.node)
+    console.log(this.value)
+  //  this.$emit('nodeadd',this.node)
+//  let node="hello"
+this.$emit('ok', this.value)
+//  this.$emit('update:title', this.node)
   }
   /*async getData() {
   let dataDoc = await fetchDocument(this.url);

@@ -1,11 +1,12 @@
 <template>
   <div class="modele-view">
     <!--  <Component /> -->
-    EditorNetwork {{ file.url }}
+    EditorNetwork {{ file.url }}<br>
+    TITLE : {{ node.label}}<br>
     <b-button v-b-modal.node-popup>Launch demo modal</b-button>
     <b-button v-b-modal.edge-popup>Launch demo modal</b-button>
     <b-button @click="clear">Clear</b-button>
-    <b-input v-model="newfile.name" />
+    <b-input v-model="filename" />
     <b-button @click="create">New</b-button>
     <network ref="network"
     class="wrapper"
@@ -18,8 +19,9 @@
     >
   </network>
 
-  <NodeModal :node="node" />
-  <EdgeModal :edge="edge"/>
+  <NodeModal v-model="node" @ok="saveNode"
+   />
+  <EdgeModal :edge="edge" :file="file"/>
 
   <b-list-group>
     <b-list-group-item v-for="(t,i) in triples" :key="i">
@@ -59,7 +61,8 @@ export default {
   },
   data() {
     return {
-      newfile:{},
+    //  title:{label:"youpy"},
+      filename:"",
       triples: [],
       node: {},
       edge:{},
@@ -134,23 +137,24 @@ mounted(){
     manipulation: {
       enabled: true,
       addNode: async (node, callback) => {
-        //  callback() // Node will be added via reactivity from Vuex
+                callback() // Node will be added via reactivity from Vuex
+        node.id = this.tmp_file.url+"#"+node.id
         console.log(node)
         this.editNode(node, callback)
       },
       editNode: async (node, callback) => {
-        //  callback() // Node will be added via reactivity from Vuex
+          callback() // Node will be added via reactivity from Vuex
         console.log(node)
         this.editNode(node, callback)
       },
       addEdge: async (edge, callback) => {
-        //  callback() // Node will be added via reactivity from Vuex
+          callback() // Node will be added via reactivity from Vuex
         console.log(edge)
         this.addEdge(edge, callback)
       },
       editEdge: {
         editWithoutDrag: function (edge, callback){
-          //  callback() // Node will be added via reactivity from Vuex
+            callback() // Node will be added via reactivity from Vuex
           console.log(edge)
           app.editEdge(edge, callback)
         }
@@ -161,12 +165,34 @@ mounted(){
 },
 
 methods: {
+  saveNode(n){
+    console.log("saveNode",n)
+  //  this.callback(n)
+
+  var index = this.nodes.map(x => {
+  return x.id;
+}).indexOf(n.id);
+
+console.log(index)
+if(index > -1){
+  this.nodes.splice(index, 1);
+}
+this.nodes.push(n)
+
+  },
   create(){
     this.clear()
+    console.log(this.file)
     console.log(this.newfile)
     console.log(this.folder)
-    this.newfile.url =  this.newfile.name.endsWith('.ttl') ? this.folder.url+this.newfile.name : this.folder.url+this.newfile.name+".ttl"
-    console.log(this.newfile.url)
+    this.tmp_file = {}
+
+    this.tmp_file.name =  this.filename.endsWith('.ttl') ? this.filename : this.filename+".ttl"
+    this.tmp_file.url = this.folder.url+this.tmp_file.name
+    console.log(this.tmp_file)
+    let thisNode = {id:this.tmp_file.url+"#this", label:"#this"}
+    this.nodes.push(thisNode)
+
   },
   clear(){
     this.nodes = []
@@ -236,12 +262,14 @@ methods: {
 
 
   },
-  editNode(node, cancelAction, callback) {
-    console.log("addedge",node)
+  editNode(node) {
+    console.log("editNode",node)
     this.node = node
     this.$bvModal.show("node-popup")
-    console.log(node, cancelAction, callback)
-  //  callback()
+  //  console.log(node, callback)
+  //  callback(node)
+  //  this.callback = callback
+    //  callback()
     /*  document.getElementById('node-label').value = data.label;
     document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
     document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
@@ -331,6 +359,9 @@ saveEdgeData(data, callback) {
 
 },
 watch:{
+  node(){
+    console.log("NODE ADD ", this.node)
+  },
   file(){
     console.log("watch")
     this.update()

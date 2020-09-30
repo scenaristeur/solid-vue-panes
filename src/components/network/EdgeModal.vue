@@ -28,7 +28,7 @@ export default {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
-props:['edge'],
+props:['edge', 'file'],
 data() {
   return {
     //
