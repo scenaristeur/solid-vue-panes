@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.113 - network editor
+      0.1.114 - popups in network editor
     </i></small>
 
 </div>

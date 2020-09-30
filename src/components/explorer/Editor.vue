@@ -8,7 +8,7 @@
             <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
           </b-button-group>
           <b-button-group size="sm" class="mr-1">
-            <b-button size="sm" variant="warning" v-b-modal.modal-1>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
+            <b-button size="sm" variant="warning" v-b-modal.editor_save>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
 
 
           </b-button-group>
@@ -39,7 +39,7 @@
     </b-tabs>
 
 
-    <b-modal id="modal-1" title="Save" @show="fill" @ok="save">
+    <b-modal id="editor_save" title="Save" @show="fill" @ok="save">
       <b-form-group
       label-cols-sm="3"
       label="Path:"
