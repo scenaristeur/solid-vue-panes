@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.111 - friend's workspaces, groups & tensions
+      0.1.112 - network editor start
     </i></small>
 
 </div>

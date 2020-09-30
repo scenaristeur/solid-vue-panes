@@ -129,5 +129,115 @@ export default {
          var o = Math.round, r = Math.random, s = 255;
          return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
        },
+
+       addOrNothingNode(n){
+         let found = this.nodes.find(x => x.id === n.id)
+         if( found == undefined){
+           n.mass=1
+           this.nodes.push(n)
+           return n
+         }else{
+           found.mass < 50 ? found.mass++ :""
+           this.lastX = found.x
+           this.lastY = found.y
+           return found
+         }
+       },
+       stringOrArray(entries){
+         let result = []
+         if( entries != undefined ){
+           if ( typeof entries == "string" ){
+             result.push(entries)
+           }else{
+             entries.forEach((m) => {
+               result.push(m)
+             });
+           }
+         }
+         return result
+       },
+       lastPart(url){
+         return url.substr(url.lastIndexOf('/') + 1)
+       },
+       add2network(response_data){
+         let donnees = response_data["ldp:contains"]
+         console.log(donnees)
+         for (let don in donnees){
+           let d = donnees[don]
+           //  let color = this.random_rgba()
+           var color = this.colorize(d['@id'])
+
+
+           let label = d['pair:label'] || d['pair:firstName']+' '+d['pair:lastName'] || this.lastPart(d['@id'])
+           let subjectNode = { id:d['@id'], label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' , x:this.lastX , y:this.lastY  }
+           //this.addOrNothingNode(subjectNode)
+           this.dataset.nodes[subjectNode.id] = subjectNode
+
+           for (const [key, value] of Object.entries(d)) {
+             let typeNode = {}
+             let typeEdge = {}
+             let propertyEdge = {}
+             let objectNode = {}
+             //console.log("FOR")
+             switch (key) {
+               // NE rien faire déjà traité ou traité differemment
+               case "pair:label":
+               case 'pair:firstName':
+               case 'pair:lastName':
+               case "@id":
+               //console.log(key, value);
+               break;
+               case "@type":
+               typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100,  }
+               this.addOrNothingNode(typeNode)
+               typeEdge = {
+                 from: d['@id'],
+                 to: d['@type'],
+                 label: "a",
+               }
+               //  this.edges.push(typeEdge);
+               this.dataset.nodes[typeNode.id] = typeNode
+               this.dataset.edges.push(typeEdge)
+               this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+
+               break;
+               // autres propriétés
+               case "pair:involves":
+               case 'pair:offeredBy':
+               case 'pair:hasMember':
+               case 'pair:memberOf':
+               case 'pair:hasInterest':
+               case 'pair:offers':
+               case 'pair:involvedIn':
+               case 'pair:interestOf':
+
+               //  console.log("_______________",key, value);
+               this.stringOrArray(value).forEach((v) => {
+                 objectNode = { id:v, label: this.lastPart(v), shape: "box", color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', x:this.lastX , y:this.lastY  }
+                 propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+                 //  this.addOrNothingNode(objectNode)
+                 //  this.edges.push(propertyEdge);
+
+                 this.dataset.nodes[objectNode.id] = objectNode
+                 this.dataset.edges.push(propertyEdge)
+               });
+               //  console.log(this.stringToColour(key))
+               break;
+
+               default:
+               console.warn("TODO : ---------------",key, value);
+               this.stringOrArray(value).forEach((v) => {
+                 objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' , x:this.lastX , y:this.lastY  }
+                 propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}
+                 //  this.addOrNothingNode(objectNode)
+                 //  this.edges.push(propertyEdge);
+                 this.dataset.nodes[objectNode.id] = objectNode
+                 this.dataset.edges.push(propertyEdge)
+               });
+
+             }
+           }
+         }
+       },
     }
   }

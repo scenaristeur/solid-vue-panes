@@ -142,7 +142,7 @@ export default {
   },
   computed:{
     profile_url:{
-      get: function() { return this.$store.state.solid.storage+"public/salut/profile.ttl"},
+      get: function() { return this.$store.state.solid.storage+"public/popock/profile.ttl"},
       set: function() {}
     },
     storage:{
@@ -198,7 +198,7 @@ export default {
     },
     async addInterests(webId){
       let storage =  await solid.data[webId].storage
-      let p_u = storage+"public/salut/profile.ttl"
+      let p_u = storage+"public/popock/profile.ttl"
       console.log("P8U",p_u)
       try{
         this.profileDoc = await fetchDocument(p_u)

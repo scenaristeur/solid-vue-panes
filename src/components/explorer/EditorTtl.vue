@@ -31,7 +31,7 @@ import {  fetchDocument } from 'tripledoc';
 
 export default {
   name: 'EditorTtl',
-props:['file'],
+//props:['file'],
 data() {
   return {
     triples: []
@@ -61,6 +61,12 @@ watch:{
     console.log("watch")
     this.update()
   }
+},
+computed:{
+file: {
+  get: function () {return this.$store.state.solid.file},
+  set: function (file) {return this.$store.commit('solid/setFile', file)}
+},
 }
 }
 </script>
