@@ -10,7 +10,7 @@
     <span id="edge-operation">edge</span> <br>
     <table style="margin:auto;">
       <tr>
-        <td>label</td><td><input v-model="edge.label" /></td>
+        <td>label</td><td><input v-model="value.label" /></td>
       </tr></table>
 
     </b-modal>
@@ -28,7 +28,7 @@ export default {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
-props:['edge', 'file'],
+ props: ['value'],
 data() {
   return {
     //
@@ -41,7 +41,8 @@ created(){
 },
 methods: {
   addEdge(){
-    console.log(this.edge)
+    console.log(this.value)
+    this.$emit('ok', this.value)
   }
   /*async getData() {
   let dataDoc = await fetchDocument(this.url);

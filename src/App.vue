@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.114 - popups in network editor
+      0.1.115 - add edit node eges with modal
     </i></small>
 
 </div>

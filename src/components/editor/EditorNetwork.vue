@@ -19,9 +19,8 @@
     >
   </network>
 
-  <NodeModal v-model="node" @ok="saveNode"
-   />
-  <EdgeModal :edge="edge" :file="file"/>
+  <NodeModal v-model="node" @ok="saveNode"/>
+  <EdgeModal v-model="edge" @ok="saveEdge"/>
 
   <b-list-group>
     <b-list-group-item v-for="(t,i) in triples" :key="i">
@@ -61,7 +60,7 @@ export default {
   },
   data() {
     return {
-    //  title:{label:"youpy"},
+      //  title:{label:"youpy"},
       filename:"",
       triples: [],
       node: {},
@@ -137,24 +136,24 @@ mounted(){
     manipulation: {
       enabled: true,
       addNode: async (node, callback) => {
-                callback() // Node will be added via reactivity from Vuex
+        callback() // Node will be added via reactivity from Vuex
         node.id = this.tmp_file.url+"#"+node.id
         console.log(node)
         this.editNode(node, callback)
       },
       editNode: async (node, callback) => {
-          callback() // Node will be added via reactivity from Vuex
+        callback() // Node will be added via reactivity from Vuex
         console.log(node)
         this.editNode(node, callback)
       },
       addEdge: async (edge, callback) => {
-          callback() // Node will be added via reactivity from Vuex
+        callback() // Node will be added via reactivity from Vuex
         console.log(edge)
         this.addEdge(edge, callback)
       },
       editEdge: {
         editWithoutDrag: function (edge, callback){
-            callback() // Node will be added via reactivity from Vuex
+          callback() // Node will be added via reactivity from Vuex
           console.log(edge)
           app.editEdge(edge, callback)
         }
@@ -167,17 +166,40 @@ mounted(){
 methods: {
   saveNode(n){
     console.log("saveNode",n)
-  //  this.callback(n)
+    //  this.callback(n)
 
-  var index = this.nodes.map(x => {
-  return x.id;
-}).indexOf(n.id);
+    var index = this.nodes.map(x => {
+      return x.id;
+    }).indexOf(n.id);
 
-console.log(index)
-if(index > -1){
-  this.nodes.splice(index, 1);
-}
-this.nodes.push(n)
+    console.log(index)
+    if(index > -1){
+      //  this.nodes.splice(index, 1);
+      console.log(  this.nodes[index])
+      this.nodes[index].label = n.label
+    }else{
+      this.nodes.push(n)
+    }
+
+
+  },
+  saveEdge(e){
+    console.log("saveEdge",e)
+    //  this.callback(n)
+
+    var index = this.edges.map(x => {
+      return x.id;
+    }).indexOf(e.id);
+
+    console.log(index)
+    if(index > -1){
+      console.log(  this.edges[index])
+      this.edges[index].label = e.label
+    }else{
+      this.edges.push(e)
+    }
+    //
+
 
   },
   create(){
@@ -266,9 +288,9 @@ this.nodes.push(n)
     console.log("editNode",node)
     this.node = node
     this.$bvModal.show("node-popup")
-  //  console.log(node, callback)
-  //  callback(node)
-  //  this.callback = callback
+    //  console.log(node, callback)
+    //  callback(node)
+    //  this.callback = callback
     //  callback()
     /*  document.getElementById('node-label').value = data.label;
     document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
@@ -287,14 +309,15 @@ this.nodes.push(n)
     }
 
     this.editEdgeWithoutDrag(edge, callback);
-    callback()
+    //callback()
   },
   editEdge(edge, callback){
     console.log("edit edge", edge, callback)
     this.editEdgeWithoutDrag(edge, callback);
-    callback()
+    //  callback()
   },
   editEdgeWithoutDrag(edge, callback){
+    //
     console.log("edit editWithoutDrag",edge)
     /*      // filling in the popup DOM elements
     document.getElementById('edge-label').value = data.label;
@@ -302,8 +325,10 @@ this.nodes.push(n)
     document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
     document.getElementById('edge-popUp').style.display = 'block';
     */
+    this.edge = edge
     this.$bvModal.show("edge-popup")
     console.log(edge, callback)
+    callback()
   },
 
 
