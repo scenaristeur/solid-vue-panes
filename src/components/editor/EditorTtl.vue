@@ -38,6 +38,7 @@ data() {
   }
 },
 async created(){
+  this.file = this.$store.state.solid.file
   this.update()
 },
 

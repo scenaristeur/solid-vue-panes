@@ -21,7 +21,7 @@
   </div>
 
     <small><i>
-      0.1.112 - network editor start
+      0.1.113 - network editor
     </i></small>
 
 </div>

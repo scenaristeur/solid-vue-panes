@@ -1,14 +1,16 @@
 <template>
   <div class="browser">
     <div v-if="webId != null">
+
       <b-list-group>
         <b-list-group-item
+        href="#"
         v-if="folder.parent != 'https://'"
         class="item"
         @click="updateFolder(folder.parent)">
         <b-icon-arrow-up></b-icon-arrow-up>   {{ folder.url }}
       </b-list-group-item>
-      <b-list-group-item v-else class="item">
+      <b-list-group-item v-else class="item" href="#">
         {{ storage }}
       </b-list-group-item>
 
@@ -42,9 +44,11 @@
         multiple
         ></b-form-file>
       </div>
+    </b-list-group>
 
-
+    <b-list-group class="scroll">
       <b-list-group-item
+      href="#"
       class="item list-group-item d-flex justify-content-between"
       v-for="fo in folder.folders"
       :key="fo.name"
@@ -62,10 +66,9 @@
         </b-button>
 
       </b-list-group-item>
-    </b-list-group>
-
-    <b-list-group>
+      <!-- -->
       <b-list-group-item
+      href="#"
       class="item list-group-item d-flex justify-content-between"
       v-for="fi in folder.files"
       :key="fi.name"
@@ -244,7 +247,7 @@ export default {
           this.currentItem.url
         );
         console.log("File deleted !");
-        this.makeToast("success !", "File deleted !", "success") 
+        this.makeToast("success !", "File deleted !", "success")
       }else{
         await  fc.deleteFolder(this.currentItem.url)
       }
@@ -270,5 +273,11 @@ export default {
 <style>
 .item {
   text-align: left;
+}
+.scroll{
+  max-height: 80vh;
+  margin-bottom: 10px;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
 }
 </style>
