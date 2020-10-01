@@ -34,7 +34,7 @@
         <EditorTtl />
       </b-tab>
       <b-tab title="Network" >
-        <EditorNetwork />
+    -  <EditorNetwork />
       </b-tab>
     </b-tabs>
 
@@ -87,7 +87,7 @@ export default {
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'EditorTtl': () => import('@/components/editor/EditorTtl'),
-    'EditorNetwork': () => import('@/components/editor/EditorNetwork'),
+   'EditorNetwork': () => import('@/components/editor/EditorNetwork'),
     //  'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {
