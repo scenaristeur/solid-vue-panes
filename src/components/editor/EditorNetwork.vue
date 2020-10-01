@@ -57,7 +57,7 @@
 
 <script>
 import {  fetchDocument, createDocument } from 'tripledoc';
-import { foaf, rdfs, dct } from 'rdf-namespaces'
+import { foaf, rdfs, dct, rdf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import networkMixin from '@/mixins/networkMixin'
 import ActivityMixin from '@/mixins/ActivityMixin'
@@ -196,7 +196,7 @@ mounted(){
         if (this.tmp_file != null ){
           this.file = this.tmp_file
         }
-        node.id = this.tmp_file.url+"#"+node.id
+        node.id = this.file.url+"#"+node.id
         //console.log(node)
         this.editNode(node, callback)
       },
@@ -332,9 +332,10 @@ methods: {
     let subj = doc.addSubject({identifier: "this"})
 
     if(exist == false){
-      let this_label = this.thisNode.label+"test"
+      let this_label = this.thisNode.label
       subj.addString(rdfs.label, this_label)
       subj.addString(dct.created, date)
+        subj.addRef(rdf.type, this.tmp_file.url+"#Network")
       console.log("file created", this.tmp_file.url)
 
     }else{

@@ -42,7 +42,7 @@ export default {
       subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
-    this.currentWorkspace != undefined ?  subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type) : subj.addRef(rdf.type, +this.activity.object.url+"#"+this.activity.object.type)
+    this.currentWorkspace != undefined ?  subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type) : subj.addRef(rdf.type, this.activity.object.url+"#"+this.activity.object.type)
       /*  console.log("PART1 OK")
       let object_subj =   activityDoc.addSubject({identifier:this.activity.object.url})
       object_subj.addLiteral(rdf.type, this.activity.object.type)

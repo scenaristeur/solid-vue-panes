@@ -2,7 +2,8 @@
   <div class="view container">
 
     <TaskView v-if="types.includes('http://purl.org/vocab/lifecycle/schema#Task')" :subject="subject" :url="url"/>
-    <GroupView v-if="types.includes( 'http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
+    <GroupView v-else-if="types.includes('http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
+    <NetworkView v-else-if="isNetwork == true" :subject="subject" :url="url"/>
     <div v-else>
       no template for {{ url }} with types : {{ types }}<br>
       view : {{ url }}
@@ -23,10 +24,12 @@ export default {
     'ResourceView': () => import('@/components/views/ResourceView'),
     'TaskView': () => import('@/components/views/TaskView'),
     'GroupView': () => import('@/components/views/GroupView'),
+    'NetworkView': () => import('@/components/views/NetworkView'),
   },
   data() {
     return {
-      types: []
+      types: [],
+      isNetwork: false
     }
   },
   created(){
@@ -42,6 +45,7 @@ export default {
   },
   methods: {
     async getData() {
+      this.isNetwork = false
       let dataDoc = await fetchDocument(this.url);
       let url =  this.url.endsWith("#this") ? this.url : this.url+"#this"
       console.log(url)
@@ -49,6 +53,14 @@ export default {
       console.log(this.subject)
       this.types = await this.subject.getAllRefs(rdf.type)
       console.log(this.types)
+
+      this.types.forEach((t) => {
+        if (t.endsWith('#Network') ){
+          this.isNetwork = true
+        }
+      });
+
+
 
     }
   },
