@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import {  fetchDocument } from 'tripledoc';
-import { foaf } from 'rdf-namespaces'
+import {  fetchDocument, createDocument } from 'tripledoc';
+import { foaf, rdfs, dct } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import networkMixin from '@/mixins/networkMixin'
 
@@ -62,6 +62,7 @@ export default {
     return {
       //  title:{label:"youpy"},
       filename:"",
+      tmp_file: null,
       triples: [],
       node: {},
       edge:{},
@@ -137,24 +138,27 @@ mounted(){
       enabled: true,
       addNode: async (node, callback) => {
         callback() // Node will be added via reactivity from Vuex
+        if (this.tmp_file != null ){
+          this.file = this.tmp_file
+        }
         node.id = this.tmp_file.url+"#"+node.id
-        console.log(node)
+        //console.log(node)
         this.editNode(node, callback)
       },
       editNode: async (node, callback) => {
         callback() // Node will be added via reactivity from Vuex
-        console.log(node)
+        //console.log(node)
         this.editNode(node, callback)
       },
       addEdge: async (edge, callback) => {
         callback() // Node will be added via reactivity from Vuex
-        console.log(edge)
+        //console.log(edge)
         this.addEdge(edge, callback)
       },
       editEdge: {
         editWithoutDrag: function (edge, callback){
           callback() // Node will be added via reactivity from Vuex
-          console.log(edge)
+          //console.log(edge)
           app.editEdge(edge, callback)
         }
       },
@@ -165,17 +169,17 @@ mounted(){
 
 methods: {
   saveNode(n){
-    console.log("saveNode",n)
+    //console.log("saveNode",n)
     //  this.callback(n)
 
     var index = this.nodes.map(x => {
       return x.id;
     }).indexOf(n.id);
 
-    console.log(index)
+    //console.log(index)
     if(index > -1){
-      //  this.nodes.splice(index, 1);
-      console.log(  this.nodes[index])
+      this.nodes.splice(index, 1);
+      //console.log(  this.nodes[index])
       this.nodes[index].label = n.label
     }else{
       this.nodes.push(n)
@@ -183,38 +187,107 @@ methods: {
 
 
   },
+  async  writeEdgeToFile(e){
+    if (this.tmp_file != null){
+      this.file = this.tmp_file
+    }
+    let subject  = this.nodes.filter(function(el) {
+      return el.id == e.from
+    });
+    let object  = this.nodes.filter(function(el) {
+      return el.id == e.to
+    });
+    //console.log(subject[0], e, object[0])
+
+    //let identifier = subject[0].id.indexOf(this.file) > 0 ? subject[0].id.split('#') : subject[0].id
+    let subj_identifier = subject[0].id.split('#')[1]
+    let obj_identifier = object[0].id.split('#')[1]
+
+
+    var dateObj = new Date();
+    var date = dateObj.toISOString()
+    let doc =  await fetchDocument(this.file.url)
+    //console.log(doc)
+    let subj = doc.addSubject({identifier: subj_identifier})
+    subj.addString(rdfs.label, subject[0].label)
+
+    subj.addString(dct.modified, date)
+
+    subj.addRef(foaf.maker, this.webId)
+
+
+    subj.addRef(this.file.url+"#"+e.label, object[0].id)
+    //subj.addRef(this.file.url+"#"+e.label, obj_identifier)
+    let obj = doc.addSubject({identifier: obj_identifier})
+    obj.addString(rdfs.label, object[0].label)
+    doc.save()
+  },
   saveEdge(e){
-    console.log("saveEdge",e)
+    //console.log("saveEdge",e)
     //  this.callback(n)
 
     var index = this.edges.map(x => {
       return x.id;
     }).indexOf(e.id);
 
-    console.log(index)
+    //console.log(index)
     if(index > -1){
-      console.log(  this.edges[index])
+      //console.log(  this.edges[index])
       this.edges[index].label = e.label
     }else{
       this.edges.push(e)
+      this.writeEdgeToFile(e)
     }
+
+
     //
 
 
   },
-  create(){
+  async  create(){
     this.clear()
-    console.log(this.file)
-    console.log(this.newfile)
-    console.log(this.folder)
+    // //console.log(this.file)
+    // //console.log(this.newfile)
+    // //console.log(this.folder)
     this.tmp_file = {}
+    this.filename = this.filename.split(' ').join('_');
 
     this.tmp_file.name =  this.filename.endsWith('.ttl') ? this.filename : this.filename+".ttl"
     this.tmp_file.url = this.folder.url+this.tmp_file.name
-    console.log(this.tmp_file)
+    //console.log(this.tmp_file)
     let thisNode = {id:this.tmp_file.url+"#this", label:"#this"}
     this.nodes.push(thisNode)
 
+    let doc = {}
+    //console.log(this.file.url)
+    let exist = false
+    try{
+      doc =  await fetchDocument(this.tmp_file.url)
+      exist = true
+    }catch(e){
+      doc =  await createDocument(this.tmp_file.url)
+      exist = false
+
+    }
+
+    var dateObj = new Date();
+    var date = dateObj.toISOString()
+    //let doc =  await fetchDocument(this.file.url)
+    //console.log(doc)
+    let subj = doc.addSubject({identifier: "this"})
+
+    if(exist == false){
+      subj.addString(rdfs.label, thisNode.label)
+      subj.addString(dct.created, date)
+      console.log("file created", this.tmp_file.url)
+
+    }else{
+      subj.addString(dct.modified, date)
+      console.log("file modified", this.tmp_file.url)
+
+    }
+    subj.addRef(foaf.maker, this.webId)
+    doc.save()
   },
   clear(){
     this.nodes = []
@@ -222,141 +295,141 @@ methods: {
   },
   async update(){
     this.triples = []
-    console.log(this.file.url)
+    //console.log(this.file.url)
     if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
       let fileDoc = await fetchDocument(this.file.url)
-      console.log("fileDoc",fileDoc)
+      //console.log("fileDoc",fileDoc)
       this.triples = fileDoc.getTriples()
-      console.log(this.triples)
+      //console.log(this.triples)
     }else{
-      console.log(this.file.url)
+      //console.log(this.file.url)
     }
 
   },
-  networkEvent(e){
-    console.log(e)
-  },
-  async addInterests(webId){
-    let storage =  await solid.data[webId].storage
-    let p_u = storage+"public/popock/profile.ttl"
-    console.log("P8U",p_u)
-    try{
-      this.profileDoc = await fetchDocument(p_u)
-      let subj = await this.profileDoc.getSubject(p_u+"#me")
-      this.interests = await subj.getAllLiterals(foaf.topic_interest)
-      console.log(this.interests)
-      this.interests.forEach((interest) => {
-        this.$refs.network.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" });
-        this.$refs.network.edges.push({
-          from: webId,
-          to: interest,
-          label: "foaf:topic_interest"
-        });
+  /*networkEvent(e){
+  console.log(e)
+},*/
+async addInterests(webId){
+  let storage =  await solid.data[webId].storage
+  let p_u = storage+"public/popock/profile.ttl"
+  //console.log("P8U",p_u)
+  try{
+    this.profileDoc = await fetchDocument(p_u)
+    let subj = await this.profileDoc.getSubject(p_u+"#me")
+    this.interests = await subj.getAllLiterals(foaf.topic_interest)
+    //console.log(this.interests)
+    this.interests.forEach((interest) => {
+      this.$refs.network.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" });
+      this.$refs.network.edges.push({
+        from: webId,
+        to: interest,
+        label: "foaf:topic_interest"
       });
+    });
 
-    }catch(e){
-      //  console.log(e)
-      //  this.profileDoc = await createDocument(p_u)
+  }catch(e){
+    // //console.log(e)
+    //  this.profileDoc = await createDocument(p_u)
+  }
+
+},
+addTriplet(t){
+  // //console.log(t)
+  // //console.log(t.subject.id, t.predicate.id, t.object.id)
+
+  var color = this.colorize(t.subject.id)
+  let label =  this.lastPart(t.subject.id)
+  let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
+  // //console.log(subjectNode)
+  //  this.dataset.nodes[subjectNode.id] = subjectNode
+  this.addOrNothingNode(subjectNode)
+
+  var colorO = this.colorize(t.object.id)
+  let labelO =  this.lastPart(t.object.id)
+  let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
+  // //console.log(objectNode)
+  //  this.dataset.nodes[subjectNode.id] = subjectNode
+  this.addOrNothingNode(objectNode)
+
+  let labelP = this.lastPart(t.predicate.id)
+  let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
+  this.edges.push(propertyEdge)
+
+
+},
+editNode(node) {
+  //console.log("editNode",node)
+  this.node = node
+  this.$bvModal.show("node-popup")
+  //  console.log(node, callback)
+  //  callback(node)
+  //  this.callback = callback
+  //  callback()
+  /*  document.getElementById('node-label').value = data.label;
+  document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
+  document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
+  document.getElementById('node-popUp').style.display = 'block';*/
+},
+addEdge(edge, callback){
+  //console.log("addedge")
+  this.edge = edge
+  if (edge.from == edge.to) {
+    var r = confirm("Do you want to connect the node to itself?");
+    if (r != true) {
+      callback(null);
+      return;
     }
+  }
 
-  },
-  addTriplet(t){
-    //  console.log(t)
-    //  console.log(t.subject.id, t.predicate.id, t.object.id)
-
-    var color = this.colorize(t.subject.id)
-    let label =  this.lastPart(t.subject.id)
-    let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
-    //  console.log(subjectNode)
-    //  this.dataset.nodes[subjectNode.id] = subjectNode
-    this.addOrNothingNode(subjectNode)
-
-    var colorO = this.colorize(t.object.id)
-    let labelO =  this.lastPart(t.object.id)
-    let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
-    //  console.log(objectNode)
-    //  this.dataset.nodes[subjectNode.id] = subjectNode
-    this.addOrNothingNode(objectNode)
-
-    let labelP = this.lastPart(t.predicate.id)
-    let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
-    this.edges.push(propertyEdge)
-
-
-  },
-  editNode(node) {
-    console.log("editNode",node)
-    this.node = node
-    this.$bvModal.show("node-popup")
-    //  console.log(node, callback)
-    //  callback(node)
-    //  this.callback = callback
-    //  callback()
-    /*  document.getElementById('node-label').value = data.label;
-    document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
-    document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
-    document.getElementById('node-popUp').style.display = 'block';*/
-  },
-  addEdge(edge, callback){
-    console.log("addedge")
-    this.edge = edge
-    if (edge.from == edge.to) {
-      var r = confirm("Do you want to connect the node to itself?");
-      if (r != true) {
-        callback(null);
-        return;
-      }
-    }
-
-    this.editEdgeWithoutDrag(edge, callback);
-    //callback()
-  },
-  editEdge(edge, callback){
-    console.log("edit edge", edge, callback)
-    this.editEdgeWithoutDrag(edge, callback);
-    //  callback()
-  },
-  editEdgeWithoutDrag(edge, callback){
-    //
-    console.log("edit editWithoutDrag",edge)
-    /*      // filling in the popup DOM elements
-    document.getElementById('edge-label').value = data.label;
-    document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
-    document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
-    document.getElementById('edge-popUp').style.display = 'block';
-    */
-    this.edge = edge
-    this.$bvModal.show("edge-popup")
-    console.log(edge, callback)
-    callback()
-  },
-
-
-
-  // Callback passed as parameter is ignored
-  clearNodePopUp() {
-    document.getElementById('node-saveButton').onclick = null;
-    document.getElementById('node-cancelButton').onclick = null;
-    document.getElementById('node-popUp').style.display = 'none';
-  },
-
-  cancelNodeEdit(callback) {
-    this.clearNodePopUp();
-    callback(null);
-  },
-
-  saveNodeData(data, callback) {
-    data.label = document.getElementById('node-label').value;
-    this.clearNodePopUp();
-    callback(data);
-  },
-
-  /*  editEdgeWithoutDrag(data, callback) {
-  // filling in the popup DOM elements
+  this.editEdgeWithoutDrag(edge, callback);
+  //callback()
+},
+editEdge(edge, callback){
+  //console.log("edit edge", edge, callback)
+  this.editEdgeWithoutDrag(edge, callback);
+  //  callback()
+},
+editEdgeWithoutDrag(edge, callback){
+  //
+  //console.log("edit editWithoutDrag",edge)
+  /*      // filling in the popup DOM elements
   document.getElementById('edge-label').value = data.label;
   document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
   document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
   document.getElementById('edge-popUp').style.display = 'block';
+  */
+  this.edge = edge
+  this.$bvModal.show("edge-popup")
+  //console.log(edge, callback)
+  callback()
+},
+
+
+
+// Callback passed as parameter is ignored
+clearNodePopUp() {
+  document.getElementById('node-saveButton').onclick = null;
+  document.getElementById('node-cancelButton').onclick = null;
+  document.getElementById('node-popUp').style.display = 'none';
+},
+
+cancelNodeEdit(callback) {
+  this.clearNodePopUp();
+  callback(null);
+},
+
+saveNodeData(data, callback) {
+  data.label = document.getElementById('node-label').value;
+  this.clearNodePopUp();
+  callback(data);
+},
+
+/*  editEdgeWithoutDrag(data, callback) {
+// filling in the popup DOM elements
+document.getElementById('edge-label').value = data.label;
+document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
+document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
+document.getElementById('edge-popUp').style.display = 'block';
 },*/
 
 clearEdgePopUp() {
@@ -385,46 +458,46 @@ saveEdgeData(data, callback) {
 },
 watch:{
   node(){
-    console.log("NODE ADD ", this.node)
+    //console.log("NODE ADD ", this.node)
   },
   file(){
-    console.log("watch")
+    //console.log("watch")
     this.update()
   },
-  $route(to, from) {
-    console.log(to, from, this.$route)
-    // react to route changes...
-  },
-  storage (st) {
-    //  '$route' (to, from) {
-    console.log(st)
-  },
-  friends(friends){
-    console.log(friends)
-    friends.forEach((f) => {
-      //  console.log(f,i)
-      this.$refs.network.nodes.push({ id:f, label: f , shape: "dot", color: "yellow"});
-      this.$refs.network.edges.push({
-        from: this.webId,
-        to: f,
-        label: "foaf:friend"
-      });
-      this.addInterests(f)
-
+  /*$route(to, from) {
+  console.log(to, from, this.$route)
+  // react to route changes...
+},
+storage (st) {
+//  '$route' (to, from) {
+console.log(st)
+},*/
+friends(friends){
+  //console.log(friends)
+  friends.forEach((f) => {
+    // //console.log(f,i)
+    this.$refs.network.nodes.push({ id:f, label: f , shape: "dot", color: "yellow"});
+    this.$refs.network.edges.push({
+      from: this.webId,
+      to: f,
+      label: "foaf:friend"
     });
+    this.addInterests(f)
 
-  },
-  webId(webId){
-    console.log(webId)
-    this.$refs.network.nodes.push({ id:webId, label: webId ,/*   "shape": "icon",
-    "icon": {
-    face: '"Font Awesome 5 Brands"',
-    code: '\uf36e'
-  }*/});
-  this.addInterests(webId)
+  });
+
+},
+webId(webId){
+  //console.log(webId)
+  this.$refs.network.nodes.push({ id:webId, label: webId ,/*   "shape": "icon",
+  "icon": {
+  face: '"Font Awesome 5 Brands"',
+  code: '\uf36e'
+}*/});
+this.addInterests(webId)
 },
 triples(){
-  console.log("TRIPLES",this.triples)
+  //console.log("TRIPLES",this.triples)
   if (this.triples.length > 0){
     this.triples.forEach((t) => {
       this.addTriplet(t)

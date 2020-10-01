@@ -21,7 +21,9 @@
   </div>
 
     <small><i>
-      0.1.115 - add edit node eges with modal
+      <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
+      0.1.116 - Mindmap creation in Network Editor
+    </a>
     </i></small>
 
 </div>
