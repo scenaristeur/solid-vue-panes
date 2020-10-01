@@ -22,7 +22,7 @@
   <NodeModal v-model="node" @ok="saveNode"/>
   <EdgeModal v-model="edge" @ok="saveEdge"/>
 
-  <b-list-group>
+<!--  <b-list-group>
     <b-list-group-item v-for="(t,i) in triples" :key="i">
       <div class="row">
         <div class="col rounded">
@@ -41,7 +41,7 @@
         </div>
       </div>
     </b-list-group-item>
-  </b-list-group>
+  </b-list-group> -->
 </div>
 </template>
 
