@@ -1,14 +1,17 @@
 <template>
   <div class="modele-view">
     <!--  <Component /> -->
-    EditorNetwork {{ file.url }}<br>
-    TITLE : {{ node.label}}<br>
+    <small>  File <a :href="file.url" target="_blank">{{ file.url }}</a><br>
+      Node : {{ node.label}}<br>
+    </small>
 
-    <b-button v-b-modal.node-popup>Launch demo modal</b-button>
-    <b-button v-b-modal.edge-popup>Launch demo modal</b-button>
-    <b-button @click="clear">Clear</b-button>
-    <b-input v-model="filename" />
-    <b-button @click="create">New</b-button>
+    <!--  <b-button v-b-modal.node-popup>Launch demo modal</b-button>
+    <b-button v-b-modal.edge-popup>Launch demo modal</b-button>-->
+    <div class="row">
+      <b-input placeholder="new file name" v-model="filename" />
+      <b-button @click="create">New</b-button>
+    </div>
+    <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
@@ -57,10 +60,11 @@ import {  fetchDocument, createDocument } from 'tripledoc';
 import { foaf, rdfs, dct } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import networkMixin from '@/mixins/networkMixin'
+import ActivityMixin from '@/mixins/ActivityMixin'
 
 export default {
   name: 'EditorNetwork',
-  mixins: [networkMixin],
+  mixins: [networkMixin, ActivityMixin],
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
@@ -73,6 +77,7 @@ export default {
       triples: [],
       node: {},
       edge:{},
+      net: {},
       /*nodes: [
       {id: 1,  label: 'circle',  shape: 'circle' },
       {id: 2,  label: 'ellipse', shape: 'ellipse'},
@@ -139,38 +144,38 @@ options: {
   },
   /*manipulation: {
 
-    addNode: function (data, callback) {
-      // filling in the popup DOM elements
-      //  document.getElementById('node-operation').innerHTML = "Add Node";
-      this.editNode(data, this.clearNodePopUp, callback);
-      console.log(data,callback)
-    },
-    editNode: function (data, callback) {
+  addNode: function (data, callback) {
+  // filling in the popup DOM elements
+  //  document.getElementById('node-operation').innerHTML = "Add Node";
+  this.editNode(data, this.clearNodePopUp, callback);
+  console.log(data,callback)
+},
+editNode: function (data, callback) {
 
-      // filling in the popup DOM elements
-      //  document.getElementById('node-operation').innerHTML = "Edit Node";
-      this.editNode(data, this.cancelNodeEdit, callback).bind(this);
-      console.log(data,callback)
-    },
-    addEdge: function (data, callback) {
-      if (data.from == data.to) {
-        var r = confirm("Do you want to connect the node to itself?");
-        if (r != true) {
-          callback(null);
-          return;
-        }
-      }
-      document.getElementById('edge-operation').innerHTML = "Add Edge";
-      this.editEdgeWithoutDrag(data, callback);
-    },
-    editEdge: {
-      editWithoutDrag: function(data, callback) {
-        document.getElementById('edge-operation').innerHTML = "Edit Edge";
-        this.editEdgeWithoutDrag(data,callback);
-        console.log(data,callback)
-      }
-    }
-  }*/
+// filling in the popup DOM elements
+//  document.getElementById('node-operation').innerHTML = "Edit Node";
+this.editNode(data, this.cancelNodeEdit, callback).bind(this);
+console.log(data,callback)
+},
+addEdge: function (data, callback) {
+if (data.from == data.to) {
+var r = confirm("Do you want to connect the node to itself?");
+if (r != true) {
+callback(null);
+return;
+}
+}
+document.getElementById('edge-operation').innerHTML = "Add Edge";
+this.editEdgeWithoutDrag(data, callback);
+},
+editEdge: {
+editWithoutDrag: function(data, callback) {
+document.getElementById('edge-operation').innerHTML = "Edit Edge";
+this.editEdgeWithoutDrag(data,callback);
+console.log(data,callback)
+}
+}
+}*/
 }
 }
 },
@@ -185,6 +190,7 @@ mounted(){
   this.network.setOptions({
     manipulation: {
       enabled: true,
+      initiallyActive: true,
       addNode: async (node, callback) => {
         callback() // Node will be added via reactivity from Vuex
         if (this.tmp_file != null ){
@@ -304,8 +310,8 @@ methods: {
     this.tmp_file.name =  this.filename.endsWith('.ttl') ? this.filename : this.filename+".ttl"
     this.tmp_file.url = this.folder.url+this.tmp_file.name
     //console.log(this.tmp_file)
-    let thisNode = {id:this.tmp_file.url+"#this", label:"#this"}
-    this.nodes.push(thisNode)
+    this.thisNode = {id:this.tmp_file.url+"#this", label: this.filename}
+    this.nodes.push(this.thisNode)
 
     let doc = {}
     //console.log(this.file.url)
@@ -326,7 +332,8 @@ methods: {
     let subj = doc.addSubject({identifier: "this"})
 
     if(exist == false){
-      subj.addString(rdfs.label, thisNode.label)
+      let this_label = this.thisNode.label+"test"
+      subj.addString(rdfs.label, this_label)
       subj.addString(dct.created, date)
       console.log("file created", this.tmp_file.url)
 
@@ -337,170 +344,192 @@ methods: {
     }
     subj.addRef(foaf.maker, this.webId)
     doc.save()
+    this.createActivity()
   },
-  clear(){
-    this.nodes = []
-    this.edges = []
-  },
-  async update(){
-    this.triples = []
-    //console.log(this.file.url)
-    if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
-      let fileDoc = await fetchDocument(this.file.url)
-      //console.log("fileDoc",fileDoc)
-      this.triples = fileDoc.getTriples()
-      //console.log(this.triples)
-    }else{
-      //console.log(this.file.url)
-    }
+  createActivity(){
+    console.log("createActivity")
 
-  },
-  networkEvent(e,object){
-    console.log(e,object)
-  },
-  async addInterests(webId){
-    let storage =  await solid.data[webId].storage
-    let p_u = storage+"public/popock/profile.ttl"
-    //console.log("P8U",p_u)
-    try{
-      this.profileDoc = await fetchDocument(p_u)
-      let subj = await this.profileDoc.getSubject(p_u+"#me")
-      this.interests = await subj.getAllLiterals(foaf.topic_interest)
-      //console.log(this.interests)
-      this.interests.forEach((interest) => {
-        this.$refs.network.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" });
-        this.$refs.network.edges.push({
-          from: webId,
-          to: interest,
-          label: "foaf:topic_interest"
-        });
-      });
-
-    }catch(e){
-      // //console.log(e)
-      //  this.profileDoc = await createDocument(p_u)
-    }
-
-  },
-  addTriplet(t){
-    // //console.log(t)
-    // //console.log(t.subject.id, t.predicate.id, t.object.id)
-
-    var color = this.colorize(t.subject.id)
-    let label =  this.lastPart(t.subject.id)
-    let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
-    // //console.log(subjectNode)
-    //  this.dataset.nodes[subjectNode.id] = subjectNode
-    this.addOrNothingNode(subjectNode)
-
-    var colorO = this.colorize(t.object.id)
-    let labelO =  this.lastPart(t.object.id)
-    let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
-    // //console.log(objectNode)
-    //  this.dataset.nodes[subjectNode.id] = subjectNode
-    this.addOrNothingNode(objectNode)
-
-    let labelP = this.lastPart(t.predicate.id)
-    let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
-    this.edges.push(propertyEdge)
-
-
-  },
-  editNode(node) {
-    //console.log("editNode",node)
-    this.node = node
-    this.$bvModal.show("node-popup")
-    //  console.log(node, callback)
-    //  callback(node)
-    //  this.callback = callback
-    //  callback()
-    /*  document.getElementById('node-label').value = data.label;
-    document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
-    document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
-    document.getElementById('node-popUp').style.display = 'block';*/
-  },
-  addEdge(edge, callback){
-    //console.log("addedge")
-    this.edge = edge
-    if (edge.from == edge.to) {
-      var r = confirm("Do you want to connect the node to itself?");
-      if (r != true) {
-        callback(null);
-        return;
+    this.net.displayType = "Network"
+    this.net.types = ["Task", "http://www.w3.org/ns/ldp#Resource"]
+    this.net.path = this.tmp_file.url
+    console.log(this.net)
+    this.activity = {
+      actor: {name: this.$store.state.solid.webId},
+      type:"Create",
+      summary: "",
+      object:{
+        name: this.thisNode.label,
+        url: this.tmp_file.url,
+        type:"Network"}
       }
-    }
 
-    this.editEdgeWithoutDrag(edge, callback);
-    //callback()
-  },
-  editEdge(edge, callback){
-    //console.log("edit edge", edge, callback)
-    this.editEdgeWithoutDrag(edge, callback);
-    //  callback()
-  },
-  editEdgeWithoutDrag(edge, callback){
-    //
-    //console.log("edit editWithoutDrag",edge)
-    /*      // filling in the popup DOM elements
+      this.sendActivity()
+
+
+    },
+    clear(){
+      this.nodes = []
+      this.edges = []
+    },
+    async update(){
+      this.triples = []
+      console.log(this.file.url)
+      if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
+        let fileDoc = await fetchDocument(this.file.url)
+        console.log("fileDoc",fileDoc)
+        this.triples = fileDoc.getTriples()
+        console.log(this.triples)
+      }else{
+        console.log("TODO",this.file.url)
+      }
+
+    },
+    networkEvent(e,object){
+      console.log(e,object)
+    },
+    async addInterests(webId){
+      let storage =  await solid.data[webId].storage
+      let p_u = storage+"public/popock/profile.ttl"
+      //console.log("P8U",p_u)
+      try{
+        this.profileDoc = await fetchDocument(p_u)
+        let subj = await this.profileDoc.getSubject(p_u+"#me")
+        this.interests = await subj.getAllLiterals(foaf.topic_interest)
+        //console.log(this.interests)
+        this.interests.forEach((interest) => {
+          this.$refs.network.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" });
+          this.$refs.network.edges.push({
+            from: webId,
+            to: interest,
+            label: "foaf:topic_interest"
+          });
+        });
+
+      }catch(e){
+        // //console.log(e)
+        //  this.profileDoc = await createDocument(p_u)
+      }
+
+    },
+    addTriplet(t){
+      // //console.log(t)
+      // //console.log(t.subject.id, t.predicate.id, t.object.id)
+
+      var color = this.colorize(t.subject.id)
+      let label =  this.lastPart(t.subject.id)
+      let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
+      // //console.log(subjectNode)
+      //  this.dataset.nodes[subjectNode.id] = subjectNode
+      this.addOrNothingNode(subjectNode)
+
+      var colorO = this.colorize(t.object.id)
+      let labelO =  this.lastPart(t.object.id)
+      let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
+      // //console.log(objectNode)
+      //  this.dataset.nodes[subjectNode.id] = subjectNode
+      this.addOrNothingNode(objectNode)
+
+      let labelP = this.lastPart(t.predicate.id)
+      let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
+      this.edges.push(propertyEdge)
+
+
+    },
+    editNode(node) {
+      //console.log("editNode",node)
+      this.node = node
+      this.$bvModal.show("node-popup")
+      //  console.log(node, callback)
+      //  callback(node)
+      //  this.callback = callback
+      //  callback()
+      /*  document.getElementById('node-label').value = data.label;
+      document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
+      document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
+      document.getElementById('node-popUp').style.display = 'block';*/
+    },
+    addEdge(edge, callback){
+      //console.log("addedge")
+      this.edge = edge
+      if (edge.from == edge.to) {
+        var r = confirm("Do you want to connect the node to itself?");
+        if (r != true) {
+          callback(null);
+          return;
+        }
+      }
+
+      this.editEdgeWithoutDrag(edge, callback);
+      //callback()
+    },
+    editEdge(edge, callback){
+      //console.log("edit edge", edge, callback)
+      this.editEdgeWithoutDrag(edge, callback);
+      //  callback()
+    },
+    editEdgeWithoutDrag(edge, callback){
+      //
+      //console.log("edit editWithoutDrag",edge)
+      /*      // filling in the popup DOM elements
+      document.getElementById('edge-label').value = data.label;
+      document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
+      document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
+      document.getElementById('edge-popUp').style.display = 'block';
+      */
+      this.edge = edge
+      this.$bvModal.show("edge-popup")
+      //console.log(edge, callback)
+      callback()
+    },
+
+
+
+    // Callback passed as parameter is ignored
+    clearNodePopUp() {
+      document.getElementById('node-saveButton').onclick = null;
+      document.getElementById('node-cancelButton').onclick = null;
+      document.getElementById('node-popUp').style.display = 'none';
+    },
+
+    cancelNodeEdit(callback) {
+      this.clearNodePopUp();
+      callback(null);
+    },
+
+    saveNodeData(data, callback) {
+      data.label = document.getElementById('node-label').value;
+      this.clearNodePopUp();
+      callback(data);
+    },
+
+    /*  editEdgeWithoutDrag(data, callback) {
+    // filling in the popup DOM elements
     document.getElementById('edge-label').value = data.label;
     document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
     document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
     document.getElementById('edge-popUp').style.display = 'block';
-    */
-    this.edge = edge
-    this.$bvModal.show("edge-popup")
-    //console.log(edge, callback)
-    callback()
+  },*/
+
+  clearEdgePopUp() {
+    document.getElementById('edge-saveButton').onclick = null;
+    document.getElementById('edge-cancelButton').onclick = null;
+    document.getElementById('edge-popUp').style.display = 'none';
   },
 
-
-
-  // Callback passed as parameter is ignored
-  clearNodePopUp() {
-    document.getElementById('node-saveButton').onclick = null;
-    document.getElementById('node-cancelButton').onclick = null;
-    document.getElementById('node-popUp').style.display = 'none';
-  },
-
-  cancelNodeEdit(callback) {
-    this.clearNodePopUp();
+  cancelEdgeEdit(callback) {
+    this.clearEdgePopUp();
     callback(null);
   },
 
-  saveNodeData(data, callback) {
-    data.label = document.getElementById('node-label').value;
-    this.clearNodePopUp();
+  saveEdgeData(data, callback) {
+    if (typeof data.to === 'object')
+    data.to = data.to.id
+    if (typeof data.from === 'object')
+    data.from = data.from.id
+    data.label = document.getElementById('edge-label').value;
+    this.clearEdgePopUp();
     callback(data);
   },
-
-  /*  editEdgeWithoutDrag(data, callback) {
-  // filling in the popup DOM elements
-  document.getElementById('edge-label').value = data.label;
-  document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
-  document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
-  document.getElementById('edge-popUp').style.display = 'block';
-},*/
-
-clearEdgePopUp() {
-  document.getElementById('edge-saveButton').onclick = null;
-  document.getElementById('edge-cancelButton').onclick = null;
-  document.getElementById('edge-popUp').style.display = 'none';
-},
-
-cancelEdgeEdit(callback) {
-  this.clearEdgePopUp();
-  callback(null);
-},
-
-saveEdgeData(data, callback) {
-  if (typeof data.to === 'object')
-  data.to = data.to.id
-  if (typeof data.from === 'object')
-  data.from = data.from.id
-  data.label = document.getElementById('edge-label').value;
-  this.clearEdgePopUp();
-  callback(data);
-},
 
 
 
@@ -549,6 +578,7 @@ triples(){
   //console.log("TRIPLES",this.triples)
   if (this.triples.length > 0){
     this.triples.forEach((t) => {
+      console.log("trip",t)
       this.addTriplet(t)
     });
 

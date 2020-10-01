@@ -23,12 +23,12 @@ export default {
 
       this.activity = {
         actor: {name: this.$store.state.solid.webId},
-        type:"Create",
+        type: "Create",
         summary: "",
         object:{
           name: data.label,
           url: "",
-          type:"Tension"}
+          type: "Tension"}
         }
 
         try{
