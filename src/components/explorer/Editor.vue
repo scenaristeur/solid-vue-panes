@@ -16,7 +16,7 @@
       </div>
 
       <b-tabs content-class="mt-3">
-        <b-tab title="Text" active>
+        <b-tab title="Text">
 
           <div>
             <b-form-textarea
@@ -33,7 +33,7 @@
       <b-tab title="Ttl">
         <EditorTtl />
       </b-tab>
-      <b-tab title="Network" >
+      <b-tab title="Network" active>
     -  <EditorNetwork />
       </b-tab>
     </b-tabs>

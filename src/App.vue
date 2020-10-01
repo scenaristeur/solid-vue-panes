@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.118 - Mindmap creation in Network Editor -test fix network
+      0.1.119 - fix network
     </a>
     </i></small>
 
