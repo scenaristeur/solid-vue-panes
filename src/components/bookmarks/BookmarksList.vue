@@ -26,64 +26,14 @@
     </b-card-group>
   </div>
 
-  <!--
-  <b-list-group>
-  <b-list-group-item v-for="b in bookmarks" :key="b.id" >
-  <h5 class="mr-2">  {{ b.label }}</h5>
-  <p>{{b.content}}</p>
-  <p class="ml-2">
-
-  <a v-bind:href="b.url" v-if="b.url != null" target="_blank">{{b.url}}</a>
-</p>
-</b-list-group-item>
-</b-list-group>
--->
-
-
 <h5>Categories :</h5>
 
 <b-button v-for="fo in bm.folders" :key="fo.url" variant="info" class="m-1" @click="updateBm(fo.url)">{{ fo.name }}</b-button>
-<!--
-<b-list-group>
-<b-list-group-item v-for="fo in bm.folders" :key="fo.url" class="d-flex align-items-center">
-{{ fo }}
-</b-list-group-item>
-</b-list-group>-->
-<!--  {{ bm }} -->
-
-<!--  Current :  {{ webId }}, {{ friends.length }} friends<br>
-
-<router-link :to="{ name: 'FoFri'}">Me</router-link><br>
-<router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link>
-<b-button disabled>add Spoggy to your friends</b-button><br>
-<router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solid.community/profile/card#me' }}">spoggy-test6</router-link><br>
-<hr>
-
-
-
-<b-list-group>
-<b-list-group-item v-for="f in friends" :key="f" v-bind:to="{ name: 'FoFri', params: { webId: f }}" class="d-flex align-items-center">
-<b-avatar class="mr-3"></b-avatar>
-<b-avatar button  src="https://placekitten.com/300/300" badge badge-variant="danger" class="mr-3"></b-avatar>
-<span class="mr-auto">{{ f }}</span>
-<b-badge>12</b-badge>
-<PeopleItem :webId="f" />
-</b-list-group-item>
-</b-list-group>-->
-
-<!--  <div v-for="f in friends" :key="f"  style="font-size: 2rem;">
-<router-link v-bind:to="{ name: 'FoFri', params: { webId: f }}">
-<b-avatar rounded="lg"></b-avatar>  {{ f }}
-</router-link>
-<br>
-</div > -->
-
 
 </div>
 </template>
 
 <script>
-//import profileMixin from '@/mixins/profileMixin'
 import auth from 'solid-auth-client';
 const SolidFileClient = window.SolidFileClient
 const fc = new SolidFileClient(auth)
@@ -92,26 +42,21 @@ import { sioc, rdfs } from 'rdf-namespaces'
 
 export default {
   name: 'BookmarksList',
-  //  mixins: [profileMixin],
   components: {
-    //  'PeopleItem': () => import('@/components/profile/PeopleItem'),
   },
   props: ['mode'],
   data: function () {
     return {
       bm : {files: [], folders: []},
       bookmarks: []
-      //  webId: {},
-      //  friends: [],
-    }
+      }
   },
   mounted() {
     this.path = this.$store.state.solid.storage+this.mode+"/bookmarks/"
     this.updateBm()
   },
   watch: {
-    path (path) {
-      console.log("path",path)
+    path () {
       this.updateBm()
     },
     storage (st) {
@@ -120,10 +65,8 @@ export default {
   },
   methods:{
     async updateBm(path = this.path){
-      console.log("path updated",path)
       let bm = {files: [], folders: []}
       let bookmarks = []
-      console.log(bm.files.length)
 
       try {
         bm = await fc.readFolder(path)
@@ -139,7 +82,6 @@ export default {
 
             }
             b.img= "//image.thum.io/get/width/355/crop/600/"+b.url
-            console.log(b)
             bookmarks.unshift(b)
           }
         }

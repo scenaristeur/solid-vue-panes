@@ -96,6 +96,11 @@ export default {
     this.fullPath =  this.$route.fullPath
     this.title != undefined || this.text != undefined || this.url != undefined ? this.valid = true : this.valid = false
     console.log(this.$route)
+  this.url == undefined ? this.url = this.text : ""
+  this.title == undefined ? this.title = "no-title" : ""
+  this.topic == undefined ? this.topic = "default" : ""
+  this.text == undefined ? this.text = "I didn't have enough time to complete this text, but now I can !" : ""
+
     /*
     if (this.webId == null){
     this.popupLogin()
@@ -123,13 +128,10 @@ watch: {
 methods:{
   async saveBm(){
     if (this.webId != null){
-      var date = new Date();
-      //  var date = dateObj.toISOString()
-      console.log(this.path)
-      const bookmarkDoc =    await fc.itemExists( this.path ) ?    await fetchDocument(this.path) : await createDocument(this.path);
-      this.topic == "" ? this.topic = "default" : ""
 
-      //  https://www.w3.org/2002/01/bookmark#recalls
+      var date = new Date();
+      const bookmarkDoc =    await fc.itemExists( this.path ) ?    await fetchDocument(this.path) : await createDocument(this.path);
+
       let subj =   bookmarkDoc.addSubject()
       subj.addLiteral(rdfs.label, this.title)
       subj.addLiteral(sioc.content, this.text)
@@ -168,27 +170,6 @@ computed:{
   storage(){
     return this.$store.state.solid.storage
   },
-  /*  folder(){
-  return  this.$store.state.solid.folder
-}*/
 },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.122 - network activity view & copy
+      0.1.123 - bookmarks
     </a>
     </i></small>
 

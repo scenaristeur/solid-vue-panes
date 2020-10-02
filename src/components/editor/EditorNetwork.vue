@@ -256,9 +256,10 @@ mounted(){
 
 methods: {
   copy(){
-    let copyText = "https://scenaristeur.github.io/solid-vue-panes/view" //window.location.href
+    let copyText = "https://scenaristeur.github.io/solid-vue-panes/?url="+this.file.url //window.location.href
     let app = this
-    !copyText.endsWith(".ttl") ? copyText = copyText+"/"+this.file.url : ""
+  //  !copyText.endsWith(".ttl") ?
+   //copyText = copyText+this.file.url //: ""
     console.log(copyText)
     navigator.clipboard.writeText(copyText).then(function() {
       /* clipboard successfully set */
