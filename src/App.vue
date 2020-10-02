@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.123 - bookmarks
+      0.1.124 - acl for new network
     </a>
     </i></small>
 

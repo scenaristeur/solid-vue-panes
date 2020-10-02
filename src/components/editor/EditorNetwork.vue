@@ -78,7 +78,7 @@ import {
   createAclFromFallbackAcl,
   getResourceAcl,
   setPublicResourceAccess,
-  //  setAgentResourceAccess,
+  setAgentResourceAccess,
   saveAclFor,
 } from "@inrupt/solid-client";
 import networkMixin from '@/mixins/networkMixin'
@@ -258,18 +258,18 @@ methods: {
   copy(){
     let copyText = "https://scenaristeur.github.io/solid-vue-panes/?url="+this.file.url //window.location.href
     let app = this
-  //  !copyText.endsWith(".ttl") ?
-   //copyText = copyText+this.file.url //: ""
+    //  !copyText.endsWith(".ttl") ?
+    //copyText = copyText+this.file.url //: ""
     console.log(copyText)
     navigator.clipboard.writeText(copyText).then(function() {
       /* clipboard successfully set */
-    //  console.log("clipok", copyText)
-    app.makeToast("The url is in your clipboard ;-)", copyText+".               Use Ctrl+V to share it", "success")
-  }, function() {
+      //  console.log("clipok", copyText)
+      app.makeToast("The url is in your clipboard ;-)", copyText+".               Use Ctrl+V to share it", "success")
+    }, function() {
       /* clipboard write failed */
       console.log("clipERROR", copyText)
-    app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
-  })
+      app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
+    })
 
   },
   saveNode(n){
@@ -402,6 +402,7 @@ methods: {
 
       console.log(this.tmp_file.url)
       const myDatasetWithAcl = await getSolidDatasetWithAcl(this.tmp_file.url);
+      console.log(myDatasetWithAcl)
       // Obtain the SolidDataset's own ACL, if available,
       // or initialise a new one, if possible:
       let resourceAcl;
@@ -411,6 +412,7 @@ methods: {
             "The current user does not have permission to change access rights to this Resource."
           );
         }
+
         if (!hasFallbackAcl(myDatasetWithAcl)) {
           throw new Error(
             "The current user does not have permission to see who currently has access to this Resource."
@@ -421,9 +423,10 @@ methods: {
           // resourceAcl = createAcl(myDatasetWithAcl);
         }
         resourceAcl = createAclFromFallbackAcl(myDatasetWithAcl);
-        console.log("create does not work ???")
+        console.log("create")
       } else {
         resourceAcl = getResourceAcl(myDatasetWithAcl);
+        console.log("get")
       }
       console.log("acl",resourceAcl)
       // Give someone Control access to the given Resource:
@@ -432,14 +435,22 @@ methods: {
       "https://some.pod/profile#webId",
       { read: false, append: false, write: false, control: true }
     );*/
-    const updatedAcl = setPublicResourceAccess(
+    const ownerAcl = setAgentResourceAccess(resourceAcl,
+      this.webId,
+      { read: true, append: true, write: true, control: true },
+    );
+
+    let r =  await saveAclFor(myDatasetWithAcl, ownerAcl);
+    const publicAcl = setPublicResourceAccess(
       resourceAcl,
       { read: true, append: true, write: false, control: false },
     );
 
-    // Now save the ACL:
-    await saveAclFor(myDatasetWithAcl, updatedAcl);
 
+    // Now save the ACL:
+    //  let r =  await saveAclFor(myDatasetWithAcl, ownerAcl);
+    let rp =  await saveAclFor(myDatasetWithAcl, publicAcl);
+    console.log(r,rp)
   }
   this.createActivity()
 },
