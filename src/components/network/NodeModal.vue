@@ -1,16 +1,16 @@
 <template>
   <div class="modele-view">
     <b-modal id="node-popup" title="Node"
+    hide-backdrop content-class="shadow"
     @ok="addNode">
-    <span id="node-operation">node</span> <br>
-    <table style="margin:auto;">
-      <tr>
-        <td>id</td><td><input v-model="value.id" /></td>
-      </tr>
-      <tr>
-        <td>label</td><td><input v-model="value.label" /></td>
-      </tr>
-    </table>
+
+    <b-input-group size="lg" prepend="id">
+      <b-form-input v-model="value.id"></b-form-input>
+    </b-input-group>
+    <b-input-group size="lg" prepend="Label">
+      <b-form-input v-model="value.label" autofocus></b-form-input>
+    </b-input-group>
+
 
   </b-modal>
   <!--  <Component /> -->

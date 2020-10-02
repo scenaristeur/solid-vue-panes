@@ -2,19 +2,13 @@
   <div class="modele-view">
     <b-modal id="edge-popup"
     title="Edge"
+    hide-backdrop content-class="shadow"
     @ok="addEdge" >
-    <!--  @show="resetModal"
-    @hidden="resetModal"
-    @ok="handleOk"-->
-
-    <span id="edge-operation">edge</span> <br>
-    <table style="margin:auto;">
-      <tr>
-        <td>label</td><td><input v-model="value.label" /></td>
-      </tr></table>
-
-    </b-modal>
-  </div>
+    <b-input-group size="lg" prepend="Label">
+      <b-form-input v-model="value.label" autofocus></b-form-input>
+    </b-input-group>
+  </b-modal>
+</div>
 </template>
 
 <script>
@@ -28,7 +22,7 @@ export default {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
- props: ['value'],
+props: ['value'],
 data() {
   return {
     //

@@ -10,22 +10,32 @@
     <div class="row">
       <b-input placeholder="new file name" v-model="filename" />
       <b-button @click="create">New</b-button>
-    </div>
-    <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
-    <network ref="network"
-    class="wrapper"
-    :nodes="nodes"
-    :edges="edges"
-    :options="options"
-    @select="networkEvent('select')"
-    @select-node="networkEvent('selectNode')"
-    @select-edge="networkEvent('selectEdge')"
-    >
-  </network>
-  <!--  <network ref="network"
+      <b-form-checkbox class="m-2"
+      id="checkbox-1"
+      v-model="privacy"
+      name="checkbox-1"
+      value="public_write"
+      unchecked-value="private_write"
+      checked> Anyone can amend this file
+    </b-form-checkbox>
+  </div>
+  <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
+  <b-button @click="copy"  size="sm" variant="success">Copy</b-button>
+
+  <network ref="network"
+  class="wrapper"
   :nodes="nodes"
   :edges="edges"
-  :options="options">
+  :options="options"
+  @select="networkEvent('select')"
+  @select-node="networkEvent('selectNode')"
+  @select-edge="networkEvent('selectEdge')"
+  >
+</network>
+<!--  <network ref="network"
+:nodes="nodes"
+:edges="edges"
+:options="options">
 </network>-->
 
 <NodeModal v-model="node" @ok="saveNode"/>
@@ -59,12 +69,26 @@
 import {  fetchDocument, createDocument } from 'tripledoc';
 import { foaf, rdfs, dct, rdf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+import {
+  getSolidDatasetWithAcl,
+  hasResourceAcl,
+  hasFallbackAcl,
+  hasAccessibleAcl,
+  //  createAcl,
+  createAclFromFallbackAcl,
+  getResourceAcl,
+  setPublicResourceAccess,
+  //  setAgentResourceAccess,
+  saveAclFor,
+} from "@inrupt/solid-client";
 import networkMixin from '@/mixins/networkMixin'
 import ActivityMixin from '@/mixins/ActivityMixin'
+import ToastMixin from '@/mixins/ToastMixin'
+
 
 export default {
   name: 'EditorNetwork',
-  mixins: [networkMixin, ActivityMixin],
+  mixins: [networkMixin, ActivityMixin, ToastMixin],
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
@@ -78,6 +102,8 @@ export default {
       node: {},
       edge:{},
       net: {},
+      privacy: "public_write",
+      clipDispo: false,
       /*nodes: [
       {id: 1,  label: 'circle',  shape: 'circle' },
       {id: 2,  label: 'ellipse', shape: 'ellipse'},
@@ -180,8 +206,14 @@ console.log(data,callback)
 }
 },
 async created(){
-  this.file = this.$store.state.solid.file
-  this.update()
+  /*  navigator.permissions.query({name: "clipboard-write"}).then(result => {
+  if (result.state == "granted" || result.state == "prompt") {
+  // write to the clipboard now
+  this.clipDispo = true
+}
+});*/
+this.file = this.$store.state.solid.file
+this.update()
 
 },
 mounted(){
@@ -223,6 +255,22 @@ mounted(){
 },
 
 methods: {
+  copy(){
+    let copyText = "https://scenaristeur.github.io/solid-vue-panes/view" //window.location.href
+    let app = this
+    !copyText.endsWith(".ttl") ? copyText = copyText+"/"+this.file.url : ""
+    console.log(copyText)
+    navigator.clipboard.writeText(copyText).then(function() {
+      /* clipboard successfully set */
+    //  console.log("clipok", copyText)
+    app.makeToast("The url is in your clipboard ;-)", copyText+".               Use Ctrl+V to share it", "success")
+  }, function() {
+      /* clipboard write failed */
+      console.log("clipERROR", copyText)
+    app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
+  })
+
+  },
   saveNode(n){
     //console.log("saveNode",n)
     //  this.callback(n)
@@ -304,6 +352,7 @@ methods: {
     // //console.log(this.file)
     // //console.log(this.newfile)
     // //console.log(this.folder)
+    console.log(this.privacy)
     this.tmp_file = {}
     this.filename = this.filename.split(' ').join('_');
 
@@ -335,7 +384,7 @@ methods: {
       let this_label = this.thisNode.label
       subj.addString(rdfs.label, this_label)
       subj.addString(dct.created, date)
-        subj.addRef(rdf.type, this.tmp_file.url+"#Network")
+      subj.addRef(rdf.type, this.tmp_file.url+"#Network")
       console.log("file created", this.tmp_file.url)
 
     }else{
@@ -344,193 +393,239 @@ methods: {
 
     }
     subj.addRef(foaf.maker, this.webId)
-    doc.save()
-    this.createActivity()
-  },
-  createActivity(){
-    console.log("createActivity")
+    console.log("one")
+    let s = await  doc.save()
+    console.log("two", s)
 
-    this.net.displayType = "Network"
-    this.net.types = ["Task", "http://www.w3.org/ns/ldp#Resource"]
-    this.net.path = this.tmp_file.url
-    console.log(this.net)
-    this.activity = {
-      actor: {name: this.$store.state.solid.webId},
-      type:"Create",
-      summary: "",
-      object:{
-        name: this.thisNode.label,
-        url: this.tmp_file.url,
-        type:"Network"}
-      }
+    if(this.privacy == "public_write"){
 
-      this.sendActivity()
-
-
-    },
-    clear(){
-      this.nodes = []
-      this.edges = []
-    },
-    async update(){
-      this.triples = []
-      console.log(this.file.url)
-      if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
-        let fileDoc = await fetchDocument(this.file.url)
-        console.log("fileDoc",fileDoc)
-        this.triples = fileDoc.getTriples()
-        console.log(this.triples)
-      }else{
-        console.log("TODO",this.file.url)
-      }
-
-    },
-    networkEvent(e,object){
-      console.log(e,object)
-    },
-    async addInterests(webId){
-      let storage =  await solid.data[webId].storage
-      let p_u = storage+"public/popock/profile.ttl"
-      //console.log("P8U",p_u)
-      try{
-        this.profileDoc = await fetchDocument(p_u)
-        let subj = await this.profileDoc.getSubject(p_u+"#me")
-        this.interests = await subj.getAllLiterals(foaf.topic_interest)
-        //console.log(this.interests)
-        this.interests.forEach((interest) => {
-          this.$refs.network.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" });
-          this.$refs.network.edges.push({
-            from: webId,
-            to: interest,
-            label: "foaf:topic_interest"
-          });
-        });
-
-      }catch(e){
-        // //console.log(e)
-        //  this.profileDoc = await createDocument(p_u)
-      }
-
-    },
-    addTriplet(t){
-      // //console.log(t)
-      // //console.log(t.subject.id, t.predicate.id, t.object.id)
-
-      var color = this.colorize(t.subject.id)
-      let label =  this.lastPart(t.subject.id)
-      let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
-      // //console.log(subjectNode)
-      //  this.dataset.nodes[subjectNode.id] = subjectNode
-      this.addOrNothingNode(subjectNode)
-
-      var colorO = this.colorize(t.object.id)
-      let labelO =  this.lastPart(t.object.id)
-      let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
-      // //console.log(objectNode)
-      //  this.dataset.nodes[subjectNode.id] = subjectNode
-      this.addOrNothingNode(objectNode)
-
-      let labelP = this.lastPart(t.predicate.id)
-      let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
-      this.edges.push(propertyEdge)
-
-
-    },
-    editNode(node) {
-      //console.log("editNode",node)
-      this.node = node
-      this.$bvModal.show("node-popup")
-      //  console.log(node, callback)
-      //  callback(node)
-      //  this.callback = callback
-      //  callback()
-      /*  document.getElementById('node-label').value = data.label;
-      document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
-      document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
-      document.getElementById('node-popUp').style.display = 'block';*/
-    },
-    addEdge(edge, callback){
-      //console.log("addedge")
-      this.edge = edge
-      if (edge.from == edge.to) {
-        var r = confirm("Do you want to connect the node to itself?");
-        if (r != true) {
-          callback(null);
-          return;
+      console.log(this.tmp_file.url)
+      const myDatasetWithAcl = await getSolidDatasetWithAcl(this.tmp_file.url);
+      // Obtain the SolidDataset's own ACL, if available,
+      // or initialise a new one, if possible:
+      let resourceAcl;
+      if (!hasResourceAcl(myDatasetWithAcl)) {
+        if (!hasAccessibleAcl(myDatasetWithAcl)) {
+          throw new Error(
+            "The current user does not have permission to change access rights to this Resource."
+          );
         }
+        if (!hasFallbackAcl(myDatasetWithAcl)) {
+          throw new Error(
+            "The current user does not have permission to see who currently has access to this Resource."
+          );
+          // Alternatively, initialise a new empty ACL as follows,
+          // but be aware that if you do not give someone Control access,
+          // **nobody will ever be able to change Access permissions in the future**:
+          // resourceAcl = createAcl(myDatasetWithAcl);
+        }
+        resourceAcl = createAclFromFallbackAcl(myDatasetWithAcl);
+        console.log("create does not work ???")
+      } else {
+        resourceAcl = getResourceAcl(myDatasetWithAcl);
       }
+      console.log("acl",resourceAcl)
+      // Give someone Control access to the given Resource:
+      /*  const updatedAcl = setAgentResourceAccess(
+      resourceAcl,
+      "https://some.pod/profile#webId",
+      { read: false, append: false, write: false, control: true }
+    );*/
+    const updatedAcl = setPublicResourceAccess(
+      resourceAcl,
+      { read: true, append: true, write: false, control: false },
+    );
 
-      this.editEdgeWithoutDrag(edge, callback);
-      //callback()
-    },
-    editEdge(edge, callback){
-      //console.log("edit edge", edge, callback)
-      this.editEdgeWithoutDrag(edge, callback);
-      //  callback()
-    },
-    editEdgeWithoutDrag(edge, callback){
-      //
-      //console.log("edit editWithoutDrag",edge)
-      /*      // filling in the popup DOM elements
-      document.getElementById('edge-label').value = data.label;
-      document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
-      document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
-      document.getElementById('edge-popUp').style.display = 'block';
-      */
-      this.edge = edge
-      this.$bvModal.show("edge-popup")
-      //console.log(edge, callback)
-      callback()
-    },
+    // Now save the ACL:
+    await saveAclFor(myDatasetWithAcl, updatedAcl);
+
+  }
+  this.createActivity()
+},
+createActivity(){
+  console.log("createActivity")
+
+  this.net.displayType = "Network"
+  this.net.types = ["Task", "http://www.w3.org/ns/ldp#Resource"]
+  this.net.path = this.tmp_file.url
+  console.log(this.net)
+  this.activity = {
+    actor: {name: this.$store.state.solid.webId},
+    type:"Create",
+    summary: "",
+    object:{
+      name: this.thisNode.label,
+      url: this.tmp_file.url,
+      type:"Network"}
+    }
+
+    this.sendActivity()
 
 
+  },
+  clear(){
+    this.nodes = []
+    this.edges = []
+  },
+  async update(){
+    this.triples = []
+    console.log(this.file.url)
+    if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
+      let fileDoc = await fetchDocument(this.file.url)
+      console.log("fileDoc",fileDoc)
+      this.triples = fileDoc.getTriples()
+      console.log(this.triples)
+    }else{
+      console.log("TODO",this.file.url)
+    }
 
-    // Callback passed as parameter is ignored
-    clearNodePopUp() {
-      document.getElementById('node-saveButton').onclick = null;
-      document.getElementById('node-cancelButton').onclick = null;
-      document.getElementById('node-popUp').style.display = 'none';
-    },
+  },
+  networkEvent(e,object){
+    console.log(e,object)
+  },
+  async addInterests(webId){
+    let storage =  await solid.data[webId].storage
+    let p_u = storage+"public/popock/profile.ttl"
+    //console.log("P8U",p_u)
+    try{
+      this.profileDoc = await fetchDocument(p_u)
+      let subj = await this.profileDoc.getSubject(p_u+"#me")
+      this.interests = await subj.getAllLiterals(foaf.topic_interest)
+      //console.log(this.interests)
+      this.interests.forEach((interest) => {
+        this.$refs.network.nodes.push({ id:interest, label: interest, shape: "triangle", color: "green" });
+        this.$refs.network.edges.push({
+          from: webId,
+          to: interest,
+          label: "foaf:topic_interest"
+        });
+      });
 
-    cancelNodeEdit(callback) {
-      this.clearNodePopUp();
-      callback(null);
-    },
+    }catch(e){
+      // //console.log(e)
+      //  this.profileDoc = await createDocument(p_u)
+    }
 
-    saveNodeData(data, callback) {
-      data.label = document.getElementById('node-label').value;
-      this.clearNodePopUp();
-      callback(data);
-    },
+  },
+  addTriplet(t){
+    // //console.log(t)
+    // //console.log(t.subject.id, t.predicate.id, t.object.id)
 
-    /*  editEdgeWithoutDrag(data, callback) {
-    // filling in the popup DOM elements
+    var color = this.colorize(t.subject.id)
+    let label =  this.lastPart(t.subject.id)
+    let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
+    // //console.log(subjectNode)
+    //  this.dataset.nodes[subjectNode.id] = subjectNode
+    this.addOrNothingNode(subjectNode)
+
+    var colorO = this.colorize(t.object.id)
+    let labelO =  this.lastPart(t.object.id)
+    let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
+    // //console.log(objectNode)
+    //  this.dataset.nodes[subjectNode.id] = subjectNode
+    this.addOrNothingNode(objectNode)
+
+    let labelP = this.lastPart(t.predicate.id)
+    let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
+    this.edges.push(propertyEdge)
+
+
+  },
+  editNode(node) {
+    //console.log("editNode",node)
+    this.node = node
+    this.$bvModal.show("node-popup")
+    //  console.log(node, callback)
+    //  callback(node)
+    //  this.callback = callback
+    //  callback()
+    /*  document.getElementById('node-label').value = data.label;
+    document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
+    document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
+    document.getElementById('node-popUp').style.display = 'block';*/
+  },
+  addEdge(edge, callback){
+    //console.log("addedge")
+    this.edge = edge
+    if (edge.from == edge.to) {
+      var r = confirm("Do you want to connect the node to itself?");
+      if (r != true) {
+        callback(null);
+        return;
+      }
+    }
+
+    this.editEdgeWithoutDrag(edge, callback);
+    //callback()
+  },
+  editEdge(edge, callback){
+    //console.log("edit edge", edge, callback)
+    this.editEdgeWithoutDrag(edge, callback);
+    //  callback()
+  },
+  editEdgeWithoutDrag(edge, callback){
+    //
+    //console.log("edit editWithoutDrag",edge)
+    /*      // filling in the popup DOM elements
     document.getElementById('edge-label').value = data.label;
     document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
     document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
     document.getElementById('edge-popUp').style.display = 'block';
-  },*/
-
-  clearEdgePopUp() {
-    document.getElementById('edge-saveButton').onclick = null;
-    document.getElementById('edge-cancelButton').onclick = null;
-    document.getElementById('edge-popUp').style.display = 'none';
+    */
+    this.edge = edge
+    this.$bvModal.show("edge-popup")
+    //console.log(edge, callback)
+    callback()
   },
 
-  cancelEdgeEdit(callback) {
-    this.clearEdgePopUp();
+
+
+  // Callback passed as parameter is ignored
+  clearNodePopUp() {
+    document.getElementById('node-saveButton').onclick = null;
+    document.getElementById('node-cancelButton').onclick = null;
+    document.getElementById('node-popUp').style.display = 'none';
+  },
+
+  cancelNodeEdit(callback) {
+    this.clearNodePopUp();
     callback(null);
   },
 
-  saveEdgeData(data, callback) {
-    if (typeof data.to === 'object')
-    data.to = data.to.id
-    if (typeof data.from === 'object')
-    data.from = data.from.id
-    data.label = document.getElementById('edge-label').value;
-    this.clearEdgePopUp();
+  saveNodeData(data, callback) {
+    data.label = document.getElementById('node-label').value;
+    this.clearNodePopUp();
     callback(data);
   },
+
+  /*  editEdgeWithoutDrag(data, callback) {
+  // filling in the popup DOM elements
+  document.getElementById('edge-label').value = data.label;
+  document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
+  document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
+  document.getElementById('edge-popUp').style.display = 'block';
+},*/
+
+clearEdgePopUp() {
+  document.getElementById('edge-saveButton').onclick = null;
+  document.getElementById('edge-cancelButton').onclick = null;
+  document.getElementById('edge-popUp').style.display = 'none';
+},
+
+cancelEdgeEdit(callback) {
+  this.clearEdgePopUp();
+  callback(null);
+},
+
+saveEdgeData(data, callback) {
+  if (typeof data.to === 'object')
+  data.to = data.to.id
+  if (typeof data.from === 'object')
+  data.from = data.from.id
+  data.label = document.getElementById('edge-label').value;
+  this.clearEdgePopUp();
+  callback(data);
+},
 
 
 
@@ -579,7 +674,7 @@ triples(){
   //console.log("TRIPLES",this.triples)
   if (this.triples.length > 0){
     this.triples.forEach((t) => {
-      console.log("trip",t)
+      //  console.log("trip",t)
       this.addTriplet(t)
     });
 
