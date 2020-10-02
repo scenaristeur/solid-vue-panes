@@ -70,7 +70,12 @@ const actions = {
       context.commit('setStorage', `${storage}`)
       context.commit('setProgress', 2)
       //  let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
-      context.commit('setFolder', await fc.readFolder(`${storage}`))
+      try{
+          context.commit('setFolder', await fc.readFolder(`${storage}`))
+      }catch(e){
+        alert(e)
+      }
+
       context.commit('setProgress', 3)
       context.commit('setProgress', 14)
       let user = {webId: webId, storage: `${storage}`}

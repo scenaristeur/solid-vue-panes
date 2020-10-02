@@ -1,8 +1,9 @@
 <template>
   <div class="modele-view">
     <!--  <Component /> -->
-    <small>  File <a :href="file.url" target="_blank">{{ file.url }}</a><br>
-      Node : {{ node.label}}<br>
+    <small>
+      File: <a :href="file.url" target="_blank">{{ file.url }}</a><br>
+      Node: {{node.label}}<br>
     </small>
 
     <!--  <b-button v-b-modal.node-popup>Launch demo modal</b-button>
@@ -133,12 +134,12 @@ color: 'lightgray'
 manipulation: {
 //enabled: true,
 //initiallyActive: true,
-// addNode: true,
-// addEdge: true,
-// //  editNode: true,
-// editEdge: true,
-// deleteNode: true,
-// deleteEdge: true,
+addNode: true,
+addEdge: true,
+editNode: true,
+editEdge: true,
+deleteNode: true,
+deleteEdge: true,
 // controlNodeStyle:{
 // // all node options are valid.
 // }
