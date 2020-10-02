@@ -23,7 +23,7 @@ Vue.use(Chat)
 
 
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue/dist/bootstrap-vue.min.css'
 
 import VueNativeNotification from 'vue-native-notification'
 
@@ -45,6 +45,7 @@ const i18n = new VueI18n({
 
 import { Network } from "vue-vis-network";
 Vue.component('network', Network);
+import "vis-network/dist/vis-network.esm.min.js";
 //import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
 new Vue({

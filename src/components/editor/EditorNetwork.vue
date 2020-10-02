@@ -7,8 +7,8 @@
 
     <!--  <b-button v-b-modal.node-popup>Launch demo modal</b-button>
     <b-button v-b-modal.edge-popup>Launch demo modal</b-button>-->
-    <div class="row">
-      <b-input placeholder="new file name" v-model="filename" />
+
+      <b-input placeholder="filename without spaces or any exotic char" v-model="filename" />
       <b-button @click="create">New</b-button>
       <b-form-checkbox class="m-2"
       id="checkbox-1"
@@ -18,7 +18,7 @@
       unchecked-value="private_write"
       checked> Anyone can amend this file
     </b-form-checkbox>
-  </div>
+
   <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
   <b-button @click="copy"  size="sm" variant="success">Copy</b-button>
 
@@ -104,7 +104,7 @@ export default {
       net: {},
       privacy: "public_write",
       clipDispo: false,
-      /*nodes: [
+      nodes: [
       {id: 1,  label: 'circle',  shape: 'circle' },
       {id: 2,  label: 'ellipse', shape: 'ellipse'},
       {id: 3,  label: 'database',shape: 'database'},
@@ -123,7 +123,7 @@ export default {
     {from: 5, to: 7},
     {from: 6, to: 8}
   ],
-  options: {
+  options1: {
   nodes: {
   borderWidth: 4
 },
@@ -131,22 +131,22 @@ edges: {
 color: 'lightgray'
 },
 manipulation: {
-enabled: true,
-initiallyActive: true,
-addNode: true,
-addEdge: true,
-//  editNode: true,
-editEdge: true,
-deleteNode: true,
-deleteEdge: true,
-controlNodeStyle:{
-// all node options are valid.
-}
+//enabled: true,
+//initiallyActive: true,
+// addNode: true,
+// addEdge: true,
+// //  editNode: true,
+// editEdge: true,
+// deleteNode: true,
+// deleteEdge: true,
+// controlNodeStyle:{
+// // all node options are valid.
+// }
 }
 
-}*/
-nodes: [],
-edges: [],
+},
+//nodes: [],
+//edges: [],
 options: {
   locale: navigator.language,
   nodes: {
@@ -168,40 +168,34 @@ options: {
     navigationButtons: true,
     keyboard: true
   },
-  /*manipulation: {
+  manipulation: {
+    enabled: true,
+    initiallyActive: true,
+    addNode: async (node, callback) => {
+      callback() // Node will be added via reactivity from Vuex
+      if (this.tmp_file != null ){
+        this.file = this.tmp_file
+      }
+      node.id = this.file.url+"#"+node.id
+      //console.log(node)
+      this.editNode(node, callback)
+    },
+    editNode: async (node, callback) => {
+      callback() // Node will be added via reactivity from Vuex
+      //console.log(node)
+      this.editNode(node, callback)
+    },
+    addEdge: async (edge, callback) => {
+      callback() // Node will be added via reactivity from Vuex
+      //console.log(edge)
+      this.addEdge(edge, callback)
+    },
+    editEdge: {
+      editWithoutDrag: async (edge, callback) => {this.editWithoutDrag(edge, callback)}
+    },
 
-  addNode: function (data, callback) {
-  // filling in the popup DOM elements
-  //  document.getElementById('node-operation').innerHTML = "Add Node";
-  this.editNode(data, this.clearNodePopUp, callback);
-  console.log(data,callback)
-},
-editNode: function (data, callback) {
+  }
 
-// filling in the popup DOM elements
-//  document.getElementById('node-operation').innerHTML = "Edit Node";
-this.editNode(data, this.cancelNodeEdit, callback).bind(this);
-console.log(data,callback)
-},
-addEdge: function (data, callback) {
-if (data.from == data.to) {
-var r = confirm("Do you want to connect the node to itself?");
-if (r != true) {
-callback(null);
-return;
-}
-}
-document.getElementById('edge-operation').innerHTML = "Add Edge";
-this.editEdgeWithoutDrag(data, callback);
-},
-editEdge: {
-editWithoutDrag: function(data, callback) {
-document.getElementById('edge-operation').innerHTML = "Edit Edge";
-this.editEdgeWithoutDrag(data,callback);
-console.log(data,callback)
-}
-}
-}*/
 }
 }
 },
@@ -212,49 +206,77 @@ async created(){
   this.clipDispo = true
 }
 });*/
-this.file = this.$store.state.solid.file
-this.update()
+
 
 },
 mounted(){
-  let app = this
+  // let app = this
   this.network = this.$refs.network
+  console.log(this.network)
   this.network.setOptions({
-    manipulation: {
-      enabled: true,
-      initiallyActive: true,
-      addNode: async (node, callback) => {
-        callback() // Node will be added via reactivity from Vuex
-        if (this.tmp_file != null ){
-          this.file = this.tmp_file
-        }
-        node.id = this.file.url+"#"+node.id
-        //console.log(node)
-        this.editNode(node, callback)
-      },
-      editNode: async (node, callback) => {
-        callback() // Node will be added via reactivity from Vuex
-        //console.log(node)
-        this.editNode(node, callback)
-      },
-      addEdge: async (edge, callback) => {
-        callback() // Node will be added via reactivity from Vuex
-        //console.log(edge)
-        this.addEdge(edge, callback)
-      },
-      editEdge: {
-        editWithoutDrag: function (edge, callback){
-          callback() // Node will be added via reactivity from Vuex
-          //console.log(edge)
-          app.editEdge(edge, callback)
-        }
-      },
+    locale: navigator.language,
+    nodes: {
+      borderWidth: 1
+    },
+    edges:{
+      arrows: 'to',
+      color: 'red',
+      //  font: '12px arial #ff0000',
 
-    }
+      //  shadow: true,
+      //   font: '12px arial #ff0000',
+      scaling:{
+        label: true,
+      },
+      smooth: true,
+    },
+    interaction: {
+      navigationButtons: true,
+    //  keyboard: true
+    },
+    // manipulation: {
+    //   enabled: true,
+    //   initiallyActive: true,
+    //   // addNode: async (node, callback) => {
+    //   //   callback() // Node will be added via reactivity from Vuex
+    //   //   if (this.tmp_file != null ){
+    //   //     this.file = this.tmp_file
+    //   //   }
+    //   //   node.id = this.file.url+"#"+node.id
+    //   //   //console.log(node)
+    //   //   this.editNode(node, callback)
+    //   // },
+    //   editNode: async (node, callback) => {
+    //     callback() // Node will be added via reactivity from Vuex
+    //     //console.log(node)
+    //     this.editNode(node, callback)
+    //   },
+    //   addEdge: async (edge, callback) => {
+    //     callback() // Node will be added via reactivity from Vuex
+    //     //console.log(edge)
+    //     this.addEdge(edge, callback)
+    //   },
+    //   editEdge: {
+    //     editWithoutDrag: function (edge, callback){
+    //       callback() // Node will be added via reactivity from Vuex
+    //       //console.log(edge)
+    //       app.editEdge(edge, callback)
+    //     }
+    //   },
+    //
+    // }
   })
+  this.file = this.$store.state.solid.file
+//  this.update()
 },
 
 methods: {
+  editWithoutDrag(edge, callback){
+      callback() // Node will be added via reactivity from Vuex
+      //console.log(edge)
+      this.editEdge(edge, callback)
+
+  },
   copy(){
     let copyText = "https://scenaristeur.github.io/solid-vue-panes/?url="+this.file.url //window.location.href
     let app = this

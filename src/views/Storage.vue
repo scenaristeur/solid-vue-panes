@@ -1,9 +1,10 @@
 <template>
-  <div class="storage">
-    <div v-if="webId != null" class="row">
+  <div class="storage container-fluid">
+    <div v-if="webId != null">
+      <Explorer />
 
-      <Browser class="col-md-6" />
-      <Editor class="col-md-6" />
+      <Browser class="col-6" />
+      <Editor class="col-6" />
     </div>
     <div v-else>
       <SolidLoginButton />
@@ -24,17 +25,18 @@ export default {
   name: 'Storage',
   components: {
     'Browser': () => import('@/components/explorer/Browser'),
+    'Explorer': () => import('@/components/explorer/Explorer'),
     'Editor': () => import('@/components/explorer/Editor'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
-    mixins: [loginMixin],
+  mixins: [loginMixin],
   data: function () {
     return {
       //  storage: "",
       //folder: {}
     }
   },
-   created(){
+  created(){
 
     if (this.webId == null){
       this.popupLogin()

@@ -1,78 +1,82 @@
 <template>
-  <div class="editor">
+  <div class="editor container">
 
     <div v-if="webId != null">
-      <div>
-        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-          <b-button-group size="sm" class="mr-1">
-            <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
-          </b-button-group>
-          <b-button-group size="sm" class="mr-1">
-            <b-button size="sm" variant="warning" v-b-modal.editor_save>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
 
 
-          </b-button-group>
-        </b-button-toolbar>
-      </div>
 
-      <b-tabs content-class="mt-3">
-        <b-tab title="Text">
+      <b-card title="Editor">
 
-          <div>
-            <b-form-textarea
-            id="textarea"
-            v-model="text"
-            placeholder="Enter something, then click 'Save' button..."
-            rows="3"
-            max-rows="15"
-            @change="change"
-            >
-          </b-form-textarea>
+  <Explorer />
+        <b-tabs content-class="mt-3">
+          <b-tab title="Text">
+            <div>
+          <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+            <b-button-group size="sm" class="mr-1">
+              <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
+            </b-button-group>
+            <b-button-group size="sm" class="mr-1">
+              <b-button size="sm" variant="warning" v-b-modal.editor_save>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
+
+
+            </b-button-group>
+          </b-button-toolbar>
         </div>
-      </b-tab>
-      <b-tab title="Ttl">
-        <EditorTtl />
-      </b-tab>
-      <b-tab title="Network" active>
-    -  <EditorNetwork />
-      </b-tab>
-    </b-tabs>
+            <div>
+              <b-form-textarea
+              id="textarea"
+              v-model="text"
+              placeholder="Enter something, then click 'Save' button..."
+              rows="3"
+              max-rows="15"
+              @change="change"
+              >
+            </b-form-textarea>
+          </div>
+        </b-tab>
+        <b-tab title="Ttl">
+          <EditorTtl />
+        </b-tab>
+        <b-tab title="Network" active>
+          -  <EditorNetwork />
+        </b-tab>
+      </b-tabs>
 
+    </b-card>
 
-    <b-modal id="editor_save" title="Save" @show="fill" @ok="save">
-      <b-form-group
-      label-cols-sm="3"
-      label="Path:"
-      label-align-sm="right"
-      label-for="path">
-      <b-form-input id="path" v-model="path"></b-form-input>
-    </b-form-group>
+  </div>
+  <div v-else>
+    <SolidLoginButton />
+  </div>
 
+  <b-modal id="editor_save" title="Save" @show="fill" @ok="save">
     <b-form-group
     label-cols-sm="3"
-    label="Filename:"
+    label="Path:"
     label-align-sm="right"
-    label-for="name">
-    <b-form-input id="name" v-model="name"></b-form-input>
+    label-for="path">
+    <b-form-input id="path" v-model="path"></b-form-input>
   </b-form-group>
 
   <b-form-group
   label-cols-sm="3"
-  label="Mimetype:"
+  label="Filename:"
   label-align-sm="right"
-  placeholder="text/plain ? text/turtle ? application/json ?"
-  label-for="type">
-  <b-form-input id="type" v-model="type"></b-form-input>
+  label-for="name">
+  <b-form-input id="name" v-model="name"></b-form-input>
+</b-form-group>
+
+<b-form-group
+label-cols-sm="3"
+label="Mimetype:"
+label-align-sm="right"
+placeholder="text/plain ? text/turtle ? application/json ?"
+label-for="type">
+<b-form-input id="type" v-model="type"></b-form-input>
 </b-form-group>
 
 
 </b-modal>
-
-
-</div>
-<div v-else>
-  <SolidLoginButton />
-</div>
 
 
 </div>
@@ -87,7 +91,8 @@ export default {
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'EditorTtl': () => import('@/components/editor/EditorTtl'),
-   'EditorNetwork': () => import('@/components/editor/EditorNetwork'),
+    'EditorNetwork': () => import('@/components/editor/EditorNetwork'),
+        'Explorer': () => import('@/components/explorer/Explorer'),
     //  'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {

@@ -2,24 +2,13 @@
   <div class="browser">
     <div v-if="webId != null">
 
-      <b-list-group>
-        <b-list-group-item
-        href="#"
-        v-if="folder.parent != 'https://'"
-        class="item"
-        @click="updateFolder(folder.parent)">
-        <b-icon-arrow-up></b-icon-arrow-up>   {{ folder.url }}
-      </b-list-group-item>
-      <b-list-group-item v-else class="item" href="#">
-        {{ storage }}
-      </b-list-group-item>
+      <b-card title="Explorer">
 
-      <div>
         <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
           <b-button-group class="mx-1">
-            <b-button title="New Folder" @click="init_folder"><b-icon-folder-plus></b-icon-folder-plus></b-button>
-            <b-button title="Upload Files" @click="$refs.fileInput.$el.childNodes[0].click()"> <b-icon-files></b-icon-files></b-button>
-            <b-button title="Upload Folder" @click="$refs.folderInput.$el.childNodes[0].click()"> <b-icon-folder-symlink></b-icon-folder-symlink></b-button>
+            <b-button title="New Folder" @click="init_folder" variant="info"><b-icon-folder-plus></b-icon-folder-plus></b-button>
+            <b-button title="Upload Files" @click="$refs.fileInput.$el.childNodes[0].click()" variant="info"> <b-icon-files></b-icon-files></b-button>
+            <b-button title="Upload Folder" @click="$refs.folderInput.$el.childNodes[0].click()" variant="info"> <b-icon-folder-symlink></b-icon-folder-symlink></b-button>
 
 
             <!--  <b-button>Edit</b-button>
@@ -27,67 +16,96 @@
           </b-button-group>
         </b-button-toolbar>
 
-        <b-form-file
-        ref="fileInput" style="display:none;"
-        v-model="files"
-        placeholder="upload files"
-        drop-placeholder="Drop file here..."
-        multiple
-        ></b-form-file>
+        <b-list-group>
+          <b-list-group-item
+          href="#"
+          v-if="folder.parent != 'https://'"
+          class="item"
+          @click="updateFolder(folder.parent)"
+          variant="info">
 
-        <b-form-file
-        ref="folderInput" style="display:none;"
-        v-model="files"
-        placeholder="Upload directory"
-        drop-placeholder="Upoload directory"
-        directory
-        multiple
-        ></b-form-file>
-      </div>
-    </b-list-group>
+          <b-button variant="info"><b-icon-arrow-up></b-icon-arrow-up></b-button>
 
-    <b-list-group class="scroll">
-      <b-list-group-item
-      href="#"
-      class="item list-group-item d-flex justify-content-between"
-      v-for="fo in folder.folders"
-      :key="fo.name"
-      @click="selected(fo)"
-      @contextmenu.prevent="right(fo)"
-      >
-      <p class="p-0 m-0 flex-grow-1">  <b-icon-folder2></b-icon-folder2>
-        {{ fo.name }}</p>
-        <b-button size="sm mr-2" variant="outline-primary">
-          <b-icon-alt @click.stop="init_move(fo)" variant="primary"></b-icon-alt>
+
+            {{ folder.url }}
+        </b-list-group-item>
+        <b-list-group-item v-else class="item" href="#" variant="info">
+          {{ storage }}
+        </b-list-group-item>
+
+        <div>
+
+
+          <b-form-file
+          ref="fileInput" style="display:none;"
+          v-model="files"
+          placeholder="upload files"
+          drop-placeholder="Drop file here..."
+          multiple
+          ></b-form-file>
+
+          <b-form-file
+          ref="folderInput" style="display:none;"
+          v-model="files"
+          placeholder="Upload directory"
+          drop-placeholder="Upoload directory"
+          directory
+          multiple
+          ></b-form-file>
+        </div>
+      </b-list-group>
+
+      <b-list-group class="scroll">
+        <b-list-group-item
+        href="#"
+        class="item list-group-item d-flex justify-content-between p-1"
+        v-for="fo in folder.folders"
+        :key="fo.name"
+        @click="selected(fo)"
+        @contextmenu.prevent="right(fo)"
+        >
+        <p class="p-0 m-0 flex-grow-1">
+          <b-button class="unstyled-button" variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
+
+
+
+          {{ fo.name }}</p>
+          <b-button size="sm mr-2" variant="outline-primary">
+            <b-icon-alt @click.stop="init_move(fo)" variant="primary"></b-icon-alt>
+          </b-button>
+
+          <b-button size="sm" variant="outline-danger">
+            <b-icon-trash @click.stop="init_trash(fo)" variant="danger"></b-icon-trash>
+          </b-button>
+
+        </b-list-group-item>
+        <!-- -->
+        <b-list-group-item
+        href="#"
+        class="item list-group-item d-flex justify-content-between"
+        v-for="fi in folder.files"
+        :key="fi.name"
+        @click="selected(fi)"
+        @contextmenu.prevent="right(fi)">
+
+        <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
+        <b-button size="sm mr-2" variant="outline-primary" disabled>
+          <b-icon-download></b-icon-download>
         </b-button>
-
+        <b-button size="sm mr-2" variant="outline-primary">
+          <b-icon-alt @click.stop="init_move(fi)" variant="primary"></b-icon-alt>
+        </b-button>
         <b-button size="sm" variant="outline-danger">
-          <b-icon-trash @click.stop="init_trash(fo)" variant="danger"></b-icon-trash>
+          <b-icon-trash @click.stop="init_trash(fi)" variant="danger"></b-icon-trash>
         </b-button>
 
       </b-list-group-item>
-      <!-- -->
-      <b-list-group-item
-      href="#"
-      class="item list-group-item d-flex justify-content-between"
-      v-for="fi in folder.files"
-      :key="fi.name"
-      @click="selected(fi)"
-      @contextmenu.prevent="right(fi)">
+    </b-list-group>
 
-      <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
-      <b-button size="sm mr-2" variant="outline-primary" disabled>
-        <b-icon-download></b-icon-download>
-      </b-button>
-      <b-button size="sm mr-2" variant="outline-primary">
-        <b-icon-alt @click.stop="init_move(fi)" variant="primary"></b-icon-alt>
-      </b-button>
-      <b-button size="sm" variant="outline-danger">
-        <b-icon-trash @click.stop="init_trash(fi)" variant="danger"></b-icon-trash>
-      </b-button>
+    <a href="#" class="card-link">Card link</a>
+    <b-link href="#" class="card-link">Another link</b-link>
+  </b-card>
 
-    </b-list-group-item>
-  </b-list-group>
 </div>
 <div v-else>
   <SolidLoginButton />
@@ -279,5 +297,10 @@ export default {
   margin-bottom: 10px;
   overflow-y:scroll;
   -webkit-overflow-scrolling: touch;
+}
+.unstyled-button {
+  border: none;
+  padding: 0;
+  background: none;
 }
 </style>
