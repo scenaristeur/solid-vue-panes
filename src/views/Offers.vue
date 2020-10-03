@@ -1,7 +1,10 @@
 <template>
-  <div class="offers">
-  <!--  <Offers/> -->
-  Offers
+  <div class="container">
+    <!--  <Offers/> -->
+    Offer or Ask for
+
+    <MyOffers />
+    <OtherOffers />
   </div>
 </template>
 
@@ -9,8 +12,10 @@
 
 export default {
   name: 'Offers',
-  /*  components: {
-    'Offers': () => import('@/views/Offers'),
-  },*/
+  components: {
+
+    'MyOffers': () => import('@/components/offers/MyOffers'),
+    'OtherOffers': () => import('@/components/offers/OtherOffers'),
+  },
 }
 </script>

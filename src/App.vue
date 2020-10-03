@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.127 - explorer & ttlEditor, screenshots
+      0.1.129 - explorer & ttlEditor, screenshots, offers module start
     </a>
     </i></small>
 
