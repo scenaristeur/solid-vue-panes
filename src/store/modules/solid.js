@@ -3,7 +3,7 @@
 
 import auth from 'solid-auth-client';
 import { fetchDocument } from 'tripledoc';
-import { vcard,  dct,/* rdfs, foaf, ldp, acl */} from 'rdf-namespaces'
+import { vcard,  dct /* rdfs, foaf, ldp, acl */} from 'rdf-namespaces'
 
 const SolidFileClient = window.SolidFileClient
 //console.log("SFC", SolidFileClient)
@@ -86,11 +86,11 @@ const actions = {
       var dateObj = new Date();
       var date = dateObj.toISOString()
       let log="https://spoggy.solidweb.org/private/logs/log.ttl"
+      let w_l = window.location.toString()
       let logDoc = await fetchDocument(log)
       let subj = logDoc.addSubject({identifier: webId})
       subj.addString(dct.created, date)
-      //  subj.addString(foaf.maker, webId)
-
+      subj.addString("https://schema.org/url", w_l)
       logDoc.save()
 
     }else{

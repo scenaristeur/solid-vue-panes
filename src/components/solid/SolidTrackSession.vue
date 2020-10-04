@@ -24,7 +24,7 @@ export default {
 });*/
 
 
-axios.get('https://gd.geobytes.com/GetCityDetails?callback=?')
+axios.get('http://gd.geobytes.com/GetCityDetails?callback=?')
   .then(function (response) {
     // handle success
     console.log("RESP",JSON.stringify(response, null, 2));
