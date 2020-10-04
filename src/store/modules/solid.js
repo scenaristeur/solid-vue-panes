@@ -4,6 +4,7 @@
 import auth from 'solid-auth-client';
 import { fetchDocument } from 'tripledoc';
 import { vcard,  dct /* rdfs, foaf, ldp, acl */} from 'rdf-namespaces'
+import axios from 'axios';
 
 const SolidFileClient = window.SolidFileClient
 //console.log("SFC", SolidFileClient)
@@ -82,16 +83,7 @@ const actions = {
       context.dispatch('inbox/setUser', user, { root: true })
       context.dispatch('workspaces/getUserWorkspaces', null,  { root: true })
 
-      // log
-      var dateObj = new Date();
-      var date = dateObj.toISOString()
-      let log="https://spoggy.solidweb.org/private/logs/log.ttl"
-      let w_l = window.location.toString()
-      let logDoc = await fetchDocument(log)
-      let subj = logDoc.addSubject({identifier: webId})
-      subj.addString(dct.created, date)
-      subj.addString("https://schema.org/url", w_l)
-      logDoc.save()
+
 
     }else{
       context.commit('setStorage', null)
@@ -99,6 +91,35 @@ const actions = {
       context.dispatch('inbox/setUser', null, { root: true })
       context.commit('workspaces/setCurrentWorkspace', {}, { root: true })
     }
+
+    // log
+    let city = ""
+    axios.get('https://ipapi.co/json/')
+      .then(function (response) {
+        // handle success
+      //  console.log("RESP",JSON.stringify(response, null, 2));
+        city = response.data.city
+      })
+      .catch(function (error) {
+        // handle error
+        console.log("ERR",error);
+      })
+      .then(async function () {
+        console.log("DONE")
+        // always executed
+
+        var dateObj = new Date();
+        var date = dateObj.toISOString()
+        let log="https://spoggy.solidweb.org/private/logs/log.ttl"
+        let w_l = window.location.toString()
+        let logDoc = await fetchDocument(log)
+        let subj = logDoc.addSubject({identifier: webId})
+        subj.addString(dct.created, date)
+        subj.addString("https://schema.org/url", w_l)
+        subj.addString("https://schema.org/location", city)
+        logDoc.save()
+      });
+
   },
   async updateFolder (context, url) {
     let folder = await fc.readFolder(url)
