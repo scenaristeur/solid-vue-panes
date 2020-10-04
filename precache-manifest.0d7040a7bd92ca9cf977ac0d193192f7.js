@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/agora.09c1fb62.css"
   },
   {
-    "revision": "7c8ab07e559d843e07c5",
+    "revision": "a77f24579b1d517a9e2c",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -416,7 +416,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "da0ccb442966c5a1e5f603d4ff0e4289",
+    "revision": "1eb50453f3477a531f5e9f70d85ab0a2",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -428,8 +428,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.66872d06.js"
   },
   {
-    "revision": "7c8ab07e559d843e07c5",
-    "url": "/solid-vue-panes/js/app.a6874f79.js"
+    "revision": "a77f24579b1d517a9e2c",
+    "url": "/solid-vue-panes/js/app.63ad537a.js"
   },
   {
     "revision": "e74e6685bd2cbdabcbc0",
@@ -756,8 +756,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-44db7b07.22d3dfcf.js"
   },
   {
-    "revision": "b8b28f0358dadd2dc2f3",
-    "url": "/solid-vue-panes/js/chunk-45132d3c.b5029f29.js"
+    "revision": "13e389568e9b2e8b9810",
+    "url": "/solid-vue-panes/js/chunk-45132d3c.fe777f76.js"
   },
   {
     "revision": "19f6c7f702092392a3db",
