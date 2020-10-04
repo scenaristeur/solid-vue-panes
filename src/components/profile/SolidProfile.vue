@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       location: "<http://schema.org/location>",
-      org: "<http://www.w3.org/ns/org#subOrganizationOf>"
+      org: "<http://www.w3.org/ns/org#>"
     }
   },
   created(){

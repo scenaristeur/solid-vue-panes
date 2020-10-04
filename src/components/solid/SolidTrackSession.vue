@@ -7,6 +7,7 @@
 <script>
 import auth from 'solid-auth-client';
 import profileMixin from '@/mixins/profileMixin'
+import axios from 'axios';
 
 export default {
   name: 'SolidTrackSession',
@@ -18,6 +19,25 @@ export default {
     }
   },
   created(){
+  /*  $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
+  console.log(JSON.stringify(data, null, 2));
+});*/
+
+
+axios.get('https://gd.geobytes.com/GetCityDetails?callback=?')
+  .then(function (response) {
+    // handle success
+    console.log("RESP",JSON.stringify(response, null, 2));
+  })
+  .catch(function (error) {
+    // handle error
+    console.log("ERR",error);
+  })
+  .then(function () {
+    console.log("DONE")
+    // always executed
+  });
+
     auth.trackSession(async session => {
       if (!session){
         this.user = null

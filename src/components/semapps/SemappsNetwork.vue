@@ -289,7 +289,7 @@ export default {
           scaling:{
             label: true,
           },
-          smooth: false // true,
+          smooth:  true,
         },
         interaction: {
           navigationButtons: true,

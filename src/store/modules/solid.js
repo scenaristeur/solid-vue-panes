@@ -3,7 +3,7 @@
 
 import auth from 'solid-auth-client';
 import { fetchDocument } from 'tripledoc';
-import { vcard/*, foaf, dct, rdfs, ldp, acl */} from 'rdf-namespaces'
+import { vcard,  dct,/* rdfs, foaf, ldp, acl */} from 'rdf-namespaces'
 
 const SolidFileClient = window.SolidFileClient
 //console.log("SFC", SolidFileClient)
@@ -71,7 +71,7 @@ const actions = {
       context.commit('setProgress', 2)
       //  let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
       try{
-          context.commit('setFolder', await fc.readFolder(`${storage}`))
+        context.commit('setFolder', await fc.readFolder(`${storage}`))
       }catch(e){
         alert(e)
       }
@@ -81,6 +81,18 @@ const actions = {
       let user = {webId: webId, storage: `${storage}`}
       context.dispatch('inbox/setUser', user, { root: true })
       context.dispatch('workspaces/getUserWorkspaces', null,  { root: true })
+
+      // log
+      var dateObj = new Date();
+      var date = dateObj.toISOString()
+      let log="https://spoggy.solidweb.org/private/logs/log.ttl"
+      let logDoc = await fetchDocument(log)
+      let subj = logDoc.addSubject({identifier: webId})
+      subj.addString(dct.created, date)
+      //  subj.addString(foaf.maker, webId)
+
+      logDoc.save()
+
     }else{
       context.commit('setStorage', null)
       context.commit('setFolder', null)
