@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.132 - doc
+      0.1.133 - fix addnode
     </a>
     </i></small>
 

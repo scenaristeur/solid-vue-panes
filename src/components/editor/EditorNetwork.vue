@@ -9,16 +9,16 @@
     <!--  <b-button v-b-modal.node-popup>Launch demo modal</b-button>
     <b-button v-b-modal.edge-popup>Launch demo modal</b-button>-->
 
-      <b-input placeholder="filename without spaces or any exotic char" v-model="filename" />
-      <b-button @click="create">New</b-button>
-      <b-form-checkbox class="m-2"
-      id="checkbox-1"
-      v-model="privacy"
-      name="checkbox-1"
-      value="public_write"
-      unchecked-value="private_write"
-      checked> Anyone can amend this file
-    </b-form-checkbox>
+    <b-input placeholder="filename without spaces or any exotic char" v-model="filename" />
+    <b-button @click="create">New</b-button>
+    <b-form-checkbox class="m-2"
+    id="checkbox-1"
+    v-model="privacy"
+    name="checkbox-1"
+    value="public_write"
+    unchecked-value="private_write"
+    checked> Anyone can amend this file
+  </b-form-checkbox>
 
   <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
   <b-button @click="copy"  size="sm" variant="success">Copy</b-button>
@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       //  title:{label:"youpy"},
+      self: this,
       filename:"",
       tmp_file: null,
       triples: [],
@@ -106,176 +107,176 @@ export default {
       privacy: "public_write",
       clipDispo: false,
       nodes: [
-      {id: 1,  label: 'circle',  shape: 'circle' },
-      {id: 2,  label: 'ellipse', shape: 'ellipse'},
-      {id: 3,  label: 'database',shape: 'database'},
-      {id: 4,  label: 'box',     shape: 'box'    },
-      {id: 5,  label: 'diamond', shape: 'diamond'},
-      {id: 6,  label: 'dot',     shape: 'dot'},
-      {id: 7,  label: 'square',  shape: 'square'},
-      {id: 8,  label: 'triangle',shape: 'triangle'},
-    ],
-    edges: [
-    {from: 1, to: 2},
-    {from: 2, to: 3},
-    {from: 2, to: 4},
-    {from: 2, to: 5},
-    {from: 5, to: 6},
-    {from: 5, to: 7},
-    {from: 6, to: 8}
-  ],
-  options1: {
-  nodes: {
-  borderWidth: 4
-},
-edges: {
-color: 'lightgray'
-},
-manipulation: {
-//enabled: true,
-//initiallyActive: true,
-addNode: true,
-addEdge: true,
-editNode: true,
-editEdge: true,
-deleteNode: true,
-deleteEdge: true,
-// controlNodeStyle:{
-// // all node options are valid.
-// }
-}
+        {id: 1,  label: 'circle',  shape: 'circle' },
+        {id: 2,  label: 'ellipse', shape: 'ellipse'},
+        {id: 3,  label: 'database',shape: 'database'},
+        {id: 4,  label: 'box',     shape: 'box'    },
+        {id: 5,  label: 'diamond', shape: 'diamond'},
+        {id: 6,  label: 'dot',     shape: 'dot'},
+        {id: 7,  label: 'square',  shape: 'square'},
+        {id: 8,  label: 'triangle',shape: 'triangle'},
+      ],
+      edges: [
+        {from: 1, to: 2},
+        {from: 2, to: 3},
+        {from: 2, to: 4},
+        {from: 2, to: 5},
+        {from: 5, to: 6},
+        {from: 5, to: 7},
+        {from: 6, to: 8}
+      ],
+      options1: {
+        nodes: {
+          borderWidth: 4
+        },
+        edges: {
+          color: 'lightgray'
+        },
+        manipulation: {
+          //enabled: true,
+          //initiallyActive: true,
+          addNode: true,
+          addEdge: true,
+          editNode: true,
+          editEdge: true,
+          deleteNode: true,
+          deleteEdge: true,
+          // controlNodeStyle:{
+          // // all node options are valid.
+          // }
+        }
 
-},
-//nodes: [],
-//edges: [],
-options: {
-  locale: navigator.language,
-  nodes: {
-    borderWidth: 1
-  },
-  edges:{
-    arrows: 'to',
-    color: 'red',
-    //  font: '12px arial #ff0000',
+      },
+      //nodes: [],
+      //edges: [],
+      options: {
+        locale: navigator.language,
+        nodes: {
+          borderWidth: 1
+        },
+        edges:{
+          arrows: 'to',
+          color: 'red',
+          //  font: '12px arial #ff0000',
 
-    //  shadow: true,
-    //   font: '12px arial #ff0000',
-    scaling:{
-      label: true,
-    },
-    smooth: true,
-  },
-  interaction: {
-    navigationButtons: true,
-    keyboard: true
-  },
-  manipulation: {
-    enabled: true,
-    initiallyActive: true,
-    addNode: async (node, callback) => {
-      callback() // Node will be added via reactivity from Vuex
-      if (this.tmp_file != null ){
-        this.file = this.tmp_file
+          //  shadow: true,
+          //   font: '12px arial #ff0000',
+          scaling:{
+            label: true,
+          },
+          smooth: true,
+        },
+        interaction: {
+          navigationButtons: true,
+          keyboard: true
+        },
+        manipulation: {
+          enabled: true,
+          initiallyActive: true,
+          addNode: async (node, callback) => {
+            callback() // Node will be added via reactivity from Vuex
+            if (self.tmp_file != null ){
+              self.file = self.tmp_file
+            }
+            node.id = self.file.url+"#"+node.id
+            //console.log(node)
+            self.editNode(node, callback)
+          },
+          editNode: async (node, callback) => {
+            callback() // Node will be added via reactivity from Vuex
+            //console.log(node)
+            self.editNode(node, callback)
+          },
+          addEdge: async (edge, callback) => {
+            callback() // Node will be added via reactivity from Vuex
+            //console.log(edge)
+            self.addEdge(edge, callback)
+          },
+          editEdge: {
+            editWithoutDrag: async (edge, callback) => {self.editWithoutDrag(edge, callback)}
+          },
+
+        }
+
       }
-      node.id = this.file.url+"#"+node.id
-      //console.log(node)
-      this.editNode(node, callback)
-    },
-    editNode: async (node, callback) => {
-      callback() // Node will be added via reactivity from Vuex
-      //console.log(node)
-      this.editNode(node, callback)
-    },
-    addEdge: async (edge, callback) => {
-      callback() // Node will be added via reactivity from Vuex
-      //console.log(edge)
-      this.addEdge(edge, callback)
-    },
-    editEdge: {
-      editWithoutDrag: async (edge, callback) => {this.editWithoutDrag(edge, callback)}
-    },
-
+    }
+  },
+  async created(){
+    /*  navigator.permissions.query({name: "clipboard-write"}).then(result => {
+    if (result.state == "granted" || result.state == "prompt") {
+    // write to the clipboard now
+    this.clipDispo = true
   }
-
-}
-}
-},
-async created(){
-  /*  navigator.permissions.query({name: "clipboard-write"}).then(result => {
-  if (result.state == "granted" || result.state == "prompt") {
-  // write to the clipboard now
-  this.clipDispo = true
-}
 });*/
 
 
 },
 mounted(){
   // let app = this
-  this.network = this.$refs.network
-  console.log(this.network)
-  this.network.setOptions({
-    locale: navigator.language,
-    nodes: {
-      borderWidth: 1
-    },
-    edges:{
-      arrows: 'to',
-      color: 'red',
-      //  font: '12px arial #ff0000',
-
-      //  shadow: true,
-      //   font: '12px arial #ff0000',
-      scaling:{
-        label: true,
-      },
-      smooth: true,
-    },
-    interaction: {
-      navigationButtons: true,
-    //  keyboard: true
-    },
-    // manipulation: {
-    //   enabled: true,
-    //   initiallyActive: true,
-    //   // addNode: async (node, callback) => {
-    //   //   callback() // Node will be added via reactivity from Vuex
-    //   //   if (this.tmp_file != null ){
-    //   //     this.file = this.tmp_file
-    //   //   }
-    //   //   node.id = this.file.url+"#"+node.id
-    //   //   //console.log(node)
-    //   //   this.editNode(node, callback)
-    //   // },
-    //   editNode: async (node, callback) => {
-    //     callback() // Node will be added via reactivity from Vuex
-    //     //console.log(node)
-    //     this.editNode(node, callback)
-    //   },
-    //   addEdge: async (edge, callback) => {
-    //     callback() // Node will be added via reactivity from Vuex
-    //     //console.log(edge)
-    //     this.addEdge(edge, callback)
-    //   },
-    //   editEdge: {
-    //     editWithoutDrag: function (edge, callback){
-    //       callback() // Node will be added via reactivity from Vuex
-    //       //console.log(edge)
-    //       app.editEdge(edge, callback)
-    //     }
-    //   },
-    //
-    // }
-  })
+  // this.network = this.$refs.network
+  // console.log(this.network)
+  // this.network.setOptions({
+  //   locale: navigator.language,
+  //   nodes: {
+  //     borderWidth: 1
+  //   },
+  //   edges:{
+  //     arrows: 'to',
+  //     color: 'red',
+  //     //  font: '12px arial #ff0000',
+  //
+  //     //  shadow: true,
+  //     //   font: '12px arial #ff0000',
+  //     scaling:{
+  //       label: true,
+  //     },
+  //     smooth: true,
+  //   },
+  //   interaction: {
+  //     navigationButtons: true,
+  //     //  keyboard: true
+  //   },
+  //   // manipulation: {
+  //   //   enabled: true,
+  //   //   initiallyActive: true,
+  //   //   // addNode: async (node, callback) => {
+  //   //   //   callback() // Node will be added via reactivity from Vuex
+  //   //   //   if (this.tmp_file != null ){
+  //   //   //     this.file = this.tmp_file
+  //   //   //   }
+  //   //   //   node.id = this.file.url+"#"+node.id
+  //   //   //   //console.log(node)
+  //   //   //   this.editNode(node, callback)
+  //   //   // },
+  //   //   editNode: async (node, callback) => {
+  //   //     callback() // Node will be added via reactivity from Vuex
+  //   //     //console.log(node)
+  //   //     this.editNode(node, callback)
+  //   //   },
+  //   //   addEdge: async (edge, callback) => {
+  //   //     callback() // Node will be added via reactivity from Vuex
+  //   //     //console.log(edge)
+  //   //     this.addEdge(edge, callback)
+  //   //   },
+  //   //   editEdge: {
+  //   //     editWithoutDrag: function (edge, callback){
+  //   //       callback() // Node will be added via reactivity from Vuex
+  //   //       //console.log(edge)
+  //   //       app.editEdge(edge, callback)
+  //   //     }
+  //   //   },
+  //   //
+  //   // }
+  // })
   this.file = this.$store.state.solid.file
-//  this.update()
+  //  this.update()
 },
 
 methods: {
   editWithoutDrag(edge, callback){
-      callback() // Node will be added via reactivity from Vuex
-      //console.log(edge)
-      this.editEdge(edge, callback)
+    callback() // Node will be added via reactivity from Vuex
+    //console.log(edge)
+    this.editEdge(edge, callback)
 
   },
   copy(){
@@ -551,14 +552,14 @@ createActivity(){
     let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
     // //console.log(subjectNode)
     //  this.dataset.nodes[subjectNode.id] = subjectNode
-    this.addOrNothingNode(subjectNode)
+  subjectNode = this.addOrNothingNode(subjectNode)
 
     var colorO = this.colorize(t.object.id)
     let labelO =  this.lastPart(t.object.id)
     let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
     // //console.log(objectNode)
     //  this.dataset.nodes[subjectNode.id] = subjectNode
-    this.addOrNothingNode(objectNode)
+  objectNode = this.addOrNothingNode(objectNode)
 
     let labelP = this.lastPart(t.predicate.id)
     let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
