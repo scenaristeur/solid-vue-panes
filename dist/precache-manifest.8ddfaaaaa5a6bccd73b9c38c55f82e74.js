@@ -416,7 +416,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "df2d3b048a1f993d6073ce9141f15b4f",
+    "revision": "2eb0bc4950c11e3f7ebb4fe66b61e1eb",
     "url": "/solid-vue-panes/index.html"
   },
   {
