@@ -1,5 +1,6 @@
-###Popock un réseau social basé sur le matching des centres d’intérêts, expertises, compétences & projets...
+# Popock un réseau social basé sur le matching des centres d’intérêts, expertises, compétences & projets...
 
+see doc folder for more infos
 
 Le projet Solid1 de Tim Berners Lee vise à fournir à chacun des espaces de stockage personnels avec des containers LDP2 (Linked Data Platform).
 
@@ -14,10 +15,11 @@ Un utilisateur peut par exemple utiliser l’application Plume pour poster un ar
 
 
 
-##Popock
+# Popock
 
 Popock vise à faciliter, pour un utilisateur, l’interaction avec ses données, à explorer les données publiques de ses amis, ou encore à parcourir des bases de connaissances telles que Semapps3, ou tout autre triplestore tel que celui de Persée4.
 Popock propose, en plus de la visualisation de graphes, plusieurs fonctionnalités intéressantes basées sur le Web Sémantique :
+
     • un profil Solid étendu par l’ajout de centres d’intérêts (ajout futur de compétences, soft-skills, projets…)
 
 
