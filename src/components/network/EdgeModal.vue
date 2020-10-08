@@ -5,7 +5,7 @@
     hide-backdrop content-class="shadow"
     @ok="addEdge" >
     <b-input-group size="lg" prepend="Label">
-      <b-form-input v-model="value.label" autofocus></b-form-input>
+      <b-form-input v-model="value.label" @keyup.enter="addEdge" autofocus></b-form-input>
     </b-input-group>
   </b-modal>
 </div>
@@ -37,7 +37,7 @@ methods: {
   addEdge(){
     console.log(this.value)
     this.$emit('ok', this.value)
-  }
+  },
   /*async getData() {
   let dataDoc = await fetchDocument(this.url);
   let subj = dataDoc.getSubject(this.url+"#this")

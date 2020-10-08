@@ -138,25 +138,52 @@ export default {
 
     addNode(node, callback){
       //  callback() // Node will be added via reactivity from Vuex
-      if (self.tmp_file != null ){
-        self.file = self.tmp_file
+      if (this.tmp_file != null ){
+        this.file = this.tmp_file
       }
-      node.id = self.file.url+"#"+node.id
+      node.id = this.file.url+"#"+node.id
+      node.label = ""
       //console.log(node)
       this.editNode(node, callback)
     },
     editNode(n,cb){
       console.log("EDIT NODE",n,cb)
+      this.node = n
+      this.$bvModal.show("node-popup")
     },
-    addEdge(n,cb){
-      console.log("EDIT NODE",n,cb)
+    addEdge(e,cb){
+      console.log("add edge",e,cb)
+      this.edge = e
+      if (e.from == e.to) {
+        var r = confirm("Do you want to connect the node to itself?");
+        if (r != true) {
+          cb(null);
+          return;
+        }
+      }
+      this.editEdgeWithoutDrag(e, cb);
     },
-    editEdge(n,cb){
-      console.log("EDIT NODE",n,cb)
+    editEdge(e,cb){
+      console.log("EDIT edge",e,cb)
+      this.editEdgeWithoutDrag(e, cb);
+    },
+    editEdgeWithoutDrag(edge, callback){
+      //
+      //console.log("edit editWithoutDrag",edge)
+      /*      // filling in the popup DOM elements
+      document.getElementById('edge-label').value = data.label;
+      document.getElementById('edge-saveButton').onclick = this.saveEdgeData.bind(this, data, callback);
+      document.getElementById('edge-cancelButton').onclick = this.cancelEdgeEdit.bind(this,callback);
+      document.getElementById('edge-popUp').style.display = 'block';
+      */
+      this.edge = edge
+      this.$bvModal.show("edge-popup")
+      //console.log(edge, callback)
+      callback()
     },
 
     saveNode(n){
-      //console.log("saveNode",n)
+      console.log("saveNode",n)
       var index = this.nodes.map(x => {
         return x.id;
       }).indexOf(n.id);
@@ -183,6 +210,41 @@ export default {
       }
     },
 
+    async  writeEdgeToFile(e){
+      if (this.tmp_file != null){
+        this.file = this.tmp_file
+      }
+      let subject  = this.nodes.filter(function(el) {
+        return el.id == e.from
+      });
+      let object  = this.nodes.filter(function(el) {
+        return el.id == e.to
+      });
+      //console.log(subject[0], e, object[0])
+
+      //let identifier = subject[0].id.indexOf(this.file) > 0 ? subject[0].id.split('#') : subject[0].id
+      let subj_identifier = subject[0].id.split('#')[1]
+      let obj_identifier = object[0].id.split('#')[1]
+
+
+      var dateObj = new Date();
+      var date = dateObj.toISOString()
+      let doc =  await fetchDocument(this.file.url)
+      //console.log(doc)
+      let subj = doc.addSubject({identifier: subj_identifier})
+      subj.addString(rdfs.label, subject[0].label)
+
+      subj.addString(dct.modified, date)
+
+      subj.addRef(foaf.maker, this.webId)
+
+
+      subj.addRef(this.file.url+"#"+e.label, object[0].id)
+      //subj.addRef(this.file.url+"#"+e.label, obj_identifier)
+      let obj = doc.addSubject({identifier: obj_identifier})
+      obj.addString(rdfs.label, object[0].label)
+      doc.save()
+    },
     networkEvent(eventName,e) {
       console.log(eventName,e)
     },
