@@ -23,7 +23,7 @@
 
   <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
   <b-button @click="copy"  size="sm" variant="success">Copy</b-button>
-  <b-button @click="openCommand"  size="sm" variant="success">Command</b-button>
+  <b-button @click="openCommand" disabled size="sm" variant="success">Command</b-button>
 
   <network ref="network"
   class="wrapper"
@@ -112,6 +112,25 @@ export default {
         {from: 6, to: 8}
       ],
       options: {
+          // locale: navigator.language,
+          // nodes: {
+          // //  borderWidth: 1
+          // },
+          edges:{
+            arrows: 'to',
+          //  color: 'red',
+            //  font: '12px arial #ff0000',
+              //  shadow: true,
+            //   font: '12px arial #ff0000',
+            scaling:{
+              label: true,
+            },
+            smooth: true,
+          },
+          interaction: {
+            navigationButtons: true,
+            keyboard: true
+          },
         manipulation: {
           enabled: true,
           initiallyActive: true,
@@ -405,7 +424,51 @@ export default {
     },
     openCommand(){
       this.$bvModal.show("command-popup")
-    }
+    },
+    async update(){
+      this.triples = []
+      console.log(this.file.url)
+      if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
+        let fileDoc = await fetchDocument(this.file.url)
+        console.log("fileDoc",fileDoc)
+        this.triples = fileDoc.getTriples()
+        console.log(this.triples)
+      }else{
+        console.log("TODO",this.file.url)
+      }
+      if (this.triples.length > 0){
+        this.triples.forEach((t) => {
+           console.log("trip",t)
+          this.addTriplet(t)
+        });
+
+      }
+
+    },
+    addTriplet(t){
+      // //console.log(t)
+      // //console.log(t.subject.id, t.predicate.id, t.object.id)
+
+      var color = this.colorize(t.subject.id)
+      let label =  this.lastPart(t.subject.id)
+      let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
+      // //console.log(subjectNode)
+      //  this.dataset.nodes[subjectNode.id] = subjectNode
+    subjectNode  = this.addOrNothingNode(subjectNode)
+
+      var colorO = this.colorize(t.object.id)
+      let labelO =  this.lastPart(t.object.id)
+      let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
+      // //console.log(objectNode)
+      //  this.dataset.nodes[subjectNode.id] = subjectNode
+      this.addOrNothingNode(objectNode)
+
+      let labelP = this.lastPart(t.predicate.id)
+      let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
+      this.edges.push(propertyEdge)
+
+
+    },
 
     /*async getData() {
     let dataDoc = await fetchDocument(this.url);
@@ -417,6 +480,11 @@ export default {
 },
 
 watch:{
+  file(){
+    console.log(this.file)
+    this.update()
+  },
+
   /*'$route' (to) {
   //  '$route' (to, from) {
   console.log(to)
