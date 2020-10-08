@@ -8,7 +8,7 @@
       <b-form-input v-model="value.id"></b-form-input>
     </b-input-group>
     <b-input-group size="lg" prepend="Label">
-      <b-form-input v-model="value.label" autofocus></b-form-input>
+      <b-form-input v-model="value.label" @keyup.enter="addNode" autofocus></b-form-input>
     </b-input-group>
 
 
@@ -45,6 +45,7 @@ methods: {
   //  this.$emit('nodeadd',this.node)
 //  let node="hello"
 this.$emit('ok', this.value)
+    this.$bvModal.hide("node-popup")
 //  this.$emit('update:title', this.node)
   }
   /*async getData() {

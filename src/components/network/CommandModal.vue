@@ -1,14 +1,16 @@
 <template>
   <div class="modele-view">
-    <b-modal id="edge-popup"
-
-    title="Edge"
+    <b-modal id="command-popup" title="Command"
     hide-backdrop content-class="shadow"
-    @ok="addEdge" >
-    <b-input-group size="lg" prepend="Label">
-      <b-form-input v-model="value.label" @keyup.enter="addEdge" autofocus></b-form-input>
+    @ok="sendCommand">
+    type 3 words & end with a comma
+    <b-input-group>
+      <b-form-input v-model="command" @keyup.enter="sendCommand" autofocus></b-form-input>
     </b-input-group>
+
+
   </b-modal>
+  <!--  <Component /> -->
 </div>
 </template>
 
@@ -18,15 +20,15 @@
 //import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
-  name: 'EdgeModal',
+  name: 'CommandModal',
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
-props: ['value'],
+//props: ['command'],
 data() {
   return {
-    //
+    command: ""
   }
 },
 created(){
@@ -35,11 +37,14 @@ created(){
   //  this.getData()
 },
 methods: {
-  addEdge(){
-    console.log(this.value)
-    this.$emit('ok', this.value)
-    this.$bvModal.hide("edge-popup")
-  },
+  sendCommand(){
+    console.log(this.command)
+    //  this.$emit('nodeadd',this.node)
+    //  let node="hello"
+    this.$emit('ok', this.command)
+    //this.$bvModal.hide("co-popup")
+    //  this.$emit('update:title', this.node)
+  }
   /*async getData() {
   let dataDoc = await fetchDocument(this.url);
   let subj = dataDoc.getSubject(this.url+"#this")

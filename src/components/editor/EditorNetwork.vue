@@ -23,6 +23,7 @@
 
   <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
   <b-button @click="copy"  size="sm" variant="success">Copy</b-button>
+  <b-button @click="openCommand"  size="sm" variant="success">Command</b-button>
 
   <network ref="network"
   class="wrapper"
@@ -46,6 +47,7 @@
 
 <NodeModal v-model="node" @ok="saveNode"/>
 <EdgeModal v-model="edge" @ok="saveEdge"/>
+<CommandModal v-model="command" @ok="saveCommand"/>
 
 </div>
 </template>
@@ -77,6 +79,7 @@ export default {
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
+    'CommandModal': () => import('@/components/network/CommandModal'),
   },
   mixins: [networkMixin, ActivityMixin, ToastMixin],
   data() {
@@ -88,6 +91,7 @@ export default {
       filename: "new_graph.ttl",
       privacy: "public_write",
       net: {},
+      command: "",
       nodes: [
         {id: 1,  label: 'circle',  shape: 'circle' },
         {id: 2,  label: 'ellipse', shape: 'ellipse'},
@@ -135,7 +139,9 @@ export default {
     //  this.getData()
   },
   methods: {
-
+    saveCommand(command){
+      console.log("COMMAND",command)
+    },
     addNode(node, callback){
       //  callback() // Node will be added via reactivity from Vuex
       if (this.tmp_file != null ){
@@ -249,7 +255,21 @@ export default {
       console.log(eventName,e)
     },
     copy(){
-      console.log("copy")
+      let copyText = "https://scenaristeur.github.io/solid-vue-panes/?url="+this.file.url //window.location.href
+      let app = this
+      //  !copyText.endsWith(".ttl") ?
+      //copyText = copyText+this.file.url //: ""
+      console.log(copyText)
+      navigator.clipboard.writeText(copyText).then(function() {
+        /* clipboard successfully set */
+        //  console.log("clipok", copyText)
+        app.makeToast("The url is in your clipboard ;-)", copyText+".               Use Ctrl+V to share it", "success")
+      }, function() {
+        /* clipboard write failed */
+        console.log("clipERROR", copyText)
+        app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
+      })
+
     },
 
     async  create(){
@@ -383,6 +403,9 @@ export default {
       this.nodes = []
       this.edges = []
     },
+    openCommand(){
+      this.$bvModal.show("command-popup")
+    }
 
     /*async getData() {
     let dataDoc = await fetchDocument(this.url);
