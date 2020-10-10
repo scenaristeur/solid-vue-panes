@@ -37,6 +37,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "file" */ '@/components/network/AllVis.vue')
   },
   {
+    path: '/migration',
+    name: 'Migration',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "migration" */ '@/views/MigrationView.vue')
+  },
+  {
     path: '/fofri/:webId?',
     name: 'FoFri',
     // route level code-splitting
@@ -308,54 +316,54 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "tension-edit" */'@/views/tension/TensionEdit.vue')
   },
-/*  {
-    path: '/tension/detail/:details?',
-    name: 'TensionDetail',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(@/views/tension/TensionDetail.vue')
-  },*/
-  {
-    path: '/tensions',
-    name: 'TensionsList',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
-  },
-  {
-    path: '/tensions/:url?',
-    name: 'Tensions',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
-  },
-  {
-    path: '/simplegouv',
-    name: 'SimpleGouv',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "simple-gouv" */'@/views/simple-gouv/SimpleGouvView.vue')
-  },
-  {
-    path: '/workspaces',
-    name: 'Workspaces',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "workspaces" */ '@/views/WorkSpaces.vue')
-  },
-  {
-    path: '/semapps/:url?',
-    name: 'Semapps',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "agora" */ '@/views/SemApps.vue')
-  },
+  /*  {
+  path: '/tension/detail/:details?',
+  name: 'TensionDetail',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(@/views/tension/TensionDetail.vue')
+},*/
+{
+  path: '/tensions',
+  name: 'TensionsList',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
+},
+{
+  path: '/tensions/:url?',
+  name: 'Tensions',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "tensions-list" */'@/views/tension/TensionsList.vue')
+},
+{
+  path: '/simplegouv',
+  name: 'SimpleGouv',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "simple-gouv" */'@/views/simple-gouv/SimpleGouvView.vue')
+},
+{
+  path: '/workspaces',
+  name: 'Workspaces',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "workspaces" */ '@/views/WorkSpaces.vue')
+},
+{
+  path: '/semapps/:url?',
+  name: 'Semapps',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "agora" */ '@/views/SemApps.vue')
+},
 
 ]
 

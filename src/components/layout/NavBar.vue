@@ -89,6 +89,7 @@
     <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
     <b-dropdown-item to="/semapps">SemApps</b-dropdown-item>
     <b-dropdown-item to="/workspaces">WorkSpaces</b-dropdown-item>
+    <b-dropdown-item to="/migration">Migration</b-dropdown-item>
   </b-nav-item-dropdown>
 
 
