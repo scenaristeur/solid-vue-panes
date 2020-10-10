@@ -44,7 +44,7 @@ async created(){
     // (This moves the user away from the current page.)
     session.login({
         // Specify the URL of the user's OIDC issuer.
-        oidcIssuer: 'https://solid.community',
+        oidcIssuer: 'https://solidcommunity.net',
         // Specify the URL the system should redirect to after login.
         redirectUrl: '/groups',
     });

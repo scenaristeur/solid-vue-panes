@@ -27,7 +27,7 @@
     <b-form-group class="row">
       <FriendsSelection  v-on:selected="onSelected"/>
       <label for="destinataire">WebId :</label>
-      <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
+      <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solidcommunity.net/profile/card#me"></b-form-input>
       <!--  <b-button @click="add">Add</b-button> -->
     </b-form-group>
   </div>
@@ -47,10 +47,6 @@
     rows="8"
     ></b-form-textarea>
 
-    <!--<b-list-group-item>Move</b-list-group-item>-->
-    <!--<b-list-group-item><b-icon-trash @click="trash"></b-icon-trash></b-list-group-item>-->
-    <!--  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-    <b-list-group-item>Vestibulum at eros</b-list-group-item>-->
   </b-list-group>
 </b-modal>
 
@@ -62,16 +58,11 @@
 <script>
 
 import profileMixin from '@/mixins/profileMixin'
-//import { saveFileInContainer, getSourceUrl } from "@inrupt/solid-client";
-//import { overwriteFile } from "@inrupt/solid-client";
+
 
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
-//let solid = window.solid
-//console.log("SOLID",solid)
-//const { namedNode } = require('@rdfjs/data-model');
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 import { fetchDocument } from 'tripledoc';
 import { schema } from 'rdf-namespaces'

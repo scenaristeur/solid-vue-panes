@@ -132,9 +132,9 @@ export default {
       subj.addLiteral(dct.created, date)
       subj.addRef(foaf.maker, this.webId)
       subj.addRef(vcard.hasMember, this.webId)
-      subj.addRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
-      subj.addRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
-      subj.addRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+      subj.addRef(vcard.hasMember, "https://spoggy-test4.solidcommunity.net/profile/card#me")
+      subj.addRef(vcard.hasMember, "https://spoggy-test5.solidcommunity.net/profile/card#me")
+      subj.addRef(vcard.hasMember, "https://spoggy.solidcommunity.net/profile/card#me")
       subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)
       subj.addRef("http://www.w3.org/ns/org#subOrganizationOf", this.parent)
 

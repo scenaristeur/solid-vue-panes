@@ -6,7 +6,7 @@ export default {
     buildTtl(ttlData){
       console.log(ttlData)
       var ttlString = "@prefix : <#>.\n"
-      //  +  "@prefix : <https://holacratie.solid.community/public/> .\n"
+      //  +  "@prefix : <https://holacratie.solidcommunity.net/public/> .\n"
       +  "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n"
       +  "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n"
       +  "@prefix xml: <http://www.w3.org/XML/1998/namespace> .\n"

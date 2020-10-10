@@ -4,7 +4,7 @@
     <b-button v-if="active == false" @click="newOffer">New Offer</b-button>
     <div v-else>
 
-      if you want to add lots of picture, prefer using <a href="https://solidweb.org/register" target="_blank">https://solidweb.org</a> (250Mo) instead of <a href="https://solid.community/register"  target="_blank">https://solid.community</a> (25Mo)
+      if you want to add lots of picture, prefer using <a href="https://solidweb.org/register" target="_blank">https://solidweb.org</a> (250Mo) instead of <a href="https://solidcommunity.net/register"  target="_blank">https://solidcommunity.net</a> (25Mo)
 
       <b-input-group prepend="title">
         <b-form-input v-model="offer.title"></b-form-input>

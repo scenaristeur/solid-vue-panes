@@ -6,7 +6,7 @@
         <b-form-group class="row">
           <FriendsSelection  v-on:selected="onSelected"/>
           <label for="name">or Member WebId</label>
-          <b-form-input id="member" v-model="member" placeholder="ex https://spoggy-test.solid.community/profile/card#me"></b-form-input>
+          <b-form-input id="member" v-model="member" placeholder="ex https://spoggy-test.solidcommunity.net/profile/card#me"></b-form-input>
           <b-button @click="add">Add</b-button>
         </b-form-group>
       </div>
@@ -65,9 +65,9 @@ export default {
       subj.addLiteral(dct.created, date)
       subj.addNodeRef(foaf.maker, this.webId)
       subj.addNodeRef(vcard.hasMember, this.webId)
-      subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
-      subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
-      subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")*/
+      subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solidcommunity.net/profile/card#me")
+      subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solidcommunity.net/profile/card#me")
+      subj.addNodeRef(vcard.hasMember, "https://spoggy.solidcommunity.net/profile/card#me")*/
       //  await groupDoc.save();
 
       /*@prefix vcard: <http://www.w3.org/2006/vcard/ns#>.

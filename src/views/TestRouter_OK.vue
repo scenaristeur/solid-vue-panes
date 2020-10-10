@@ -5,9 +5,9 @@
     parametre {{ webId }}
     <hr>
 
-    <router-link :to="{ name: 'TestRouter', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link><br>
-    <router-link :to="{ name: 'TestRouter', params: { webId: 'https://spoggy-test5.solid.community/profile/card#me' }}">sp t5</router-link><br>
-    <router-link :to="{ name: 'TestRouter', params: { webId: 'https://spoggy-test6.solid.community/profile/card#me' }}">sp t6</router-link><br>
+    <router-link :to="{ name: 'TestRouter', params: { webId: 'https://spoggy.solidcommunity.net/profile/card#me' }}">spoggy</router-link><br>
+    <router-link :to="{ name: 'TestRouter', params: { webId: 'https://spoggy-test5.solidcommunity.net/profile/card#me' }}">sp t5</router-link><br>
+    <router-link :to="{ name: 'TestRouter', params: { webId: 'https://spoggy-test6.solidcommunity.net/profile/card#me' }}">sp t6</router-link><br>
     <router-link :to="{ name: 'TestRouter'}">No param</router-link><br>
     <hr>
 

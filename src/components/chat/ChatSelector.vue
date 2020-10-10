@@ -54,8 +54,8 @@
 
 { value: {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:'01/01/2020', label: 'Solidarity'} ,  text : 'Solidarity (main) ' } ,
 { value: {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:'08/01/2020', label: 'Welcome'} ,  text : 'Welcome to Solid' } ,
-{ value: {instance:'https://solidos.solid.community/Team/SolidOs%20team%20chat/', created:'01/01/2020', label: 'Solidos'}, text: 'Solidos' } ,
-{ value: {instance:'https://w3c-cg.solid.community/public/w3c-cg-chat/', created:'01/01/2020', label: 'Solid W3C CG'}, text: 'Solid W3C CG' },
+{ value: {instance:'https://solidos.solidcommunity.net/Team/SolidOs%20team%20chat/', created:'01/01/2020', label: 'Solidos'}, text: 'Solidos' } ,
+{ value: {instance:'https://w3c-cg.solidcommunity.net/public/w3c-cg-chat/', created:'01/01/2020', label: 'Solid W3C CG'}, text: 'Solid W3C CG' },
 { value: {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:'08/01/2020', label: 'Applications'} ,  text : 'Solid Applications' } ,
 { value: {instance:'https://parle.inrupt.net/public/chat/solid/francais/', created:'08/01/2020', label: 'Français'} ,  text : 'Français' } ,
 { value: {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:'01/01/2020', label: 'Shighl / Solid-vue-panes'} ,  text : 'Shighl / Solid-vue-panes' } ,
@@ -80,8 +80,8 @@ export default {
       common_channels: [
         {instance:'https://solidarity.inrupt.net/public/Solidarity/', created:'01/01/2020', label: 'Solidarity'},
         {instance:'https://parle.inrupt.net/public/chat/solid/welcome/', created:'08/01/2020', label: 'Welcome to Solid'},
-        {instance:'https://solidos.solid.community/Team/SolidOs%20team%20chat/', created:'01/01/2020', label: 'Solidos'},
-        {instance:'https://w3c-cg.solid.community/public/w3c-cg-chat/', created:'01/01/2020', label: 'Solid W3C CG'},
+        {instance:'https://solidos.solidcommunity.net/Team/SolidOs%20team%20chat/', created:'01/01/2020', label: 'Solidos'},
+        {instance:'https://w3c-cg.solidcommunity.net/public/w3c-cg-chat/', created:'01/01/2020', label: 'Solid W3C CG'},
         {instance:'https://parle.inrupt.net/public/chat/solid/applications/', created:'08/01/2020', label: 'Applications'} ,
         {instance:'https://parle.inrupt.net/public/chat/solid/francais/', created:'08/01/2020', label: 'Français'} ,
         {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:'01/01/2020', label: 'Popock'} ,

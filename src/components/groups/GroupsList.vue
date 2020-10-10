@@ -25,14 +25,10 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import auth from 'solid-auth-client';
-//import { fetchDocument } from 'tripledoc';
-//import { vcard, foaf /*sioc, dct, foaf*/ } from 'rdf-namespaces'
 
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   name: 'GroupsList',

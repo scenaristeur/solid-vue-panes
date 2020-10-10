@@ -15,8 +15,8 @@
 //import profileMixin from '@/mixins/profileMixin'
 
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   name: 'OrganizationNew',

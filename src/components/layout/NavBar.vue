@@ -14,7 +14,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
 
-          <!--  <b-nav-item  href="https://scenaristeur.github.io/spoggy-simple/?source=https://parle.solid.community/public/parle/" target="_blank">Viualization</b-nav-item>
+          <!--  <b-nav-item  href="https://scenaristeur.github.io/spoggy-simple/?source=https://parle.solidcommunity.net/public/parle/" target="_blank">Viualization</b-nav-item>
         -->
 
         <!-- <b-nav-item-dropdown right>

@@ -3,7 +3,7 @@
 // initial state
 const state = () => ({
   channel : null,
-  users: {"https://spoggy-test3.solid.community/profile/card#me": {pic:"boo"}},
+  users: {"https://spoggy-test3.solidcommunity.net/profile/card#me": {pic:"boo"}},
   root: "",
   //  dataDate: "",
   //  path: "",

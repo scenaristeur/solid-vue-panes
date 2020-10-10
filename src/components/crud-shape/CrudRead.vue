@@ -24,8 +24,8 @@
 <script>
 //import ShexMixin from '@/mixins/crud/ShexMixin'
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   name: 'CrudRead',

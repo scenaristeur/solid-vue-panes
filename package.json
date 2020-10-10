@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.137",
+  "version": "0.1.138",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -35,7 +35,7 @@
     "vue-i18n": "^8.21.1",
     "vue-infinite-scroll": "^2.0.2",
     "vue-native-notification": "^1.1.1",
-    "vue-router": "^3.4.5",
+    "vue-router": "^3.4.6",
     "vue-vis-network": "^1.0.2",
     "vue2vis": "0.0.18",
     "vuex": "^3.4.0"

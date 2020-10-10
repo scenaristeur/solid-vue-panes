@@ -18,7 +18,7 @@
 
       <b-tab title="Shape selection" >
         <p>Select a Tab to use a Form or choose
-          <b-link href="https://holacratie.solid.community/public/Schema/" target="_blank">another ShEx shapes</b-link>.
+          <b-link href="https://holacratie.solidcommunity.net/public/Schema/" target="_blank">another ShEx shapes</b-link>.
 
           <ShapeChoose />
           <SolidLoginButton />

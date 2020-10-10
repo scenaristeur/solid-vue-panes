@@ -34,7 +34,7 @@ export default {
   props: ['value'],
   data: function () {
     return {
-      friend: "https://spoggy.solid.community/profile/card#me",
+      friend: "https://spoggy.solidcommunity.net/profile/card#me",
       html: '<div><a href="#">This is example</a></div>',
       //  beg: '<pre><a href="</pre>',
       //  end: '" target="_blank">Be my Solid Friend</a>'

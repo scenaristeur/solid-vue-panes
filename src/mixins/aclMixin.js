@@ -22,9 +22,8 @@ import { fetchDocument, createDocument } from 'tripledoc';
 import { schema } from 'rdf-namespaces'
 
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   created(){

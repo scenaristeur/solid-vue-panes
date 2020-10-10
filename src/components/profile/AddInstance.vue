@@ -46,10 +46,10 @@
 // @ is an alias to /src
 import profileMixin from '@/mixins/profileMixin'
 import aclMixin from '@/mixins/aclMixin'
-const SolidFileClient = window.SolidFileClient
+
 import auth from 'solid-auth-client';
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   name: 'AddInstance',

@@ -26,8 +26,8 @@ export default {
     this.label = this.subject.getLiteral(rdfs.label)
     /*this.created = this.subject.getLiteral(dct.created)
     this.inbox = this.subject.getRef(ldp.inbox)
-    this.wi = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatis")
-    this.wsb = this.subject.getLiteral("https://holacratie.solid.community/public/holacratie#whatshouldbe")
+    this.wi = this.subject.getLiteral("https://holacratie.solidcommunity.net/public/holacratie#whatis")
+    this.wsb = this.subject.getLiteral("https://holacratie.solidcommunity.net/public/holacratie#whatshouldbe")
     this.maker = this.subject.getRef(foaf.maker)
 
     this.roles = this.subject.getAllLiterals("http://www.w3.org/ns/org#memberOf")*/

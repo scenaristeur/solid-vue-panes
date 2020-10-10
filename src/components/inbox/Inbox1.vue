@@ -4,7 +4,7 @@
     <div v-if="webId != null">
       <!--  Inbox_urls : {{ inbox_urls}} <br>
       inbox_acl : {{ inbox_acl }}<br>-->
-      <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solid.community/profile/card#me" target="_blank">https://spoggy.solid.community/profile/card#me</a><br>
+      <p>To test the inbox, you can add me to your friends :<br> <a href="https://spoggy.solidcommunity.net/profile/card#me" target="_blank">https://spoggy.solidcommunity.net/profile/card#me</a><br>
         You have too <a href="https://forum.solidproject.org/t/popock-bring-your-pod-in-your-pocket/3378/4?u=smag0" target="_blank">grant authenticated Agents & this app</a> if you want to receive messages.
       </p>
       <InboxSend />
@@ -45,14 +45,7 @@
     <div v-else>
       <SolidLogin />
     </div>
-    <!--  inbox: {{ inbox }}-->
 
-    <!--  <div v-for="f in friends" :key="f"  style="font-size: 2rem;">
-    <router-link v-bind:to="{ name: 'FoFri', params: { webId: f }}">
-    <b-avatar rounded="lg"></b-avatar>  {{ f }}
-  </router-link>
-  <br>
-</div > -->
 <InboxDialogs />
 
 </div>
@@ -60,9 +53,8 @@
 
 <script>
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 import profileMixin from '@/mixins/profileMixin'
 
 //read public access & agents access

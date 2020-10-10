@@ -31,7 +31,7 @@ export default {
   async  created() {
     //only for dev
     this.url = this.$route.params.url
-    this.root == undefined ? this.root = "https://parle.solid.community/public/" : ""
+    this.root == undefined ? this.root = "https://parle.solidcommunity.net/public/" : ""
     console.log("root",this.root)
     !this.root.endsWith("/") ? this.root = this.root+"/" : "";
     !this.root.endsWith("/parle/") ? this.root = this.root+"parle/" : "";

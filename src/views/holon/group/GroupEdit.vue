@@ -39,8 +39,8 @@
 import { createDocument, fetchDocument } from 'tripledoc';
 import { vcard, dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces'
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
@@ -95,9 +95,9 @@ export default {
       subj.addNodeRef(rdf.type, vcard.Group)
       subj.addLiteral(rdfs.label, name)
       subj.addNodeRef(vcard.hasMember, this.webId)
-      subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
-      subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
-      subj.addNodeRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+      subj.addNodeRef(vcard.hasMember, "https://spoggy-test4.solidcommunity.net/profile/card#me")
+      subj.addNodeRef(vcard.hasMember, "https://spoggy-test5.solidcommunity.net/profile/card#me")
+      subj.addNodeRef(vcard.hasMember, "https://spoggy.solidcommunity.net/profile/card#me")
       subj.addNodeRef('http://www.w3.org/ns/org#purpose', 'http://www.w3.org/ns/org#Organization')
       subj.addLiteral('http://www.w3.org/ns/org#purpose', this.group.purpose)
 

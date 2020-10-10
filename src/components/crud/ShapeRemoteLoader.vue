@@ -23,7 +23,7 @@ export default {
   mixins: [ ShexMixin],
   data: function () {
     return {
-      shape_url: "https://holacratie.solid.community/public/Schema/issue.shex"
+      shape_url: "https://holacratie.solidcommunity.net/public/Schema/issue.shex"
     }
   },
   methods: {

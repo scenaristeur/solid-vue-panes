@@ -1,10 +1,10 @@
 <template>
   <div class="modele-view">
-    <div v-if="meta.url != undefined ">
+    <!-- <div v-if="meta.url != undefined ">
       <div class="row">META :<FileContent :file="meta" :search="search" :replace="replace" /></div>
     </div>
     <div v-if="acl.url != undefined"><div class="row">ACL :    <FileContent :file="acl" :search="search" :replace="replace" /></div>
-  </div>
+  </div> -->
 
   <div v-for="folder in folder.folders" :key="folder.url">
     <b-icon-folder-fill></b-icon-folder-fill>
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-//import {  fetchDocument } from 'tripledoc';
-//import {  rdf} from 'rdf-namespaces'
+
 import ToastMixin from '@/mixins/ToastMixin'
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
+
 
 export default {
   name: 'SubFolder',
@@ -39,41 +39,24 @@ export default {
   data() {
     return {
       folder:{ folders: [], files: []},
-      meta: {},
-      acl: {}
     }
   },
   async created(){
-    this.makeToast("loading",this.url)
-    this.folder = await fc.readFolder(this.url, {links:"include"} )
-    this.meta.url = this.folder.links.meta
-    this.acl.url = this.folder.links.acl
-
-    // console.log(folder.links.meta || "no .meta for this folder")
-    //console.log(folder.files[0].links.acl || "no .acl for this file")
-    //  console.log("FOLDER",this.folder)
-    //  console.log("route",this.$route)
-    //  this.url = this.$route.params.url
-    //  this.getData()
+    this.update()
   },
   methods: {
-    /*async getData() {
-    let dataDoc = await fetchDocument(this.url);
-    let subj = dataDoc.getSubject(this.url+"#this")
-    console.log(subj)
-    let types = subj.getAllRefs(rdf.type)
-    console.log(types)
-  }*/
+  async update(){
+    if (this.url != undefined){
+      this.makeToast("loading",this.url)
+      this.folder = await fc.readFolder(this.url)
+    }
+    }
 },
 
 watch:{
-  /*'$route' (to) {
-  //  '$route' (to, from) {
-  console.log(to)
-},
-url(url){
-console.log("URL CHANGE",url)
-}*/
+  url(){
+    this.update()
+  }
 },
 computed:{
   /*storage: {

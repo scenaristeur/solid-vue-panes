@@ -50,8 +50,8 @@ export default {
             subj.addLiteral(dct.modified, date)
             subj.removeAll(rdfs.label)
             subj.removeAll(ldp.inbox)
-            subj.removeAll("https://holacratie.solid.community/public/holacratie#whatis",data.wi)
-            subj.removeAll("https://holacratie.solid.community/public/holacratie#whatshouldbe",data.wsb)
+            subj.removeAll("https://holacratie.solidcommunity.net/public/holacratie#whatis",data.wi)
+            subj.removeAll("https://holacratie.solidcommunity.net/public/holacratie#whatshouldbe",data.wsb)
             //  subj.addRef(foaf.maker, this.$store.state.solid.webId)
             subj.removeAll(rdf.type)
             subj.removeAll("http://www.w3.org/ns/org#memberOf")
@@ -65,8 +65,8 @@ export default {
           subj.addLiteral(rdfs.label, data.label)
           subj.addRef(ldp.inbox, "./"+data.ttl_name+"/inbox/")
 
-          subj.addLiteral("https://holacratie.solid.community/public/holacratie#whatis",data.wi)
-          subj.addLiteral("https://holacratie.solid.community/public/holacratie#whatshouldbe",data.wsb)
+          subj.addLiteral("https://holacratie.solidcommunity.net/public/holacratie#whatis",data.wi)
+          subj.addLiteral("https://holacratie.solidcommunity.net/public/holacratie#whatshouldbe",data.wsb)
           subj.addRef(foaf.maker, this.$store.state.solid.webId)
           data.types.forEach((t) => {
             subj.addRef(rdf.type, t)

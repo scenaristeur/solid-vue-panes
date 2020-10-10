@@ -60,13 +60,9 @@ import { fetchDocument, createDocument } from 'tripledoc';
 import { sioc, dct, foaf, rdf, rdfs } from 'rdf-namespaces'
 
 import auth from 'solid-auth-client';
-//import { fetchDocument } from 'tripledoc';
-//import { vcard, foaf /*sioc, dct, foaf*/ } from 'rdf-namespaces'
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
-//import loginMixin from '@/mixins/loginMixin'
 
 export default {
   name: 'ShareTarget',

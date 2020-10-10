@@ -82,7 +82,7 @@ export default {
 
       // put something in outbox
       //put something in Agora inbox
-      //https://agora.solid.community/public/agora/inbox/
+      //https://agora.solidcommunity.net/public/agora/inbox/
 
     },
     formatDate(d) {
@@ -183,7 +183,7 @@ export default {
       "@context": [
       "https://www.w3.org/ns/activitystreams",
       {
-      "hc": "https://smag0.solid.community/holacracy/ns#",
+      "hc": "https://smag0.solidcommunity.net/holacracy/ns#",
       "purpose": {
       "@id": "hc:purpose",
       "@type": "@id"
@@ -202,7 +202,7 @@ export default {
 "purpose": "This is a simple circle to represent the Solid Community"
 }
 },*/
-pubPod: "https://agora.solid.community/public/popock/inbox/",
+pubPod: "https://agora.solidcommunity.net/public/popock/inbox/",
 
 }
 },

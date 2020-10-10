@@ -30,7 +30,7 @@ export default {
   },
   data: function () {
     return {
-      shape_url: "https://holacratie.solid.community/public/Schema/tension.shex",
+      shape_url: "https://holacratie.solidcommunity.net/public/Schema/tension.shex",
       currentShape: {id:"Loading Shape..."},
       shapes: [],
       footprint_shapes: [],

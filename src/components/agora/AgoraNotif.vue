@@ -28,7 +28,7 @@ export default {
   },
   data: function () {
     return {
-      pubPod: "https://agora.solid.community/public/popock/inbox/",
+      pubPod: "https://agora.solidcommunity.net/public/popock/inbox/",
       acitivities_cnt: 0,
       show: false,
       //  webId: {},

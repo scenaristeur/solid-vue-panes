@@ -58,13 +58,13 @@ export default {
 },*/
 data: function () {
   return {
-  //  pubPod: "https://agora.solid.community/public/popock/inbox/",
+  //  pubPod: "https://agora.solidcommunity.net/public/popock/inbox/",
 
     activity:  {
       "@context": [
         "https://www.w3.org/ns/activitystreams",
         {
-          "hc": "https://smag0.solid.community/holacracy/ns#",
+          "hc": "https://smag0.solidcommunity.net/holacracy/ns#",
           "purpose": {
             "@id": "hc:purpose",
             "@type": "@id"

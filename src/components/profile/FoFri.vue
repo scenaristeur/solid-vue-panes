@@ -37,9 +37,9 @@
 </div>
 <b-button :to="link" variant=outline-info>add Spoggy to your friends</b-button><br>
 <router-link :to="{ name: 'FoFri'}">Me</router-link><br>
-<router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link><br>
+<router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solidcommunity.net/profile/card#me' }}">spoggy</router-link><br>
 
-<router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solid.community/profile/card#me' }}">spoggy-test6</router-link><br>
+<router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solidcommunity.net/profile/card#me' }}">spoggy-test6</router-link><br>
 <hr>
 
 
@@ -112,7 +112,7 @@ export default {
   computed:{
     link(){
       console.log("route",this.$route, location.href)
-      let path = location.protocol+location.host+location.pathname+"?add=https://spoggy.solid.community/profile/card#me"
+      let path = location.protocol+location.host+location.pathname+"?add=https://spoggy.solidcommunity.net/profile/card#me"
       return  path //'<a href="'+path+'" target="_blank">Be my friend</a>'
     }
   }

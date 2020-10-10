@@ -34,7 +34,7 @@
         <b-form-group >
 
           <label for="destinataire">WebId :</label>
-          <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solid.community/profile/card#me"></b-form-input>
+          <b-form-input id="destinataire" v-model="recipient" placeholder="ex: https://spoggy-test.solidcommunity.net/profile/card#me"></b-form-input>
           <!--  <b-button @click="add">Add</b-button> -->
         </b-form-group>
       </div>
@@ -75,9 +75,8 @@ import loginMixin from '@/mixins/loginMixin'
 import profileMixin from '@/mixins/profileMixin'
 import aclMixin from '@/mixins/aclMixin'
 import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 //import { deleteFile } from "@inrupt/solid-client";
 import { fetchDocument, createDocument } from 'tripledoc';
 import { schema, space } from 'rdf-namespaces'
@@ -347,7 +346,7 @@ computed:{
   },
   link(){
     console.log("route",this.$route, location.href, location.host)
-    let path = "/friends?add=https://spoggy.solid.community/profile/card#me"
+    let path = "/friends?add=https://spoggy.solidcommunity.net/profile/card#me"
     return  path //'<a href="'+path+'" target="_blank">Be my friend</a>'
   }
 }

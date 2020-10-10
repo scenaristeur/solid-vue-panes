@@ -1,8 +1,4 @@
-//import { fetchDocument } from 'tripledoc';
-//import { ldp } from 'rdf-namespaces'
-/*import auth from 'solid-auth-client';
-const SolidFileClient = window.SolidFileClient
-const fc = new SolidFileClient(auth)*/
+
 import {
   getSolidDataset,
   getThingAll,

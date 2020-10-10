@@ -1,12 +1,8 @@
 import { fetchDocument } from 'tripledoc';
 import { vcard, foaf, dct, rdfs, ldp , rdf} from 'rdf-namespaces'
 import auth from 'solid-auth-client';
-
-const SolidFileClient = window.SolidFileClient
-//console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
-
-//const solid= window.solid
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   methods: {

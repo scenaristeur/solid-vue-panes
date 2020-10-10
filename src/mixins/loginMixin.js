@@ -4,7 +4,7 @@ export default {
   methods: {
     async popupLogin() {
       let session = await auth.currentSession();
-      let popupUri = './dist-popup/popup.html';  //  let popupUri = 'https://solid.community/common/popup.html';
+      let popupUri = './dist-popup/popup.html';  //  let popupUri = 'https://solidcommunity.net/common/popup.html';
       if (!session){
         session = await auth.popupLogin({ popupUri });
       }

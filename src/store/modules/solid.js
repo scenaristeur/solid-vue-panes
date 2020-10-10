@@ -6,9 +6,8 @@ import { fetchDocument } from 'tripledoc';
 import { vcard,  dct /* rdfs, foaf, ldp, acl */} from 'rdf-namespaces'
 import axios from 'axios';
 
-const SolidFileClient = window.SolidFileClient
-//console.log("SFC", SolidFileClient)
-const fc = new SolidFileClient(auth)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 // initial state
 const state = () => ({
   webId : null,

@@ -79,6 +79,9 @@
 
 <script>
 import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
+
 export default {
   //  store,
 
@@ -98,9 +101,7 @@ export default {
   },
 
   created() {
-    const SolidFileClient = window.SolidFileClient
-    console.log("SFC", SolidFileClient)
-    this.fc = new SolidFileClient(auth)
+
     this.file = this.$route.params.file
     console.log(this.file)
     this.path = this.file.url
@@ -117,7 +118,7 @@ export default {
   },
   methods:{
     async updateFile(){
-      this.content = await this.fc.readFile(this.path)
+      this.content = await fc.readFile(this.path)
     },
     clean(){
       this.text=""
@@ -157,7 +158,7 @@ export default {
   this.path = this.storage
   //  this.solid= window.solid
   //  this.webId =
-  //  this.fc = new SolidFileClient(auth)
+  //  fc = new SolidFileClient(auth)
   //  example     await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
 
 },
@@ -217,7 +218,7 @@ this.type = "text/plain"
 this.path = this.storage
 //  this.solid= window.solid
 //  this.webId =
-//  this.fc = new SolidFileClient(auth)
+//  fc = new SolidFileClient(auth)
 //  example     await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
 
 },

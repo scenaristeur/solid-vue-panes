@@ -5,9 +5,9 @@
 
     <!--
     <router-link :to="{ name: 'FoFri'}">Me</router-link><br>
-    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solid.community/profile/card#me' }}">spoggy</router-link>
+    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy.solidcommunity.net/profile/card#me' }}">spoggy</router-link>
     <b-button disabled>add Spoggy to your friends</b-button><br>
-    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solid.community/profile/card#me' }}">spoggy-test6</router-link><br>
+    <router-link :to="{ name: 'FoFri', params: { webId: 'https://spoggy-test.solidcommunity.net/profile/card#me' }}">spoggy-test6</router-link><br>
     <hr>-->
 
 

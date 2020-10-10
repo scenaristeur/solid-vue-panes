@@ -44,7 +44,7 @@ data() {
     name: "CoolGroup",
     purpose: "",
     parent: "",
-    pubPod: "https://agora.solid.community/public/popock/inbox/", // REVOIR ACTIVITY MIXIN !!!
+    pubPod: "https://agora.solidcommunity.net/public/popock/inbox/", // REVOIR ACTIVITY MIXIN !!!
     tension:"",
     url:""
   }
@@ -106,9 +106,9 @@ methods:{
     subj.addLiteral(dct.created, date)
     subj.addRef(foaf.maker, this.webId)
     subj.addRef(vcard.hasMember, this.webId)
-    subj.addRef(vcard.hasMember, "https://spoggy-test4.solid.community/profile/card#me")
-    subj.addRef(vcard.hasMember, "https://spoggy-test5.solid.community/profile/card#me")
-    subj.addRef(vcard.hasMember, "https://spoggy.solid.community/profile/card#me")
+    subj.addRef(vcard.hasMember, "https://spoggy-test4.solidcommunity.net/profile/card#me")
+    subj.addRef(vcard.hasMember, "https://spoggy-test5.solidcommunity.net/profile/card#me")
+    subj.addRef(vcard.hasMember, "https://spoggy.solidcommunity.net/profile/card#me")
     subj.addRef(rdf.type, this.currentWorkspace.path+'Group')
       subj.addRef(rdf.type, vcard.Group) ////////////////////////////////////////////
     subj.addLiteral('http://www.w3.org/ns/org#purpose', this.purpose)

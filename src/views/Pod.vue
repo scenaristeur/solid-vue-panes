@@ -56,6 +56,8 @@
 <script>
 // @ is an alias to /src
 import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   name: 'Pod',
@@ -70,9 +72,6 @@ data: function () {
   }
 },
 created() {
-  const SolidFileClient = window.SolidFileClient
-  console.log("SFC", SolidFileClient)
-  this.fc = new SolidFileClient(auth)
   this.path = this.$route.params.path || this.$store.state.solid.storage
   this.updatePod()
 },
@@ -85,7 +84,7 @@ watch: {
 },
 methods:{
   async updatePod(){
-    this.folder = await this.fc.readFolder(this.path)
+    this.folder = await fc.readFolder(this.path)
   },
 }
 }

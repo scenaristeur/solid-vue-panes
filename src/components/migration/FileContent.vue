@@ -16,6 +16,13 @@
         ></b-form-textarea>
 
         <b-button variant="warning" @click="fix">Fix</b-button>
+
+        <!-- <div v-if="meta.url != undefined ">
+          <div class="row">META :<FileContent :file="meta" :search="search" :replace="replace" /></div>
+        </div>
+        <div v-if="acl.url != undefined"><div class="row">ACL :    <FileContent :file="acl" :search="search" :replace="replace" /></div>
+      </div> -->
+
         <hr>
         <hr>
       </div>
@@ -24,7 +31,7 @@
       <b-alert v-else variant="success" show>
         <b-icon-file-text></b-icon-file-text>
         <a :href="file.url" target="_blank">{{file.url}}</a>
-        <b> Not Found</b>
+        <b> OK</b>
       </b-alert>
 
 
@@ -37,8 +44,8 @@
   //import {  rdf} from 'rdf-namespaces'
   import ToastMixin from '@/mixins/ToastMixin'
   import auth from 'solid-auth-client';
-  const SolidFileClient = window.SolidFileClient
-  const fc = new SolidFileClient(auth)
+  import FC from 'solid-file-client'
+  const fc = new FC( auth )
 
   export default {
     name: 'FileContent',
@@ -62,12 +69,14 @@
   },
   methods: {
     async getContent(){
-      let text = await fc.readFile(this.file.url)
+      let content = await fc.readFile(this.file.url)
+      // this.aclObject = await fc.aclUrlParser(this.file.url)
+      // console.log("ACLOBJECT", this.aclObject)
       //  console.log("CONTENT", this.file.url, text, typeof text )
-      if (typeof text == "string" ){
+      if (typeof content == "string" ){
         //  console.log(text, text.includes(this.search))
-        this.text = text
-        if (text.includes(this.search)){
+        this.text = content
+        if (content.includes(this.search)){
           this.found = true
         }
 
