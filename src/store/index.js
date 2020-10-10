@@ -11,6 +11,7 @@ import agora from './modules/agora'
 import gouvernance from './modules/gouvernance'
 import workspaces from './modules/workspaces'
 import semapps from './modules/semapps'
+import migration from './modules/migration'
 
 Vue.use(Vuex)
 
@@ -21,5 +22,5 @@ export default new Vuex.Store({
   },
   actions: {
   },
-  modules: { solid,  websocket, parle, chat, crud, inbox, groups, agora, gouvernance, workspaces, semapps}
+  modules: { solid,  websocket, parle, chat, crud, inbox, groups, agora, gouvernance, workspaces, semapps, migration}
 })

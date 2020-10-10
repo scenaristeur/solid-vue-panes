@@ -84,10 +84,10 @@
 
     },
     async fix(){
-      console.log(this.text)
+    //  console.log(this.text)
       let result = this.text.replaceAll(this.search, this.replace);
-      console.log(result)
-      console.log(this.file)
+    //  console.log(result)
+    //  console.log(this.file)
       try{
         await fc.createFile( this.file.url, result, this.file.type )
         this.makeToast("FIXED", this.file.url, "success")
