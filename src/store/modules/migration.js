@@ -3,7 +3,8 @@
 // initial state
 const state = () => ({
   folders:[],
-  files:[]
+  files:[],
+  mustUpdate:[]
 })
 
 // getters
@@ -21,13 +22,16 @@ const mutations = {
     folders.forEach((f) => {
       state.folders.push(f)
     });
-
-
   },
   addFiles (state, files) {
     files.forEach((f) => {
       state.files.push(f)
     });
+  },
+  mustUpdate (state, file) {
+
+    state.mustUpdate.push(file)
+
   },
   init(state){
     state.folders = []

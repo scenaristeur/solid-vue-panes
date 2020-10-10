@@ -7,15 +7,15 @@
 </div> -->
 
 <div v-for="folder in folder.folders" :key="folder.url">
-  <b-icon-folder-fill></b-icon-folder-fill>
-  <a href="folder.url" target="_blank"> {{folder.url}}</a>
+  <!--<b-icon-folder-fill></b-icon-folder-fill>
+  <a href="folder.url" target="_blank"> {{folder.url}}</a>-->
   <SubFolder :url="folder.url"  :search="search" :replace="replace" />
 </div>
 
-
+<!--
 <div v-for="file in folder.files" :key="file.url">
   <FileContent :file="file" :search="search" :replace="replace" />
-</div>
+</div>-->
 
 </div>
 </template>
@@ -31,7 +31,7 @@ const fc = new FC( auth )
 export default {
   name: 'SubFolder',
   components: {
-    'FileContent': () => import('@/components/migration/FileContent'),
+  //  'FileContent': () => import('@/components/migration/FileContent'),
     'SubFolder': () => import('@/components/migration/SubFolder'),
   },
   mixins: [ToastMixin],

@@ -29,7 +29,7 @@
 
 
       <b-alert v-else variant="success" show>
-        <b-icon-file-text></b-icon-file-text>
+         <b-icon-file-text></b-icon-file-text>
         <a :href="file.url" target="_blank">{{file.url}}</a>
         <b> OK</b>
       </b-alert>
@@ -78,6 +78,8 @@
         this.text = content
         if (content.includes(this.search)){
           this.found = true
+          this.file.newContent = this.text.replaceAll(this.search, this.replace);
+            this.$store.commit('migration/mustUpdate', this.file)
         }
 
       }
