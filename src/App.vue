@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.136 - migration
+      0.1.137 - migration only file, without acl & meta
     </a>
     </i></small>
 
