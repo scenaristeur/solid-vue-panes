@@ -51,8 +51,11 @@
             <b-card-text>
               <ul>
                 <li>
-                  <!-- <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link>  -->
                   <router-link to="/editor"><b-icon-pen class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-pen><br>{{ $t('editor') }}</router-link>
+                </li>
+                <li>
+                  <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link> 
+
                 </li>
                 <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
               </ul>

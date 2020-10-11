@@ -73,6 +73,7 @@
     <template v-slot:button-content>
       Experiments
     </template>
+    <b-dropdown-item to="/storage">{{ $t('explorer') }} + {{ $t('editor') }}</b-dropdown-item>
     <b-dropdown-item to="/migration">Migration</b-dropdown-item>
     <b-dropdown-item to="/groups">Groups</b-dropdown-item>
     <b-dropdown-item to="/agora">Agora</b-dropdown-item>
