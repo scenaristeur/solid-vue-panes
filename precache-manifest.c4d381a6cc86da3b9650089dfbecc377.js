@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/agora.09c1fb62.css"
   },
   {
-    "revision": "826ff44845c1cfb832f9",
+    "revision": "20804dc713d7f734ca95",
     "url": "/solid-vue-panes/css/app.ff7b691d.css"
   },
   {
@@ -80,7 +80,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/chunk-24d9e2b9.736d1035.css"
   },
   {
-    "revision": "f172f815159ff59d4fda",
+    "revision": "01d87ebf3d06d282738d",
     "url": "/solid-vue-panes/css/chunk-26aa14ae.1579f70d.css"
   },
   {
@@ -444,7 +444,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "c35218a206f6d201e1fced9a0b4a5dbe",
+    "revision": "24d19b42f8388182ff0eeada6e76cb21",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -456,8 +456,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.523edf9f.js"
   },
   {
-    "revision": "826ff44845c1cfb832f9",
-    "url": "/solid-vue-panes/js/app.169c9879.js"
+    "revision": "20804dc713d7f734ca95",
+    "url": "/solid-vue-panes/js/app.1f232f62.js"
   },
   {
     "revision": "410cd1321d0d9e317126",
@@ -536,8 +536,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-24d9e2b9.e81ab625.js"
   },
   {
-    "revision": "f172f815159ff59d4fda",
-    "url": "/solid-vue-panes/js/chunk-26aa14ae.b2de9ce0.js"
+    "revision": "01d87ebf3d06d282738d",
+    "url": "/solid-vue-panes/js/chunk-26aa14ae.b9ea6f23.js"
   },
   {
     "revision": "49f8f0506c1783d77216",
@@ -864,8 +864,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/chunk-629f7e72.84d4505e.js"
   },
   {
-    "revision": "19d8c973a0e3c2776372",
-    "url": "/solid-vue-panes/js/chunk-6a93ec6c.ff23bb09.js"
+    "revision": "9947ff4efed19238a7a2",
+    "url": "/solid-vue-panes/js/chunk-6a93ec6c.94f67fcb.js"
   },
   {
     "revision": "65a6ddddb90dda84937c",
