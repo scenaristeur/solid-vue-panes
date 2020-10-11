@@ -30,12 +30,10 @@
   :nodes="nodes"
   :edges="edges"
   :options="options"
-  @select="networkEvent('select')"
-  @select-node="networkEvent('selectNode')"
-  @select-edge="networkEvent('selectEdge')"
-
-  >
+  @select-node="selectNode"
+  @select-edge="selectEdge">
 </network>
+<!-- @select="networkEvent('select')" -->
 <!--  @nodes-mounted="networkEvent('nodes-mounted')"
 @nodes-add="addNode"
 @nodes-update="updateNode"
@@ -160,6 +158,14 @@ export default {
     //  this.getData()
   },
   methods: {
+    selectNode(e){
+      console.log(e)
+      console.log(e.nodes[0])
+    },
+    selectEdge(e){
+      console.log(e)
+      console.log(e.edges[0])
+    },
     saveCommand(command){
       console.log("COMMAND",command)
       let inputObject = this.getInputType(command)
@@ -167,7 +173,7 @@ export default {
       this.traiteInput(inputObject);
       this.inputNew = inputObject.inputNew
       console.log(this.inputNew)
-    //  this.updateInput(inputObject.inputNew)
+      //  this.updateInput(inputObject.inputNew)
     },
     addNode(node, callback){
       //  callback() // Node will be added via reactivity from Vuex
@@ -459,9 +465,13 @@ export default {
     addTriplet(t){
       // //console.log(t)
       // //console.log(t.subject.id, t.predicate.id, t.object.id)
-
       var color = this.colorize(t.subject.id)
       let label =  this.lastPart(t.subject.id)
+
+      if (t.predicate.id == "http://www.w3.org/2000/01/rdf-schema#label"){
+        console.log("LABEL",t.object.id)
+      }
+
       let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
       // //console.log(subjectNode)
       //  this.dataset.nodes[subjectNode.id] = subjectNode
@@ -469,6 +479,10 @@ export default {
 
       var colorO = this.colorize(t.object.id)
       let labelO =  this.lastPart(t.object.id)
+
+
+
+
       let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
       // //console.log(objectNode)
       //  this.dataset.nodes[subjectNode.id] = subjectNode
@@ -477,6 +491,7 @@ export default {
       let labelP = this.lastPart(t.predicate.id)
       let propertyEdge = {from: subjectNode.id, to: objectNode.id, label: labelP}
       this.edges.push(propertyEdge)
+
 
 
     },
