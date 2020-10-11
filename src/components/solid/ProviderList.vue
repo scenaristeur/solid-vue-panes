@@ -13,7 +13,7 @@
         :disabled="o.disabled">{{o.text}}</b-dropdown-item>
       </b-dropdown>
     </div>
-    List : {{ source }}
+    <small>List : {{ source }}</small>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ data() {
       {text: "solid.authing", description:"solid.authing was a public Solid server deployed in China.", url:"https://solid.authing.cn/", disabled:true},
       {text: "podware.org", description:"podware.org was a public Solid server deployed in Italy", url:"https://podware.org", disabled:true},
       {text: "solid.community", description:"solid.community was a public server for early adopters of Solid.", url:"https://solid.community/", disabled:true},
-      {text: "BECOME A POD PROVIDER", description:"Build Your POD PROVIDER", url:"https://github.com/solid/node-solid-server"},
+      {text: "BECOME A POD PROVIDER", description:"Build Your POD PROVIDER", url:"https://solidproject.org/for-developers/pod-server"},
     ]
   }
 },
