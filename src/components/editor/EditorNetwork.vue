@@ -470,6 +470,7 @@ export default {
 
       if (t.predicate.id == "http://www.w3.org/2000/01/rdf-schema#label"){
         console.log("LABEL",t.object.id)
+        label = t.object.id
       }
 
       let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }

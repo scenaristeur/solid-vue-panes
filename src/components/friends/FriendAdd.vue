@@ -75,7 +75,7 @@ export default {
     },
     link(){
       console.log("route",this.$route, location.href)
-      let path = location.protocol+location.host+location.pathname+"?add="+this.$store.state.solid.webId
+      let path = location.protocol+"//"+location.host+location.pathname+"?add="+this.$store.state.solid.webId
       return  path //'<a href="'+path+'" target="_blank">Be my friend</a>'
     }
   }
