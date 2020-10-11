@@ -47,7 +47,7 @@
 
 <NodeModal v-model="node" @ok="saveNode"/>
 <EdgeModal v-model="edge" @ok="saveEdge"/>
-<CommandModal v-model="command" @ok="saveCommand"/>
+<CommandModal v-model="command" :inputNew="inputNew" @ok="saveCommand"/>
 
 </div>
 </template>
@@ -93,6 +93,7 @@ export default {
       privacy: "public_write",
       net: {},
       command: "",
+      inputNew:"",
       nodes: [
         {id: 1,  label: 'circle',  shape: 'circle' },
         {id: 2,  label: 'ellipse', shape: 'ellipse'},
@@ -164,6 +165,8 @@ export default {
       let inputObject = this.getInputType(command)
       console.log("inputObject",inputObject);
       this.traiteInput(inputObject);
+      this.inputNew = inputObject.inputNew
+      console.log(this.inputNew)
     //  this.updateInput(inputObject.inputNew)
     },
     addNode(node, callback){
@@ -244,6 +247,7 @@ export default {
       if (this.tmp_file != null){
         this.file = this.tmp_file
       }
+      console.log(e)
       let subject  = this.nodes.filter(function(el) {
         return el.id == e.from
       });
@@ -253,8 +257,10 @@ export default {
       //console.log(subject[0], e, object[0])
 
       //let identifier = subject[0].id.indexOf(this.file) > 0 ? subject[0].id.split('#') : subject[0].id
-      let subj_identifier = subject[0].id.split('#')[1]
-      let obj_identifier = object[0].id.split('#')[1]
+
+
+      let subj_identifier = subject[0].id.includes(this.file.url) ? subject[0].id.split('#')[1] : subject[0].id
+      let obj_identifier = object[0].id.includes(this.file.url) ? object[0].id.split('#')[1] : object[0].id
 
 
       var dateObj = new Date();

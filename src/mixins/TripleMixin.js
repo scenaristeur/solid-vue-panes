@@ -48,8 +48,8 @@ export default {
           default:
           // si le premier charactère n'indique pas une commande, on traite comme un triplet
           inputObject = this.traiteTriplet(iv);
-        //  this.catchTriplet(inputObject)
-        console.log("TODO is catchTriplet Necessaire ici ?")
+          this.catchTriplet(inputObject)
+          //  console.log("TODO is catchTriplet Necessaire ici ?")
         }
       }
 
@@ -146,6 +146,69 @@ export default {
     },
 
     catchTriplet(triplet){
+      var subject = triplet.value.subject;
+      var predicate = triplet.value.predicate;
+      var object = triplet.value.object;
+
+      let subjectNode  = this.nodes.filter(function(el) {
+        return el.label == subject
+      });
+      let objectNode  = this.nodes.filter(function(el) {
+        return el.label == object
+      });
+      console.log(predicate, subjectNode, objectNode)
+      if(subjectNode.length == 0 ){
+        subjectNode = {id:this.file.url+"#"+subject , label:subject}
+        // let res =
+        //  this.$refs.network.nodes.add(subjectNode)
+        this.nodes.push(subjectNode)
+        //  console.log(this.nodes[res])
+        //  subjectNode = this.$refs.network.body.data.nodes.add(subjectNode)
+
+      }
+      if (  objectNode.length == 0){
+        objectNode = {id:this.file.url+"#"+object, label: object}
+        // let res =
+        this.nodes.push(objectNode)
+      //  this.$refs.network.nodes.add(objectNode)
+
+        //  console.log(this.nodes[res])
+        //  objectNode = this.$refs.network.body.data.nodes.add(objectNode)
+      }
+      console.log(this.$refs.network.nodes)
+      subjectNode  = this.$refs.network.nodes.filter(function(el) {
+        return el.label == subject
+      });
+      objectNode  = this.$refs.network.nodes.filter(function(el) {
+        return el.label == object
+      });
+      subjectNode = subjectNode[0]
+      objectNode = objectNode[0]
+      console.log(subjectNode, objectNode)
+      let   edge = {from: subjectNode.id, to:objectNode.id, label: predicate}
+      this.edges.push(edge)
+      console.log(edge)
+      this.writeEdgeToFile(edge)
+
+
+      // let edge = this.edges.filter(function(e) {
+      //   return (e.from == subjectNode.id && e.to == objectNode.id && e.label == predicate);
+      // })
+      // console.log(edge)
+      // if (edge.length == 0){
+      //   edge = {from: subjectNode.id, to:objectNode.id, label: predicate}
+      //   this.edges.push(edge)
+      //   console.log(edge)
+      //   this.writeEdgeToFile(edge)
+      // }
+
+
+
+
+    },
+
+
+    catchTriplet1(triplet){
       //  console.log(triplet)
       var subject = triplet.value.subject;
       var predicate = triplet.value.predicate;

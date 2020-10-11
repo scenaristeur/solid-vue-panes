@@ -5,7 +5,7 @@
     @ok="sendCommand">
     type 3 words & end with a comma
     <b-input-group>
-      <b-form-input v-model="command" @keyup.enter="sendCommand" autofocus></b-form-input>
+      <b-form-input ref="command_input" v-model="command" :value="inputNew" @keyup.enter="sendCommand" autofocus></b-form-input>
     </b-input-group>
 
 
@@ -25,7 +25,7 @@ export default {
   'Component': () => import('@/components/Component'),
 },*/
 //  mixins: [ToastMixin],
-//props: ['command'],
+props: ['inputNew'],
 data() {
   return {
     command: ""
@@ -55,6 +55,10 @@ methods: {
 },
 
 watch:{
+  inputNew(){
+    console.log(this.inputNew)
+   this.command = this.inputNew
+  }
   /*'$route' (to) {
   //  '$route' (to, from) {
   console.log(to)
@@ -64,6 +68,7 @@ console.log("URL CHANGE",url)
 }*/
 },
 computed:{
+
   /*storage: {
   get: function() { return this.$store.state.solid.storage},
   set: function() {}

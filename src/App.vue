@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.141 - migration update all option & start command EditorNetwork
+      0.1.142 - EditorNetwork command
     </a>
     </i></small>
 
