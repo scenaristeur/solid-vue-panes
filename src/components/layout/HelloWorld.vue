@@ -2,8 +2,12 @@
 
 <template>
   <div class="hello">
+    <div v-if="webId == null">
 
-    <SolidLoginButton class="m-3" v-if="webId == null" />
+    <SolidLoginButton class="m-3"  />
+    <ProviderList />
+
+  </div>
 
     <div class="container fluid">
       <div>
@@ -78,7 +82,8 @@
 export default {
   name: 'HelloWorld',
   components: {
-    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+    'ProviderList': () => import('@/components/solid/ProviderList')
   },
   computed:{
     webId(){

@@ -22,7 +22,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.142 - EditorNetwork command
+      0.1.143 - EditorNetwork command & POD provider List
     </a>
     </i></small>
 
