@@ -23,7 +23,7 @@
 
   <b-button @click="clear" size="sm" variant="warning">Clear</b-button>
   <b-button @click="copy"  size="sm" variant="success">Copy</b-button>
-  <b-button @click="openCommand" disabled size="sm" variant="success">Command</b-button>
+  <b-button @click="openCommand" size="sm" variant="success">Command</b-button>
 
   <network ref="network"
   class="wrapper"
@@ -73,6 +73,7 @@ import {
 import networkMixin from '@/mixins/networkMixin'
 import ActivityMixin from '@/mixins/ActivityMixin'
 import ToastMixin from '@/mixins/ToastMixin'
+import TripleMixin from '@/mixins/TripleMixin'
 
 export default {
   name: 'EditorNetwork',
@@ -81,7 +82,7 @@ export default {
     'EdgeModal': () => import('@/components/network/EdgeModal'),
     'CommandModal': () => import('@/components/network/CommandModal'),
   },
-  mixins: [networkMixin, ActivityMixin, ToastMixin],
+  mixins: [networkMixin, ActivityMixin, ToastMixin, TripleMixin],
   data() {
     return {
       //  file: {url:"file_url"},
@@ -112,25 +113,25 @@ export default {
         {from: 6, to: 8}
       ],
       options: {
-          // locale: navigator.language,
-          // nodes: {
-          // //  borderWidth: 1
-          // },
-          edges:{
-            arrows: 'to',
+        // locale: navigator.language,
+        // nodes: {
+        // //  borderWidth: 1
+        // },
+        edges:{
+          arrows: 'to',
           //  color: 'red',
-            //  font: '12px arial #ff0000',
-              //  shadow: true,
-            //   font: '12px arial #ff0000',
-            scaling:{
-              label: true,
-            },
-            smooth: true,
+          //  font: '12px arial #ff0000',
+          //  shadow: true,
+          //   font: '12px arial #ff0000',
+          scaling:{
+            label: true,
           },
-          interaction: {
-            navigationButtons: true,
-            keyboard: true
-          },
+          smooth: true,
+        },
+        interaction: {
+          navigationButtons: true,
+          keyboard: true
+        },
         manipulation: {
           enabled: true,
           initiallyActive: true,
@@ -160,6 +161,10 @@ export default {
   methods: {
     saveCommand(command){
       console.log("COMMAND",command)
+      let inputObject = this.getInputType(command)
+      console.log("inputObject",inputObject);
+      this.traiteInput(inputObject);
+    //  this.updateInput(inputObject.inputNew)
     },
     addNode(node, callback){
       //  callback() // Node will be added via reactivity from Vuex
@@ -438,7 +443,7 @@ export default {
       }
       if (this.triples.length > 0){
         this.triples.forEach((t) => {
-           console.log("trip",t)
+          console.log("trip",t)
           this.addTriplet(t)
         });
 
@@ -454,7 +459,7 @@ export default {
       let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
       // //console.log(subjectNode)
       //  this.dataset.nodes[subjectNode.id] = subjectNode
-    subjectNode  = this.addOrNothingNode(subjectNode)
+      subjectNode  = this.addOrNothingNode(subjectNode)
 
       var colorO = this.colorize(t.object.id)
       let labelO =  this.lastPart(t.object.id)

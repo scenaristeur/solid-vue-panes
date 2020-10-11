@@ -54,7 +54,7 @@ export default {
     'SubFolder': () => import('@/components/migration/SubFolder'),
     'MigrationItem': ()=> import('@/components/migration/MigrationItem'),
   },
-    mixins: [ToastMixin],
+  mixins: [ToastMixin],
   props:['webId'],
   data() {
     return {
@@ -75,9 +75,10 @@ export default {
     }
   },
   methods:{
-    updateAll(){
+    async  updateAll(){
       let app = this
-      this.mustUpdate.forEach(async function(f)  {
+      while (this.mustUpdate.length > 0 ) {
+        let f = this.mustUpdate.pop()
         try{
           await fc.createFile( f.url, f.newContent, f.type )
           console.log("fixed",f.url)
@@ -85,8 +86,7 @@ export default {
         }catch(e){
           app.makeToast("ERROR", e, "danger")
         }
-      });
-
+      }
     },
     async  checkStorageAcl(){
       try{

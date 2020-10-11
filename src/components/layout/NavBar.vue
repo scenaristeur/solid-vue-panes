@@ -73,7 +73,7 @@
     <template v-slot:button-content>
       Experiments
     </template>
-
+    <b-dropdown-item to="/migration">Migration</b-dropdown-item>
     <b-dropdown-item to="/groups">Groups</b-dropdown-item>
     <b-dropdown-item to="/agora">Agora</b-dropdown-item>
     <b-dropdown-item to="/forms">Forms</b-dropdown-item>
@@ -89,7 +89,7 @@
     <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
     <b-dropdown-item to="/semapps">SemApps</b-dropdown-item>
     <b-dropdown-item to="/workspaces">WorkSpaces</b-dropdown-item>
-    <b-dropdown-item to="/migration">Migration</b-dropdown-item>
+
   </b-nav-item-dropdown>
 
 
