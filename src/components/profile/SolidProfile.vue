@@ -41,26 +41,22 @@
             </ul>
             <EditableDiv v-model="profile.country" placeholder="your COUNTRY" @input="update"></EditableDiv>.
         </b-alert>
-          (todo see js console BUG #1)
+<!--          (todo see js console BUG #1)-->
         </small>
 
-        <hr>
+      </div>
 
+
+      <div class="col-lg-5">
         <div class="media">
           <a class="pull-left" href="#">
             <img class="media-object dp img-circle" :src="profile.photo" style="width: 100px;height:100px;">
           </a>
 
-
-
-
         </div>
-      </div>
-
-
-      <div class="col-lg-5"  v-if="profile.organization">
-        <EditableDiv v-model="profile.organization" placeholder="YOUR ORGANIZATION" @input="update"></EditableDiv>
-        org:hasMember <small><i>(Todo : getmembers())</i></small>
+        <!--  <EditableDiv   v-if="profile.organization" v-model="profile.organization" placeholder="YOUR ORGANIZATION" @input="update">
+        </EditableDiv>
+      org:hasMember <small><i>(Todo : getmembers())</i></small>-->
       </div>
 
       <!--  <b-button v-b-modal.profile-editor>Edit</b-button>
