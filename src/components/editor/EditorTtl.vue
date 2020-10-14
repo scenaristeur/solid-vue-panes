@@ -4,9 +4,9 @@
     EditorTtl {{ file.url }}
 
     <b-list-group>
-      <b-list-group-item v-for="(t,i) in triples" :key="i" class="container">
-
-        <b-input-group class="col">
+      <b-list-group-item v-for="(t,i) in triples" :key="i">
+<div class="row">
+        <b-input-group class="col col-md-4">
 
           <b-input-group-prepend>
             <b-button :href="t.subject.id" target="_blank" size="sm" variant="info">S</b-button>
@@ -14,20 +14,21 @@
           <b-form-input v-model="t.subject.id" aria-label="Subject" placeholder="Subject" ></b-form-input>
         </b-input-group>
 
-        <b-input-group class="col">
+        <b-input-group class="col col-md-4">
           <b-input-group-prepend>
             <b-button :href="t.predicate.id" target="_blank" size="sm" variant="info">p</b-button>
           </b-input-group-prepend>
           <b-form-input v-model="t.predicate.id" aria-label="predicate" placeholder="predicate"></b-form-input>
         </b-input-group>
 
-        <b-input-group class="col">
+        <b-input-group class="col col-md-4">
           <b-input-group-prepend>
             <b-button :href="t.object.id" target="_blank" size="sm" variant="info">O</b-button>
           </b-input-group-prepend>
           <b-form-input v-model="t.object.id" aria-label="object" placeholder="Object"></b-form-input>
 
         </b-input-group>
+</div>
 
 
 

@@ -11,7 +11,8 @@
       <div class="input-group mb-3">
         <input id="interest" v-model="interest" type="text" class="form-control"
         placeholder="I'm intersted in..." aria-label="Interest"
-        aria-describedby="interest-label">
+        aria-describedby="interest-label"
+        @keyup.enter="addInterest">
         <div class="input-group-append">
           <button id="submit_btn" class="btn btn-primary" type="button" @click="addInterest">Add
             <span id="submit_spinner" class="spinner-border spinner-border-sm" hidden role="status" aria-hidden="true"></span>
@@ -31,7 +32,8 @@
       <div class="input-group mb-3">
         <input id="skills" v-model="skill" type="text" class="form-control"
         placeholder="I have some skills that could interest others..." aria-label="Skill"
-        aria-describedby="skill-label">
+        aria-describedby="skill-label"
+        @keyup.enter="addSkill">
         <div class="input-group-append">
           <button id="submit_btn" class="btn btn-primary" type="button" @click="addSkill">Add
             <span id="submit_spinner" class="spinner-border spinner-border-sm" hidden role="status" aria-hidden="true"></span>
@@ -51,7 +53,8 @@
       <div class="input-group mb-3">
         <input id="service" v-model="service" type="text" class="form-control"
         placeholder="I propose a service..." aria-label="Service"
-        aria-describedby="service-label">
+        aria-describedby="service-label"
+        @keyup.enter="addService">
         <div class="input-group-append">
           <button id="submit_btn" class="btn btn-primary" type="button" @click="addService">Add
             <span id="submit_spinner" class="spinner-border spinner-border-sm" hidden role="status" aria-hidden="true"></span>

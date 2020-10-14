@@ -1,10 +1,10 @@
 <template>
   <div class="storage container-fluid">
     <div v-if="webId != null">
-      <Explorer />
+    <!--  <Explorer />
 
-      <Browser class="col-6" />
-      <Editor class="col-6" />
+      <Browser class="col-6" />-->
+      <Editor />
     </div>
     <div v-else>
       <SolidLoginButton />
@@ -24,8 +24,8 @@ export default {
 
   name: 'Storage',
   components: {
-    'Browser': () => import('@/components/explorer/Browser'),
-    'Explorer': () => import('@/components/explorer/Explorer'),
+    //'Browser': () => import('@/components/explorer/Browser'),
+    //'Explorer': () => import('@/components/explorer/Explorer'),
     'Editor': () => import('@/components/explorer/Editor'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },

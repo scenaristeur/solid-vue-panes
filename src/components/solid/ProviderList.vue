@@ -2,7 +2,8 @@
   <div class="container">
     <!--  <Component /> -->
 
-
+    <a href="https://solidproject.org/" target="_blank">What is Solid ?</a>
+    <br>
     <div>
       <b-dropdown id="dropdown-1" text="If you don't have a SOLID POD, some provider can give you one" class="m-md-2">
         <b-dropdown-item
@@ -13,7 +14,8 @@
         :disabled="o.disabled">{{o.text}}</b-dropdown-item>
       </b-dropdown>
     </div>
-    <small>List : {{ source }}</small>
+
+    <!--<small>List : {{ source }}</small>-->
   </div>
 </template>
 
