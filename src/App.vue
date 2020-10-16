@@ -8,27 +8,27 @@
     </transition>
     <SolidTrackSession />
 
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/simplegouv">Gouvernance</router-link> |
-    <router-link to="/profile">Profile</router-link> |
-    <router-link to="/workspaces">Worspaces</router-link> |
-    <router-link to="/storage">Storage</router-link> |
-    <router-link to="/inbox">Inbox</router-link> |
-    <router-link to="/chat">Chat</router-link> |
-    <router-link to="/parle">Parle</router-link> |
-    <router-link to="/about">About</router-link> |
-    <a href="https://join.slack.com/t/popock/shared_invite/zt-i5n7m70z-BmBypozj8vkdGRI9bxBCaA" target="_blank">Join Popock slack</a>
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/simplegouv">Gouvernance</router-link> |
+      <router-link to="/profile">Profile</router-link> |
+      <router-link to="/workspaces">Worspaces</router-link> |
+      <router-link to="/storage">Storage</router-link> |
+      <router-link to="/inbox">Inbox</router-link> |
+      <router-link to="/chat">Chat</router-link> |
+      <router-link to="/parle">Parle</router-link> |
+      <router-link to="/about">About</router-link> |
+      <a href="https://join.slack.com/t/popock/shared_invite/zt-i5n7m70z-BmBypozj8vkdGRI9bxBCaA" target="_blank">Join Popock slack</a>
 
-  </div>
+    </div>
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-      0.1.144 - slack link + extended profile skills & services
-    </a>
+        0.1.145 - slack link + extended profile skills & services
+      </a>
     </i></small>
 
-</div>
+  </div>
 </template>
 
 <script>
@@ -72,5 +72,8 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+router-view {
+  text-align: left;
 }
 </style>
