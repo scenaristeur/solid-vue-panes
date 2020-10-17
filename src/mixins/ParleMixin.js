@@ -1,28 +1,23 @@
-
 import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf, schema } from 'rdf-namespaces'
 
 export default {
-  created(){
-    this.fc = new SolidFileClient(auth)
-  },
   methods: {
-
     async prepareToday(){
-    //  let root = this.$store.state.chat.root
       let now = new Date()
       this.$store.commit('parle/setDataDate', now)
       let filename = [now.getFullYear(), ("0" + (now.getMonth() + 1)).slice(-2), ("0" + now.getDate()).slice(-2)].join("-")+".ttl"
       let fileUrl = this.$store.state.parle.root+filename
-      console.log(fileUrl)
-      await  this.create(fileUrl)
+      await this.create(fileUrl)
       this.$store.commit('parle/setFileUrl', fileUrl)
 
     },
     async create(fileUrl){
-      if( !await this.fc.itemExists( fileUrl )) {
-        await this.fc.postFile(fileUrl, "", "text/turtle")
+      if( !await fc.itemExists( fileUrl )) {
+        await fc.postFile(fileUrl, "", "text/turtle")
         .then((content) => {
           console.log("File Created",content)
         })
@@ -35,22 +30,18 @@ export default {
       console.log("BASCULE",p)
       this.$store.commit('parle/setFileUrl', p)
       this.path = p.substr(0, p.lastIndexOf("/") + 1)
-      console.log(this.path)
       if (this.$store.state.websocket.socket != undefined){
-        console.log("subscribe")
+        console.log("TODO : subscribe")
       //  this.$store.state.websocket.socket.send('sub '+p);
       }
-      console.log("mt")
       this.makeToast('We have switched to',p,'info')
-          console.log("mt 2")
       this.getMessages(p)
-          console.log("getmess")
     },
     async getMessages(uri){
       console.log("URI",uri)
       let messages = []
-      if( !await this.fc.itemExists( uri )) {
-        await this.fc.postFile(uri, "", "text/turtle")
+      if( !await fc.itemExists( uri )) {
+        await fc.postFile(uri, "", "text/turtle")
         .then((content) => {
           console.log("File Created",content)
         })

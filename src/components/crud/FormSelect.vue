@@ -24,6 +24,9 @@
 //import DebugProperties from '@/components/DebugProperties.vue'
 import SolidMixin from '@/mixins/crud/SolidMixin.js'
 import UtilMixin from '@/mixins/crud/UtilMixin.js'
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 
 export default {
@@ -62,8 +65,8 @@ export default {
 
     console.log("SOURCE : ",this.source)
 
-    if(this.source != undefined &&  await this.fc.itemExists(this.source)) {
-      await this.fc.readFolder(this.source).then(folder => {
+    if(this.source != undefined &&  await fc.itemExists(this.source)) {
+      await fc.readFolder(this.source).then(folder => {
         console.log("Folder",folder.folders)
         //  store.commit('crud/setShapeUrl', this.shape_url)
         this.folder = folder

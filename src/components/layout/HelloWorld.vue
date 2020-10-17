@@ -4,16 +4,16 @@
   <div class="hello">
     <div v-if="webId == null">
 
-    <SolidLoginButton class="m-3"  />
-    <ProviderList />
+      <SolidLoginButton class="m-3"  />
+      <b-button class="m-2" variant="info text-light" to="/welcome">C'est quoi Solid ?<br> What is Solid ?</b-button>
 
-  </div>
+    </div>
 
     <div class="container fluid">
       <div>
         <b-card-group deck>
 
-          <b-card bg-variant="dark" text-variant="white" header="Profile" class="text-center">
+          <b-card bg-variant="dark" text-variant="white" header="Profile" class="text-center mb-2" style="min-width: 20rem;">
             <b-card-text>
               <ul>
                 <li><router-link to="/profile"><b-icon-person-badge class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-person-badge><br>{{ $t('profile') }}</router-link></li>
@@ -25,7 +25,7 @@
             </b-card-text>
           </b-card>
 
-          <b-card bg-variant="dark" text-variant="white" header="Communication" class="text-center">
+          <b-card bg-variant="dark" text-variant="white" header="Communication" class="text-center mb-2"  style="min-width: 20rem;">
             <b-card-text>
               <ul>
                 <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>{{ $t('chat') }}</router-link></li>
@@ -36,7 +36,7 @@
             </b-card-text>
           </b-card>
 
-          <b-card bg-variant="dark" text-variant="white" header="Gouvernance" class="text-center">
+          <b-card bg-variant="dark" text-variant="white" header="Gouvernance" class="text-center mb-2" style="min-width: 20rem;">
             <b-card-text>
               <ul>
                 <li><router-link to="/tension/edit"><b-icon-lightning class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-lightning><br>{{ $t('Tension') }}</router-link></li>
@@ -47,14 +47,14 @@
             </b-card-text>
           </b-card>
 
-          <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center">
+          <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center mb-2" style="min-width: 20rem;">
             <b-card-text>
               <ul>
                 <li>
                   <router-link to="/editor"><b-icon-pen class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-pen><br>{{ $t('editor') }}</router-link>
                 </li>
                 <li>
-                  <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link> 
+                  <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link>
 
                 </li>
                 <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
@@ -86,7 +86,6 @@ export default {
   name: 'HelloWorld',
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
-    'ProviderList': () => import('@/components/solid/ProviderList')
   },
   computed:{
     webId(){

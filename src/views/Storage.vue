@@ -13,10 +13,7 @@
 </template>
 
 <script>
-//import store from "@/store";
-//import { fetchDocument } from 'tripledoc';
-//import { sioc, dct, foaf } from 'rdf-namespaces' //
-//const { namedNode } = require('@rdfjs/data-model');
+
 import loginMixin from '@/mixins/loginMixin'
 
 export default {
@@ -43,15 +40,11 @@ export default {
     }
     //  this.solid= window.solid
     //  this.webId =
-    //  this.fc = new SolidFileClient(auth)
+    //  fc = new SolidFileClient(auth)
     //  example     await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
 
   },
   methods: {
-    /*  updateBrowser: async  function (){
-    this.folder = await this.fc.readFolder(this.storage)
-    console.log(this.folder)
-  }*/
 },
 computed:{
   webId(){

@@ -77,7 +77,9 @@
 <script>
 import ParleMixin from '@/mixins/ParleMixin' // Manage folders & files
 import { fetchDocument, createDocument } from 'tripledoc';
-//import auth from 'solid-auth-client';
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 import {/* sioc,*/ dct, foaf, schema } from 'rdf-namespaces'
 
 export default {
@@ -163,8 +165,8 @@ export default {
 
         // create Doc
 
-        if( !await this.fc.itemExists( child_url )) {
-          await this.fc.postFile(child_url, "", "text/turtle")
+        if( !await fc.itemExists( child_url )) {
+          await fc.postFile(child_url, "", "text/turtle")
           .then((content) => {
             console.log("File Created",content)
           })

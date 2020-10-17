@@ -4,6 +4,8 @@ import ActivityMixin from '@/mixins/ActivityMixin'
 import { createDocument, fetchDocument } from 'tripledoc';
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
 import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   mixins: [ToastMixin, ActivityMixin],
@@ -11,10 +13,6 @@ export default {
     return {
       //    tension : {privacy:"public"}
     }
-  },
-  created(){
-    this.fc   = new SolidFileClient(auth)
-  //  console.log(this.fc)
   },
   methods: {
     async createFile(data){
@@ -108,7 +106,7 @@ export default {
       },
       async  getFolder(url){
         //console.log("get folder",url)
-        let folder = await this.fc.readFolder(url)
+        let folder = await fc.readFolder(url)
         return folder
       },
     }
