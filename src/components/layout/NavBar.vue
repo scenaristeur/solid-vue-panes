@@ -86,6 +86,7 @@
     <b-dropdown-item to="/groups">Groups</b-dropdown-item>
     <b-dropdown-item to="/forms">Forms</b-dropdown-item>
     <b-dropdown-item to="/salut">Salut</b-dropdown-item>
+    <b-dropdown-item to="/issuetrackers">Issue Trackers</b-dropdown-item>
 
     <b-dropdown-item to="/offers">Offers</b-dropdown-item>
     <b-dropdown-item to="/pod">Pod 2 </b-dropdown-item>
