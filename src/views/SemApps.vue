@@ -1,6 +1,12 @@
+<i18n src="@/common/locales.json"></i18n>
+
 <template>
-  <div class="modele-view container row">
-    <h2>SemApps</h2>
+  <div class="container">
+    <h2>Visualization</h2>
+
+    <h5>{{$t('proposition_frends_graph')}} <b-button variant="outline-info" onClick="window.location.reload();">{{$t('refresh')}}</b-button></h5>
+
+
     <SemappsEnpoints :endpoints="endpoints" />
     <SemappsNetwork variant="outline-info" />
     <!--  <div class="col-lg-7">
@@ -42,12 +48,12 @@ export default {
         url: "https://data.virtual-assembly.org/",
         disabled: false, containers: [ "skills", "themas","organizations", "projects", "persons"],
         model: "semapps"},
-        {name: "Fake url for test",
-        url: "https://popock-test.virtual-assembly.org/",
-        disabled: false,
-        containers: [ "test"],
-        model: "semapps"},
-      /*  {name: "Startinblox",
+        // {name: "Fake url for test",
+        // url: "https://popock-test.virtual-assembly.org/",
+        // disabled: false,
+        // containers: [ "test"],
+        // model: "semapps"},
+        /*  {name: "Startinblox",
         url: "https://api.startinblox.com/",
         disabled: false,
         containers: [  "users"],
@@ -55,7 +61,7 @@ export default {
         {name: "Startinblox Community",
         url: "https://api.community.startinblox.com/",
         disabled: false,
-        containers: [/*"accounts",*/ "users"],
+        containers: ["accounts", "users"],
         model: "startinblox"},
         {name: "Happy Dev",
         url: "https://api.paris.happy-dev.fr/",

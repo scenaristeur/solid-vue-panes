@@ -3,7 +3,7 @@
 
     <!-- https://github.com/nico-martin/todo-pwa/blob/master/vue/src/app/Header.vue#L28-L33 -->
     <header class="font-bold text-xl py-3 flex">
-      {{ titleS }}
+      <!-- {{ titleS }} -->
       <button
       v-if="shareFeature"
       class="ml-auto opacity-50 hover:opacity-75"
@@ -40,7 +40,7 @@ export default {
       .share({
         title: this.titleS,
         text: 'Share PoPock',
-        url: 'https://scenaristeur.github.io/solid-vue-panes/',
+        url: window.location,
       })
       .then(() => console.log('Successful share'))
       .catch(error => console.log('Error sharing', error));

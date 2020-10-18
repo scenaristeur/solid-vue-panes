@@ -387,5 +387,11 @@ const router = new VueRouter({
   routes, mode: 'history', base: publicPath,  linkActiveClass: 'active'
 })
 
+router.beforeEach((to, from, next) => {
+  console.log("ROUTER", to, from, next)
+
+  next()
+})
+
 
 export default router

@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <button type="button" v-for="interest in interests" :key="interest" class="btn btn-outline-info btn-sm">
+    <button type="button" v-for="interest in interests" :key="'i_'+interest" class="btn btn-outline-info btn-sm">
       {{interest}}
       <b-icon-trash-fill @click.stop="delInterest(interest)" v-if="editTopic == true"></b-icon-trash-fill>
     </button>
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <button type="button" v-for="skill in skills" :key="skill" class="btn btn-outline-info btn-sm">
+    <button type="button" v-for="skill in skills" :key="'sk_'+skill" class="btn btn-outline-info btn-sm">
       {{skill}}
       <b-icon-trash-fill @click.stop="delSkill(skill)" v-if="editSkill == true"></b-icon-trash-fill>
     </button>
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <button type="button" v-for="service in services" :key="service" class="btn btn-outline-info btn-sm">
+    <button type="button" v-for="service in services" :key="'se_'+service" class="btn btn-outline-info btn-sm">
       {{service}}
       <b-icon-trash-fill @click.stop="delService(service)" v-if="editService == true"></b-icon-trash-fill>
     </button>

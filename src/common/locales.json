@@ -27,8 +27,13 @@
     "Tension": "Tension",
     "Tensions": "Tensions",
     "Groups": "Groups",
-    "Name": "Name"
+    "Name": "Name",
+    "provider_select_proposition" : "If you don't have a POD, please select a provider in the list below:",
+    "proposition_frends_graph" : "To see your Solid friends in the graph, please refresh this page.",
+    "refresh":"Refresh",
+    "choose_source": "Choose a source :"
   },
+
   "fr": {
     "hello": "Salut tout le monde!",
     "login": "S'identifier",
@@ -57,7 +62,11 @@
     "Tension": "Tension",
     "Tensions": "Tensions",
     "Groups": "Groupes",
-    "Name": "Nom"
+    "Name": "Nom",
+    "provider_select_proposition": "Si vous n'avez pas de POD, vous pouvez selectionner un fournisseur dans la liste suivante :",
+    "proposition_frends_graph": "Pour voir vos amis Solid dans le graphe",
+    "refresh": "Rafraîchir",
+    "choose_source": "Choisissez une source"
   },
   "de": {
     "hello": "Hallo Welt!",

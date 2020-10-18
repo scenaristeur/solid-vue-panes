@@ -1,6 +1,8 @@
+<i18n src="@/common/locales.json"></i18n>
+
 <template>
   <div class="modele-view">
-    <h5>Choose your source</h5>
+    <h5>{{$t('choose_source')}}</h5>
     <b-list-group>
       <b-list-group-item button v-for="e in endpoints" :key="e.name" @click="changeEndpoint(e)" variant="success" :disabled="e.disabled">
         <b>{{ e.name}} : </b>{{ e.url}}
@@ -12,6 +14,7 @@
 </template>
 
 <script>
+
 //import {  fetchDocument } from 'tripledoc';
 //import {  rdf} from 'rdf-namespaces'
 //import ToastMixin from '@/mixins/ToastMixin'

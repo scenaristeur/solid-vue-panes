@@ -5,65 +5,99 @@
 
     <div class="row">
       <div class="col">
-        <b-input @input="search" size="sm" v-model="input.subject" placeholder="Subject" />
-        <b-input @input="search" size="sm" v-model="input.property" placeholder="property" />
-        <b-input @input="search" size="sm" v-model="input.object" placeholder="Object" />
+        <div class="row">
+
+          <b-input @input="search" size="sm" v-model="input.subject" placeholder="Subject" />
+          <b-input @input="search" size="sm" v-model="input.property" placeholder="property" />
+          <b-input @input="search" size="sm" v-model="input.object" placeholder="Object" />
+
+        </div>
 
         <b-button  @click="showTypes" size="sm" variant="outline-info">All types</b-button>
         <b-button  @click="showNodes" size="sm" variant="outline-info">All Nodes</b-button>
-        <!--https://visjs.github.io/vis-network/examples/network/physics/physicsConfiguration.html-->
-        <b-button v-b-toggle.collapse-1 variant="primary">Network Settings</b-button>
-        <a href="https://visjs.github.io/vis-network/docs/network/physics.html" target="_blank"><b>?</b></a>
-
       </div>
-      <div class="col">
+      <b-list-group v-if="historic.length > 0">
+        <b-list-group-item v-for='h in historic' :key="h.id">
+          {{ h.label }}
+          <b-button-group>
+            <b-button variant="outline-info" size="sm" @click="see(h)">See</b-button>
+            <b-button variant="outline-info" size="sm" v-bind:to="{ name: 'Profile', params: { interest: h.id }}">Add to my inyterests</b-button>
+            <!--<b-button>Button 3</b-button>-->
+          </b-button-group>
+        </b-list-group-item>
+      </b-list-group>
+    </div>
 
 
 
 
-        <b-collapse id="collapse-1" class="mt-2">
-          <b-card>
+    <network ref="network"
+    class="wrapper"
+    :nodes="nodes"
+    :edges="edges"
+    :options="options"
+    @select-node="selectNode">
+  </network>
 
-            <b-button v-b-toggle.collapse-1-inner size="sm">Edges</b-button>
-            <b-collapse id="collapse-1-inner" class="mt-2">
-              <b-card>
 
-                - smooth : <br>
-                <b-row>
-                  <b-col sm="3">
-                    <label for="smooth-enabled">Enabled</label>
-                  </b-col>
-                  <b-col sm="9">
-                    <b-form-checkbox
-                    id="smooth-enabled"
-                    v-model="options.edges.smooth">
 
-                  </b-form-checkbox>
+
+
+  <div>
+    <div>
+      <!--https://visjs.github.io/vis-network/examples/network/physics/physicsConfiguration.html-->
+      <b-button v-b-toggle.collapse-1 variant="primary">Network Settings</b-button>
+      <a href="https://visjs.github.io/vis-network/docs/network/physics.html" target="_blank"><b>?</b></a>
+
+    </div>
+    <div class="col">
+
+
+
+
+      <b-collapse id="collapse-1" class="mt-2">
+        <b-card>
+
+          <b-button v-b-toggle.collapse-1-inner size="sm">Edges</b-button>
+          <b-collapse id="collapse-1-inner" class="mt-2">
+            <b-card>
+
+              - smooth : <br>
+              <b-row>
+                <b-col sm="3">
+                  <label for="smooth-enabled">Enabled</label>
                 </b-col>
-              </b-row>
+                <b-col sm="9">
+                  <b-form-checkbox
+                  id="smooth-enabled"
+                  v-model="options.edges.smooth">
 
-              <!--        <b-row>
-              <b-col sm="3">
-              <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
-            </b-col>
-            <b-col sm="9">
-            <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+                </b-form-checkbox>
+              </b-col>
+            </b-row>
+
+            <!--        <b-row>
+            <b-col sm="3">
+            <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
           </b-col>
-        </b-row>
+          <b-col sm="9">
+          <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+        </b-col>
+      </b-row>
 
 
-        <b-row>
-        <b-col sm="3">
-        <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
-      </b-col>
-      <b-col sm="9">
-      <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+      <b-row>
+      <b-col sm="3">
+      <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
     </b-col>
-  </b-row>
+    <b-col sm="9">
+    <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+  </b-col>
+</b-row>
 
-  <b-row>
-  <b-col sm="3">
-  <label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
+<b-row>
+<b-col sm="3">
+<label :for="`type-${type}`">Type <code>{{ type }}</code>:</label>
 </b-col>
 <b-col sm="9">
 <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
@@ -108,52 +142,52 @@
 
 
 
-    <b-row>
-      <b-col sm="4">
-        <label for="max-velocity">Max velocity : {{ options.physics.maxVelocity }}</label>
-      </b-col>
-      <b-col sm="8">
-        <b-form-input id="range-1" v-model.number="options.physics.maxVelocity" type="range" min=1 max=100></b-form-input>
-      </b-col>
-    </b-row>
-
-
-    <b-row>
-      <b-col sm="4">
-        <label for="solver">Min velocity : {{ options.physics.minVelocity }}</label>
-      </b-col>
-      <b-col sm="8">
-        <b-form-input id="range-1" v-model.number="options.physics.minVelocity" type="range" step=0.1 min=0 max=1></b-form-input>
-
-      </b-col>
-    </b-row>
-
-    <b-row>
-      <b-col sm="4">
-        <label for="solver">Time step : {{ options.physics.timestep }}</label>
-      </b-col>
-      <b-col sm="8">
-
-        <b-form-input id="range-1" v-model.number="options.physics.timestep" type="range" step=0.1 min=0 max=1></b-form-input>
-
-      </b-col>
-    </b-row>
-
-    <b-row>
-      <b-col>
-        <label for="adaptive-timestep">Adaptive Timestep</label>
-      </b-col>
-      <b-col>
-        <b-form-checkbox
-        id="adaptive-timestep"
-        v-model="options.physics.adaptiveTimestep">
-      </b-form-checkbox>
+  <b-row>
+    <b-col sm="4">
+      <label for="max-velocity">Max velocity : {{ options.physics.maxVelocity }}</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="range-1" v-model.number="options.physics.maxVelocity" type="range" min=1 max=100></b-form-input>
     </b-col>
   </b-row>
 
 
-  </b-card>
-  <b-card>
+  <b-row>
+    <b-col sm="4">
+      <label for="solver">Min velocity : {{ options.physics.minVelocity }}</label>
+    </b-col>
+    <b-col sm="8">
+      <b-form-input id="range-1" v-model.number="options.physics.minVelocity" type="range" step=0.1 min=0 max=1></b-form-input>
+
+    </b-col>
+  </b-row>
+
+  <b-row>
+    <b-col sm="4">
+      <label for="solver">Time step : {{ options.physics.timestep }}</label>
+    </b-col>
+    <b-col sm="8">
+
+      <b-form-input id="range-1" v-model.number="options.physics.timestep" type="range" step=0.1 min=0 max=1></b-form-input>
+
+    </b-col>
+  </b-row>
+
+  <b-row>
+    <b-col>
+      <label for="adaptive-timestep">Adaptive Timestep</label>
+    </b-col>
+    <b-col>
+      <b-form-checkbox
+      id="adaptive-timestep"
+      v-model="options.physics.adaptiveTimestep">
+    </b-form-checkbox>
+  </b-col>
+</b-row>
+
+
+</b-card>
+<b-card>
 
   <b-row>
     <b-col sm="4">
@@ -196,25 +230,6 @@
 </div>
 
 
-<network ref="network"
-class="wrapper"
-:nodes="nodes"
-:edges="edges"
-:options="options"
-@select-node="selectNode">
-</network>
-
-
-<b-list-group v-if="historic.length > 0">
-  <b-list-group-item v-for='h in historic' :key="h.id">
-    {{ h.label }}
-    <b-button-group>
-      <b-button variant="outline-info" size="sm" @click="see(h)">See</b-button>
-      <b-button variant="outline-info" size="sm" v-bind:to="{ name: 'Profile', params: { interest: h.id }}">Add to my inyterests</b-button>
-      <!--<b-button>Button 3</b-button>-->
-    </b-button-group>
-  </b-list-group-item>
-</b-list-group>
 
 <div id="node-popUp">
   <span id="node-operation">node</span> <br>
@@ -370,7 +385,7 @@ physics:{
     iterations: 1000,
     updateInterval: 500,
     //onlyDynamicEdges: true,
-  //  fit: true
+    //  fit: true
   },
   timestep: 0.5,
   adaptiveTimestep: true,

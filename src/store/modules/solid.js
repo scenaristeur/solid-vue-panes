@@ -94,42 +94,53 @@ const actions = {
     // log
     let city = ""
     axios.get('https://ipapi.co/json/')
-      .then(function (response) {
-        // handle success
+    .then(function (response) {
+      // handle success
       //  console.log("RESP",JSON.stringify(response, null, 2));
-        city = response.data.city
-      })
-      .catch(function (error) {
-        // handle error
-        console.log("ERR",error);
-      })
-      .then(async function () {
-        console.log("DONE")
-        // always executed
+      city = response.data.city
+    })
+    .catch(function (error) {
+      // handle error
+      console.log("ERR",error);
+    })
+    .then(async function () {
+      console.log("DONE")
+      // always executed
 
-        var dateObj = new Date();
-        var date = dateObj.toISOString()
-        let log="https://spoggy.solidweb.org/private/logs/log.ttl"
-        let w_l = window.location.toString()
-        let logDoc = await fetchDocument(log)
-        let subj = logDoc.addSubject({identifier: webId})
-        subj.addString(dct.created, date)
-        subj.addString("https://schema.org/url", w_l)
-        subj.addString("https://schema.org/location", city)
-        logDoc.save()
-      });
+      var dateObj = new Date();
+      var date = dateObj.toISOString()
+      let log="https://spoggy.solidweb.org/private/logs/log.ttl"
+      let w_l = window.location.toString()
+      let logDoc = await fetchDocument(log)
+      let subj = logDoc.addSubject({identifier: webId})
+      subj.addString(dct.created, date)
+      subj.addString("https://schema.org/url", w_l)
+      subj.addString("https://schema.org/location", city)
+      logDoc.save()
 
-  },
-  async updateFolder (context, url) {
-    let folder = await fc.readFolder(url)
-    context.commit('setFolder', folder)
-    /*  let folder = await fc.readFolder(url,  {links:"include_possible"})
-    let acl = ""
-    try{
-    acl = await fc.readFile(folder.links.acl)
-  }catch(e){
-  console.log(e)
-  acl = null
+
+      /*
+      var ip = '208.67.222.222'
+      $.get('https://ipapi.co/'+ip+'/latlong/', function(response){
+      var latlong = response.split(',');
+      console.log(latlong);
+      $.get('http://api.openweathermap.org/data/2.5/weather?lat=' + latlong[0] + '&lon=' + latlong[1] + '&appid=API_KEY', function(wResponse){
+      console.log(weather);
+    })
+  })*/
+});
+
+},
+async updateFolder (context, url) {
+  let folder = await fc.readFolder(url)
+  context.commit('setFolder', folder)
+  /*  let folder = await fc.readFolder(url,  {links:"include_possible"})
+  let acl = ""
+  try{
+  acl = await fc.readFile(folder.links.acl)
+}catch(e){
+console.log(e)
+acl = null
 }
 folder.acl = acl*/
 //    console.log("update", folder)

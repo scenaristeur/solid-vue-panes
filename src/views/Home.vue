@@ -5,11 +5,13 @@
     <img width="100px" alt="Vue logo" src="../assets/popock.png">
     <h1>PoPock</h1>
     <h4>{{ $t('POds in the POCKet') }}</h4>
-    <ShareTarget />
+
 
     <HelloWorld />
 
-    <div>Due to migration from solid.community to solidcommunity.net, you may want ti use <a href="/migration">Migration</a>
+    <ShareTarget />
+
+    <div>Due to migration from solid.community to solidcommunity.net, you may want to use <a href="/migration">Migration</a>
     </div>
 
 

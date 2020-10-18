@@ -1,5 +1,11 @@
 # Popock un réseau social basé sur le matching des centres d’intérêts, expertises, compétences & projets...
 
+
+data-source : SemApps "L'assemblée Virtuelle vue par Popock"
+
+![Visualisation Semapps](https://cdr.solidcommunity.net/public/semapps/Screenshot_2020-10-18%20PoPock.png)
+
+
 see doc folder for more infos
 
 Le projet Solid1 de Tim Berners Lee vise à fournir à chacun des espaces de stockage personnels avec des containers LDP2 (Linked Data Platform).
@@ -120,3 +126,5 @@ https://snipcart.com/blog/vuejs-blog-demo
 https://github.com/snipcart/vue-blog-demo
 
 https://popock.jimdosite.com/
+https://fr.wix.com
+https://fr.strikingly.com/

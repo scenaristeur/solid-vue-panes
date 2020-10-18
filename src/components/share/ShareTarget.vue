@@ -2,33 +2,48 @@
   <div class="share container col">
 
     <div v-if="valid == true">
+
+
+      <b-button v-b-modal.modal-bookmark>Bookmarks</b-button>
+
+       <b-modal id="modal-bookmark" title="Bookmarks"
+       v-b-modal="valid"
+       @ok="saveBm">
+         <p class="my-4">
+           <b-input-group prepend="Title" >
+             <b-form-input v-model="title" placeholder="What is this bookmark title ?"></b-form-input>
+           </b-input-group>
+           <b-input-group prepend="Text" >
+             <b-form-input v-model="text" placeholder="Blah Blah Blah..."></b-form-input>
+           </b-input-group>
+           <b-input-group prepend="Url" >
+             <b-form-input v-model="url" placeholder="https://the_url.com"></b-form-input>
+           </b-input-group>
+           <b-input-group prepend="Topic" >
+             <b-form-input v-model="topic" placeholder="topic/sub_topic/sub_sub_topic..."></b-form-input>
+           </b-input-group>
+
+           <b-form-group label="Confidentiality">
+             <b-form-radio v-model="selected" name="confidential" value="private">Private</b-form-radio>
+             <b-form-radio v-model="selected" name="confidential" value="public">Public</b-form-radio>
+           </b-form-group>
+
+           Path : {{ path }} !! <br>
+           webId : {{ webId}} <br>
+           <p>
+             <!-- <b-button variant="outline-info" @click="saveBm">Save Bookmark</b-button> -->
+             <b-button class="mr-auto" variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
+           </p>
+
+
+
+       </b-modal>
+
+
       <h3>Popock Bookmark</h3>
 
       <div class="container">
-        <b-input-group prepend="Title" >
-          <b-form-input v-model="title" placeholder="What is this bookmark title ?"></b-form-input>
-        </b-input-group>
-        <b-input-group prepend="Text" >
-          <b-form-input v-model="text" placeholder="Blah Blah Blah..."></b-form-input>
-        </b-input-group>
-        <b-input-group prepend="Url" >
-          <b-form-input v-model="url" placeholder="https://the_url.com"></b-form-input>
-        </b-input-group>
-        <b-input-group prepend="Topic" >
-          <b-form-input v-model="topic" placeholder="topic/sub_topic/sub_sub_topic..."></b-form-input>
-        </b-input-group>
 
-        <b-form-group label="Confidentiality">
-          <b-form-radio v-model="selected" name="confidential" value="private">Private</b-form-radio>
-          <b-form-radio v-model="selected" name="confidential" value="public">Public</b-form-radio>
-        </b-form-group>
-
-        Path : {{ path }} !! <br>
-        webId : {{ webId}} <br>
-        <p >
-          <b-button variant="outline-info" @click="saveBm">Save Bookmark</b-button>
-          <b-button class="mr-auto" variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
-        </p>
         <p v-if="webId == null">
           You need to <SolidLoginButton /> to your POD.
         </p>
@@ -37,9 +52,8 @@
 
       </div>
     </div>
-    <div v-else>
+    <div>
       <p>
-        The first approach to discover Popock, could be for example to
         <b-button variant="outline-info"
         to="?title=Popock&url=https://scenaristeur.github.io/solid-vue-panes/&text=My%20favorite%20Pod%20Manager">bookmark Popock</b-button>
         or
@@ -118,7 +132,7 @@ watch: {
     //    this.updatePod()
   },
   valid(v){
-    v == false ? this.$router.push('/bookmarks') : ""
+    v == false ? this.$router.push('/bookmarks') : this.$bvModal.show("modal-bookmark") 
   }
 },
 methods:{
