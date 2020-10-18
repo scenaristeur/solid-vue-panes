@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/solid-vue-panes/precache-manifest.e0403dfe58b575e7b0048baf8e17ea37.js"
+  "/solid-vue-panes/precache-manifest.0778f96e3b135de6f92002f318f3d0c9.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "PoPock"});
