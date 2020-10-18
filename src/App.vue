@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.148 - issue tracker & popock video
+        0.1.149 - issue tracker & popock video fr
       </a>
     </i></small>
 

@@ -16,8 +16,16 @@
           <small><i>(la traduction automatique est disponible dans les 'Paramètres' de la vidéo)</i></small>
         </p>
         <p>
+          Editeur Popock (FR)
+          <iframe width="540" height="315" src="https://www.youtube.com/embed/njsg4_T4vuQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </p>
+        <p>
+          Popock Editor (EN)
           <iframe width="540" height="315" src="https://www.youtube.com/embed/EJ9zD6i5juk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </p>
+
+
+
 
       </div>
 
@@ -41,7 +49,7 @@
         </p>
         <p>
           Vos données sont structurées de manière à pouvoir être liées les unes aux autres.<br>
-          Il est également possible de les lier aux données partagées par d'autres utilisateurs, ou à des bases de données séantiques telles que Semapps, offrant ainsi une infinité de connexions !
+          Il est également possible de les lier aux données partagées par d'autres utilisateurs, ou à des bases de données sémantiques telles que Semapps, offrant ainsi une infinité de connexions !
         </p>
         <p>
           <b>Popock</b> est une applications modulaire qui facilite la gestion de vos données Solid en mettant à votre disposition plusieurs outils :
