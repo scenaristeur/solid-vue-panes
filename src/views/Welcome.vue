@@ -59,7 +59,7 @@
       </p>
       <p>
         Vos données sont structurées de manière à pouvoir être liées les unes aux autres.<br>
-        Il est également possible de les lier aux données partagées par d'autres utilisateurs, offrant ainsi une infinité de connexions !
+        Il est également possible de les lier aux données partagées par d'autres utilisateurs, ou à des bases de données séantiques telles que Semapps, offrant ainsi une infinité de connexions !
       </p>
       <p>
         <b>Popock</b> est une applications modulaire qui facilite la gestion de vos données Solid en mettant à votre disposition plusieurs outils :
@@ -99,11 +99,11 @@
           <b-button class="m-2" variant="info"  to="/providers">Je n'ai pas de POD</b-button>
         </div>
 
-        <div class="col">
+      <!--  <div class="col">
           Service 3
           <p style="text-align:left">
           </p>
-        </div>
+        </div>-->
       </div>
 
 
@@ -133,7 +133,7 @@
     </center>
   </b-jumbotron>
 
-  - proposer un module, contribuer
+<!--  - proposer un module, contribuer -->
 
 </div>
 
