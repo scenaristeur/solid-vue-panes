@@ -129,7 +129,7 @@ export default {
         },
         interaction: {
           navigationButtons: true,
-          keyboard: true
+        //  keyboard: true
         },
         manipulation: {
           enabled: true,

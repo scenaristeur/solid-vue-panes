@@ -128,3 +128,8 @@ https://github.com/snipcart/vue-blog-demo
 https://popock.jimdosite.com/
 https://fr.wix.com
 https://fr.strikingly.com/
+
+
+typeform + stripes
+https://www.koudetat.co/episodes/comprendre-ta-cible-en-posant-les-bonnes-questions 52:00
+paypal.me 1:00:00
