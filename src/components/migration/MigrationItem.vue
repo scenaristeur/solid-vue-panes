@@ -3,9 +3,9 @@
     <!--  <Component /> -->
     <div >
       {{ item.url}}
-      <b-button size="sm" :variant="acl_variant">
+      <!-- <b-button size="sm" :variant="acl_variant">
         Acl <b-badge variant="light">{{acl}}</b-badge>
-      </b-button>
+      </b-button> -->
       {{item.type}}
       <FileContent v-if="item.type=='text/turtle'" :file="item"  :search="search" :replace="replace" />
 
@@ -17,10 +17,10 @@
 //import {  fetchDocument } from 'tripledoc';
 //import {  rdf} from 'rdf-namespaces'
 import ToastMixin from '@/mixins/ToastMixin'
-import {
-  getSolidDatasetWithAcl,
-  getAgentAccessAll,
-} from "@inrupt/solid-client";
+// import {
+//   getSolidDataset,
+//   getAgentAccessAll,
+// } from "@inrupt/solid-client";
 
 // import auth from 'solid-auth-client';
 // import FC from 'solid-file-client'
@@ -35,52 +35,52 @@ export default {
   props:['item', 'search', 'replace'],
   data() {
     return {
-      acl : "loading",
-      acl_variant : "primary"
+      // acl : "loading",
+      // acl_variant : "primary"
     }
   },
-  async created(){
-    if (this.item.url != "https://"){
-      try{
-        const myDatasetWithAcl = await getSolidDatasetWithAcl(this.item.url);
-        let accessByAgent = getAgentAccessAll(myDatasetWithAcl);
-        //  this.acl = accessByAgent
-        //console.log(accessByAgent)
-        let entries = Object.keys(accessByAgent)
-        //console.log(this.search)
-        if(entries.includes(this.search)){
-          this.acl = "must update"
-          this.acl_variant = "danger"
-        }else{
-          this.acl = "ok"
-          this.acl_variant = "success"
-        }
-      }catch(e){
-        this.acl = "no acl"
-        this.acl_variant = "light"
-      }
-
-
-
-
-      // try{
-      //   const { acl: aclUrl } = await fc.getItemLinks(this.item.url, { links: 'include_possible'})
-      //   this.aclUrl = aclUrl
-      //   let content = await fc.aclUrlParser(this.item.url)
-      //   console.log(content)
-      // }catch(e){
-      //   this.makeToast("Error", e, "danger")
-      // //  alert(e)
-      // }
-    }
-    // const myDatasetWithAcl = await getSolidDatasetWithAcl(this.item.url);
-    // let accessByAgent = getAgentAccessAll(myDatasetWithAcl);
-    // this.acl = accessByAgent
-    // console.log(this.acl)
-    //  console.log("route",this.$route)
-    //  this.url = this.$route.params.url
-    //  this.getData()
-  },
+  // async created(){
+  //   if (this.item.url != "https://"){
+  //     try{
+  //       const myDataset = await getSolidDataset(this.item.url);
+  //       let accessByAgent = getAgentAccessAll(myDataset);
+  //       //  this.acl = accessByAgent
+  //       //console.log(accessByAgent)
+  //       let entries = Object.keys(accessByAgent)
+  //       //console.log(this.search)
+  //       if(entries.includes(this.search)){
+  //         this.acl = "must update"
+  //         this.acl_variant = "danger"
+  //       }else{
+  //         this.acl = "ok"
+  //         this.acl_variant = "success"
+  //       }
+  //     }catch(e){
+  //       this.acl = "no acl"
+  //       this.acl_variant = "light"
+  //     }
+  //
+  //
+  //
+  //
+  //     // try{
+  //     //   const { acl: aclUrl } = await fc.getItemLinks(this.item.url, { links: 'include_possible'})
+  //     //   this.aclUrl = aclUrl
+  //     //   let content = await fc.aclUrlParser(this.item.url)
+  //     //   console.log(content)
+  //     // }catch(e){
+  //     //   this.makeToast("Error", e, "danger")
+  //     // //  alert(e)
+  //     // }
+  //   }
+  //   // const myDatasetWithAcl = await getSolidDatasetWithAcl(this.item.url);
+  //   // let accessByAgent = getAgentAccessAll(myDatasetWithAcl);
+  //   // this.acl = accessByAgent
+  //   // console.log(this.acl)
+  //   //  console.log("route",this.$route)
+  //   //  this.url = this.$route.params.url
+  //   //  this.getData()
+  // },
   methods: {
     /*async getData() {
     let dataDoc = await fetchDocument(this.url);
