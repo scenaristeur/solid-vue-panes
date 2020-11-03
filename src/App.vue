@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.149 - issue tracker & popock video fr
+        0.1.150 - activitypub on agora for post Article
       </a>
     </i></small>
 

@@ -3,6 +3,7 @@
 
     <TaskView v-if="types.includes('http://purl.org/vocab/lifecycle/schema#Task')" :subject="subject" :url="url"/>
     <GroupView v-else-if="types.includes('http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
+    <ArticleView v-else-if="types.includes('https://www.w3.org/ns/activitystreams#Article')" :subject="subject" :url="url"/>
     <NetworkView v-else-if="isNetwork == true" :subject="subject" :url="url"/>
     <div v-else>
       no template for {{ url }} with types : {{ types }}<br>
@@ -25,6 +26,7 @@ export default {
     'TaskView': () => import('@/components/views/TaskView'),
     'GroupView': () => import('@/components/views/GroupView'),
     'NetworkView': () => import('@/components/views/NetworkView'),
+    'ArticleView': () => import('@/components/views/ArticleView'),
   },
   data() {
     return {
@@ -47,7 +49,7 @@ export default {
     async getData() {
       this.isNetwork = false
       let dataDoc = await fetchDocument(this.url);
-      let url =  this.url.endsWith("#this") ? this.url : this.url+"#this"
+      let url =  this.url.includes("#") ? this.url : this.url+"#this"
       console.log(url)
       this.subject = await dataDoc.getSubject(url)
       console.log(this.subject)

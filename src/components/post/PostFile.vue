@@ -25,6 +25,7 @@ export default {
     async getThings(){
       const postFileResource = await getSolidDataset(this.file.url);
       this.posts = getThingAll(postFileResource);
+      this.posts.reverse()
 //      console.log("POSTS",this.posts)
     }
 },

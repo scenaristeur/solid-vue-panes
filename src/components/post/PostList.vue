@@ -23,7 +23,6 @@ export default {
   components: {
     'PostFile': () => import('@/components/post/PostFile'),
   },
-  props: ['value'],
   data: function () {
     return {
       folder : {files: []}
@@ -46,6 +45,8 @@ export default {
       //  console.log(this.storage)
         let path = this.storage+"public/blog/"
         this.folder = await fc.readFolder(path)
+        console.log("FILES",this.folder.files)
+      //  this.folder.files.reverve()
       //  console.log(this.folder)
       }
     }

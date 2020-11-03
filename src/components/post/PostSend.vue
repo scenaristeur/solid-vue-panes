@@ -23,13 +23,13 @@
 </template>
 
 <script>
-//import profileMixin from '@/mixins/profileMixin'
+import activityMixin from '@/mixins/ActivityMixin'
 import { fetchDocument, createDocument } from 'tripledoc';
 import {/*namedNode, sioc,*/  dct, foaf, rdfs, sioc, rdf } from 'rdf-namespaces'
 
 export default {
   name: 'PostSend',
-  //mixins: [profileMixin],
+  mixins: [activityMixin],
   components: {
     //'PeopleItem': () => import('@/components/profile/PeopleItem'),
   },
@@ -67,8 +67,6 @@ export default {
       console.log(this.path)
       console.log(this.fileUrl)
 
-
-
       let postDoc = {}
       try{
         postDoc = await fetchDocument(fileUrl);
@@ -88,10 +86,20 @@ export default {
 
       try{
         await postDoc.save();
+        this.activity = {actor:{}, object: {}, summary:""}
+        this.activity.actor.name = this.webId
+        this.activity.type = "https://www.w3.org/ns/activitystreams#Create"
+        this.activity.object.name = this.post.title
+        this.activity.object.type = "Article"
+        this.activity.object.url = fileUrl+"#"+postId
+    //    this.activity.summary = this.webId+" has just posted an Article with title "+this.post.title+" at "+this.activity.object.url
+        this.sendActivity()
       }
       catch(e){
         alert(e)
       }
+
+
 
 
       this.post = {}
