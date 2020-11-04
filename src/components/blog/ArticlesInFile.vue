@@ -32,7 +32,7 @@ async created(){
 
     const chatDoc = await fetchDocument(this.file.url);
     let subjects = chatDoc.findSubjects()
-    this.subjects = subjects.filter( this.onlyUnique )
+    this.subjects = subjects.filter( this.onlyUnique ).reverse()
   //  console.log(this.subjects)
   }
   catch(e){

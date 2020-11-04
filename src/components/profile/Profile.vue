@@ -89,10 +89,6 @@
 
 <script>
 
-let solid = window.solid
-console.log("SOLID",solid)
-
-
 export default {
   name: 'Profile',
   components: {
