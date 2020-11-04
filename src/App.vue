@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.151 - blog on home
+        0.1.152 - last Blog Articles
       </a>
     </i></small>
 

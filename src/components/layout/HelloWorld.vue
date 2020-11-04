@@ -29,10 +29,7 @@
             <b-card-text>
               <ul>
                 <li><router-link to="/inbox"><b-icon-mailbox class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-mailbox><br>{{ $t('inbox') }}</router-link></li>
-                <li><router-link to="/post">
-                  <b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph>
-                  <br>{{ $t('Blog') }}</router-link></li>
-
+                <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
                 <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>{{ $t('chat') }}</router-link></li>
                 <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
                 <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
@@ -48,6 +45,15 @@
                 <li><router-link to="/groups"><b-icon-building class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-building><br>{{ $t('Groups') }}</router-link></li>
                 <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
               </ul>
+            </b-card-text>
+          </b-card>
+
+          <b-card bg-variant="dark" text-variant="white" header="Last Blog Articles" class="text-center mb-2"  style="min-width: 20rem;">
+            <ul>
+              <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
+            </ul>
+            <b-card-text bg-variant="white" text-variant="dark">
+              <LastBlog />
             </b-card-text>
           </b-card>
 
@@ -90,6 +96,8 @@ export default {
   name: 'HelloWorld',
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+    'LastBlog': () => import('@/components/blog/LastBlog'),
+
   },
   computed:{
     webId(){
