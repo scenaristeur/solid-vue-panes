@@ -29,9 +29,8 @@
             <b-card-text>
               <ul>
                 <li><router-link to="/inbox"><b-icon-mailbox class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-mailbox><br>{{ $t('inbox') }}</router-link></li>
-                <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
                 <li><router-link to="/chat"><b-icon-chat class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat><br>{{ $t('chat') }}</router-link></li>
-                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
+                <!-- <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li> -->
                 <!--<li><router-link to="/share"> - Share, todo move to misc</router-link></li>-->
               </ul>
             </b-card-text>
@@ -43,19 +42,11 @@
                 <li><router-link to="/tension/edit"><b-icon-lightning class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-lightning><br>{{ $t('Tension') }}</router-link></li>
                 <li><router-link to="/tensions"><b-icon-card-checklist class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-card-checklist><br>{{ $t('Tensions') }}</router-link></li>
                 <li><router-link to="/groups"><b-icon-building class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-building><br>{{ $t('Groups') }}</router-link></li>
-                <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li>
+                <!-- <li><router-link to="/parle"><b-icon-chat-text-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-chat-text-fill><br>{{ $t('talk') }}</router-link></li> -->
               </ul>
             </b-card-text>
           </b-card>
 
-          <b-card bg-variant="dark" text-variant="white" header="Last Blog Articles" class="text-center mb-2"  style="min-width: 20rem;">
-            <ul>
-              <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
-            </ul>
-            <b-card-text bg-variant="white" text-variant="dark">
-              <LastBlog />
-            </b-card-text>
-          </b-card>
 
           <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center mb-2" style="min-width: 20rem;">
             <b-card-text>
@@ -63,12 +54,21 @@
                 <li>
                   <router-link to="/editor"><b-icon-pen class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-pen><br>{{ $t('editor') }}</router-link>
                 </li>
-                <li>
+                <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
+
+                <!-- <li>
                   <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link>
 
-                </li>
+                </li> -->
                 <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
               </ul>
+            </b-card-text>
+          </b-card>
+
+          <b-card bg-variant="dark" text-variant="white" header="Last Blog Articles" class="text-center mb-2"  style="min-width: 20rem;">
+
+            <b-card-text bg-variant="white" text-variant="dark">
+              <LastBlog />
             </b-card-text>
           </b-card>
 

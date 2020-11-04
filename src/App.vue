@@ -13,7 +13,7 @@
       <router-link to="/simplegouv">Gouvernance</router-link> |
       <router-link to="/profile">Profile</router-link> |
       <router-link to="/workspaces">Worspaces</router-link> |
-      <router-link to="/storage">Storage</router-link> |
+      <router-link to="/editor">{{ $t('editor') }}</router-link> |
       <router-link to="/inbox">Inbox</router-link> |
       <router-link to="/chat">Chat</router-link> |
       <router-link to="/parle">Parle</router-link> |
@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.153 - add multi-post options
+        0.1.154 - suppression page storage
       </a>
     </i></small>
 

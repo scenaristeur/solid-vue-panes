@@ -27,11 +27,12 @@
     <b-form-group label="Expert test">
       <b-form-radio-group id="radio-group-2" v-model="selected" name="radio-sub-component">
         <b-form-radio value="post">Post</b-form-radio>
-        <b-form-radio value="html" >Html</b-form-radio>
+
         <b-form-radio value="dokieli">Dokieli</b-form-radio>
         <b-form-radio value="text">Text</b-form-radio>
         <b-form-radio value="ttl">Triple Turtle</b-form-radio>
         <b-form-radio value="network">Network</b-form-radio>
+        <b-form-radio value="html" disabled>Html</b-form-radio>
         <!-- <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio> -->
       </b-form-radio-group>
     </b-form-group>
@@ -89,8 +90,8 @@ export default {
         this.$router.push({ path: '/editor' })
         break;
         case  "dokieli":
-      //  this.$router.push({ path: '/dokieli/dokieli.html' })
-      window.open('https://scenaristeur.github.io/solid-vue-panes/dokieli/dokieli.html', '_blank')
+        //  this.$router.push({ path: '/dokieli/dokieli.html' })
+        window.open('https://scenaristeur.github.io/solid-vue-panes/dokieli/dokieli.html', '_blank')
         //         console.log("dokieli", this.folder)
         // this.post.text = ""
         //  await fc.copyFolder( "file:///somepath/foo/", this.folder+"Dokieli.test.html" )

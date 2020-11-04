@@ -7,7 +7,7 @@
       -->      <b-button variant="outline"  v-bind:to="{ name: 'TensionEdit', params: { url: url }}">Edit <b-icon icon="pen" aria-hidden="true" variant="info"></b-icon> </b-button>
       <b-button variant="outline" v-if="navigator_share" @click="openShareDialog"> Share <b-icon icon="share" variant="info"></b-icon></b-button>
       <b-button variant="outline"  to="/groups">Create Group <b-icon icon="people" variant="info"></b-icon></b-button>
-      <b-button variant="outline"  to="/storage">Fork <b-icon icon="back" variant="info"></b-icon></b-button>
+      <b-button variant="outline"  to="/editor">Fork <b-icon icon="back" variant="info"></b-icon></b-button>
       <b-button variant="outline"  v-bind:to="{ name: 'Parle', params: { url: url }}">Parle <b-icon icon="chat-text-fill" variant="info"></b-icon></b-button>
       <!--<b-button variant="outline"  to="/tensions">Fork <b-icon icon="list" variant="info"></b-icon></b-button>-->
     </b-button-group>

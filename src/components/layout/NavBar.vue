@@ -37,8 +37,8 @@
       <b-dropdown-item to="/profile">  {{ $t('profile') }}</b-dropdown-item>
       <b-dropdown-item to="/friends">{{ $t('friends') }}</b-dropdown-item>
       <b-dropdown-item to="/fofri">{{ $t('fofri') }}</b-dropdown-item>
-      <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
-      <b-dropdown-item to="/general">Profile General</b-dropdown-item>
+      <!-- <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
+      <b-dropdown-item to="/general">Profile General</b-dropdown-item> -->
     </b-nav-item-dropdown>
 
 
@@ -48,8 +48,9 @@
         Communication
       </template>
       <b-dropdown-item to="/inbox">{{ $t('inbox') }}</b-dropdown-item>
+      <b-dropdown-item to="/post">Blog</b-dropdown-item>
       <b-dropdown-item to="/chat">{{ $t('chat') }}</b-dropdown-item>
-      <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
+      <!-- <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item> -->
     </b-nav-item-dropdown>
 
     <!--    <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
@@ -76,12 +77,12 @@
     <b-dropdown-item to="/welcome">Welcome</b-dropdown-item>
     <b-dropdown-item to="/post">Post</b-dropdown-item>
 
-    <b-dropdown-item to="/storage">{{ $t('explorer') }} + {{ $t('editor') }}</b-dropdown-item>
+    <b-dropdown-item to="/editor">{{ $t('editor') }}</b-dropdown-item>
     <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
     <b-dropdown-item to="/semapps">SemApps</b-dropdown-item>
     <b-dropdown-item to="/workspaces">WorkSpaces</b-dropdown-item>
     <b-dropdown-item to="/migration">Migration (solid.community -> solidcommunity.net)</b-dropdown-item>
-
+    <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
     <b-dropdown-item to="/agora">Agora</b-dropdown-item>
     <b-dropdown-item to="/groups">Groups</b-dropdown-item>
     <b-dropdown-item to="/forms">Forms</b-dropdown-item>

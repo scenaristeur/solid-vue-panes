@@ -4,7 +4,7 @@
       <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
         <b-button-group class="mx-1">
           <b-button @click="newGroup">New</b-button>
-          <b-button :to="'/storage?path='+path">Edit</b-button>
+          <b-button :to="'/editor?path='+path">Edit</b-button>
         <!--  <b-button>Undo</b-button>-->
         </b-button-group>
       <!--  <b-dropdown class="mx-1" right text="menu">
