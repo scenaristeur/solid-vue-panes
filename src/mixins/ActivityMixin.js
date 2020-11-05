@@ -42,15 +42,9 @@ export default {
       subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
-    this.currentWorkspace != undefined ?  subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type) : subj.addRef(rdf.type, this.activity.object.url+"#"+this.activity.object.type)
-      /*  console.log("PART1 OK")
-      let object_subj =   activityDoc.addSubject({identifier:this.activity.object.url})
-      object_subj.addLiteral(rdf.type, this.activity.object.type)
-      object_subj.addLiteral(rdfs.label, this.activity.object.name)
-      console.log("PART2 OK")*/
-
+      this.activity.object.inReplyTo != undefined ? subj.addRef('https://www.w3.org/ns/activitystreams#inReplyTo', this.activity.object.inReplyTo) : ""
+      this.currentWorkspace != undefined ?  subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type) : subj.addRef(rdf.type, this.activity.object.url+"#"+this.activity.object.type)
       await activityDoc.save();
-
     },
     async   send() {
       console.log(this.activity)
@@ -79,7 +73,7 @@ export default {
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
       await activityDoc.save();
-
+      console.log("todo toast when activity saved" )
       // put something in outbox
       //put something in Agora inbox
       //https://agora.solidcommunity.net/public/agora/inbox/

@@ -56,7 +56,7 @@ methods: {
     .share({
       title: this.label,
       text: 'This could interest you : ',
-      url: 'https://scenaristeur.github.io/solid-vue-panes/view/'+this.url,
+      url: 'https://scenaristeur.github.io/solid-vue-panes/view/?url='+this.url,
     })
     .then(() => console.log('Successful share'))
     .catch(error => console.log('Error sharing', error));

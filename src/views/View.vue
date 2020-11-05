@@ -35,8 +35,8 @@ export default {
     }
   },
   created(){
-    console.log("route",this.$route)
-    this.url = this.$route.params.url
+    //console.log("route",this.$route)
+    this.url = this.$route.params.url || this.$route.query.url+this.$route.hash
     this.getData()
   },
   computed:{
@@ -50,9 +50,9 @@ export default {
       this.isNetwork = false
       let dataDoc = await fetchDocument(this.url);
       let url =  this.url.includes("#") ? this.url : this.url+"#this"
-      console.log(url)
+    //  console.log(url)
       this.subject = await dataDoc.getSubject(url)
-      console.log(this.subject)
+    //  console.log(this.subject)
       this.types = await this.subject.getAllRefs(rdf.type)
       console.log(this.types)
 
@@ -61,21 +61,14 @@ export default {
           this.isNetwork = true
         }
       });
-
-
-
     }
   },
   watch:{
     '$route' (to) {
       //  '$route' (to, from) {
       console.log(to)
-      this.url = to.params.url // || this.storage+"public/groups/"
+      this.url = to.params.url || to.query.url+to.query.hash
       this.getData()
-      //  console.log(this.url)
-      //  this.initGroups(to.params.url)
-      //  this.updateFriends()
-      //  this.updateIndexes()
     },
     url(url){
       console.log("URL CHANGED",url)

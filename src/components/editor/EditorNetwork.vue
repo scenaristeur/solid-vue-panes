@@ -295,14 +295,14 @@ export default {
       let app = this
       //  !copyText.endsWith(".ttl") ?
       //copyText = copyText+this.file.url //: ""
-      console.log(copyText)
+    //  console.log(copyText)
       navigator.clipboard.writeText(copyText).then(function() {
         /* clipboard successfully set */
         //  console.log("clipok", copyText)
         app.makeToast("The url is in your clipboard ;-)", copyText+".               Use Ctrl+V to share it", "success")
       }, function() {
         /* clipboard write failed */
-        console.log("clipERROR", copyText)
+      //  console.log("clipERROR", copyText)
         app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
       })
 

@@ -2,6 +2,15 @@
 <template>
   <div class="post-send container">
     <h5>PostSend</h5>
+    <div v-if="url != undefined">
+      <!-- <b-button >edit / fork {{ url }} </b-button> -->
+
+      <b-input-group prepend="Linked to" class="mt-3">
+        <b-form-input v-model="url"></b-form-input>
+      </b-input-group>
+
+
+    </div>
 
     <div v-if="selected == 'post' || selected == 'dokieli'">
       <b-input-group prepend="Title" class="mt-3">
@@ -62,27 +71,22 @@ export default {
   data: function () {
     return {
       post: {},
-      selected: "post"
-      //  webId: {},
-      //  friends: [],
+      selected: "post",
+      url: ""
     }
   },
   created() {
     this.storage = this.$store.state.solid.storage
     this.webId = this.$store.state.solid.webId
-
-    //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
-    //  this.updateFriends()
+    this.url = this.$route.params.url
+    this.url == undefined ? this.url = this.$route.query.url+this.$route.hash : ""
   },
   watch: {
     storage (st) {
-      //  '$route' (to, from) {
-      console.log(st)
-      this.path =  st+"public/blog/"
+      this.folder =  st+"public/blog/"
+      console.log("folder",this.folder)
     },
     async  selected(){
-      console.log("selected", this.selected)
-
       switch (this.selected) {
         case "text":
         case "ttl":
@@ -90,20 +94,15 @@ export default {
         this.$router.push({ path: '/editor' })
         break;
         case  "dokieli":
-        //  this.$router.push({ path: '/dokieli/dokieli.html' })
         window.open('https://scenaristeur.github.io/solid-vue-panes/dokieli/dokieli.html', '_blank')
-        //         console.log("dokieli", this.folder)
-        // this.post.text = ""
-        //  await fc.copyFolder( "file:///somepath/foo/", this.folder+"Dokieli.test.html" )
         break;
         default:
-
       }
-
-
-
-
-    }
+    },
+    '$route' (to) {
+      this.url = to.params.url || to.query.url
+      console.log(this.url)
+    },
   },
   methods:{
     async send(){
@@ -111,8 +110,8 @@ export default {
       //  this.d = d
       let iso_date = d.toISOString()
       let filename = [d.getFullYear(), ("0" + (d.getMonth() + 1)).slice(-2), ("0" + d.getDate()).slice(-2)].join("-")
-      this.path = this.storage+"public/blog/"
-      let fileUrl = this.path+filename+".ttl"
+      let path = this.folder.url != this.storage? this.folder.url : this.storage+"public/blog/"
+      let fileUrl = path+filename+".ttl"
       console.log(this.post)
       console.log(this.path)
       console.log(this.fileUrl)
@@ -124,7 +123,6 @@ export default {
         postDoc = await createDocument(fileUrl);
       }
 
-      console.log(postDoc)
       var postId = "Article_"+d.getTime()
       let subj =   postDoc.addSubject({identifier:postId})
       //subj.addLiteral(sioc.content, this.activity)
@@ -133,6 +131,7 @@ export default {
       subj.addRef(foaf.maker, this.webId)
       subj.addRef(rdf.type, "https://www.w3.org/ns/activitystreams#Article")
       subj.addLiteral(sioc.content, this.post.text)
+        subj.addRef("https://www.w3.org/ns/activitystreams#inReplyTo", this.url)
 
       try{
         await postDoc.save();
@@ -142,16 +141,13 @@ export default {
         this.activity.object.name = this.post.title
         this.activity.object.type = "Article"
         this.activity.object.url = fileUrl+"#"+postId
+        this.activity.object.inReplyTo = this.url
         //    this.activity.summary = this.webId+" has just posted an Article with title "+this.post.title+" at "+this.activity.object.url
         this.sendActivity()
       }
       catch(e){
         alert(e)
       }
-
-
-
-
       this.post = {}
     }
     /*  async updateFriends(){
