@@ -20,6 +20,11 @@ export default {
     'PostList': () => import('@/components/post/PostList'),
     'PostSend': () => import('@/components/post/PostSend'),
   },
+  computed:{
+    webId(){
+      return this.$store.state.solid.webId
+    },
+  }
 }
 </script>
 <style>
