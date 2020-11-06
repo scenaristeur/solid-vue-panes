@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/agora.09c1fb62.css"
   },
   {
-    "revision": "6b6aa28dbb21f9092fd4",
+    "revision": "16f34c93dc0713109065",
     "url": "/solid-vue-panes/css/app.16899ed8.css"
   },
   {
@@ -336,7 +336,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/css/pod.802ff776.css"
   },
   {
-    "revision": "45a11bfc63f1cff7b476",
+    "revision": "8318ca2ccc67df3aecd0",
     "url": "/solid-vue-panes/css/post.2ab8eddb.css"
   },
   {
@@ -472,7 +472,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "be78718111f1b9c6a2088e73af4bda24",
+    "revision": "3d74ea96813782783b05a2d5918dc282",
     "url": "/solid-vue-panes/index.html"
   },
   {
@@ -484,8 +484,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/agora.fbb17f28.js"
   },
   {
-    "revision": "6b6aa28dbb21f9092fd4",
-    "url": "/solid-vue-panes/js/app.6bdd48eb.js"
+    "revision": "16f34c93dc0713109065",
+    "url": "/solid-vue-panes/js/app.d333c5d3.js"
   },
   {
     "revision": "1129a18d98274e537b1c",
@@ -1116,8 +1116,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/solid-vue-panes/js/pod.2efba914.js"
   },
   {
-    "revision": "45a11bfc63f1cff7b476",
-    "url": "/solid-vue-panes/js/post.0f370621.js"
+    "revision": "8318ca2ccc67df3aecd0",
+    "url": "/solid-vue-panes/js/post.79d4d14d.js"
   },
   {
     "revision": "b1caa4748b82644652c3",
