@@ -27,14 +27,14 @@
       <b-dropdown-item to="/bookmarks">{{ $t('bookmarks') }}</b-dropdown-item>
     </b-nav-item-dropdown> -->
 
-    <b-nav-item to="/editor"> <b-icon-pen class="border border-info rounded p-2" font-scale="2"></b-icon-pen> {{ $t('editor') }}</b-nav-item>
+    <b-nav-item to="/editor">{{ $t('editor') }}</b-nav-item>
 
     <b-nav-item-dropdown right>
 
       <template v-slot:button-content>
         {{ $t('User') }}
       </template>
-      <b-dropdown-item to="/profile">  {{ $t('profile') }}</b-dropdown-item>
+      <b-dropdown-item to="/profile">{{ $t('profile') }}</b-dropdown-item>
       <b-dropdown-item to="/friends">{{ $t('friends') }}</b-dropdown-item>
       <b-dropdown-item to="/fofri">{{ $t('fofri') }}</b-dropdown-item>
       <!-- <b-dropdown-item to="/indexes">Indexes</b-dropdown-item>
@@ -76,14 +76,14 @@
     </template>
     <b-dropdown-item to="/welcome">Welcome</b-dropdown-item>
     <b-dropdown-item to="/post">Post</b-dropdown-item>
-
+    <b-dropdown-item to="/agora">Agora</b-dropdown-item>
     <b-dropdown-item to="/editor">{{ $t('editor') }}</b-dropdown-item>
     <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
     <b-dropdown-item to="/semapps">SemApps</b-dropdown-item>
     <b-dropdown-item to="/workspaces">WorkSpaces</b-dropdown-item>
     <b-dropdown-item to="/migration">Migration (solid.community -> solidcommunity.net)</b-dropdown-item>
     <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
-    <b-dropdown-item to="/agora">Agora</b-dropdown-item>
+
     <b-dropdown-item to="/groups">Groups</b-dropdown-item>
     <b-dropdown-item to="/forms">Forms</b-dropdown-item>
     <b-dropdown-item to="/salut">Salut</b-dropdown-item>

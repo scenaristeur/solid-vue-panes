@@ -6,8 +6,7 @@
     <ArticleView v-else-if="types.includes('https://www.w3.org/ns/activitystreams#Article')" :subject="subject" :url="url"/>
     <NetworkView v-else-if="isNetwork == true" :subject="subject" :url="url"/>
     <div v-else>
-      no template for {{ url }} with types : {{ types }}<br>
-      view : {{ url }}
+      Finding template for {{ url }} with types : {{ types }}<br>
 
     </div>
     <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/>
@@ -36,7 +35,11 @@ export default {
   },
   created(){
     //console.log("route",this.$route)
-    this.url = this.$route.params.url || this.$route.query.url+this.$route.hash
+    this.url = this.$route.params.url
+  if( this.url == undefined){
+   this.url = this.$route.query.url
+    this.$route.query.hash != "" ? this.url = this.url+this.$route.query.hash : ""
+  }
     this.getData()
   },
   computed:{
@@ -66,8 +69,11 @@ export default {
   watch:{
     '$route' (to) {
       //  '$route' (to, from) {
-      console.log(to)
-      this.url = to.params.url || to.query.url+to.query.hash
+      this.url = to.params.url
+    if( this.url == undefined){
+     this.url = to.query.url
+      to.query.hash != "" ? this.url = this.url+to.query.hash : ""
+    }
       this.getData()
     },
     url(url){

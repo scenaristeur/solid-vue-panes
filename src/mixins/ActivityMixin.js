@@ -1,6 +1,9 @@
 import { fetchDocument, createDocument } from 'tripledoc';
 import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
+import UtilMixin from '@/mixins/crud/UtilMixin'
+
 export default {
+  mixins: [UtilMixin],
   created(){
     this.webId = this.$store.state.solid.webId
     //  console.log("ActivityMixin WEBID CREATED",this.webId)
@@ -29,21 +32,28 @@ export default {
         activityDoc = await createDocument(fileUrl);
       }
 
-      console.log("webId",this.webId)
       if(this.activity.summary.length <1 ){
-        this.activity.summary = [this.activity.actor.name, this.activity.type, "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
+        this.activity.summary = [this.activity.actor.name.split('/').slice(2,3)[0], this.localname(this.activity.type), "a", this.activity.object.type, "with name", this.activity.object.name].join(" ")
       }
+      let object_type = this.activity.object.type.startsWith("http") ? this.activity.object.type : 'https://www.w3.org/ns/activitystreams#'+this.activity.object.type
+
       let subj = activityDoc.addSubject({identifier:messageId})
       //subj.addLiteral(sioc.content, this.activity)
       subj.addLiteral(rdfs.label, this.activity.object.name)
       subj.addLiteral(dct.created, date)
       subj.addRef(foaf.maker, this.webId)
       subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
-      subj.addRef(rdf.type, 'https://www.w3.org/ns/activitystreams#'+this.activity.type)
+      subj.addRef(rdf.type, object_type)
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary', this.activity.summary)
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
       this.activity.object.inReplyTo != undefined ? subj.addRef('https://www.w3.org/ns/activitystreams#inReplyTo', this.activity.object.inReplyTo) : ""
-      this.currentWorkspace != undefined ?  subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type) : subj.addRef(rdf.type, this.activity.object.url+"#"+this.activity.object.type)
+      if (object_type != "https://www.w3.org/ns/activitystreams#Article"){
+        // bug Agora if remove that test for Article
+        this.currentWorkspace != undefined ?  subj.addRef(rdf.type, this.currentWorkspace.path+this.activity.object.type) : subj.addRef(rdf.type, this.activity.object.url+"#"+this.activity.object.type)
+      }else{
+        subj.addRef(rdf.type, this.activity.type)
+      }
+
       await activityDoc.save();
     },
     async   send() {

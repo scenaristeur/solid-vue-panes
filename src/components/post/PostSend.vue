@@ -131,7 +131,7 @@ export default {
       subj.addRef(foaf.maker, this.webId)
       subj.addRef(rdf.type, "https://www.w3.org/ns/activitystreams#Article")
       subj.addLiteral(sioc.content, this.post.text)
-        subj.addRef("https://www.w3.org/ns/activitystreams#inReplyTo", this.url)
+    this.url != undefined && this.url != "undefined" ? subj.addRef("https://www.w3.org/ns/activitystreams#inReplyTo", this.url) :""
 
       try{
         await postDoc.save();

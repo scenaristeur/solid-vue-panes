@@ -14,8 +14,13 @@
       <b-card-footer>
         <UserName :webId="maker" />
         <Date :dateIso="created"/>
-        actor : {{actor }}<br>
-        types: {{ types }}<br>
+        <!-- actor : {{actor }}<br> -->
+        <p>
+        types:
+        <span v-for="t in types" :key="t.uri">- {{ t.localname }} -</span>
+
+
+      </p>
         <p><a :href="object_url" target="_blank">link</a></p>
       </b-card-footer>
     </b-card>
@@ -24,6 +29,7 @@
 </template>
 
 <script>
+import UtilMixin from '@/mixins/crud/UtilMixin'
 
 import { getStringNoLocale, getUrl, getUrlAll} from "@inrupt/solid-client";
 import { RDFS, DCTERMS, AS, FOAF, RDF } from "@inrupt/vocab-common-rdf"; //https://solidproject.org/for-developers/apps/vocabularies/well-known/common#dc
@@ -34,6 +40,8 @@ export default {
     'Date': () => import('@/components/basic/Date'),
     'AgoraToolbar': () => import('@/components/agora/AgoraToolbar'),
   },
+  mixins: [UtilMixin],
+
   props: ['activity'],
   data: function () {
     return {
@@ -55,9 +63,14 @@ export default {
     this.maker = getUrl(this.activity, FOAF.maker);
     this.actor = getUrl(this.activity, AS.actor);
   //  this.type = getUrl(this.activity, RDF.type);
-    this.types = getUrlAll(this.activity, RDF.type);
+    let types = getUrlAll(this.activity, RDF.type);
 
     this.activitiesUrl = this.$store.state.agora.activitiesUrl
+
+    types.forEach((t) => {
+      this.types.push({uri: t, localname: this.localname(t) })
+    });
+
   //  console.log("ACTIVITIES URL",this.activitiesUrl)
   //  console.log("LITERAL TYPE",this.LiteralType)
 

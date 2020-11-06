@@ -10,11 +10,11 @@
 
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/editor">{{ $t('editor') }}</router-link> |
       <router-link to="/simplegouv">Gouvernance</router-link> |
       <router-link to="/profile">Profile</router-link> |
-      <router-link to="/workspaces">Worspaces</router-link> |
-      <router-link to="/editor">{{ $t('editor') }}</router-link> |
       <router-link to="/inbox">Inbox</router-link> |
+      <router-link to="/workspaces">Worspaces</router-link> |
       <router-link to="/chat">Chat</router-link> |
       <router-link to="/parle">Parle</router-link> |
       <router-link to="/about">About</router-link> |
@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.155 - blog reply
+        0.1.156 - blog reply
       </a>
     </i></small>
 

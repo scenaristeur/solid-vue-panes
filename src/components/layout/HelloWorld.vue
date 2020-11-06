@@ -13,6 +13,23 @@
       <div>
         <b-card-group deck>
 
+          <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center mb-2" style="min-width: 20rem;">
+            <b-card-text>
+              <ul>
+                <li>
+                  <router-link to="/editor"><b-icon-pen class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-pen><br>{{ $t('editor') }}</router-link>
+                </li>
+                <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
+
+                <!-- <li>
+                  <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link>
+
+                </li> -->
+                <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
+              </ul>
+            </b-card-text>
+          </b-card>
+
           <b-card bg-variant="dark" text-variant="white" header="Profile" class="text-center mb-2" style="min-width: 20rem;">
             <b-card-text>
               <ul>
@@ -48,22 +65,7 @@
           </b-card>
 
 
-          <b-card bg-variant="dark" text-variant="white" header="Storage" class="text-center mb-2" style="min-width: 20rem;">
-            <b-card-text>
-              <ul>
-                <li>
-                  <router-link to="/editor"><b-icon-pen class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-pen><br>{{ $t('editor') }}</router-link>
-                </li>
-                <li><router-link to="/post"><b-icon-text-paragraph class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-text-paragraph><br>Blog</router-link></li>
 
-                <!-- <li>
-                  <router-link to="/storage"><b-icon-folder class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-folder><br>{{ $t('databrowser') }}</router-link>
-
-                </li> -->
-                <li><router-link to="/bookmarks"><b-icon-bookmarks-fill class="border border-info rounded p-2" font-scale="4" variant="info"></b-icon-bookmarks-fill><br>{{ $t('bookmarks') }}</router-link></li>
-              </ul>
-            </b-card-text>
-          </b-card>
 
           <b-card bg-variant="dark" text-variant="white" header="Last Blog Articles" class="text-center mb-2"  style="min-width: 20rem;">
 
