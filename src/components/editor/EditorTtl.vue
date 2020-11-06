@@ -72,12 +72,12 @@ export default {
   methods: {
     async update(){
       this.triples = []
-      console.log(this.file.url)
+    //  console.log(this.file.url)
       if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
         let fileDoc = await fetchDocument(this.file.url)
-        console.log("fileDoc",fileDoc)
+      //  console.log("fileDoc",fileDoc)
         this.triples = fileDoc.getTriples()
-        console.log(this.triples)
+      //  console.log(this.triples)
       }else{
         console.log(this.file.url)
       }
@@ -86,7 +86,6 @@ export default {
   },
   watch:{
     file(){
-      console.log("watch")
       this.update()
     }
   },

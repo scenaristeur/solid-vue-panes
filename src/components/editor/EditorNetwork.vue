@@ -129,7 +129,7 @@ export default {
         },
         interaction: {
           navigationButtons: true,
-        //  keyboard: true
+          //  keyboard: true
         },
         manipulation: {
           enabled: true,
@@ -153,26 +153,35 @@ export default {
   },
   created(){
     this.folder = this.$store.state.solid.folder
+    //console.log(this.file.url)
+    this.update()
     //  console.log("route",this.$route)
     //  this.url = this.$route.params.url
     //  this.getData()
   },
   methods: {
     selectNode(e){
-      console.log(e)
-      console.log(e.nodes[0])
+      //console.log(e)
+      //console.log(e.nodes[0])
+      try{
+        this.file = {}
+        this.file.url = e.nodes[0]
+        this.update()
+      }catch(e){
+        console.log(e)
+      }
     },
     selectEdge(e){
-      console.log(e)
+      //console.log(e)
       console.log(e.edges[0])
     },
     saveCommand(command){
-      console.log("COMMAND",command)
+      //console.log("COMMAND",command)
       let inputObject = this.getInputType(command)
-      console.log("inputObject",inputObject);
+      //console.log("inputObject",inputObject);
       this.traiteInput(inputObject);
       this.inputNew = inputObject.inputNew
-      console.log(this.inputNew)
+      //console.log(this.inputNew)
       //  this.updateInput(inputObject.inputNew)
     },
     addNode(node, callback){
@@ -185,13 +194,13 @@ export default {
       //console.log(node)
       this.editNode(node, callback)
     },
-    editNode(n,cb){
-      console.log("EDIT NODE",n,cb)
+    editNode(n/*,cb*/){
+      //console.log("EDIT NODE",n,cb)
       this.node = n
       this.$bvModal.show("node-popup")
     },
     addEdge(e,cb){
-      console.log("add edge",e,cb)
+      //console.log("add edge",e,cb)
       this.edge = e
       if (e.from == e.to) {
         var r = confirm("Do you want to connect the node to itself?");
@@ -203,7 +212,7 @@ export default {
       this.editEdgeWithoutDrag(e, cb);
     },
     editEdge(e,cb){
-      console.log("EDIT edge",e,cb)
+      //console.log("EDIT edge",e,cb)
       this.editEdgeWithoutDrag(e, cb);
     },
     editEdgeWithoutDrag(edge, callback){
@@ -222,7 +231,7 @@ export default {
     },
 
     saveNode(n){
-      console.log("saveNode",n)
+      //console.log("saveNode",n)
       var index = this.nodes.map(x => {
         return x.id;
       }).indexOf(n.id);
@@ -253,7 +262,7 @@ export default {
       if (this.tmp_file != null){
         this.file = this.tmp_file
       }
-      console.log(e)
+      //console.log(e)
       let subject  = this.nodes.filter(function(el) {
         return el.id == e.from
       });
@@ -295,14 +304,14 @@ export default {
       let app = this
       //  !copyText.endsWith(".ttl") ?
       //copyText = copyText+this.file.url //: ""
-    //  console.log(copyText)
+      //  console.log(copyText)
       navigator.clipboard.writeText(copyText).then(function() {
         /* clipboard successfully set */
         //  console.log("clipok", copyText)
         app.makeToast("The url is in your clipboard ;-)", copyText+".               Use Ctrl+V to share it", "success")
       }, function() {
         /* clipboard write failed */
-      //  console.log("clipERROR", copyText)
+        //  console.log("clipERROR", copyText)
         app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
       })
 
@@ -313,7 +322,7 @@ export default {
       // //console.log(this.file)
       // //console.log(this.newfile)
       // //console.log(this.folder)
-      console.log(this.privacy)
+  //    console.log(this.privacy)
       this.tmp_file = {}
       this.filename = this.filename.split(' ').join('_');
 
@@ -345,24 +354,25 @@ export default {
         let this_label = this.thisNode.label
         subj.addString(rdfs.label, this_label)
         subj.addString(dct.created, date)
-        subj.addRef(rdf.type, this.tmp_file.url+"#Network")
-        console.log("file created", this.tmp_file.url)
+        subj.addRef(rdf.type, "https://scenaristeur.github.io/solid-vue-panes/Network")
+        //console.log("file created", this.tmp_file.url)
 
       }else{
         subj.addString(dct.modified, date)
-        console.log("file modified", this.tmp_file.url)
+        //console.log("file modified", this.tmp_file.url)
 
       }
       subj.addRef(foaf.maker, this.webId)
-      console.log("one")
-      let s = await  doc.save()
-      console.log("two", s)
+      //console.log("one")
+    //  let s =
+       await  doc.save()
+      //console.log("two", s)
 
       if(this.privacy == "public_write"){
 
-        console.log(this.tmp_file.url)
+        //console.log(this.tmp_file.url)
         const myDatasetWithAcl = await getSolidDatasetWithAcl(this.tmp_file.url);
-        console.log(myDatasetWithAcl)
+        //console.log(myDatasetWithAcl)
         // Obtain the SolidDataset's own ACL, if available,
         // or initialise a new one, if possible:
         let resourceAcl;
@@ -383,12 +393,12 @@ export default {
             // resourceAcl = createAcl(myDatasetWithAcl);
           }
           resourceAcl = createAclFromFallbackAcl(myDatasetWithAcl);
-          console.log("create")
+          //console.log("create")
         } else {
           resourceAcl = getResourceAcl(myDatasetWithAcl);
-          console.log("get")
+          //console.log("get")
         }
-        console.log("acl",resourceAcl)
+        //console.log("acl",resourceAcl)
         // Give someone Control access to the given Resource:
         /*  const updatedAcl = setAgentResourceAccess(
         resourceAcl,
@@ -400,7 +410,8 @@ export default {
         { read: true, append: true, write: true, control: true },
       );
 
-      let r =  await saveAclFor(myDatasetWithAcl, ownerAcl);
+    //  let r =
+       await saveAclFor(myDatasetWithAcl, ownerAcl);
       const publicAcl = setPublicResourceAccess(
         resourceAcl,
         { read: true, append: true, write: false, control: false },
@@ -409,18 +420,19 @@ export default {
 
       // Now save the ACL:
       //  let r =  await saveAclFor(myDatasetWithAcl, ownerAcl);
-      let rp =  await saveAclFor(myDatasetWithAcl, publicAcl);
-      console.log(r,rp)
+      // let rp =
+        await saveAclFor(myDatasetWithAcl, publicAcl);
+      //console.log(r,rp)
     }
     this.createActivity()
   },
   createActivity(){
-    console.log("createActivity")
+    //console.log("createActivity")
 
     this.net.displayType = "Network"
     this.net.types = ["Task", "http://www.w3.org/ns/ldp#Resource"]
     this.net.path = this.tmp_file.url
-    console.log(this.net)
+    //console.log(this.net)
     this.activity = {
       actor: {name: this.$store.state.solid.webId},
       type:"Create",
@@ -444,18 +456,21 @@ export default {
     },
     async update(){
       this.triples = []
-      console.log(this.file.url)
+      //console.log(this.file.url)
+    let split_hash = this.file.url.split("#")
+this.file.url = split_hash[0]
+this.file.localname = split_hash[1]
       if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
         let fileDoc = await fetchDocument(this.file.url)
-        console.log("fileDoc",fileDoc)
+      //  console.log("fileDoc",fileDoc)
         this.triples = fileDoc.getTriples()
-        console.log(this.triples)
+        //console.log(this.triples)
       }else{
-        console.log("TODO",this.file.url)
+        //console.log("TODO",this.file.url)
       }
       if (this.triples.length > 0){
         this.triples.forEach((t) => {
-          console.log("trip",t)
+          //console.log("trip",t)
           this.addTriplet(t)
         });
 
@@ -463,18 +478,18 @@ export default {
 
     },
     addTriplet(t){
-      // //console.log(t)
-      // //console.log(t.subject.id, t.predicate.id, t.object.id)
+      // ////console.log(t)
+      // ////console.log(t.subject.id, t.predicate.id, t.object.id)
       var color = this.colorize(t.subject.id)
       let label =  this.lastPart(t.subject.id)
 
       if (t.predicate.id == "http://www.w3.org/2000/01/rdf-schema#label"){
-        console.log("LABEL",t.object.id)
+        //console.log("LABEL",t.object.id)
         label = t.object.id
       }
 
       let subjectNode = { id:t.subject.id, label: label, shape: "star", color:'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)'  }
-      // //console.log(subjectNode)
+      // ////console.log(subjectNode)
       //  this.dataset.nodes[subjectNode.id] = subjectNode
       subjectNode  = this.addOrNothingNode(subjectNode)
 
@@ -485,7 +500,7 @@ export default {
 
 
       let objectNode = { id:t.object.id, label: labelO, shape: "box", color:'rgba('+colorO.red+', '+colorO.green+', '+colorO.blue+',0.5)'  }
-      // //console.log(objectNode)
+      // ////console.log(objectNode)
       //  this.dataset.nodes[subjectNode.id] = subjectNode
       this.addOrNothingNode(objectNode)
 
@@ -508,7 +523,7 @@ export default {
 
 watch:{
   file(){
-    console.log(this.file)
+    //console.log(this.file)
     this.update()
   },
 

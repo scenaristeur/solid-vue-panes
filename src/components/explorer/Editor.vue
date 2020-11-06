@@ -2,26 +2,22 @@
   <div class="editor container">
 
     <div v-if="webId != null">
-
-
-
       <b-card title="Editor">
-
-  <Explorer />
+        <Explorer />
         <b-tabs content-class="mt-3">
           <b-tab title="Text">
             <div>
-          <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-            <b-button-group size="sm" class="mr-1">
-              <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
-            </b-button-group>
-            <b-button-group size="sm" class="mr-1">
-              <b-button size="sm" variant="warning" v-b-modal.editor_save>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
+              <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+                <b-button-group size="sm" class="mr-1">
+                  <b-button  @click="clean"><b-icon-file-plus></b-icon-file-plus> </b-button>
+                </b-button-group>
+                <b-button-group size="sm" class="mr-1">
+                  <b-button size="sm" variant="warning" v-b-modal.editor_save>Save <b-icon-file-arrow-up></b-icon-file-arrow-up></b-button>
 
 
-            </b-button-group>
-          </b-button-toolbar>
-        </div>
+                </b-button-group>
+              </b-button-toolbar>
+            </div>
             <div>
               <b-form-textarea
               id="textarea"
@@ -85,14 +81,12 @@ label-for="type">
 <script>
 
 export default {
-  //  store,
-
   name: 'Editor',
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'EditorTtl': () => import('@/components/editor/EditorTtl'),
     'EditorNetwork': () => import('@/components/editor/EditorNetwork'),
-        'Explorer': () => import('@/components/explorer/Explorer'),
+    'Explorer': () => import('@/components/explorer/Explorer'),
     //  'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {

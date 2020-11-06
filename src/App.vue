@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.156 - blog reply
+        0.1.157 - url to editornetwork
       </a>
     </i></small>
 
