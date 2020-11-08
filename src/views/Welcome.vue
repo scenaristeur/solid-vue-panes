@@ -72,39 +72,41 @@
     </div>
 
     <b-jumbotron>
-      <div class="row">
-        <div class="col">
-          <b-embed
-          type="iframe"
-          aspect="16by9"
-          src="https://www.youtube.com/embed/JcITkApsrAM?rel=0"
-          allowfullscreen
-          ></b-embed>
-          Media sharing with poPock / partager images, videos, sons sur votre Pod
+      <center>
+        <div class="row">
+          <div class="col col-sm-12 col-md-4">
+            <b-embed
+            type="iframe"
+            aspect="16by9"
+            src="https://www.youtube.com/embed/JcITkApsrAM?rel=0"
+            allowfullscreen
+            ></b-embed>
+            Media sharing with poPock / partager images, videos, sons sur votre Pod
 
+          </div>
+
+          <div class="col col-sm-12 col-md-4">
+            <b-embed
+            type="iframe"
+            aspect="16by9"
+            src="https://www.youtube.com/embed/njsg4_T4vuQ?rel=0"
+            allowfullscreen
+            ></b-embed>
+            Editeur Popock (FR)
+
+          </div>
+          <div class="col col-sm-12 col-md-4">
+            <b-embed
+            type="iframe"
+            aspect="16by9"
+            src="https://www.youtube.com/embed/EJ9zD6i5juk?rel=0"
+            allowfullscreen
+            ></b-embed>
+            Popock Editor (EN)
+
+          </div>
         </div>
-
-        <div class="col">
-          <b-embed
-          type="iframe"
-          aspect="16by9"
-          src="https://www.youtube.com/embed/njsg4_T4vuQ?rel=0"
-          allowfullscreen
-          ></b-embed>
-          Editeur Popock (FR)
-
-        </div>
-        <div class="col">
-          <b-embed
-          type="iframe"
-          aspect="16by9"
-          src="https://www.youtube.com/embed/EJ9zD6i5juk?rel=0"
-          allowfullscreen
-          ></b-embed>
-          Popock Editor (EN)
-
-        </div>
-      </div>
+      </center>
     </b-jumbotron>
 
 
@@ -112,7 +114,7 @@
       <center>
         <h2>Services</h2>
         <div class="row">
-          <div class="col">
+          <div class="col md-6">
             <h4>Créer un POD</h4>
             <p style="text-align:left">
               Avec Solid, le stockage de vos données s'effectue sur un POD.<br>
@@ -122,7 +124,7 @@
             <b-button class="m-2" variant="info"  to="/providers">Je n'ai pas de POD</b-button>
           </div>
 
-          <div class="col">
+          <div class="colmd-6">
             <h4>Developpement d'applications decentralisées</h4>
             <p style="text-align:left">
               Vous avez une idée d'application décentralisée basée sur Solid?
@@ -131,7 +133,7 @@
             <a class="btn m-2 btn-info"  href="mailto:scenaristeur@gmail.com?subject=Developpement_poPock">Mail</a>
           </div>
 
-          <div class="col">
+          <div class="col md-6">
             <h4>Soutenir le projet poPock, Investir</h4>
             <p style="text-align:left">
               Vous souhaitez participer au projet poPock, en tant que contributeur ou investisseur ?
@@ -140,6 +142,7 @@
             <a class="btn m-2 btn-info"  href="mailto:scenaristeur@gmail.com?subject=Contribution_investissement">Mail</a>
           </div>
         </div>
+
 
 
       </center>

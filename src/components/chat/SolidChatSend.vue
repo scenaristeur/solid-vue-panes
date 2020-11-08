@@ -22,10 +22,8 @@ import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces' //
 const { namedNode } = require('@rdfjs/data-model');
 import auth from 'solid-auth-client';
-let SolidFileClient = window.SolidFileClient
-console.log("SFC", SolidFileClient)
-let fc = new SolidFileClient(auth)
-console.log(fc)
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 let solid = window.solid
 console.log("SOLID",solid)
 
