@@ -16,13 +16,15 @@
       <b-input-group prepend="Title" class="mt-3">
         <b-form-input v-model="post.title"></b-form-input>
       </b-input-group>
-      <b-form-textarea
+      <!-- <b-form-textarea
       id="textarea"
       v-model="post.text"
       placeholder="Enter something..."
       rows="3"
       max-rows="6"
-      ></b-form-textarea>
+      ></b-form-textarea> -->
+
+      <vue-easymde v-model="post.text" ref="markdownEditor" />
 
 
       <b-button class="mt-3" @click="send" variant="outline-info">Send</b-button>
@@ -60,11 +62,13 @@ import {/*namedNode, sioc,*/  dct, foaf, rdfs, sioc, rdf } from 'rdf-namespaces'
 // import auth from 'solid-auth-client';
 // import FC from 'solid-file-client'
 // const fc = new FC( auth )
+ import VueEasymde from "vue-easymde";
 
 export default {
   name: 'PostSend',
   mixins: [activityMixin],
   components: {
+    VueEasymde,
     'Explorer': () => import('@/components/explorer/Explorer'),
   },
   props: ['value'],
@@ -172,3 +176,6 @@ computed:{
 }
 }
 </script>
+<style>
+ @import "~easymde/dist/easymde.min.css";
+</style>
