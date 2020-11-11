@@ -24,7 +24,7 @@
       max-rows="6"
       ></b-form-textarea> -->
 
-      <vue-easymde v-model="post.text" ref="markdownEditor" />
+      <vue-easymde v-model="content" ref="markdownEditor" />
 
 
       <b-button class="mt-3" @click="send" variant="outline-info">Send</b-button>
@@ -62,7 +62,7 @@ import {/*namedNode, sioc,*/  dct, foaf, rdfs, sioc, rdf } from 'rdf-namespaces'
 // import auth from 'solid-auth-client';
 // import FC from 'solid-file-client'
 // const fc = new FC( auth )
- import VueEasymde from "vue-easymde";
+import VueEasymde from "vue-easymde";
 
 export default {
   name: 'PostSend',
@@ -75,6 +75,7 @@ export default {
   data: function () {
     return {
       post: {},
+      content: "",
       selected: "post",
       url: ""
     }
@@ -126,7 +127,7 @@ export default {
       }catch(e){
         postDoc = await createDocument(fileUrl);
       }
-
+      this.post.text = this.content
       var postId = "Article_"+d.getTime()
       let subj =   postDoc.addSubject({identifier:postId})
       //subj.addLiteral(sioc.content, this.activity)
@@ -135,7 +136,7 @@ export default {
       subj.addRef(foaf.maker, this.webId)
       subj.addRef(rdf.type, "https://www.w3.org/ns/activitystreams#Article")
       subj.addLiteral(sioc.content, this.post.text)
-    this.url != undefined && this.url != "undefined" ? subj.addRef("https://www.w3.org/ns/activitystreams#inReplyTo", this.url) :""
+      this.url != undefined && this.url != "undefined" ? subj.addRef("https://www.w3.org/ns/activitystreams#inReplyTo", this.url) :""
 
       try{
         await postDoc.save();
@@ -152,6 +153,7 @@ export default {
       catch(e){
         alert(e)
       }
+      this.content = ""
       this.post = {}
     }
     /*  async updateFriends(){
@@ -177,5 +179,5 @@ computed:{
 }
 </script>
 <style>
- @import "~easymde/dist/easymde.min.css";
+@import "~easymde/dist/easymde.min.css";
 </style>

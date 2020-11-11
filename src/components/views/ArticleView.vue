@@ -11,11 +11,7 @@
         <Date :dateIso="created"/>
       </b-card-header>
 
-      <b-card-text>
-
-        {{ content }}
-
-      </b-card-text>
+      <b-card-text v-html="HtmlContent"> </b-card-text>
 
 
 
@@ -38,6 +34,7 @@
 <script>
 import { fetchDocument } from 'tripledoc';
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf, sioc} from 'rdf-namespaces' //
+import {markdown} from 'markdown';
 
 export default {
   name: 'ArticleView',
@@ -93,6 +90,7 @@ export default {
       this.label = subject.getLiteral(rdfs.label)
       this.created = subject.getLiteral(dct.created)
       this.content = subject.getLiteral(sioc.content)
+      this.HtmlContent = markdown.toHTML( this.content)
       this.inbox = subject.getRef(ldp.inbox)
       this.maker = subject.getRef(foaf.maker)
       this.types = subject.getAllRefs(rdf.type)
