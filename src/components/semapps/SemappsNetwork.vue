@@ -691,9 +691,21 @@ async retrieveData(source){
     //   console.log(response.data["ldp:contains"])
     //  console.log(this.response)
     //console.log(this.donnees);
-    this.currentEndpoint.model == "semapps" ?
-    this.add2network(response.data)
-    : this.add2networkSartinblox(response.data)
+
+    switch (this.currentEndpoint.model) {
+      case "semapps":
+      this.add2networkSemapps(response.data)
+      break;
+      case "startinblox":
+      this.add2networkSartinblox(response.data)
+      break;
+      case "colibris":
+      this.add2network(response.data)
+      break;
+      default:
+
+    }
+
     //  console.log(response.status);    //  console.log(response.statusText);    //  console.log(response.headers); //  console.log(response.config);
   })
   .catch(() /*error*/ => {
@@ -705,10 +717,11 @@ async retrieveData(source){
   });
 },
 
+
+
 add2networkSartinblox(response_data){
   let donnees = response_data["ldp:contains"]
   console.log("SIB",donnees)
-  console.log(donnees)
   for (let don in donnees){
     let d = donnees[don]
     console.log(d)

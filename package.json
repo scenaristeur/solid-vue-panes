@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.159",
+  "version": "0.1.160",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -27,7 +27,7 @@
     "solid-auth-client": "^2.5.1",
     "source-map-loader": "^1.1.0",
     "tripledoc": "^4.3.4",
-    "uuid": "^8.3.0",
+    "uuid": "^8.3.1",
     "vis-data": "^7.0.0",
     "vis-network": "^8.3.2",
     "vis-util": "^4.3.4",

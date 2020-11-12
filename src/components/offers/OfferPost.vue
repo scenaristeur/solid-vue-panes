@@ -17,6 +17,10 @@
       <small>can be nested categories : /cars/prestige/BMW or coma separated : furniture, decoration, fun</small>
 
 
+      <b-input-group prepend="Type">
+        <b-form-input v-model="offer.type" placeholder="service, item..."></b-form-input>
+      </b-input-group>
+
       <b-input-group prepend="Status">
         <b-form-input v-model="offer.status" placeholder="new, used, handlemade "></b-form-input>
       </b-input-group>

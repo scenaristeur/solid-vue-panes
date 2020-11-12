@@ -128,6 +128,7 @@ export default {
         postDoc = await createDocument(fileUrl);
       }
       this.post.text = this.content
+      this.content = "Hello World!"
       var postId = "Article_"+d.getTime()
       let subj =   postDoc.addSubject({identifier:postId})
       //subj.addLiteral(sioc.content, this.activity)
@@ -153,7 +154,7 @@ export default {
       catch(e){
         alert(e)
       }
-      this.content = ""
+
       this.post = {}
     }
     /*  async updateFriends(){
