@@ -16,11 +16,11 @@
           <small><i>(la traduction automatique est disponible dans les 'Paramètres' de la vidéo)</i></small>
         </p>
         <p>
-          poPock Demo Semwebpro 2020
+          poPock premières fonctionnalités
           <b-embed
           type="iframe"
           aspect="16by9"
-          src="https://www.youtube.com/embed/yk7o0UpD49Y?rel=0"
+          src="https://www.youtube.com/embed/0gCe4yAZ3_c?rel=0"
           allowfullscreen
           ></b-embed>
         </p>
