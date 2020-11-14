@@ -8,6 +8,8 @@
     <div v-else>
       Finding template for {{ url }} with types : {{ types }}<br>
 
+      if no template is found, you can always see data on POD at <a v-bind:href="url" target="_blank">{{url}}</a>
+
     </div>
     <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/>
 
@@ -36,10 +38,10 @@ export default {
   created(){
     //console.log("route",this.$route)
     this.url = this.$route.params.url
-  if( this.url == undefined){
-   this.url = this.$route.query.url
-    this.$route.query.hash != "" ? this.url = this.url+this.$route.query.hash : ""
-  }
+    if( this.url == undefined){
+      this.url = this.$route.query.url
+      this.$route.query.hash != "" ? this.url = this.url+this.$route.query.hash : ""
+    }
     this.getData()
   },
   computed:{
@@ -53,9 +55,9 @@ export default {
       this.isNetwork = false
       let dataDoc = await fetchDocument(this.url);
       let url =  this.url.includes("#") ? this.url : this.url+"#this"
-    //  console.log(url)
+      //  console.log(url)
       this.subject = await dataDoc.getSubject(url)
-    //  console.log(this.subject)
+      //  console.log(this.subject)
       this.types = await this.subject.getAllRefs(rdf.type)
       console.log(this.types)
 
@@ -70,10 +72,10 @@ export default {
     '$route' (to) {
       //  '$route' (to, from) {
       this.url = to.params.url
-    if( this.url == undefined){
-     this.url = to.query.url
-      to.query.hash != "" ? this.url = this.url+to.query.hash : ""
-    }
+      if( this.url == undefined){
+        this.url = to.query.url
+        to.query.hash != "" ? this.url = this.url+to.query.hash : ""
+      }
       this.getData()
     },
     url(url){

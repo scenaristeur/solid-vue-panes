@@ -48,7 +48,12 @@ export default {
         // this.activity.object.url = fileUrl+"#"+postId
         // this.activity.object.inReplyTo = this.url
         // //    this.activity.summary = this.webId+" has just posted an Article with title "+this.post.title+" at "+this.activity.object.url
-        // this.sendActivity()
+        if (data['@publish'] == true){
+          this.activity = data
+          this.activity.object.url = fileUrl+"#"+postId
+          this.sendOfferActivity()
+        }
+        //
       }
       catch(e){
         alert(e)
@@ -150,7 +155,7 @@ export default {
           let p = this.shortToLong(entry[0], contextMap)
 
           entry[1].forEach((obj_val) => {
-                  let obj_long = this.shortToLong(obj_val, contextMap)
+            let obj_long = this.shortToLong(obj_val, contextMap)
             if(obj_long.startsWith('http')){
               subj_object.addRef(p, obj_long)
             }else{

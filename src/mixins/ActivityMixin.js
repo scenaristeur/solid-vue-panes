@@ -16,6 +16,44 @@ export default {
   },
 
   methods: {
+    async sendOfferActivity(){
+      console.log(this.activity)
+      var dateObj = new Date();
+      var messageId = "Activity_"+dateObj.getTime()
+      var date = dateObj.toISOString()
+      let d = this.formatDate(dateObj)
+      let fileUrl = this.pubPod+d+".ttl"
+
+      let activityDoc = {}
+      try{
+        activityDoc = await fetchDocument(fileUrl);
+      }catch(e){
+        activityDoc = await createDocument(fileUrl);
+      }
+
+      let subj = activityDoc.addSubject({identifier:messageId})
+      subj.addLiteral(rdfs.label, this.activity["gr:name"])
+
+      subj.addLiteral(dct.created, date)
+      subj.addRef(rdf.type, this.activity["gr:hasBusinessFunction"])
+          subj.addRef(rdf.type, "http://purl.org/goodrelations/v1#Offering")
+      subj.addRef(foaf.maker, this.webId)
+          subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
+      subj.addLiteral("http://purl.org/goodrelations/v1#name", this.activity["gr:name"])
+      subj.addLiteral("http://purl.org/goodrelations/v1#businessEntity", this.activity["gr:businessEntity"])
+      subj.addLiteral("http://purl.org/goodrelations/v1#description", this.activity["gr:description"])
+      subj.addLiteral('https://www.w3.org/ns/activitystreams#summary',this.activity["gr:name"])
+            subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
+
+
+      
+      await activityDoc.save();
+
+
+
+
+
+    },
     async sendActivity(){
       console.log(this.activity)
       var dateObj = new Date();
