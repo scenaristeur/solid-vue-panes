@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.161 - social colibris & start offers
+        0.1.162 - offer.object properties
       </a>
     </i></small>
 
