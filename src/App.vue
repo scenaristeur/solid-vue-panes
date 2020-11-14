@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.165 - offer post on POD & activity
+        0.1.166 - offer post on POD & activity & P5
       </a>
     </i></small>
 

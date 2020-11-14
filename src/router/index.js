@@ -216,6 +216,11 @@ const routes = [
   name: 'Semapps',
   component: () => import(/* webpackChunkName: "agora" */ '@/views/SemApps.vue')
 },
+{
+  path: '/p5/:url?',
+  name: 'P5View',
+  component: () => import(/* webpackChunkName: "p5view" */ '@/views/P5View.vue')
+},
 ]
 
 const router = new VueRouter({
