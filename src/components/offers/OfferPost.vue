@@ -113,7 +113,7 @@ export default {
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
- mixins: [SolidMixin],
+mixins: [SolidMixin],
 props:['value'],
 data() {
   return {
@@ -121,14 +121,16 @@ data() {
     offer: {
       "@context":  [ "https://www.w3.org/ns/activitystreams",
       {"@language": "en"},
-      {"gr": "http://purl.org/goodrelations/v1"}],
+      {"gr": "http://purl.org/goodrelations/v1"},
+      {"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns"}],
       "@id": "",
-      "type": "gr:Offering",
+      //"type": "gr:Offering",
+      "rdf:type": "gr:Offering",
       "gr:hasBusinessFunction": null,
       "gr:name": "",
       "gr:description": "",
       "published": "",
-      "object": {}
+      "object": {'rdf:type': 'gr:ProductOrService'}
     },
     businessFunctionOptions: [
       {value: null, text: 'Please select an Business Function (Selectionnez un type de transaction)' },
@@ -204,17 +206,17 @@ methods: {
   },
   create(){
 
-    let d = new Date()
-    //  this.d = d
-    let iso_date = d.toISOString()
-    this.offer.published = iso_date
+    // let d = new Date()
+    // //  this.d = d
+    // let iso_date = d.toISOString()
+    // this.offer.published = iso_date
     this.offer.actor = this.webId
-    this.offer.folder = "public/Offering/"
+    this.offer['folder'] = "public/Offering/"
 
     if (this.offer["gr:hasBusinessFunction"] == null){
       alert ("you must select business Function")
     }else{
-      this.offer.publish = true
+      this.offer['@publish'] = true
       console.log(this.offer)
       this.putOnPod(this.offer)
 
