@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.162 - offer.object properties
+        0.1.163 - offer post & test json-ld
       </a>
     </i></small>
 

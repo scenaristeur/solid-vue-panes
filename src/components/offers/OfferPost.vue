@@ -40,10 +40,10 @@
         Résumé
         <b-list-group>
           <b-list-group-item v-for="(prop, id) of Object.entries(offer.object)" :key="id">
-            {{ prop }}<br>
-            type :     {{ }} <br>
+            <!-- {{ prop }}<br>
+            type :     {{ }} <br> -->
 
-            {{ prop[0] }} : <br>
+            <h5>{{ prop[0] }} :</h5>
             <div v-if=" typeof prop[1] == 'string'">
               {{prop[1]}}
             </div>
@@ -61,59 +61,59 @@
     </div>
 
 
-    if you want to add lots of picture, prefer using <a href="https://solidweb.org/register" target="_blank">https://solidweb.org</a> (250Mo) instead of <a href="https://solidcommunity.net/register"  target="_blank">https://solidcommunity.net</a> (25Mo)
+    <!-- if you want to add lots of picture, prefer using <a href="https://solidweb.org/register" target="_blank">https://solidweb.org</a> (250Mo) instead of <a href="https://solidcommunity.net/register"  target="_blank">https://solidcommunity.net</a> (25Mo)
 
 
 
     <b-input-group prepend="Categories">
 
-      <b-form-input v-model="offer.categories" placeholder="/cars/prestige/BMW, "></b-form-input>
-    </b-input-group>
-    <small>can be nested categories : /cars/prestige/BMW or coma separated : furniture, decoration, fun</small>
+    <b-form-input v-model="offer.categories" placeholder="/cars/prestige/BMW, "></b-form-input>
+  </b-input-group>
+  <small>can be nested categories : /cars/prestige/BMW or coma separated : furniture, decoration, fun</small>
 
 
-    <b-input-group prepend="Type">
-      <b-form-input v-model="offer.type" placeholder="service, item..."></b-form-input>
-    </b-input-group>
+  <b-input-group prepend="Type">
+  <b-form-input v-model="offer.type" placeholder="service, item..."></b-form-input>
+</b-input-group>
 
-    <b-input-group prepend="Status">
-      <b-form-input v-model="offer.status" placeholder="new, used, handlemade "></b-form-input>
-    </b-input-group>
-
-
-    <b-input-group prepend="Add one property per line">
-      <b-form-textarea
-      id="props_textarea"
-      v-model="offer.properties"
-      placeholder="width: 20cm..."
-      rows="3"
-      max-rows="6"
-      ></b-form-textarea>
-    </b-input-group>
-    <small>Style : "property: value", ex :<br> weight: 24 kg<br>width: 20cm<br>height: 89 cm</small>
+<b-input-group prepend="Status">
+<b-form-input v-model="offer.status" placeholder="new, used, handlemade "></b-form-input>
+</b-input-group>
 
 
-
-
-
-    <br>
+<b-input-group prepend="Add one property per line">
+<b-form-textarea
+id="props_textarea"
+v-model="offer.properties"
+placeholder="width: 20cm..."
+rows="3"
+max-rows="6"
+></b-form-textarea>
+</b-input-group>
+<small>Style : "property: value", ex :<br> weight: 24 kg<br>width: 20cm<br>height: 89 cm</small>
 
 
 
-  </div>
+
+
+<br> -->
+
+
+
+</div>
 </template>
 
 <script>
 //import {  fetchDocument } from 'tripledoc';
 //import {  rdf} from 'rdf-namespaces'
-//import ToastMixin from '@/mixins/ToastMixin'
+import SolidMixin from '@/mixins/SolidMixin'
 
 export default {
   name: 'OfferPost',
   /*  components: {
   'Component': () => import('@/components/Component'),
 },*/
-//  mixins: [ToastMixin],
+ mixins: [SolidMixin],
 props:['value'],
 data() {
   return {
@@ -186,7 +186,7 @@ methods: {
     console.log(this.newProp, this.propValue)
     //this.propField = this.newProp
     this.offer.object[this.newProp] == undefined ? this.offer.object[this.newProp] = [] : ""
-    this.offer.object[this.newProp].push(this.propValue)
+    this.propValue.length > 0 ? this.offer.object[this.newProp].push(this.propValue) : ""
     this.propValue = ""
     console.log(this.offer.object)
   },
@@ -208,11 +208,16 @@ methods: {
     //  this.d = d
     let iso_date = d.toISOString()
     this.offer.published = iso_date
-    this.offer.posted_by = this.webId
-    console.log(this.offer)
+    this.offer.actor = this.webId
+    this.offer.folder = "public/Offering/"
+
     if (this.offer["gr:hasBusinessFunction"] == null){
       alert ("you must select business Function")
     }else{
+      this.offer.publish = true
+      console.log(this.offer)
+      this.putOnPod(this.offer)
+
       this.active = false
     }
 
@@ -246,12 +251,6 @@ watch:{
 url(url){
 console.log("URL CHANGE",url)
 }*/
-},
-computed:{
-  webId:{
-    get: function() { return this.$store.state.solid.webId},
-    set: function() {}
-  },
 },
 }
 </script>

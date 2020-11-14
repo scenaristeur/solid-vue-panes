@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.162",
+  "version": "0.1.163",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -20,6 +20,7 @@
     "core-js": "^3.6.5",
     "cross-fetch": "^3.0.6",
     "git": "^0.1.5",
+    "jsonld": "^3.2.0",
     "markdown": "^0.5.0",
     "rdf-namespaces": "^1.8.0",
     "register-service-worker": "^1.7.1",
