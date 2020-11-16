@@ -81,6 +81,7 @@
     <b-dropdown-item to="/simplegouv">Simple Gouv</b-dropdown-item>
     <b-dropdown-item to="/semapps">SemApps</b-dropdown-item>
     <b-dropdown-item to="/workspaces">WorkSpaces</b-dropdown-item>
+      <b-dropdown-item to="/offers">Offers & Ask</b-dropdown-item>
     <b-dropdown-item to="/migration">Migration (solid.community -> solidcommunity.net)</b-dropdown-item>
     <b-dropdown-item to="/parle">{{ $t('talk') }}</b-dropdown-item>
 

@@ -36,23 +36,17 @@ export default {
 
       subj.addLiteral(dct.created, date)
       subj.addRef(rdf.type, this.activity["gr:hasBusinessFunction"])
-          subj.addRef(rdf.type, "http://purl.org/goodrelations/v1#Offering")
+      subj.addRef(rdf.type, "http://purl.org/goodrelations/v1#Offering")
       subj.addRef(foaf.maker, this.webId)
-          subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
+      subj.addRef('https://www.w3.org/ns/activitystreams#actor', this.webId)
       subj.addLiteral("http://purl.org/goodrelations/v1#name", this.activity["gr:name"])
       subj.addLiteral("http://purl.org/goodrelations/v1#businessEntity", this.activity["gr:businessEntity"])
       subj.addLiteral("http://purl.org/goodrelations/v1#description", this.activity["gr:description"])
       subj.addLiteral('https://www.w3.org/ns/activitystreams#summary',this.activity["gr:name"])
-            subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
-
-
-      
+      subj.addRef('https://www.w3.org/ns/activitystreams#object', this.activity.object.url)
+      subj.addLiteral('http://purl.org/goodrelations/v1#hasCurrency', this.activity['gr:hasPriceSpecification']['gr:hasCurrency'])
+      subj.addLiteral('http://purl.org/goodrelations/v1#hasCurrencyValue', this.activity['gr:hasPriceSpecification']['gr:hasCurrencyValue'])
       await activityDoc.save();
-
-
-
-
-
     },
     async sendActivity(){
       console.log(this.activity)

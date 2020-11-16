@@ -23,6 +23,13 @@
         max-rows="6"
         ></b-form-textarea>
       </b-input-group>
+
+      <h4>Price</h4>
+      <b-input-group prepend="Price">
+        <b-form-input v-model="offer['gr:hasPriceSpecification']['gr:hasCurrencyValue']" placeholder="Value"></b-form-input>
+        <b-form-input v-model="offer['gr:hasPriceSpecification']['gr:hasCurrency']" placeholder="€, $ (Currency)"></b-form-input>
+      </b-input-group>
+
       <h4>Product or Service</h4>
       <b-input-group prepend="Name">
         <b-form-input v-model="offer.object['gr:name']" placeholder="What is the product or Service ?"></b-form-input>
@@ -129,6 +136,7 @@ data() {
       "gr:hasBusinessFunction": null,
       "gr:name": "",
       "gr:description": "",
+      "gr:hasPriceSpecification": {'gr:hasCurrencyValue':"", 'gr:hasCurrency': ""},
       "published": "",
       "object": {'rdf:type': 'gr:ProductOrService'}
     },
@@ -185,12 +193,12 @@ methods: {
     this.active = !this.active
   },
   addProperty(){
-    console.log(this.newProp, this.propValue)
+  //  console.log(this.newProp, this.propValue)
     //this.propField = this.newProp
     this.offer.object[this.newProp] == undefined ? this.offer.object[this.newProp] = [] : ""
     this.propValue.length > 0 ? this.offer.object[this.newProp].push(this.propValue) : ""
     this.propValue = ""
-    console.log(this.offer.object)
+    //console.log(this.offer.object)
   },
 
 
@@ -217,9 +225,8 @@ methods: {
       alert ("you must select business Function")
     }else{
       this.offer['@publish'] = true
-      console.log(this.offer)
+    //  console.log(this.offer)
       this.putOnPod(this.offer)
-
       this.active = false
     }
 

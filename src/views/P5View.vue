@@ -7,6 +7,10 @@
 
 <script>
 import P5 from 'p5'
+ //sinon , voir https://www.npmjs.com/package/vue-p5
+
+
+
 //import {  fetchDocument } from 'tripledoc';
 //import {  rdf} from 'rdf-namespaces'
 //import ToastMixin from '@/mixins/ToastMixin'

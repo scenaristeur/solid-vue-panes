@@ -1,6 +1,6 @@
 {
   "name": "PoPock",
-  "version": "0.1.166",
+  "version": "0.1.167",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

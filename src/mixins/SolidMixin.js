@@ -51,6 +51,7 @@ export default {
         if (data['@publish'] == true){
           this.activity = data
           this.activity.object.url = fileUrl+"#"+postId
+          console.log("ACTIVITY",this.activity)
           this.sendOfferActivity()
         }
         //
@@ -64,14 +65,14 @@ export default {
 
     },
     async  addOtherProperties(subject, data, doc, d){
-      console.log(data)
+      //console.log(data)
       let context = data['@context']
       //https://github.com/rdf-ext-archive/rdf-examples/blob/develop/parse-jsonld-to-prefix-map.js
-      console.log("context",context)
+      //console.log("context",context)
       let contextMap = {}
       context.forEach((item) => {
         if (typeof item == 'object'){
-          console.log(item)
+          //    console.log(item)
           Object.entries(item).forEach((prefix) => {
             if (!prefix[0].startsWith('@')){
               contextMap[prefix[0]] = prefix[1]
@@ -82,7 +83,7 @@ export default {
           //  contextMap.push(item)
         }
       });
-      console.log("MAP",contextMap)
+      //  console.log("MAP",contextMap)
 
       // const expanded = await jsonld.expand(data);
       // console.log(expanded)
@@ -116,6 +117,8 @@ export default {
             console.log(typeof entry[1], entry[0], "->",  entry[1])
             if(entry[0] == "object"){
               this.addObject(subject, entry[1], doc, d, contextMap)
+            }else if (entry[0] == "gr:hasPriceSpecification") {
+              this.addPrice(subject, entry[1])
             }
 
             break;
@@ -128,6 +131,13 @@ export default {
       });
 
     },
+    addPrice(subj, price_data){
+      subj.addLiteral('http://purl.org/goodrelations/v1#hasCurrency', price_data['gr:hasCurrency'])
+      subj.addLiteral('http://purl.org/goodrelations/v1#hasCurrencyValue', price_data['gr:hasCurrencyValue'])
+    },
+
+
+
     addObject(subj, object_data, doc, d, contextMap){
 
       var objectId = object_data['rdf:type'].split(":")[1]+"_"+d.getTime()
@@ -153,7 +163,6 @@ export default {
         }else{
           console.log("TODO",entry)
           let p = this.shortToLong(entry[0], contextMap)
-
           entry[1].forEach((obj_val) => {
             let obj_long = this.shortToLong(obj_val, contextMap)
             if(obj_long.startsWith('http')){
@@ -161,19 +170,9 @@ export default {
             }else{
               subj_object.addLiteral(p, obj_long)
             }
-
           });
-
-
-
-
-
         }
       });
-
-
-
-
     },
     shortToLong(short, prefixes){
       //  console.log(prefixes)
