@@ -1,10 +1,9 @@
 <template>
   <div class="view container">
-{{ types.includes('http://purl.org/goodrelations/v1#Offering')}}
     <TaskView v-if="types.includes('http://purl.org/vocab/lifecycle/schema#Task')" :subject="subject" :url="url"/>
     <GroupView v-else-if="types.includes('http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
     <ArticleView v-else-if="types.includes('https://www.w3.org/ns/activitystreams#Article')" :subject="subject" :url="url"/>
-    <!-- <OfferView v-else-if="types.includes('http://purl.org/goodrelations/v1#Offering')" :subject="subject" :url="url"/> -->
+    <OfferView v-else-if="types.includes('http://purl.org/goodrelations/v1#Offering')" :subject="subject" :url="url"/>
     <NetworkView v-else-if="isNetwork == true" :subject="subject" :url="url"/>
 
     <ResourceView  v-else :subject="subject" :url="url" :types="types"/>
@@ -25,7 +24,7 @@ export default {
     'GroupView': () => import('@/components/views/GroupView'),
     'NetworkView': () => import('@/components/views/NetworkView'),
     'ArticleView': () => import('@/components/views/ArticleView'),
-  //  'OfferView': () => import('@/components/offers/OfferView'),
+    'OfferView': () => import('@/components/offers/OfferView'),
   },
   data() {
     return {

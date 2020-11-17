@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.168 - price offer & default resource view
+        0.1.169 - price offer & default resource view
       </a>
     </i></small>
 
