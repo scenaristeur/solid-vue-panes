@@ -1,17 +1,14 @@
 <template>
   <div class="view container">
-
+{{ types.includes('http://purl.org/goodrelations/v1#Offering')}}
     <TaskView v-if="types.includes('http://purl.org/vocab/lifecycle/schema#Task')" :subject="subject" :url="url"/>
     <GroupView v-else-if="types.includes('http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
     <ArticleView v-else-if="types.includes('https://www.w3.org/ns/activitystreams#Article')" :subject="subject" :url="url"/>
+    <!-- <OfferView v-else-if="types.includes('http://purl.org/goodrelations/v1#Offering')" :subject="subject" :url="url"/> -->
     <NetworkView v-else-if="isNetwork == true" :subject="subject" :url="url"/>
-    <div v-else>
-      Finding template for {{ url }} with types : {{ types }}<br>
 
-      if no template is found, you can always see data on POD at <a v-bind:href="url" target="_blank">{{url}}</a>
-
-    </div>
-    <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/>
+    <ResourceView  v-else :subject="subject" :url="url" :types="types"/>
+    <!-- <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/> -->
 
   </div>
 </template>
@@ -28,10 +25,12 @@ export default {
     'GroupView': () => import('@/components/views/GroupView'),
     'NetworkView': () => import('@/components/views/NetworkView'),
     'ArticleView': () => import('@/components/views/ArticleView'),
+  //  'OfferView': () => import('@/components/offers/OfferView'),
   },
   data() {
     return {
       types: [],
+      subject: {},
       isNetwork: false
     }
   },

@@ -12,3 +12,6 @@ https://hal.inria.fr/hal-01332515/document
 
 search https://arxiv.org/pdf/1807.02039.pdf
 product vocab inria http://ns.inria.fr/provoc/v1/provoc_v1.html
+
+### TODO : add ethereum dapps
+https://dappsforbeginners.wordpress.com/tutorials/two-party-contracts/
