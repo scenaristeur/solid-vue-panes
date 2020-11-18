@@ -27,7 +27,7 @@
 
 <script>
 //import auth from 'solid-auth-client';
-import UtilMixin from '@/mixins/crud/UtilMixin.js'
+import UtilMixin from '@/mixins/UtilMixin.js'
 import TtlMixin from '@/mixins/crud/TtlMixin.js'
 import SolidMixin from '@/mixins/crud/SolidMixin.js'
 import auth from 'solid-auth-client';

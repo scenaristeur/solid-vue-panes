@@ -23,7 +23,7 @@
 <script>
 //import DebugProperties from '@/components/DebugProperties.vue'
 import SolidMixin from '@/mixins/crud/SolidMixin.js'
-import UtilMixin from '@/mixins/crud/UtilMixin.js'
+import UtilMixin from '@/mixins/UtilMixin.js'
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )

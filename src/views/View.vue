@@ -4,11 +4,12 @@
     <GroupView v-else-if="types.includes('http://www.w3.org/2006/vcard/ns#Group')" :subject="subject" :url="url"/>
     <ArticleView v-else-if="types.includes('https://www.w3.org/ns/activitystreams#Article')" :subject="subject" :url="url"/>
     <OfferView v-else-if="types.includes('http://purl.org/goodrelations/v1#Offering')" :subject="subject" :url="url"/>
+    <ProductOrServiceView v-else-if="types.includes( 'http://purl.org/goodrelations/v1#ProductOrService')" :url="url"/>
     <NetworkView v-else-if="isNetwork == true" :subject="subject" :url="url"/>
 
     <ResourceView  v-else :subject="subject" :url="url" :types="types"/>
     <!-- <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/> -->
-
+    
   </div>
 </template>
 
@@ -25,6 +26,7 @@ export default {
     'NetworkView': () => import('@/components/views/NetworkView'),
     'ArticleView': () => import('@/components/views/ArticleView'),
     'OfferView': () => import('@/components/offers/OfferView'),
+    'ProductOrServiceView': () => import('@/components/offers/ProductOrServiceView'),
   },
   data() {
     return {

@@ -1,6 +1,5 @@
 <template>
   <div class="resource-view">
-    Offer template   <hr>
     <h3>{{ offer.label }}</h3>
     <h5>{{ offer.businessFunction }} </h5>
     <b-card-header>
@@ -14,12 +13,11 @@
       {{ offer.currencyValue }} {{ offer.currency }}
     </p>
 
-    <ul>
-      <li v-for ="(q, i) of offer.thing.quads" :key="i">
-        <small>{{ q.subject.id }} --> {{ q.predicate.id }} --> {{ q.object.id}}
-        </small>
-      </li>
-    </ul>
+    <p v-for="(url, i) of offer.object.urls" :key="'url_'+i">
+          <ProductOrServiceView :url="url" />
+    </p>
+
+
 
     <hr>
     More Offers :
@@ -34,8 +32,24 @@
       </li>
     </ul>
     <hr>
-    Dataset : {{ dataset }}
-    <hr>
+
+    <div>
+      <b-button v-b-toggle.collapse-dataset variant="primary">See Dataset</b-button>
+      <b-collapse id="collapse-dataset" class="mt-2">
+        <b-card>
+          <p class="card-text">
+            <ul>
+              <li v-for ="(q, i) of offer.thing.quads" :key="i">
+                <small>{{ q.subject.id }} --> {{ q.predicate.id }} --> {{ q.object.id}}
+                </small>
+              </li>
+            </ul>
+
+          </p>
+
+        </b-card>
+      </b-collapse>
+    </div>
 
   </div>
 </template>
@@ -47,8 +61,8 @@ import {
   getThing,
   //  getLiteral,
   getStringNoLocale,
-  getUrl
-  //   getUrlAll
+  getUrl,
+  getUrlAll
 } from "@inrupt/solid-client";
 
 import { RDFS, FOAF,/*, RDF*/ /*, VCARD*/ } from "@inrupt/vocab-common-rdf";
@@ -58,13 +72,14 @@ export default {
   components: {
     'UserName': () => import('@/components/basic/UserName'),
     'Date': () => import('@/components/basic/Date'),
+    'ProductOrServiceView': () => import('@/components/offers/ProductOrServiceView'),
   },
   props:['subject','url', 'types'],
   data() {
     return {
       dataset: {},
       things: {},
-      offer: {thing:{}, maker:""},
+      offer: {thing:{}, maker:"", object:[]},
 
     }
   },
@@ -92,7 +107,8 @@ export default {
       this.offer.description = getStringNoLocale(this.offer.thing, 'http://purl.org/goodrelations/v1#description')
       this.offer.currencyValue = getStringNoLocale(this.offer.thing, 'http://purl.org/goodrelations/v1#hasCurrencyValue')
       this.offer.currency = getStringNoLocale(this.offer.thing, 'http://purl.org/goodrelations/v1#hasCurrency')
-
+      this.offer.object.urls  = getUrlAll(this.offer.thing, 'http://purl.org/goodrelations/v1#includes')
+      console.log(this.offer)
     },
     // label(resource){
     //   return getLiteral(resource, RDFS.label) || resource

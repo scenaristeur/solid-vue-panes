@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import UtilMixin from '@/mixins/crud/UtilMixin.js'
+import UtilMixin from '@/mixins/UtilMixin.js'
 
 export default {
   name: 'FormLabel',

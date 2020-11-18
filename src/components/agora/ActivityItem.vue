@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import UtilMixin from '@/mixins/crud/UtilMixin'
+import UtilMixin from '@/mixins/UtilMixin'
 
 import { getStringNoLocale, getUrl, getUrlAll} from "@inrupt/solid-client";
 import { RDFS, DCTERMS, AS, FOAF, RDF } from "@inrupt/vocab-common-rdf"; //https://solidproject.org/for-developers/apps/vocabularies/well-known/common#dc

@@ -20,7 +20,6 @@ export default {
   watch: {
     async dateIso (dateIso) {
       this.date  = new Date(dateIso).toLocaleString()
-      console.log(this.date)
     }
   }
 }

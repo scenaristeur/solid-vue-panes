@@ -1,6 +1,6 @@
 import { fetchDocument, createDocument } from 'tripledoc';
 import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
-import UtilMixin from '@/mixins/crud/UtilMixin'
+import UtilMixin from '@/mixins/UtilMixin'
 
 export default {
   mixins: [UtilMixin],

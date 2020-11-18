@@ -18,13 +18,13 @@
       <router-link to="/chat">Chat</router-link> |
       <router-link to="/parle">Parle</router-link> |
       <router-link to="/about">About</router-link> |
-      <a href="https://join.slack.com/t/popock/shared_invite/zt-i5n7m70z-BmBypozj8vkdGRI9bxBCaA" target="_blank">Join Popock slack</a>
+      <!-- <a href="https://join.slack.com/t/popock/shared_invite/zt-i5n7m70z-BmBypozj8vkdGRI9bxBCaA" target="_blank">Join Popock slack</a> -->
 
     </div>
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.169 - price offer & default resource view
+        0.1.170 - product view
       </a>
     </i></small>
 

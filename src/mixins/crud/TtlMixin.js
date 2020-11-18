@@ -1,4 +1,4 @@
-import UtilMixin from '@/mixins/crud/UtilMixin.js'
+import UtilMixin from '@/mixins/UtilMixin.js'
 
 export default {
   mixins: [ UtilMixin],
