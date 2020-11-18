@@ -1,14 +1,10 @@
 <template>
   <div class="share container col">
 
-    <div v-if="valid == true">
-
-
       <!-- <b-button v-b-modal.modal-bookmark>Bookmarks</b-button> -->
 
        <b-modal id="modal-bookmark" title="Bookmarks"
-       v-b-modal="valid"
-       @ok="saveBm">
+         @ok="saveBm">
          <p class="my-4">
            <b-input-group prepend="Title" >
              <b-form-input v-model="title" placeholder="What is this bookmark title ?"></b-form-input>
@@ -49,7 +45,7 @@
 
 
       </div>
-    </div>
+
     <div>
       <p>
         <b-button variant="outline-info"
@@ -91,7 +87,7 @@ export default {
       url: "",
       query:  "",
       route: "",
-      valid: false,
+    //  valid: false,
       topic: "",
       selected: 'public'
     }
@@ -103,7 +99,7 @@ export default {
     this.query  = this.$route.query
     this.params = this.$route.params
     this.fullPath =  this.$route.fullPath
-    this.title != undefined || this.text != undefined || this.url != undefined ? this.valid = true : this.valid = false
+    this.title != undefined || this.text != undefined || this.url != undefined ? this.$bvModal.show("modal-bookmark") : ""
     console.log(this.$route)
   this.url == undefined ? this.url = this.text : ""
   this.title == undefined ? this.title = "no-title" : ""
@@ -126,13 +122,14 @@ watch: {
     this.fullPath = to.fullPath
     console.log(this.$route.query)
     console.log(to.query)
-    this.title != undefined || this.text != undefined || this.url != undefined ? this.valid = true : this.valid = false
+    this.title != undefined || this.text != undefined || this.url != undefined ? this.$bvModal.show("modal-bookmark") : ""
 
     //    this.updatePod()
   },
-  valid(v){
-    v == false ? this.$router.push('/bookmarks') : this.$bvModal.show("modal-bookmark")
-  }
+  // valid(v){
+  //   console.log(this.valid, v)
+  //   v == false ? this.$router.push('/bookmarks') : this.$bvModal.show("modal-bookmark")
+  // }
 },
 methods:{
   async saveBm(){
@@ -155,7 +152,8 @@ methods:{
       this.title = undefined
       this.text = undefined
       this.url = undefined
-      this.valid = false
+      this.$bvModal.hide("modal-bookmark")
+    //  this.valid = false
     }else{
       alert("You must first login to your POD !")
     }
