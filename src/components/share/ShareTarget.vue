@@ -28,7 +28,8 @@
              <b-form-radio v-model="selected" name="confidential" value="public">Public</b-form-radio>
            </b-form-group>
 
-           Path : {{ path }} !! <br>
+           Path : {{ path }}
+         </p>
            <!-- webId : {{ webId}} <br>
            <p>
              <b-button variant="outline-info" @click="saveBm">Save Bookmark</b-button>
@@ -38,9 +39,6 @@
 
 
        </b-modal>
-
-
-      <h3>Popock Bookmark</h3>
 
       <div class="container">
 
