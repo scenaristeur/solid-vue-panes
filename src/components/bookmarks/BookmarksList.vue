@@ -1,11 +1,14 @@
 <template>
   <div class="bookmarks-list container">
-    <b-button @click="updateBm()" variant="outline-info" >Back to {{mode}}/bookmarks/</b-button><br>
+    <b-button @click="updateBm()" class="sm" variant="light">{{mode}}/bookmarks/</b-button><br>
+
+
+    <h5>Categories :</h5>
+
+    <b-button v-for="fo in bm.folders" :key="fo.url" variant="info" class="sm m-1" @click="updateBm(fo.url)">{{ fo.name }}</b-button>
 
 
     <h5>Bookmarks :</h5>
-
-
     <div>
       <b-card-group columns>
 
@@ -24,9 +27,6 @@
     </b-card-group>
   </div>
 
-<h5>Categories :</h5>
-
-<b-button v-for="fo in bm.folders" :key="fo.url" variant="info" class="m-1" @click="updateBm(fo.url)">{{ fo.name }}</b-button>
 
 </div>
 </template>
