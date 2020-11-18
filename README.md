@@ -133,3 +133,7 @@ https://fr.strikingly.com/
 typeform + stripes
 https://www.koudetat.co/episodes/comprendre-ta-cible-en-posant-les-bonnes-questions 52:00
 paypal.me 1:00:00
+
+
+### gh-pages redirect
+https://github.com/rafgraph/spa-github-pages#readme

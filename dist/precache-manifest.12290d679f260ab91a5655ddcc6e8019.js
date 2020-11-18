@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f981fa3d304de949f0d396483b82c3e7",
+    "revision": "dee47ffde6bf7fe1a499f6aff1244e53",
     "url": "/solid-vue-panes/404.html"
   },
   {
