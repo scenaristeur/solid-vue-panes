@@ -300,7 +300,7 @@ export default {
       console.log(eventName,e)
     },
     copy(){
-      let copyText = "https://scenaristeur.github.io/solid-vue-panes/?url="+this.file.url //window.location.href
+      let copyText = "https://scenaristeur.github.io/solid-vue-panes/view/"+this.file.url //window.location.href
       let app = this
       //  !copyText.endsWith(".ttl") ?
       //copyText = copyText+this.file.url //: ""
