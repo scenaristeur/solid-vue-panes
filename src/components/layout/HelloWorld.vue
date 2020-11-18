@@ -67,7 +67,7 @@
 
 
 
-          <b-card bg-variant="dark" text-variant="white" header="Last Blog Articles" class="text-center mb-2"  style="min-width: 20rem;">
+          <b-card bg-variant="dark" text-variant="white" header="Last Agora's Activities" class="text-center mb-2"  style="min-width: 20rem;">
 
             <b-card-text bg-variant="white" text-variant="dark">
               <LastBlog />

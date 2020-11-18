@@ -322,7 +322,7 @@ export default {
       // //console.log(this.file)
       // //console.log(this.newfile)
       // //console.log(this.folder)
-  //    console.log(this.privacy)
+      //    console.log(this.privacy)
       this.tmp_file = {}
       this.filename = this.filename.split(' ').join('_');
 
@@ -364,8 +364,8 @@ export default {
       }
       subj.addRef(foaf.maker, this.webId)
       //console.log("one")
-    //  let s =
-       await  doc.save()
+      //  let s =
+      await  doc.save()
       //console.log("two", s)
 
       if(this.privacy == "public_write"){
@@ -410,8 +410,8 @@ export default {
         { read: true, append: true, write: true, control: true },
       );
 
-    //  let r =
-       await saveAclFor(myDatasetWithAcl, ownerAcl);
+      //  let r =
+      await saveAclFor(myDatasetWithAcl, ownerAcl);
       const publicAcl = setPublicResourceAccess(
         resourceAcl,
         { read: true, append: true, write: false, control: false },
@@ -421,7 +421,7 @@ export default {
       // Now save the ACL:
       //  let r =  await saveAclFor(myDatasetWithAcl, ownerAcl);
       // let rp =
-        await saveAclFor(myDatasetWithAcl, publicAcl);
+      await saveAclFor(myDatasetWithAcl, publicAcl);
       //console.log(r,rp)
     }
     this.createActivity()
@@ -457,12 +457,13 @@ export default {
     async update(){
       this.triples = []
       //console.log(this.file.url)
-    let split_hash = this.file.url.split("#")
-this.file.url = split_hash[0]
-this.file.localname = split_hash[1]
+      let split_hash = this.file.url.split("#")
+      this.file.url = split_hash[0]
+      this.file.localname = split_hash[1]
       if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
+      //  this.clear()
         let fileDoc = await fetchDocument(this.file.url)
-      //  console.log("fileDoc",fileDoc)
+        //  console.log("fileDoc",fileDoc)
         this.triples = fileDoc.getTriples()
         //console.log(this.triples)
       }else{

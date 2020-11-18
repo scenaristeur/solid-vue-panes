@@ -11,14 +11,6 @@ Default  Resource Template <br>
       <UserName :webId="resource.maker" />
       <Date :dateIso="resource.created"/>
     </b-card-header>
-
-
-    <ul>
-      <li v-for ="(q, i) of resource.thing.quads" :key="i">
-        <small>{{ q.subject.id }} --> {{ q.predicate.id }} --> {{ q.object.id}}
-        </small>
-      </li>
-    </ul>
     <hr>
     More Resources :
     <ul>
@@ -32,8 +24,24 @@ Default  Resource Template <br>
       </li>
     </ul>
     <hr>
-    Dataset : {{ dataset }}
-    <hr>
+
+    <div>
+      <b-button v-b-toggle.collapse-dataset variant="primary">See Dataset</b-button>
+      <b-collapse id="collapse-dataset" class="mt-2">
+        <b-card>
+          <p class="card-text">
+            <ul>
+              <li v-for ="(q, i) of resource.thing.quads" :key="i">
+                <small>{{ q.subject.id }} --> {{ q.predicate.id }} --> {{ q.object.id}}
+                </small>
+              </li>
+            </ul>
+
+          </p>
+
+        </b-card>
+      </b-collapse>
+    </div>
 
   </div>
 </template>

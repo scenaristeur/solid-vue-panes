@@ -9,7 +9,7 @@
 
     <ResourceView  v-else :subject="subject" :url="url" :types="types"/>
     <!-- <ResourceView v-if="types.includes('http://www.w3.org/ns/ldp#Resource')" :subject="subject" :url="url"/> -->
-    
+
   </div>
 </template>
 
@@ -62,7 +62,7 @@ export default {
       console.log(this.types)
 
       this.types.forEach((t) => {
-        if (t.endsWith('#Network') ){
+        if (t.endsWith('Network') ){
           this.isNetwork = true
         }
       });

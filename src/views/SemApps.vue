@@ -46,12 +46,9 @@ export default {
       endpoints : [
         {name: "Assemblée Virtuelle",
         url: "https://data.virtual-assembly.org/",
-        disabled: false, containers: [ "skills", "themas","organizations", "projects", "persons"],
+        disabled: false, containers: [ "skills", "themes","organizations", "projects", "users"],
         model: "semapps"},
-        {name: "Colibris Social",
-        url: "https://colibris.social/",
-        disabled: false, containers: [ "actors"],
-        model: "colibris"},
+
         // {name: "Fake url for test",
         // url: "https://popock-test.virtual-assembly.org/",
         // disabled: false,
@@ -72,6 +69,10 @@ export default {
         disabled: false,
         containers: [ /*"accounts",*/ "users"],
         model: "startinblox"},
+        {name: "Colibris Social",
+        url: "https://colibris.social/",
+        disabled: false, containers: [ "actors"],
+        model: "colibris"},
       ],
       //  containers: [/* "skills", "themas","organizations", "projects", "persons",*/ "users"] // "projects", "persons",
     }

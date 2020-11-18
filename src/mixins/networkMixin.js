@@ -186,9 +186,9 @@ export default {
               case "string":
               //    console.log("String--",key,'->',value)
               if (key != "pair:description" && key != "pair:content"){
-                  this.addStringNode(d.id, key, value)
+                this.addStringNode(d.id, key, value)
               }else{
-                  console.log("string-- TODO",key,'->'/*,value*/)
+                console.log("string-- TODO",key,'->'/*,value*/)
               }
 
               break;
@@ -236,7 +236,21 @@ export default {
       this.edges.push(propertyEdge)
 
     },
-
+    addType(d, type, color){
+      let typeNode = {}
+      let typeEdge = {}
+      typeNode = { id:type, label: this.lastPart(type), shape: "circle", classe: type, color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100,  }
+      this.addOrNothingNode(typeNode)
+      typeEdge = {
+        from: d['@id'],
+        to: type,
+        label: "a",
+      }
+      //  this.edges.push(typeEdge);
+      this.dataset.nodes[typeNode.id] = typeNode
+      this.dataset.edges.push(typeEdge)
+      this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+    },
 
     add2networkSemapps(response_data){
       let donnees = response_data["ldp:contains"]
@@ -253,8 +267,7 @@ export default {
         this.dataset.nodes[subjectNode.id] = subjectNode
 
         for (const [key, value] of Object.entries(d)) {
-          let typeNode = {}
-          let typeEdge = {}
+
           let propertyEdge = {}
           let objectNode = {}
           //console.log("FOR")
@@ -267,17 +280,16 @@ export default {
             //console.log(key, value);
             break;
             case "@type":
-            typeNode = { id:d['@type'], label: this.lastPart(d['@type']), shape: "circle", classe: d['@type'], color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)', size: 100,  }
-            this.addOrNothingNode(typeNode)
-            typeEdge = {
-              from: d['@id'],
-              to: d['@type'],
-              label: "a",
+            console.log(typeof d['@type'], d['@type'])
+          if (typeof d['@type'] == "object"){
+              typeof d['@type'].forEach((t) => {
+                this.addType(d,t, color)
+              });
+
+            }else{
+                  this.addType(d,d['@type'], color)
             }
-            //  this.edges.push(typeEdge);
-            this.dataset.nodes[typeNode.id] = typeNode
-            this.dataset.edges.push(typeEdge)
-            this.dataset.types.indexOf(typeNode.id) < 0 ? this.dataset.types.push(typeNode.id) : ""
+
 
             break;
             // autres propriétés
@@ -304,7 +316,7 @@ export default {
             break;
 
             default:
-            console.warn("TODO : ---------------",key, value);
+            console.warn("TODO : ---------------",key/*, value*/);
             this.stringOrArray(value).forEach((v) => {
               objectNode = { id:v, label: this.lastPart(v), shape: "box",  color: 'rgba('+color.red+', '+color.green+', '+color.blue+',0.5)' , x:this.lastX , y:this.lastY  }
               propertyEdge = {from: d['@id'], to: v.replace('pair:',''), label: key}

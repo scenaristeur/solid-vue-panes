@@ -550,8 +550,9 @@ methods:{
     //https://www.npmjs.com/package/@marklogic-community/grove-react-visjs-graph
     console.log("event",selected)
     let selected_id = selected.nodes[0]
-    this.historic.push(this.dataset.nodes[selected_id])
-    console.log("dataset",this.dataset)
+
+    ! this.historic.includes(this.dataset.nodes[selected_id]) ?   this.historic.push(this.dataset.nodes[selected_id]) : ""
+    //console.log("dataset",this.dataset)
     /*  let edges = this.dataset.edges.filter(function(edge) {
     return edge.from == selected_id || edge.to == selected_id
   });
