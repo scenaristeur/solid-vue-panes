@@ -57,9 +57,10 @@
         <b-button variant="outline-info"
         to="?title=Popock&url=https://scenaristeur.github.io/solid-vue-panes/&text=My%20favorite%20Pod%20Manager">bookmark Popock</b-button>
         or
-        <b-button variant="outline-info" to="?title=something">bookmark something else</b-button> <br>
+        <b-button variant="outline-info" to="?title=something">bookmark something else</b-button>
+        <!-- <br>
         then take a look at
-        <b-button variant="outline-warning" to="/bookmarks">Bookmarks</b-button>
+        <b-button variant="outline-warning" to="/bookmarks">Bookmarks</b-button> -->
       </p>
     </div>
 
@@ -132,7 +133,7 @@ watch: {
     //    this.updatePod()
   },
   valid(v){
-    v == false ? this.$router.push('/bookmarks') : this.$bvModal.show("modal-bookmark") 
+    v == false ? this.$router.push('/bookmarks') : this.$bvModal.show("modal-bookmark")
   }
 },
 methods:{

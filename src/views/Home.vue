@@ -9,8 +9,6 @@
 
     <HelloWorld />
 
-    <ShareTarget />
-
     <div>Due to migration from solid.community to solidcommunity.net, you may want to use <a href="/migration">Migration</a>
     </div>
 
@@ -26,7 +24,6 @@ export default {
   name: 'Home',
   components: {
     'HelloWorld': () => import('@/components/layout/HelloWorld'),
-    'ShareTarget': () => import('@/components/share/ShareTarget')
   }
 }
 </script>

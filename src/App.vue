@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.171 - product view & fix semapps users
+        0.1.172 - sharetarget
       </a>
     </i></small>
 

@@ -1,9 +1,7 @@
 <template>
   <div class="bookmarks-list container">
-    <!--  storage: {{storage}}<br>
-    path : {{path}} <br>-->
-
     <b-button @click="updateBm()" variant="outline-info" >Back to {{mode}}/bookmarks/</b-button><br>
+
 
     <h5>Bookmarks :</h5>
 
@@ -42,8 +40,6 @@ import { sioc, rdfs } from 'rdf-namespaces'
 
 export default {
   name: 'BookmarksList',
-  components: {
-  },
   props: ['mode'],
   data: function () {
     return {
