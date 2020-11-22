@@ -2,8 +2,7 @@ const publicPath = process.env.NODE_ENV === 'production' ? '/solid-vue-panes/' :
 
 module.exports = {
   // options...
-  publicPath: publicPath
-  ,
+  publicPath: publicPath,
   // router en mode history
   //https://cli.vuejs.org/core-plugins/pwa.html#example-configuration
   //https://stackoverflow.com/questions/55590275/how-to-fix-that-url-query-params-are-not-working-via-the-web-share-target-api-in

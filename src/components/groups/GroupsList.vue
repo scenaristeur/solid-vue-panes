@@ -74,7 +74,7 @@ export default {
     sorted(groups) {
       if (groups != undefined){
         return groups.sort(function (a,b) {
-          return a.modified < b.modified
+          return b.modified - a.modified
         })
       }else {
         return []
