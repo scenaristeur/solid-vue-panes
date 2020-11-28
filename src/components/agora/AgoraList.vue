@@ -3,12 +3,8 @@
     <h5> {{ activities.length}} Activities</h5>
     <b-card>
       <b-card-body>
-        <b-card-title>
-
-        <h2>Do you want to share your activities to poPock users ?</h2>
-      </b-card-title>
-         Use <h3><router-link to="/post">poPock/post </router-link>!</h3>
-         or programaticaly append the current day file like those
+        Your <router-link to="/post">poPock/post </router-link>
+        are automatically ActivityPub-lished at
         <a href="https://agora.solidcommunity.net/public/popock/inbox/" target="_blank">
           https://agora.solidcommunity.net/public/popock/inbox/</a>
         </b-card-body>
