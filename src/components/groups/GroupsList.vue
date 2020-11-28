@@ -17,7 +17,10 @@
     </div>
     <div v-else>
       To use this part of Popock, you need to choose a workspace with name "gouvernance".<br>
-      <b-button size="sm" to="/workspaces" variant="outline-warning"><span v-if="currentWorkspace.name != undefined">{{ currentWorkspace.name}}</span> <span v-else>Workspaces </span></b-button>
+      <b-button size="sm" to="/workspaces" variant="outline-warning">
+        <span v-if="currentWorkspace.name != undefined">{{ currentWorkspace.name}}</span>
+        <span v-else>Workspaces </span>
+      </b-button>
 
     </div>
 

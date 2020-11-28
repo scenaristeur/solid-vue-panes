@@ -24,7 +24,7 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.174 - copy network url
+        0.1.175 - group storage
       </a>
     </i></small>
 

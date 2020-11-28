@@ -103,6 +103,7 @@ methods:{
     let subj =  groupDoc.addSubject({identifier:"this"})
     subj.addLiteral(vcard.fn, this.name)
     subj.addRef(ldp.inbox, "./"+ttl_name+"/inbox/")
+    subj.addRef("http://www.w3.org/ns/pim/space#storage", "./"+ttl_name+"/")
     subj.addLiteral(dct.created, date)
     subj.addRef(foaf.maker, this.webId)
     subj.addRef(vcard.hasMember, this.webId)
@@ -123,6 +124,7 @@ methods:{
       await tensionDoc.save();
 
     }
+    console.log("storage", "./"+ttl_name+"/")
 
     /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
     indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/

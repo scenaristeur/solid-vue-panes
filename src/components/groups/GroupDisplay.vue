@@ -109,16 +109,18 @@ export default {
       this.open('modal-members-'+this.file.url)
     },
     async add(){
-      this.name = this.name.trim().replace(/\s/g, '_')
-      console.log(this.name, this.url)
+    //  this.name = this.name.trim().replace(/\s/g, '_')
+      let ttl_name = this.name.replace(/\s/g, '_')
+      console.log(ttl_name, this.url)
       var dateObj = new Date();
       var date = dateObj.toISOString()
-      this.path = this.url+this.name+".ttl"
+      this.path = this.url+ttl_name+".ttl"
       // https://www.w3.org/TR/vocab-org/#org:purpose
       let groupDoc =    await createDocument(this.path);
       let subj =   groupDoc.addSubject({identifier:"this"})
-      subj.addLiteral(vcard.fn, this.name)
-      subj.addRef(ldp.inbox, "./"+this.name+"/inbox/")
+      subj.addLiteral(vcard.fn, ttl_name)
+      subj.addRef(ldp.inbox, "./"+ttl_name+"/inbox/")
+        subj.addRef('http://www.w3.org/ns/pim/space#storage', "./"+ttl_name+"/")
       subj.addLiteral(dct.created, date)
       subj.addRef(foaf.maker, this.webId)
       subj.addRef(vcard.hasMember, this.webId)
