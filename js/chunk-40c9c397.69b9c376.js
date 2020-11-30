@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-40c9c397"],{"0b6e":function(e,n,s){"use strict";s("60fe")},"525b":function(e,n,s){"use strict";s.r(n);var t=function(){var e=this,n=e.$createElement,s=e._self._c||n;return s("div",{staticClass:"users-view"},[e._v(" users ")])},c=[],u={name:"UsersView",components:{}},i=u,r=(s("0b6e"),s("2877")),o=Object(r["a"])(i,t,c,!1,null,null,null);n["default"]=o.exports},"60fe":function(e,n,s){}}]);
-//# sourceMappingURL=chunk-40c9c397.69b9c376.js.map
