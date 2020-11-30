@@ -24,8 +24,8 @@
 
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
-        0.1.175 - group storage
-      </a>
+        0.1.176 - update packages & chatsend left
+          </a>
     </i></small>
 
   </div>
