@@ -86,6 +86,7 @@ export default {
         {instance:'https://parle.inrupt.net/public/chat/solid/francais/', created:'08/01/2020', label: 'Français'} ,
         {instance:'https://solidarity.inrupt.net/public/Shighl/Shighl/', created:'01/01/2020', label: 'Popock'} ,
         {instance:'https://solidarity.inrupt.net/public/ChatTest/', created:'01/01/2020', label: 'ChatTest'} ,
+        {instance:'https://liqidchat.inrupt.net/chats/Talk%20about%20Liqid%20Chat/', created:'01/04/2021', label: 'Liqid Chat'} ,
       ],
       my_c : []
       //  webId: {},
