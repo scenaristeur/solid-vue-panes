@@ -30,6 +30,9 @@
             </b-form-textarea>
           </div>
         </b-tab>
+        <b-tab title="Html">
+          <EditorHtml />
+        </b-tab>
         <b-tab title="Ttl">
           <EditorTtl />
         </b-tab>
@@ -87,6 +90,7 @@ export default {
     'EditorTtl': () => import('@/components/editor/EditorTtl'),
     'EditorNetwork': () => import('@/components/editor/EditorNetwork'),
     'Explorer': () => import('@/components/explorer/Explorer'),
+    'EditorHtml': () => import('@/components/editor/EditorHtml'),
     //  'Crud': () => import('@/components/crud/Crud')
   },
   data: function () {

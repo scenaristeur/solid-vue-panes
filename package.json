@@ -11,6 +11,8 @@
     "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-inline": "^31.0.0",
+    "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "@inrupt/solid-client": "^0.1.0",
     "@inrupt/vocab-common-rdf": "^0.5.5",
     "@rdfjs/data-model": "^1.1.2",
@@ -45,13 +47,13 @@
   },
   "devDependencies": {
     "@kazupon/vue-i18n-loader": "^0.5.0",
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-plugin-pwa": "~4.4.0",
-    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-pwa": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-unit-mocha": "~4.4.0",
-    "@vue/cli-plugin-vuex": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
     "@vue/test-utils": "^1.1.0",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
@@ -59,6 +61,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "solid-file-client": "^1.1.0",
     "vue-loader": "^15.9.3",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "watchpack": "^2.3.0"
   }
 }
