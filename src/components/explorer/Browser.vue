@@ -159,9 +159,7 @@
 
 <script>
 import { deleteFile } from "@inrupt/solid-client";
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
@@ -189,6 +187,7 @@ export default {
   },
   watch: {
     async  files (files) {
+      let app = this
       console.log(files)
       let folder = this.folder.url
       console.log(folder)
@@ -197,7 +196,7 @@ export default {
 
         let uri = f.webkitRelativePath.length > 0 ? folder+f.webkitRelativePath : folder+f.name
         console.log(uri, f, f.type)
-        await fc.createFile(uri, f, f.type)
+        await app.$fc.createFile(uri, f, f.type)
       })
       this.updateFolder(this.folder.url)
 
@@ -217,8 +216,8 @@ export default {
         //  this.new_folder =  ! this.new_folder.endsWith("/") ? this.new_folder+"/" : this.new_folder
         let f = this.folder.url+this.new_folder
         console.log(f)
-        if( !(await fc.itemExists(f)) ) {
-          await fc.createFolder(f) // only create if it doesn't already exist
+        if( !(await this.$fc.itemExists(f)) ) {
+          await this.$fc.createFolder(f) // only create if it doesn't already exist
         }else{
           alert (f+" already exists")
         }
@@ -248,7 +247,7 @@ export default {
     async  move(){
       console.log("Move",this.currentItem.type, this.currentItem.url, "to", this.new_location)
       try{
-        this.currentItem.type == "folder" ? await fc.move( this.currentItem.url, this.new_location ) : await fc.move( this.currentItem.url, this.new_location )
+        this.currentItem.type == "folder" ? await this.$fc.move( this.currentItem.url, this.new_location ) : await this.$fc.move( this.currentItem.url, this.new_location )
         this.updateFolder(this.folder.url)
       }
       catch(e){
@@ -267,7 +266,7 @@ export default {
         console.log("File deleted !");
         this.makeToast("success !", "File deleted !", "success")
       }else{
-        await  fc.deleteFolder(this.currentItem.url)
+        await  this.$fc.deleteFolder(this.currentItem.url)
       }
       this.updateFolder(this.folder.url)
     },

@@ -43,7 +43,7 @@
 <script>
 // Network Event https://github.com/r3code/vue-vis-network/blob/master/example/src/App.vue
 //import profileMixin from '@/mixins/profileMixin'
-import { fetchDocument, /*createDocument*/ } from 'tripledoc';
+
 import { foaf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
@@ -201,7 +201,7 @@ export default {
       let p_u = storage+"public/popock/profile.ttl"
       console.log("P8U",p_u)
       try{
-        this.profileDoc = await fetchDocument(p_u)
+        this.profileDoc = await this.$fc.readFile(p_u)
         let subj = await this.profileDoc.getSubject(p_u+"#me")
         this.interests = await subj.getAllLiterals(foaf.topic_interest)
         console.log(this.interests)
@@ -216,7 +216,7 @@ export default {
 
       }catch(e){
       //  console.log(e)
-        //  this.profileDoc = await createDocument(p_u)
+        //  this.profileDoc = await this.$fc.createFile(p_u)
       }
 
     },

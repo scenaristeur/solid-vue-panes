@@ -25,6 +25,9 @@ console.log("SOLID",solid)
 import Chat from 'vue-beautiful-chat'
 Vue.use(Chat)
 
+import SolidPlugin from './plugins/solid-plugin';
+Vue.use(SolidPlugin, {store: store});
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.min.css'

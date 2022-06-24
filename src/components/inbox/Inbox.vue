@@ -71,20 +71,18 @@
 </template>
 
 <script>
-import loginMixin from '@/mixins/loginMixin'
+
 import profileMixin from '@/mixins/profileMixin'
 import aclMixin from '@/mixins/aclMixin'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 //import { deleteFile } from "@inrupt/solid-client";
-import { fetchDocument, createDocument } from 'tripledoc';
+
 import { schema, space } from 'rdf-namespaces'
 //const { namedNode } = require('@rdfjs/data-model');
 
 export default {
   name: 'Inbox',
-  mixins: [loginMixin,profileMixin, aclMixin],
+  mixins: [profileMixin, aclMixin],
   components: {
     'MessageLine': () => import('@/components/inbox/MessageLine'),
     'FriendsSelection': () => import('@/components/solid/FriendsSelection'),
@@ -215,6 +213,7 @@ export default {
       let getInboxUrls = this.getInboxUrls
 
       console.log(this.selected)
+      let app = this
       this.selected.forEach(async function(webId) {
         let inbox_urls = await getInboxUrls(webId)
         if (inbox_urls != undefined && inbox_urls.length > 0){
@@ -223,7 +222,7 @@ export default {
           //  let notif = inbox_log_file+"#"+message.id
           console.log(message.url)
 
-          await fc.postFile( message.url, messageStr, "text/turtle")
+          await app.$fc.postFile( message.url, messageStr, "text/turtle")
           //  await solid.data[notif].schema$about.add(namedNode(message.url))
 
           /*    let recipient_storage = await solid.data[webId].storage
@@ -232,7 +231,7 @@ export default {
           console.log("find storage of ",webId)
           //  let recipient_storage = await solid.data[webId].storage
 
-          const recipientDoc = await fetchDocument(webId);
+          const recipientDoc = await app.$fc.readFile(webId);
           const rec = await recipientDoc.getSubject(webId)
           const recipient_storage = await rec.getNodeRef(space.storage)
 
@@ -244,9 +243,9 @@ export default {
           console.log(recipient_log_file)
           let logDoc ={}
           try{
-            logDoc = await fetchDocument(recipient_log_file);
+            logDoc = await app.$fc.readFile(recipient_log_file);
           } catch(e){
-            logDoc = await createDocument(recipient_log_file);
+            logDoc = await app.$fc.createFile(recipient_log_file);
           }
 
 
@@ -309,19 +308,19 @@ export default {
 
   },
   async getMessages(){
-    this.inbox = await fc.readFolder(this.current_inbox_url)
+    this.inbox = await this.$fc.readFolder(this.current_inbox_url)
     this.notify(this.inbox.files.length+ " messages !!!")
     this.$store.commit('inbox/setInbox', this.inbox)
   },
   async trash() {
     console.log(this.toTrash)
-    //  await fc.deleteFile( this.toTrash, {withAcl:false})
+    //  await this.$fc.deleteFile( this.toTrash, {withAcl:false})
 
-    await fc.deleteFile(
+    await this.$fc.deleteFile(
       this.toTrash
     );
     console.log("File deleted !");
-    const logDoc = await fetchDocument(this.inbox_log_file);
+    const logDoc = await this.$fc.readFile(this.inbox_log_file);
     let s = logDoc.findSubject(schema.about, this.toTrash)
     logDoc.removeSubject(s)
     //s.addNodeRef(schema.about, message.url)

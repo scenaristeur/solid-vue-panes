@@ -6,7 +6,6 @@
 </template>
 
 <script>
-// import {  fetchDocument } from 'tripledoc';
 // import {  rdf, /* dct,  foaf, rdfs*/} from 'rdf-namespaces'
 //import ToastMixin from '@/mixins/ToastMixin'
 
@@ -26,7 +25,7 @@ async created(){
   try{
     this.uri = this.url.split("#")
     console.log("URI", this.uri)
-    //   const articleDoc = await fetchDocument(this.uri[0]);
+    //   const articleDoc = await this.$fc.readFile(this.uri[0]);
     //   let subj = articleDoc.getSubject(this.url)
     // //  console.log(subj)
     //   let types = subj.getAllRefs(rdf.type)
@@ -49,7 +48,7 @@ async created(){
 },
 methods: {
   /*async getData() {
-  let dataDoc = await fetchDocument(this.url);
+  let dataDoc = await this.$fc.readFile(this.url);
   let subj = dataDoc.getSubject(this.url+"#this")
   console.log(subj)
   let types = subj.getAllRefs(rdf.type)

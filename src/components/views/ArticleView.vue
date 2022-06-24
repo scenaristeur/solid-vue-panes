@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { fetchDocument } from 'tripledoc';
+
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf, sioc} from 'rdf-namespaces' //
 import {markdown} from 'markdown';
 
@@ -65,7 +65,7 @@ export default {
       console.log("article_url",this.article_url)
       if (this.article_url != this.url){
         this.url = this.article_url
-        let dataDoc = await fetchDocument(this.url);
+        let dataDoc = await this.$fc.readFile(this.url);
         let url =  this.url.includes("#") ? this.url : this.url+"#this"
          console.log(url)
         let subject = await dataDoc.getSubject(url)
@@ -76,7 +76,7 @@ export default {
       console.log(this.article_url)
       if (this.article_url != this.url){
         this.url = this.article_url
-        let dataDoc = await fetchDocument(this.url);
+        let dataDoc = await this.$fc.readFile(this.url);
         let url =  this.url.includes("#") ? this.url : this.url+"#this"
          console.log(url)
         let subject = await dataDoc.getSubject(url)

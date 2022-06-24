@@ -1,8 +1,6 @@
-import { createDocument, fetchDocument } from 'tripledoc';
+
 import { rdf, rdfs } from 'rdf-namespaces'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 
 const state = () => ({
   workspaces: [],
@@ -20,7 +18,7 @@ const actions = {
     let workspacesDoc = {}
     let workspaces = []
     try{
-      workspacesDoc = await fetchDocument(indexFile)
+      workspacesDoc = await context.rootState.solid.fc.readFile(indexFile)
       let subjects = workspacesDoc.getAllSubjectsOfType("http://www.w3.org/ns/pim/space#Workspace")
       for  (let s of subjects) {
         let name = s.getLiteral(rdf.label)
@@ -31,7 +29,7 @@ const actions = {
       }
     }catch(e){
       //  console.log(e)
-      //  workspacesDoc = await createDocument(indexFile)
+      //  workspacesDoc = await context.rootState.solid.fc.createFile(indexFile)
     }
   },
   async addWorkspace(context, workspace) {
@@ -41,9 +39,9 @@ const actions = {
     workspace.path = context.rootState.solid.storage+"public/"+ttl_name+"/"
     let workspacesDoc = {}
     try{
-      workspacesDoc = await fetchDocument(indexFile)
+      workspacesDoc = await context.rootState.solid.fc.readFile(indexFile)
     }catch(e){
-      workspacesDoc = await createDocument(indexFile)
+      workspacesDoc = await context.rootState.solid.fc.createFile(indexFile)
     }
     let subject  = workspacesDoc.addSubject({identifier:ttl_name})
     subject.addRef(rdf.type,"http://www.w3.org/ns/pim/space#Workspace")
@@ -58,8 +56,8 @@ const actions = {
   async updateWorkspaces(context, workspaces){
     let indexFile = context.rootState.solid.storage+"public/popock/workspaces.ttl"
     console.log(indexFile)
-    fc.delete(indexFile)
-    let workspacesDoc = await createDocument(indexFile)
+   context.rootState.solid.fc.delete(indexFile)
+    let workspacesDoc = await context.rootState.solid.fc.createFile(indexFile)
 
 
     workspaces.forEach((w) => {

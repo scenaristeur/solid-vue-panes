@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { fetchDocument } from 'tripledoc';
 import { vcard} from 'rdf-namespaces'
 
 export default {
@@ -22,7 +21,7 @@ export default {
   methods: {
     async update(){
       let path = this.url.split("#")
-      let groupDoc =    await fetchDocument(path[0]);
+      let groupDoc =    await this.$fc.readFile(path[0]);
       let gSubj = groupDoc.getSubject(this.url)
       this.name = gSubj.getString(vcard.fn)
     }

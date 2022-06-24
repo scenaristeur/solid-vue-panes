@@ -1,4 +1,4 @@
-import auth from 'solid-auth-client';
+
 
 export default {
   methods: {

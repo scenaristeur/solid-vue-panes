@@ -22,7 +22,7 @@
 </template>
 
 <script>
-//import {  fetchDocument } from 'tripledoc';
+
 import {   dct, rdf, foaf, rdfs} from 'rdf-namespaces'
 //import ToastMixin from '@/mixins/ToastMixin'
 
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     /*async getData() {
-    let dataDoc = await fetchDocument(this.url);
+    let dataDoc = await this.$fc.readFile(this.url);
     let subj = dataDoc.getSubject(this.url+"#this")
     console.log(subj)
     let types = subj.getAllRefs(rdf.type)

@@ -47,9 +47,7 @@
 import profileMixin from '@/mixins/profileMixin'
 import aclMixin from '@/mixins/aclMixin'
 
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 
 export default {
   name: 'AddInstance',
@@ -68,7 +66,7 @@ export default {
       this.name =  this.name.split(' ').join('_');
       let fullpath  =  this.path.endsWith('/') ? this.path+this.name+"/" : this.path+"/"+this.name+"/"
 
-      await fc.createFolder(fullpath).then((res) => {
+      await this.$fc.createFolder(fullpath).then((res) => {
         console.log(res)
       })
       await this.addIndex(this.fullpath, this.type, this.name)

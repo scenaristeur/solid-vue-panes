@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces'
 import SolidChatSend from '@/components/chat/SolidChatSend'
 //import ChatScroller from '@/components/ChatScroller'
@@ -180,7 +179,7 @@ export default {
       this.showTop = true
       try{
 
-        const chatDoc = await fetchDocument(url);
+        const chatDoc = await this.$fc.readFile(url);
         let  subjects = chatDoc.findSubjects();
         subjects = subjects.filter( this.onlyUnique )
         //  console.log(subjects)

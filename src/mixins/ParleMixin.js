@@ -1,7 +1,3 @@
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
-import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf, schema } from 'rdf-namespaces'
 
 export default {
@@ -16,8 +12,8 @@ export default {
 
     },
     async create(fileUrl){
-      if( !await fc.itemExists( fileUrl )) {
-        await fc.postFile(fileUrl, "", "text/turtle")
+      if( !await this.$fc.itemExists( fileUrl )) {
+        await this.$fc.postFile(fileUrl, "", "text/turtle")
         .then((content) => {
           console.log("File Created",content)
         })
@@ -40,8 +36,8 @@ export default {
     async getMessages(uri){
       console.log("URI",uri)
       let messages = []
-      if( !await fc.itemExists( uri )) {
-        await fc.postFile(uri, "", "text/turtle")
+      if( !await this.$fc.itemExists( uri )) {
+        await this.$fc.postFile(uri, "", "text/turtle")
         .then((content) => {
           console.log("File Created",content)
         })
@@ -52,7 +48,7 @@ export default {
       if (this.$store.state.websocket.socket != undefined){
         this.$store.state.websocket.socket.send('sub '+uri);
       }
-      const chatDoc = await fetchDocument(uri);
+      const chatDoc = await this.$fc.readFile(uri);
       //  console.log(chatDoc)
       /*  let triples = chatDoc.getTriples()
       console.log(triples)

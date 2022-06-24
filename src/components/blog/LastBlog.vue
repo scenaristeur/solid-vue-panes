@@ -30,12 +30,9 @@
 </template>
 
 <script>
-//import {  fetchDocument } from 'tripledoc';
+
 //import {  rdf} from 'rdf-namespaces'
 import ActivityMixin from '@/mixins/ActivityMixin'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 export default {
   name: 'LastBlog',
@@ -63,7 +60,7 @@ export default {
   },
   methods: {
     async update(){
-      await fc.readFolder(this.pubPod).then(folder => {
+      await this.$fc.readFolder(this.pubPod).then(folder => {
         console.log("Folder",folder.folders)
         //  store.commit('crud/setShapeUrl', this.shape_url)
         this.folder = folder
@@ -73,7 +70,7 @@ export default {
     }
     //  }
     /*async getData() {
-    let dataDoc = await fetchDocument(this.url);
+    let dataDoc = await this.$fc.readFile(this.url);
     let subj = dataDoc.getSubject(this.url+"#this")
     console.log(subj)
     let types = subj.getAllRefs(rdf.type)

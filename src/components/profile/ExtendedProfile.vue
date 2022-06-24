@@ -73,7 +73,7 @@
 
 <script>
 import ToastMixin from '@/mixins/ToastMixin'
-import { fetchDocument, createDocument } from 'tripledoc';
+
 import { foaf } from 'rdf-namespaces'
 
 export default {
@@ -106,7 +106,7 @@ export default {
     async getOrCreate(p_u){
       try{
         this.makeToast("Get", p_u)
-        this.profileDoc = await fetchDocument(p_u)
+        this.profileDoc = await this.$fc.readFile(p_u)
         let subj = await this.profileDoc.getSubject(this.profile_url+"#me")
         this.interests = await subj.getAllLiterals(foaf.topic_interest)
         this.skills = await subj.getAllLiterals("http://rdfs.org/resume-rdf/cv.rdfs#hasSkill")
@@ -114,7 +114,7 @@ export default {
       }catch(e){
         this.makeToast("Create", p_u)
         try{
-          this.profileDoc = await createDocument(p_u)
+          this.profileDoc = await this.$fc.createFile(p_u)
         }catch(e){
           this.makeToast("Unable to create your extended profile", p_u+ "are you sure that this app is granted in your POD preferences ?", "danger")
         }
@@ -129,11 +129,11 @@ export default {
       this.profileDoc = {}
       let me = {}
       try{
-        this.profileDoc = await fetchDocument(this.profile_url)
+        this.profileDoc = await this.$fc.readFile(this.profile_url)
         me = await this.profileDoc.getSubject(this.profile_url+"#me")
       }
       catch(e){
-        this.profileDoc = await createDocument(this.profile_url)
+        this.profileDoc = await this.$fc.createFile(this.profile_url)
         me = await this.profileDoc.addSubject(this.profile_url+"#me")
       }
       me.addLiteral(foaf.topic_interest, this.interest)
@@ -142,7 +142,7 @@ export default {
       console.log("TODO add activity & match semapps")
     },
     async delInterest(interest){
-      this.profileDoc = await fetchDocument(this.profile_url)
+      this.profileDoc = await this.$fc.readFile(this.profile_url)
       this.interests = this.interests.filter(function(value){ return value != interest});
       let me = await this.profileDoc.getSubject(this.profile_url+"#me")
       me.removeLiteral(foaf.topic_interest, interest)
@@ -153,11 +153,11 @@ export default {
       this.profileDoc = {}
       let me = {}
       try{
-        this.profileDoc = await fetchDocument(this.profile_url)
+        this.profileDoc = await this.$fc.readFile(this.profile_url)
         me = await this.profileDoc.getSubject(this.profile_url+"#me")
       }
       catch(e){
-        this.profileDoc = await createDocument(this.profile_url)
+        this.profileDoc = await this.$fc.createFile(this.profile_url)
         me = await this.profileDoc.addSubject(this.profile_url+"#me")
       }
       me.addLiteral("http://rdfs.org/resume-rdf/cv.rdfs#hasSkill", this.skill)
@@ -166,7 +166,7 @@ export default {
       console.log("TODO add activity & match semapps")
     },
     async delSkill(skill){
-      this.profileDoc = await fetchDocument(this.profile_url)
+      this.profileDoc = await this.$fc.readFile(this.profile_url)
       this.skills = this.skills.filter(function(value){ return value != skill});
       let me = await this.profileDoc.getSubject(this.profile_url+"#me")
       me.removeLiteral("http://rdfs.org/resume-rdf/cv.rdfs#hasSkill", skill)
@@ -177,11 +177,11 @@ export default {
       this.profileDoc = {}
       let me = {}
       try{
-        this.profileDoc = await fetchDocument(this.profile_url)
+        this.profileDoc = await this.$fc.readFile(this.profile_url)
         me = await this.profileDoc.getSubject(this.profile_url+"#me")
       }
       catch(e){
-        this.profileDoc = await createDocument(this.profile_url)
+        this.profileDoc = await this.$fc.createFile(this.profile_url)
         me = await this.profileDoc.addSubject(this.profile_url+"#me")
       }
       me.addLiteral("https://schema.org/providesService", this.service)
@@ -190,7 +190,7 @@ export default {
       console.log("TODO add activity & match semapps")
     },
     async delService(service){
-      this.profileDoc = await fetchDocument(this.profile_url)
+      this.profileDoc = await this.$fc.readFile(this.profile_url)
       this.services = this.services.filter(function(value){ return value != service});
       let me = await this.profileDoc.getSubject(this.profile_url+"#me")
       me.removeLiteral("https://schema.org/providesService", service)

@@ -17,9 +17,6 @@
 
 <script>
 // @ is an alias to /src
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 export default {
   name: 'DomainsView',
@@ -44,7 +41,7 @@ watch: {
 methods:{
   async   updatePath(){
     this.path = this.config.workspace+"domains/"
-    this.folder = await fc.readFolder(this.path)
+    this.folder = await this.$fc.readFolder(this.path)
   }
 },
 computed:{

@@ -1,4 +1,4 @@
-import { fetchDocument, createDocument } from 'tripledoc';
+import Vue from 'vue'
 import {/*namedNode, sioc,*/  dct, foaf, rdfs, rdf } from 'rdf-namespaces'
 import UtilMixin from '@/mixins/UtilMixin'
 
@@ -26,9 +26,9 @@ export default {
 
       let activityDoc = {}
       try{
-        activityDoc = await fetchDocument(fileUrl);
+        activityDoc = await Vue.prototype.$fc.readFile(fileUrl);
       }catch(e){
-        activityDoc = await createDocument(fileUrl);
+        activityDoc = await Vue.prototype.$fc.createFile(fileUrl);
       }
 
       let subj = activityDoc.addSubject({identifier:messageId})
@@ -59,9 +59,9 @@ export default {
 
       let activityDoc = {}
       try{
-        activityDoc = await fetchDocument(fileUrl);
+        activityDoc = await Vue.prototype.$fc.readFile(fileUrl);
       }catch(e){
-        activityDoc = await createDocument(fileUrl);
+        activityDoc = await Vue.prototype.$fc.createFile(fileUrl);
       }
 
       if(this.activity.summary.length <1 ){
@@ -97,9 +97,9 @@ export default {
       var date = dateObj.toISOString()
       let activityDoc = {}
       try{
-        activityDoc = await fetchDocument(fileUrl);
+        activityDoc = await Vue.prototype.$fc.readFile(fileUrl);
       }catch(e){
-        activityDoc = await createDocument(fileUrl);
+        activityDoc = await Vue.prototype.$fc.createFile(fileUrl);
       }
 
       //console.log("webId",this.webId)

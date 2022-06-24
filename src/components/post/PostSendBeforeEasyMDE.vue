@@ -55,11 +55,7 @@
 
 <script>
 import activityMixin from '@/mixins/ActivityMixin'
-import { fetchDocument, createDocument } from 'tripledoc';
 import {/*namedNode, sioc,*/  dct, foaf, rdfs, sioc, rdf } from 'rdf-namespaces'
-// import auth from 'solid-auth-client';
-// import FC from 'solid-file-client'
-// const fc = new FC( auth )
 
 export default {
   name: 'PostSend',
@@ -118,9 +114,9 @@ export default {
 
       let postDoc = {}
       try{
-        postDoc = await fetchDocument(fileUrl);
+        postDoc = await this.$fc.readFile(fileUrl);
       }catch(e){
-        postDoc = await createDocument(fileUrl);
+        postDoc = await this.$fc.createFile(fileUrl);
       }
 
       var postId = "Article_"+d.getTime()

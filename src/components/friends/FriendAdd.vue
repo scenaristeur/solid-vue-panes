@@ -22,7 +22,7 @@
 
 <script>
 import profileMixin from '@/mixins/profileMixin'
-import { fetchDocument } from 'tripledoc';
+
 import { foaf } from 'rdf-namespaces'
 
 export default {
@@ -54,7 +54,7 @@ export default {
       try{
         console.log(this.friend, this.webId)
       //  !(this.friend.endWith('#me') || this.friend.endWith('#i')) ? this.friend+("#me") : ""
-        const profileDoc = await fetchDocument(this.webId);
+        const profileDoc = await this.$fc.readFile(this.webId);
         const p = profileDoc.getSubject(this.webId)
         await  p.addRef(foaf.knows, this.friend )
         await profileDoc.save()

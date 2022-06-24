@@ -17,9 +17,7 @@
 
 <script>
 // @ is an alias to /src
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 import groupsMixin from '@/mixins/groupsMixin'
 
 export default {
@@ -46,7 +44,7 @@ watch: {
 methods:{
 async   updatePath(){
     this.path = this.config.workspace+"groups/"
-    this.folder = await fc.readFolder(this.path)
+    this.folder = await this.$fc.readFolder(this.path)
   }
 },
 computed:{

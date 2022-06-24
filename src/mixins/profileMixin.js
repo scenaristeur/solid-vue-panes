@@ -1,8 +1,6 @@
-import { fetchDocument } from 'tripledoc';
+
 import { vcard, foaf, dct, rdfs, ldp , rdf} from 'rdf-namespaces'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 
 export default {
   methods: {
@@ -10,7 +8,7 @@ export default {
       let profile = {friends:[]}
       profile.webId = webId
       try{
-        let profileDoc = await fetchDocument(webId);
+        let profileDoc = await this.$fc.readFile(webId);
         const p = profileDoc.getSubject(webId)
         profile.name = p.getString(vcard.fn)
         profile.organization = p.getString("http://www.w3.org/2006/vcard/ns#organization-name")
@@ -46,8 +44,8 @@ export default {
               let groups_folder = w.path+"groups"
               let tensions_folder = w.path+"tensions"
               console.log("ww",w, groups_folder, tensions_folder)
-              let g_folder = await fc.readFolder(groups_folder)
-              let t_folder = await fc.readFolder(groups_folder)
+              let g_folder = await this.$fc.readFolder(groups_folder)
+              let t_folder = await this.$fc.readFolder(groups_folder)
               let g_urls = g_folder.files
               let t_urls = t_folder.files
               console.log(g_urls, t_urls)
@@ -77,7 +75,7 @@ export default {
     getInboxUrls: async function(webId){
       let inbox_urls = []
       try{
-        let profileDoc = await fetchDocument(webId);
+        let profileDoc = await this.$fc.readFile(webId);
         const p = profileDoc.getSubject(webId)
         inbox_urls = await  p.getAllRefs(ldp.inbox )
       }catch(e){
@@ -89,7 +87,7 @@ export default {
     getFriends: async function(webId){
       let friends = []
       try{
-        let profileDoc = await fetchDocument(webId);
+        let profileDoc = await this.$fc.readFile(webId);
         const p = profileDoc.getSubject(webId)
         friends = await  p.getAllRefs(foaf.knows )
       }catch(e){
@@ -107,10 +105,10 @@ export default {
       let storage =  await solid.data[webId].storage
       let indexFile = storage+"public/popock/workspaces.ttl"
       //  console.log(webId, storage, indexFile)
-      if ( fc.itemExists(indexFile)){
+      if (this.$fc.itemExists(indexFile)){
         let workspacesDoc = {}
         try{
-          workspacesDoc = await fetchDocument(indexFile)
+          workspacesDoc = await this.$fc.readFile(indexFile)
           let subjects = workspacesDoc.getAllSubjectsOfType("http://www.w3.org/ns/pim/space#Workspace")
           for  (let s of subjects) {
             let name = s.getLiteral(rdf.label)
@@ -120,7 +118,7 @@ export default {
           }
         }catch(e){
           //  console.log(e)
-          //  workspacesDoc = await createDocument(indexFile)
+          //  workspacesDoc = await this.$fc.createFile(indexFile)
         }
       }
 
@@ -140,7 +138,7 @@ export default {
             console.log(w.name, w.path, w.subject)
             let folder = w.path+'groups'
             console.log("groups_folder", folder)
-            let f = await fc.readFolder(folder)
+            let f = await this.$fc.readFolder(folder)
             groups = f.files
             console.log("GGGGGGGRRRRoups 2",groups)
             return groups
@@ -162,7 +160,7 @@ export default {
           if(w.name == 'gouvernance'){
             let folder = w.path+'tensions'
             console.log("TTTTTTTTTension folder", folder)
-            let f = await fc.readFolder(folder)
+            let f = await this.$fc.readFolder(folder)
             tensions = f.files
             console.log("TTTTTENSIONS",tensions)
           }
@@ -185,7 +183,7 @@ export default {
       //      console.log(inst, classe, name, webId)
       let puti = this.$store.state.solid.indexes.puti
       //    console.log(puti)
-      let putiDoc = await fetchDocument(puti.url)
+      let putiDoc = await this.$fc.readFile(puti.url)
       let newchat = await putiDoc.addSubject()
       //subj.addLiteral(dct.created, date)
       newchat.addLiteral(rdfs.label, name)
@@ -198,7 +196,7 @@ export default {
     getIndexes: async function(webId){
       let indexes = {puti: {instances: [], classes: []}, prti: {instances: [], classes: []}}
       try{
-        let profileDoc = await fetchDocument(webId);
+        let profileDoc = await this.$fc.readFile(webId);
         const subject = profileDoc.getSubject(webId)
 
         let puti = await  subject.getNodeRef("http://www.w3.org/ns/solid/terms#publicTypeIndex" )
@@ -208,8 +206,8 @@ export default {
         //    console.log(prti)
         indexes.puti.url = puti
         indexes.prti.url = prti
-        let putiDoc = await fetchDocument(puti)
-        //  let prtiDoc = await fetchDocument(prti)
+        let putiDoc = await this.$fc.readFile(puti)
+        //  let prtiDoc = await this.$fc.readFile(prti)
         //    console.log(putiDoc)
         //    console.log(prtiDoc)
         let puIndexes = await putiDoc.findSubjects("http://www.w3.org/ns/solid/terms#forClass")

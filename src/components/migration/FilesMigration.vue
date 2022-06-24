@@ -44,9 +44,7 @@ import {
   getAgentAccessAll,
 } from "@inrupt/solid-client";
 import ToastMixin from '@/mixins/ToastMixin'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 
 export default {
   name: 'FilesMigration',
@@ -80,7 +78,7 @@ export default {
       while (this.mustUpdate.length > 0 ) {
         let f = this.mustUpdate.pop()
         try{
-          await fc.createFile( f.url, f.newContent, f.type )
+          await this.$fc.createFile( f.url, f.newContent, f.type )
           console.log("fixed",f.url)
           app.makeToast("FIXED", this.file.url, "success")
         }catch(e){

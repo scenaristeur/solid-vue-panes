@@ -32,10 +32,7 @@
 </template>
 
 <script>
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
-import { fetchDocument } from 'tripledoc';
+
 import { sioc, rdfs } from 'rdf-namespaces'
 
 export default {
@@ -65,9 +62,9 @@ export default {
       let bookmarks = []
 
       try {
-        bm = await fc.readFolder(path)
+        bm = await this.$fc.readFolder(path)
         if (bm.files.length > 0){
-          const bookmarkDoc = await fetchDocument(bm.files[0].url);
+          const bookmarkDoc = await this.$fc.readFile(bm.files[0].url);
           let  subjects = bookmarkDoc.findSubjects();
           subjects = subjects.filter( this.onlyUnique )
           for  (let s of subjects) {

@@ -65,12 +65,9 @@
 <script>
 // @ is an alias to /src
 // router en mode history
-import { fetchDocument, createDocument } from 'tripledoc';
+
 import { sioc, dct, foaf, rdf, rdfs } from 'rdf-namespaces'
 
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 
 export default {
@@ -78,7 +75,7 @@ export default {
   components: {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
   },
-  //  mixins: [loginMixin],
+
   data: function () {
     return {
       //  webId: {},
@@ -136,7 +133,7 @@ methods:{
     if (this.webId != null){
 
       var date = new Date();
-      const bookmarkDoc =    await fc.itemExists( this.path ) ?    await fetchDocument(this.path) : await createDocument(this.path);
+      const bookmarkDoc =    await this.$fc.itemExists( this.path ) ?    await this.$fc.readFile(this.path) : await this.$fc.createFile(this.path);
 
       let subj =   bookmarkDoc.addSubject()
       subj.addLiteral(rdfs.label, this.title)

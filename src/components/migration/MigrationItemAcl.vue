@@ -14,7 +14,7 @@
 </template>
 
 <script>
-//import {  fetchDocument } from 'tripledoc';
+
 //import {  rdf} from 'rdf-namespaces'
 import ToastMixin from '@/mixins/ToastMixin'
 import {
@@ -22,9 +22,7 @@ import {
   getAgentAccessAll,
 } from "@inrupt/solid-client";
 
-// import auth from 'solid-auth-client';
-// import FC from 'solid-file-client'
-// const fc = new FC( auth )
+
 
 export default {
   name: 'MigrationItem',
@@ -64,9 +62,9 @@ export default {
 
 
       // try{
-      //   const { acl: aclUrl } = await fc.getItemLinks(this.item.url, { links: 'include_possible'})
+      //   const { acl: aclUrl } = await this.$fc.getItemLinks(this.item.url, { links: 'include_possible'})
       //   this.aclUrl = aclUrl
-      //   let content = await fc.aclUrlParser(this.item.url)
+      //   let content = await this.$fc.aclUrlParser(this.item.url)
       //   console.log(content)
       // }catch(e){
       //   this.makeToast("Error", e, "danger")
@@ -83,7 +81,7 @@ export default {
   },
   methods: {
     /*async getData() {
-    let dataDoc = await fetchDocument(this.url);
+    let dataDoc = await this.$fc.readFile(this.url);
     let subj = dataDoc.getSubject(this.url+"#this")
     console.log(subj)
     let types = subj.getAllRefs(rdf.type)

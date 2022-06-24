@@ -40,7 +40,7 @@ export default {
     }
     //  this.solid= window.solid
     //  this.webId =
-    //  fc = new SolidFileClient(auth)
+    // this.$fc = new SolidFileClient(auth)
     //  example     await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(messUri))
 
   },

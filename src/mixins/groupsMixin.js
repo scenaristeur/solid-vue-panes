@@ -1,11 +1,11 @@
-import { fetchDocument } from 'tripledoc';
+
 import { vcard } from 'rdf-namespaces'
 
 export default {
   methods: {
     async getGroup(url) {
       let group = {members: [], subgroups: []}
-      const groupDoc = await fetchDocument(url);
+      const groupDoc = await this.$fc.readFile(url);
       let index = groupDoc.findSubject()
       group.name = index.getLiteral(vcard.fn)
       group.members = index.getAllRefs(vcard.hasMember)

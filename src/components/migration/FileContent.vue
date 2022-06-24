@@ -40,12 +40,10 @@
   </template>
 
   <script>
-  //import {  fetchDocument } from 'tripledoc';
+
   //import {  rdf} from 'rdf-namespaces'
   import ToastMixin from '@/mixins/ToastMixin'
-  import auth from 'solid-auth-client';
-  import FC from 'solid-file-client'
-  const fc = new FC( auth )
+
 
   export default {
     name: 'FileContent',
@@ -69,8 +67,8 @@
   },
   methods: {
     async getContent(){
-      let content = await fc.readFile(this.file.url)
-      // this.aclObject = await fc.aclUrlParser(this.file.url)
+      let content = await this.$fc.readFile(this.file.url)
+      // this.aclObject = await this.$fc.aclUrlParser(this.file.url)
       // console.log("ACLOBJECT", this.aclObject)
       //  console.log("CONTENT", this.file.url, text, typeof text )
       if (typeof content == "string" ){
@@ -91,7 +89,7 @@
     //  console.log(result)
     //  console.log(this.file)
       try{
-        await fc.createFile( this.file.url, result, this.file.type )
+        await this.$fc.createFile( this.file.url, result, this.file.type )
         this.makeToast("FIXED", this.file.url, "success")
       }catch(e){
         this.makeToast("ERROR", e, "danger")
@@ -99,7 +97,7 @@
 
     }
     /*async getData() {
-    let dataDoc = await fetchDocument(this.url);
+    let dataDoc = await this.$fc.readFile(this.url);
     let subj = dataDoc.getSubject(this.url+"#this")
     console.log(subj)
     let types = subj.getAllRefs(rdf.type)

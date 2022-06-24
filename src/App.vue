@@ -6,7 +6,7 @@
     <transition name="fade">
       <router-view/>
     </transition>
-    <SolidTrackSession />
+    <!-- <SolidTrackSession /> -->
 
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -25,7 +25,7 @@
     <small><i>
       <a href="https://github.com/scenaristeur/solid-vue-panes/commits/master" target="_blank">
         0.1.178 - add liqid chat
-          </a>
+      </a>
     </i></small>
 
   </div>
@@ -38,7 +38,10 @@ export default {
   name: 'App',
   components: {
     'NavBar': () => import('@/components/layout/NavBar.vue'),
-    'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+    // 'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+  },
+  created(){
+    this.$checkSolidSession()
   },
   computed: {
     progressValue(){return this.$store.state.solid.progressValue},

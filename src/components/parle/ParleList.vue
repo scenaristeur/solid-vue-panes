@@ -76,10 +76,8 @@
 
 <script>
 import ParleMixin from '@/mixins/ParleMixin' // Manage folders & files
-import { fetchDocument, createDocument } from 'tripledoc';
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
+
 import {/* sioc,*/ dct, foaf, schema } from 'rdf-namespaces'
 
 export default {
@@ -165,8 +163,8 @@ export default {
 
         // create Doc
 
-        if( !await fc.itemExists( child_url )) {
-          await fc.postFile(child_url, "", "text/turtle")
+        if( !await this.$fc.itemExists( child_url )) {
+          await this.$fc.postFile(child_url, "", "text/turtle")
           .then((content) => {
             console.log("File Created",content)
           })
@@ -178,9 +176,9 @@ export default {
 
         let newDoc = {}
         try{
-          newDoc = await fetchDocument(child_url);
+          newDoc = await this.$fc.readFile(child_url);
         } catch(e){
-          newDoc = await createDocument(child_url);
+          newDoc = await this.$fc.createFile(child_url);
         }
 
         //  console.log(newDoc)
@@ -196,9 +194,9 @@ export default {
         //
         let referDoc = {}
         try{
-          referDoc = await fetchDocument(parent);
+          referDoc = await this.$fc.readFile(parent);
         } catch(e){
-          referDoc = await createDocument(parent);
+          referDoc = await this.$fc.createFile(parent);
         }
         let p_id = referDoc.getSubject(parent)
         p_id.addRef(schema.hasPart, child_url)

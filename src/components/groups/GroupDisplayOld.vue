@@ -79,7 +79,7 @@
 import groupsMixin from '@/mixins/groupsMixin'
 import ToastMixin from '@/mixins/ToastMixin'
 
-import { createDocument, fetchDocument } from 'tripledoc';
+
 import { vcard, dct, foaf, ldp} from 'rdf-namespaces'
 
 export default {
@@ -125,7 +125,7 @@ export default {
       var date = dateObj.toISOString()
       this.path = this.url+this.name+".ttl"
       // https://www.w3.org/TR/vocab-org/#org:purpose
-      let groupDoc =    await createDocument(this.path);
+      let groupDoc =    await this.$fc.createFile(this.path);
       let subj =   groupDoc.addSubject({identifier:"this"})
       subj.addLiteral(vcard.fn, this.name)
       subj.addRef(ldp.inbox, "./"+this.name+"/inbox/")
@@ -141,7 +141,7 @@ export default {
       /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
 
-      let parentDoc =    await fetchDocument(this.parent);
+      let parentDoc =    await this.$fc.readFile(this.parent);
       let pSubj = parentDoc.getSubject(this.parent+"#this")
       pSubj.addNodeRef("http://www.w3.org/ns/org#hasSubOrganization", this.path)
 

@@ -20,7 +20,7 @@ export default {
   methods: {
     async trash() {
       console.log(this.toTrash)
-      //  await fc.deleteFile( this.toTrash, {withAcl:false})
+      //  await this.$fc.deleteFile( this.toTrash, {withAcl:false})
 
       await deleteFile(
         this.toTrash

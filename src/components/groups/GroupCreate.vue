@@ -27,7 +27,7 @@
 
 <script>
 // @ is an alias to /src
-import { createDocument, fetchDocument } from 'tripledoc';
+
 import { vcard, dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
 import groupsMixin from '@/mixins/groupsMixin'
 //const { namedNode } = require('@rdfjs/data-model');
@@ -99,7 +99,7 @@ methods:{
     console.log(this.path)
     // https://www.w3.org/TR/vocab-org/#org:purpose
     //http://ipocore.sourceforge.net/1.2.0/ipo-1.2.0.html#Task
-    let groupDoc =    await createDocument(this.path);
+    let groupDoc =    await this.$fc.createFile(this.path);
     let subj =  groupDoc.addSubject({identifier:"this"})
     subj.addLiteral(vcard.fn, this.name)
     subj.addRef(ldp.inbox, "./"+ttl_name+"/inbox/")
@@ -118,7 +118,7 @@ methods:{
       subj.addRef('https://www.w3.org/ns/activitystreams#object', this.tension+"#this")
       subj.addRef(foaf.topic_interest, this.tension)
       // add the group to the tension
-      let tensionDoc = await fetchDocument(this.tension);
+      let tensionDoc = await this.$fc.readFile(this.tension);
       let tensionSubj = tensionDoc.getSubject(this.tension+"#this")
       tensionSubj.addRef("https://www.w3.org/ns/activitystreams#actor", this.path+"#this")
       await tensionDoc.save();
@@ -199,9 +199,9 @@ methods:{
       let activityDoc = {}
       console.log(fileUrl)
       try{
-        activityDoc = await fetchDocument(fileUrl);
+        activityDoc = await this.$fc.readFile(fileUrl);
       }catch(e){
-        activityDoc = await createDocument(fileUrl);
+        activityDoc = await this.$fc.createFile(fileUrl);
       }
 
       console.log("webId",this.webId)

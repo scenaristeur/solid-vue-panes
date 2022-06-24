@@ -19,7 +19,7 @@
 
 <script>
 // @ is an alias to /src
-import { createDocument, fetchDocument } from 'tripledoc';
+
 import { rdf, dct /*vcard, dct, foaf, ldp*/} from 'rdf-namespaces'
 /*import {
 getSolidDataset,
@@ -48,7 +48,7 @@ export default {
     },
     '$route' (to) {
       console.log(to)
-      
+
       console.log(this.$route)
     },
   },
@@ -70,7 +70,7 @@ export default {
       var date = dateObj.toISOString()
       let timestamp = Date.now()
       console.log(timestamp)
-      let chatDoc = await createDocument(this.chat_url);
+      let chatDoc = await this.$fc.createFile(this.chat_url);
       let subj =   chatDoc.addSubject({identifier: "this"})
       //subj.addLiteral(sioc.content, this.activity)
       subj.addRef(rdf.type, "http://www.w3.org/ns/pim/meeting#LongChat")
@@ -85,7 +85,7 @@ export default {
 
       await chatDoc.save();
 
-      let groupDoc = await fetchDocument(this.group);
+      let groupDoc = await this.$fc.readFile(this.group);
       let group_instance =  groupDoc.addSubject({identifier: timestamp})
       group_instance.addRef("http://www.w3.org/ns/solid/terms#forClass", "http://www.w3.org/ns/pim/meeting#LongChat")
       group_instance.addRef("http://www.w3.org/ns/solid/terms#instance", this.chat_url+"#this")
@@ -111,7 +111,7 @@ export default {
     },
     async update(){
       console.log(this.group)
-      let groupDoc = await fetchDocument(this.group);
+      let groupDoc = await this.$fc.readFile(this.group);
       let gSubj = groupDoc.getSubject(this.group+"#this")
       console.log(gSubj)
       console.log(groupDoc)

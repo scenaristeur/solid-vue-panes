@@ -53,7 +53,6 @@
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
-import {  fetchDocument, createDocument } from 'tripledoc';
 import { foaf, rdfs, dct, rdf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import {
@@ -280,7 +279,7 @@ export default {
 
       var dateObj = new Date();
       var date = dateObj.toISOString()
-      let doc =  await fetchDocument(this.file.url)
+      let doc =  await this.$fc.readFile(this.file.url)
       //console.log(doc)
       let subj = doc.addSubject({identifier: subj_identifier})
       subj.addString(rdfs.label, subject[0].label)
@@ -336,17 +335,17 @@ export default {
       //console.log(this.file.url)
       let exist = false
       try{
-        doc =  await fetchDocument(this.tmp_file.url)
+        doc =  await this.$fc.readFile(this.tmp_file.url)
         exist = true
       }catch(e){
-        doc =  await createDocument(this.tmp_file.url)
+        doc =  await this.$fc.createFile(this.tmp_file.url)
         exist = false
 
       }
 
       var dateObj = new Date();
       var date = dateObj.toISOString()
-      //let doc =  await fetchDocument(this.file.url)
+      //let doc =  await this.$fc.readFile(this.file.url)
       //console.log(doc)
       let subj = doc.addSubject({identifier: "this"})
 
@@ -462,7 +461,7 @@ export default {
       this.file.localname = split_hash[1]
       if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
       //  this.clear()
-        let fileDoc = await fetchDocument(this.file.url)
+        let fileDoc = await this.$fc.readFile(this.file.url)
         //  console.log("fileDoc",fileDoc)
         this.triples = fileDoc.getTriples()
         //console.log(this.triples)
@@ -514,7 +513,7 @@ export default {
     },
 
     /*async getData() {
-    let dataDoc = await fetchDocument(this.url);
+    let dataDoc = await this.$fc.readFile(this.url);
     let subj = dataDoc.getSubject(this.url+"#this")
     console.log(subj)
     let types = subj.getAllRefs(rdf.type)

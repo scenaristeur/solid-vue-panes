@@ -29,9 +29,6 @@
 
 <script>
 
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 export default {
   name: 'GroupsList',
@@ -70,7 +67,7 @@ export default {
       console.log(url)
       if (this.storage != null && this.storage.length > 0){
         console.log("init groups : ",url)
-        this.folder = await fc.readFolder(url)
+        this.folder = await this.$fc.readFolder(url)
         console.log("Folder : ", this.folder)
       }
     },

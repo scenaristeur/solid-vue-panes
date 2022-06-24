@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import {  fetchDocument, createDocument } from 'tripledoc';
+
 import { foaf, rdfs, dct, rdf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import {
@@ -334,7 +334,7 @@ methods: {
 
     var dateObj = new Date();
     var date = dateObj.toISOString()
-    let doc =  await fetchDocument(this.file.url)
+    let doc =  await this.$fc.readFile(this.file.url)
     //console.log(doc)
     let subj = doc.addSubject({identifier: subj_identifier})
     subj.addString(rdfs.label, subject[0].label)
@@ -391,17 +391,17 @@ methods: {
     //console.log(this.file.url)
     let exist = false
     try{
-      doc =  await fetchDocument(this.tmp_file.url)
+      doc =  await this.$fc.readFile(this.tmp_file.url)
       exist = true
     }catch(e){
-      doc =  await createDocument(this.tmp_file.url)
+      doc =  await this.$fc.createFile(this.tmp_file.url)
       exist = false
 
     }
 
     var dateObj = new Date();
     var date = dateObj.toISOString()
-    //let doc =  await fetchDocument(this.file.url)
+    //let doc =  await this.$fc.readFile(this.file.url)
     //console.log(doc)
     let subj = doc.addSubject({identifier: "this"})
 
@@ -507,7 +507,7 @@ createActivity(){
     this.triples = []
     console.log(this.file.url)
     if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
-      let fileDoc = await fetchDocument(this.file.url)
+      let fileDoc = await this.$fc.readFile(this.file.url)
       console.log("fileDoc",fileDoc)
       this.triples = fileDoc.getTriples()
       console.log(this.triples)
@@ -524,7 +524,7 @@ createActivity(){
     let p_u = storage+"public/popock/profile.ttl"
     //console.log("P8U",p_u)
     try{
-      this.profileDoc = await fetchDocument(p_u)
+      this.profileDoc = await this.$fc.readFile(p_u)
       let subj = await this.profileDoc.getSubject(p_u+"#me")
       this.interests = await subj.getAllLiterals(foaf.topic_interest)
       //console.log(this.interests)
@@ -539,7 +539,7 @@ createActivity(){
 
     }catch(e){
       // //console.log(e)
-      //  this.profileDoc = await createDocument(p_u)
+      //  this.profileDoc = await this.$fc.createFile(p_u)
     }
 
   },

@@ -1,7 +1,6 @@
 import ToastMixin from '@/mixins/ToastMixin'
 import fileMixin from '@/mixins/fileMixin'
 
-import { fetchDocument} from 'tripledoc';
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
 
 
@@ -44,7 +43,7 @@ export default {
     },
     async getTensionDetail(tension){
 
-      let tensionDoc = await fetchDocument(tension.url)
+      let tensionDoc = await this.$fc.readFile(tension.url)
       const t_subj = tensionDoc.getSubject(tension.url+"#this")
       let details = tension
       details.created = t_subj.getLiteral(dct.created)

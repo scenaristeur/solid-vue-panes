@@ -18,12 +18,9 @@ import {
   saveAclFor,
 } from "@inrupt/solid-client";
 
-import { fetchDocument, createDocument } from 'tripledoc';
+
 import { schema } from 'rdf-namespaces'
 
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 export default {
   created(){
@@ -33,17 +30,17 @@ export default {
     async configureInbox(inbox_url, webId){
       console.log("configureInbox",inbox_url, webId,this.storage)
       let inbox_log_file = this.storage+"popock/inbox_log.ttl"
-      let inbox_exists = await fc.itemExists(inbox_url)
+      let inbox_exists = await this.$fc.itemExists(inbox_url)
       if (!inbox_exists){
-        await fc.createFolder(inbox_url)
+        await this.$fc.createFolder(inbox_url)
       }
 
 
       let logDoc ={}
       try{
-        logDoc = await fetchDocument(inbox_log_file);
+        logDoc = await this.$fc.readFile(inbox_log_file);
       } catch(e){
-        logDoc = await createDocument(inbox_log_file);
+        logDoc = await this.$fc.createFile(inbox_log_file);
         let s = logDoc.addSubject()
         s.addNodeRef(schema.about, "init")
         //  console.log(logDoc)
@@ -63,9 +60,9 @@ export default {
           alert ("Are you sure that you have allowed me to 'CONTROL' your POD, I can't read Acl of "+inbox_url+". I got a NULL value !! Please check your POD / Preferences / Trusted Application. ")
         }
 
-        /*  if( !(await fc.itemExists(inbox_log_file)) ) {
+        /*  if( !(await this.$fc.itemExists(inbox_log_file)) ) {
         console.log("creation:",inbox_log_file)
-        await fc.postFile( inbox_log_file, " ", "text/turtle") // only create if it doesn't already exist
+        await this.$fc.postFile( inbox_log_file, " ", "text/turtle") // only create if it doesn't already exist
       }*/
 
 
@@ -73,7 +70,7 @@ export default {
 
 
       console.log("inbox_url: ", inbox_url, "inbox_exists: ", inbox_exists, "agentAcces: ", agentAccess, "publicAccess:", publicAccess )
-      let inbox_log_file_exists = await fc.itemExists(inbox_log_file)
+      let inbox_log_file_exists = await this.$fc.itemExists(inbox_log_file)
       console.log("inbox_log_file_exists:", inbox_log_file_exists)
 
 
@@ -189,7 +186,7 @@ export default {
         }
 
         // cleaning for debug
-        //await fc.deleteFile(inbox_log_file)
+        //await this.$fc.deleteFile(inbox_log_file)
 
 
 

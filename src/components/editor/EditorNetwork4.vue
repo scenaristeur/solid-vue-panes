@@ -80,7 +80,7 @@
 </template>
 
 <script>
-// import {  fetchDocument, createDocument } from 'tripledoc';
+
 // import { foaf, rdfs, dct, rdf } from 'rdf-namespaces'
 // import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 // import {

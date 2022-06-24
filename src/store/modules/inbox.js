@@ -1,8 +1,5 @@
-import { fetchDocument } from 'tripledoc';
+
 import { ldp } from 'rdf-namespaces'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 let websocket, socket
 
@@ -22,11 +19,11 @@ const actions = {
       config.webId = user.webId
       config.storage = user.storage
       config.inbox_log_file = user.storage+"popock/inbox_log.ttl"
-      let profileDoc = await fetchDocument(user.webId);
+      let profileDoc = await context.rootState.solid.fc.readFile(user.webId);
       const p = profileDoc.getSubject(user.webId)
       config.inbox_urls = await  p.getAllRefs(ldp.inbox )
       context.commit('setInboxConfig', config)
-      let  inbox = await fc.readFolder(config.inbox_urls[0])
+      let  inbox = await context.rootState.solid.fc.readFolder(config.inbox_urls[0])
       context.commit('setInbox', inbox)
       // websocket
       websocket = "wss://"+config.inbox_log_file.split('/')[2];
@@ -38,7 +35,7 @@ const actions = {
       socket.onmessage = async function(msg) {
         if (msg.data && msg.data.slice(0, 3) === 'pub') {
           console.log(msg.data)
-          let  inbox = await fc.readFolder(config.inbox_urls[0])
+          let  inbox = await context.rootState.solid.fc.readFolder(config.inbox_urls[0])
           context.commit('setInbox', inbox)
         }
       };

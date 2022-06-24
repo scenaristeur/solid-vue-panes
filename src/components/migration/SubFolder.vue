@@ -23,9 +23,8 @@
 <script>
 
 import ToastMixin from '@/mixins/ToastMixin'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
+
 
 
 export default {
@@ -50,7 +49,7 @@ export default {
 
 
         try{
-          this.folder = await fc.readFolder(this.url)
+          this.folder = await this.$fc.readFolder(this.url)
 
 
           this.$store.commit('migration/addFolders', this.folder.folders)

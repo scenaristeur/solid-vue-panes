@@ -34,7 +34,7 @@ import OpenIcon from '@/assets/logo-no-bg.svg'
 import FileIcon from '@/assets/file.svg'
 import CloseIconSvg from '@/assets/close.svg'
 
-import { fetchDocument } from 'tripledoc';
+
 import { sioc, dct, foaf } from 'rdf-namespaces'
 
 export default {
@@ -108,7 +108,7 @@ export default {
     async updateMessages(url, sens){
       console.log(url, sens)
       try{
-        const chatDoc = await fetchDocument(url);
+        const chatDoc = await this.$fc.readFile(url);
         let  subjects = chatDoc.findSubjects();
         subjects = subjects.filter( this.onlyUnique )
       //  console.log(subjects)

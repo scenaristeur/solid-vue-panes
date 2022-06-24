@@ -26,13 +26,11 @@
 </template>
 
 <script>
-//import auth from 'solid-auth-client';
+
 import UtilMixin from '@/mixins/UtilMixin.js'
 import TtlMixin from '@/mixins/crud/TtlMixin.js'
 import SolidMixin from '@/mixins/crud/SolidMixin.js'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 //import SaveParameters from '@/components/SaveParameters.vue'
 
 export default {
@@ -89,7 +87,7 @@ export default {
       console.log("TTL",ttlFile)
       let path = ttlFile.ttlData.shape+"/"+ttlFile.filename
       console.log(path)
-      await fc.createFile(path, ttlFile.content, "text/turtle")
+      await this.$fc.createFile(path, ttlFile.content, "text/turtle")
       .then(
         result =>{
           console.log(result)
@@ -110,14 +108,14 @@ export default {
 
 
       /*  let path = this.storage+"public/shighltest/test.text"
-      await fc.createFile(path, JSON.stringify(data), "text/plain")*/
+      await this.$fc.createFile(path, JSON.stringify(data), "text/plain")*/
 
       let ttlData = {form: data, shape: this.currentShape, author: this.webId}
       let ttlFile = this.buildTtl(ttlData)
       console.log("TTL",ttlFile)
       let path = this.workspace+this.localname(this.currentShape)+"/"+ttlFile.filename
       console.log(path)
-      await fc.createFile(path, ttlFile.content, "text/turtle")
+      await this.$fc.createFile(path, ttlFile.content, "text/turtle")
       .then(
         result =>{
           console.log(result)
@@ -137,7 +135,7 @@ export default {
       let ttlData = {form: data, shape: this.currentShape, author: this.webId}
       let ttlFile = this.buildTtl(ttlData)
       let path = this.storage+"public/shighltest/"+this.localname(this.currentShape)+"/"+ttlFile.filename
-      await fc.createFile(path, ttlFile.content, "text/turtle")
+      await this.$fc.createFile(path, ttlFile.content, "text/turtle")
       .then(
         result =>{
           console.log(result)

@@ -260,7 +260,7 @@
 
 <script>
 import networkMixin from '@/mixins/networkMixin'
-import { fetchDocument, /*createDocument*/ } from 'tripledoc';
+
 import { foaf } from 'rdf-namespaces'
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import axios from 'axios';
@@ -825,7 +825,7 @@ async addInterests(webId){
   let p_u = storage+"public/popock/profile.ttl"
   //console.log("P8U",p_u)
   try{
-    this.profileDoc = await fetchDocument(p_u)
+    this.profileDoc = await this.$fc.readFile(p_u)
     let subj = await this.profileDoc.getSubject(p_u+"#me")
     this.interests = await subj.getAllLiterals(foaf.topic_interest)
     console.log(this.interests)
@@ -842,7 +842,7 @@ async addInterests(webId){
 
   }catch(e){
     //  console.log(e)
-    //  this.profileDoc = await createDocument(p_u)
+    //  this.profileDoc = await this.$fc.createFile(p_u)
   }
 
 },

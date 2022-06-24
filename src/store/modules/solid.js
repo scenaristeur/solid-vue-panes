@@ -1,13 +1,12 @@
 //const solid= window.solid
 //  this.webId =
 
-import auth from 'solid-auth-client';
-import { fetchDocument } from 'tripledoc';
+import FC from 'solid-file-client'
+
+
 import { vcard,  dct /* rdfs, foaf, ldp, acl */} from 'rdf-namespaces'
 import axios from 'axios';
 
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 // initial state
 const state = () => ({
   webId : null,
@@ -23,6 +22,9 @@ const state = () => ({
   // Progress
   progressMax: 14,
   progressValue: 0,
+  session: null,
+  pod: null,
+ fc: null
 })
 
 // getters
@@ -35,7 +37,7 @@ const actions = {
     let webId = context.state.webId
     console.log(webId)
     console.log(profile.name)
-    let profileDoc = await fetchDocument(webId);
+    let profileDoc = await context.state.fc.readFile(webId);
     const p = profileDoc.getSubject(webId)
     profile.name != undefined ? p.setString(vcard.fn, profile.name) : "";
     profile.organization != undefined ? p.setString("http://www.w3.org/2006/vcard/ns#organization-name", profile.organization) : "";
@@ -69,9 +71,12 @@ const actions = {
       let storage =  await solid.data[webId].storage
       context.commit('setStorage', `${storage}`)
       context.commit('setProgress', 2)
-      //  let folder = await fc.readFolder(`${storage}` , {links:"include_possible"})
+      //  let folder = await this.$fc.readFolder(`${storage}` , {links:"include_possible"})
       try{
-        context.commit('setFolder', await fc.readFolder(`${storage}`))
+        let f = await context.state.fc.readFolder(`${storage}`)
+        console.log("Folder",f)
+
+        context.commit('setFolder', f)
       }catch(e){
         alert(e)
       }
@@ -111,7 +116,7 @@ const actions = {
       var date = dateObj.toISOString()
       let log="https://spoggy.solidweb.org/private/logs/log.ttl"
       let w_l = window.location.toString()
-      let logDoc = await fetchDocument(log)
+      let logDoc = await context.state.fc.readFile(log)
       let subj = logDoc.addSubject({identifier: webId})
       subj.addString(dct.created, date)
       subj.addString("https://schema.org/url", w_l)
@@ -132,12 +137,12 @@ const actions = {
 
 },
 async updateFolder (context, url) {
-  let folder = await fc.readFolder(url)
+  let folder = await context.state.fc.readFolder(url)
   context.commit('setFolder', folder)
-  /*  let folder = await fc.readFolder(url,  {links:"include_possible"})
+  /*  let folder = await this.$fc.readFolder(url,  {links:"include_possible"})
   let acl = ""
   try{
-  acl = await fc.readFile(folder.links.acl)
+  acl = await this.$fc.readFile(folder.links.acl)
 }catch(e){
 console.log(e)
 acl = null
@@ -149,12 +154,12 @@ folder.acl = acl*/
 async updateFile (context, file) {
   console.log("FILE", file)
   context.commit('setFile', file)
-  context.commit('setContent', await fc.readFile(file.url))
+  context.commit('setContent', await context.state.fc.readFile(file.url))
   /*
-  file.content = await fc.readFile(file.url, {links:"include_possible"})
+  file.content = await this.$fc.readFile(file.url, {links:"include_possible"})
   let acl = ""
   try{
-  acl = await fc.readFile(file.links.acl)
+  acl = await this.$fc.readFile(file.links.acl)
 }catch(e){
 //  console.log(e)
 acl = null
@@ -162,7 +167,7 @@ acl = null
 file.acl = acl*/
 },
 async writeFile(context, file){
-  await fc.createFile(file.path+file.name, file.content, file.contentType).then((content) => {
+  await context.state.fc.createFile(file.path+file.name, file.content, file.contentType).then((content) => {
     console.log(content.status)
   })
   .catch(err => console.error(`Error: ${err}`))
@@ -172,6 +177,17 @@ async writeFile(context, file){
 
 // mutations
 const mutations = {
+  setSession(state, s){
+    console.log("session",s)
+    state.session = s
+    state.fc = new FC( s )
+    console.log("FC", state.fc)
+  },
+  setPod(state, p){
+    console.log("pod",p)
+    state.pod = p
+    this.dispatch('solid/setWebId', p.webId)
+  },
   setWebId (state, webId) {
     ///  console.log("webId",webId)
     state.webId = webId

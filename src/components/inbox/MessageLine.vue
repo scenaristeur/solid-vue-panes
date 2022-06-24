@@ -41,7 +41,7 @@
 
 <script>
 //import profileMixin from '@/mixins/profileMixin'
-import { fetchDocument } from 'tripledoc';
+
 import { schema,  rdfs } from 'rdf-namespaces' //rdf,
 
 export default {
@@ -97,7 +97,7 @@ methods:{
     this.$store.commit('inbox/setOldContent', this.dateSent+" : "+this.text)*/
   },
   async updateLine(){
-    const messageDoc = await fetchDocument(this.message.url);
+    const messageDoc = await this.$fc.readFile(this.message.url);
     let  subject = messageDoc.getSubject(this.message.url);
     this.sender =   subject.getRef(schema.sender)
     this.label =   subject.getString(rdfs.label)

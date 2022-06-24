@@ -62,7 +62,7 @@ methods: {
     .catch(error => console.log('Error sharing', error));
   },
   /*  async getData() {
-  let dataDoc = await fetchDocument(this.url);
+  let dataDoc = await this.$fc.readFile(this.url);
   let subj = dataDoc.getSubject(this.url+"#this")
   console.log(subj)
   let types = subj.getAllRefs(rdf.type)

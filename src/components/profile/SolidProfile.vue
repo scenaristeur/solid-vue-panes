@@ -132,7 +132,7 @@ label-for="note">
 </template>
 
 <script>
-//import {  fetchDocument } from 'tripledoc';
+
 //import {  rdf} from 'rdf-namespaces'
 //import ToastMixin from '@/mixins/ToastMixin'
 

@@ -1,11 +1,8 @@
 import ToastMixin from '@/mixins/ToastMixin'
 import ActivityMixin from '@/mixins/ActivityMixin'
 
-import { createDocument, fetchDocument } from 'tripledoc';
+
 import { /*vcard,*/ dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces' //
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 export default {
   mixins: [ToastMixin, ActivityMixin],
@@ -33,10 +30,10 @@ export default {
           let dataDoc = {}
           if (data.url == undefined){
             data.url = data.path+data.ttl_name+".ttl"
-            dataDoc = await createDocument(data.url);
+            dataDoc = await this.$fc.createFile(data.url);
             this.activity.type = "Create"
           }else{
-            dataDoc = await fetchDocument(data.url);
+            dataDoc = await this.$fc.readFile(data.url);
             this.activity.type = "Update"
           }
 
@@ -106,7 +103,7 @@ export default {
       },
       async  getFolder(url){
         //console.log("get folder",url)
-        let folder = await fc.readFolder(url)
+        let folder = await this.$fc.readFolder(url)
         return folder
       },
     }

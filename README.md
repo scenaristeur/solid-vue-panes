@@ -100,6 +100,10 @@ npm run test:unit
 npm run lint
 ```
 
+### migration to @inrupt/solid-client-authn-browser
+https://github.com/jeff-zucker/solid-file-client/issues/215
+
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
@@ -107,18 +111,16 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 https://stackoverflow.com/questions/36782467/set-subdirectory-as-website-root-on-github-pages
 
-create subbranch with dist folder
+- create subbranch with dist folder
 
-    comment the dist folder in the .gitignore file
+- comment the dist folder in the .gitignore file
+`npm run build && git add dist -f && git commit -m "Initial dist subtree commit"`
 
-git add dist -f && git commit -m "Initial dist subtree commit"
-
-    build & publish to gh-pages
-
-npm run build && git add .
+- build & publish to gh-pages
+`npm run build && git add .
 git commit -m "my modif"
 git push && git subtree push --prefix dist origin gh-pages
-
+`
 
 # todo
 add blog

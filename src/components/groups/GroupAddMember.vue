@@ -18,7 +18,7 @@
 
 <script>
 // @ is an alias to /src
-import { fetchDocument } from 'tripledoc';
+
 import { vcard } from 'rdf-namespaces'
 
 export default {
@@ -48,7 +48,7 @@ export default {
     },
     async add(){
       console.log(this.url)
-      const groupDoc = await fetchDocument(this.url);
+      const groupDoc = await this.$fc.readFile(this.url);
       let index = groupDoc.findSubject()
       this.member.length > 0 ? index.addRef(vcard.hasMember, this.member) : ""
       this.selected.forEach((s) => {
@@ -58,7 +58,7 @@ export default {
       await groupDoc.save();
       this.$emit('added')
       //this.members = index.getAllNodeRefs(vcard.hasMember)
-      /*  let groupDoc =    await createDocument(this.path);
+      /*  let groupDoc =    await this.$fc.createFile(this.path);
       let subj =   groupDoc.addSubject({identifier:"this"})
       subj.addLiteral(vcard.fn, this.name)
       subj.addNodeRef(ldp.inbox, "./"+this.name+"/inbox/")

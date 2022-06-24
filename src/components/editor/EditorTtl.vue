@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import {  fetchDocument } from 'tripledoc';
 
 export default {
   name: 'EditorTtl',
@@ -74,7 +73,7 @@ export default {
       this.triples = []
     //  console.log(this.file.url)
       if (this.file.url != undefined && (this.file.url.endsWith('.ttl') || (this.file.url.endsWith('card')))){
-        let fileDoc = await fetchDocument(this.file.url)
+        let fileDoc = await this.$fc.readFile(this.file.url)
       //  console.log("fileDoc",fileDoc)
         this.triples = fileDoc.getTriples()
       //  console.log(this.triples)

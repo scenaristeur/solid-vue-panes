@@ -18,12 +18,9 @@
 </template>
 
 <script>
-import { fetchDocument } from 'tripledoc';
+
 import { sioc, dct, foaf } from 'rdf-namespaces' //
 const { namedNode } = require('@rdfjs/data-model');
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 let solid = window.solid
 console.log("SOLID",solid)
 
@@ -41,8 +38,8 @@ export default {
   },
   /*async created(){
 
-  if( !await fc.itemExists( this.fileUrl )) {
-  await fc.postFile(this.fileUrl, "", "text/turtle")
+  if( !await this.$fc.itemExists( this.fileUrl )) {
+  await this.$fc.postFile(this.fileUrl, "", "text/turtle")
   .then((content) => {
   console.log("File Created",content)
 })
@@ -65,8 +62,8 @@ watch:{
     console.log("Webid",webId)
   },
   async  fileUrl(){
-    if( !await fc.itemExists( this.fileUrl )) {
-      await fc.postFile(this.fileUrl, "", "text/turtle")
+    if( !await this.$fc.itemExists( this.fileUrl )) {
+      await this.$fc.postFile(this.fileUrl, "", "text/turtle")
       .then((content) => {
         console.log("File Created",content)
       })
@@ -99,14 +96,14 @@ methods: {
       //let index = "this"
       //  let ind_prefix = "../../../index.ttl#" //" root+"/index.ttl#"
       let index = root+"/index.ttl#this"
-      console.log("TODO : must integrate "+index+" in tripledoc or batch ldflex")
+      console.log("TODO : must integrate "+index+" in  batch ldflex")
       let messUri = this.fileUrl+"#"+messageId
       console.log(messUri)
 
 
       await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
 
-      const chatDoc = await fetchDocument(this.fileUrl);
+      const chatDoc = await this.$fc.readFile(this.fileUrl);
       let subj =   chatDoc.addSubject({identifier:messageId})
       subj.addLiteral(sioc.content, this.message)
       subj.addLiteral(dct.created, date)
@@ -123,7 +120,7 @@ methods: {
       //          await solid.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].set(namedNode(subj.asRef()))
 
       /*
-      const chatDoc2 = await fetchDocument(this.fileUrl);
+      const chatDoc2 = await this.$fc.readFile(this.fileUrl);
       let index =   chatDoc2.addSubject({identifier:this.root+"/index.ttl"})
       console.log(await index.getTriples())
       console.log(await index.getRef())

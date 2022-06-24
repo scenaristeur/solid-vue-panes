@@ -14,9 +14,7 @@
 </template>
 
 <script>
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 
 export default {
   name: 'PostList',
@@ -44,7 +42,7 @@ export default {
       //  console.log("UpdatePosts")
       //  console.log(this.storage)
         let path = this.storage+"public/blog/"
-        this.folder = await fc.readFolder(path)
+        this.folder = await this.$fc.readFolder(path)
         console.log("FILES",this.folder.files)
       //  this.folder.files.reverve()
       //  console.log(this.folder)

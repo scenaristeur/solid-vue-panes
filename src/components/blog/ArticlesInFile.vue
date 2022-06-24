@@ -11,9 +11,6 @@
 </template>
 
 <script>
-import {  fetchDocument } from 'tripledoc';
-//import {  rdf} from 'rdf-namespaces'
-//import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: 'ArticlesInFile',
@@ -30,7 +27,7 @@ data() {
 async created(){
   try{
 
-    const chatDoc = await fetchDocument(this.file.url);
+    const chatDoc = await this.$fc.readFile(this.file.url);
     let subjects = chatDoc.findSubjects()
     this.subjects = subjects.filter( this.onlyUnique ).reverse()
   //  console.log(this.subjects)
@@ -49,7 +46,7 @@ methods: {
     return self.indexOf(value) === index;
   },
   /*async getData() {
-  let dataDoc = await fetchDocument(this.url);
+  let dataDoc = await this.$fc.readFile(this.url);
   let subj = dataDoc.getSubject(this.url+"#this")
   console.log(subj)
   let types = subj.getAllRefs(rdf.type)

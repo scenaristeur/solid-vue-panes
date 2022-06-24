@@ -23,9 +23,7 @@
 
 <script>
 //import ShexMixin from '@/mixins/crud/ShexMixin'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 
 export default {
   name: 'CrudRead',
@@ -61,7 +59,7 @@ export default {
       this.setFolderPath()
     },
     async   folder_path(fp){
-      this.folder = await fc.readFolder(fp)
+      this.folder = await this.$fc.readFolder(fp)
       console.log("FOLDER",this.folder)
     }
     /*shape(s){

@@ -1,4 +1,4 @@
-import { fetchDocument, createDocument } from 'tripledoc';
+
 import { dct, rdfs, foaf, rdf } from 'rdf-namespaces'
 import activityMixin from '@/mixins/ActivityMixin'
 import ToastMixin from '@/mixins/ToastMixin'
@@ -20,9 +20,9 @@ export default {
       console.log(fileUrl)
       let postDoc = {}
       try{
-        postDoc = await fetchDocument(fileUrl);
+        postDoc = await this.$fc.readFile(fileUrl);
       }catch(e){
-        postDoc = await createDocument(fileUrl);
+        postDoc = await this.$fc.createFile(fileUrl);
       }
       var postId = data['rdf:type'].split(":")[1]+"_"+d.getTime()
       console.log(postId)

@@ -59,12 +59,6 @@
 
 import profileMixin from '@/mixins/profileMixin'
 
-
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
-
-import { fetchDocument } from 'tripledoc';
 import { schema } from 'rdf-namespaces'
 
 export default {
@@ -133,18 +127,18 @@ export default {
         message.url = inbox+message.id+".ttl"
         console.log(message.url)
         try{
-          await fc.postFile( message.url, messageStr, "text/turtle")
+          await this.$fc.postFile( message.url, messageStr, "text/turtle")
           var notif = inbox+"log.ttl#"+message.id
-          if( !(await fc.itemExists(inbox+"log.ttl")) ) {
+          if( !(await this.$fc.itemExists(inbox+"log.ttl")) ) {
          console.log(notif,"don't exist")
-         await fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
+         await this.$fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
        }
           //  await solid.data[notif].schema$message.add(namedNode(message.url))
         }catch(e){
           alert("one"+e)
         }
 
-        const logDoc = await fetchDocument(inbox+"log.ttl");
+        const logDoc = await this.$fc.readFile(inbox+"log.ttl");
         let s = logDoc.addSubject()
         s.addNodeRef(schema.about, message.url)
       //  console.log(logDoc)
@@ -152,16 +146,16 @@ export default {
 
 
         //  var notif = inbox+"log.ttl#"+message.id
-        //  await fc.postFile(notif,"","text/turtle")
-        /*  if( !(await fc.itemExists(inbox+"log.ttl")) ) {
+        //  await this.$fc.postFile(notif,"","text/turtle")
+        /*  if( !(await this.$fc.itemExists(inbox+"log.ttl")) ) {
         console.log(notif,"don't exist")
-        await fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
+        await this.$fc.postFile(inbox+"log.ttl","","text/turtle") // only create if it doesn't already exist
       }else{
       console.log(notif," exist")
     }*/
   //  console.log(namedNode)
 /*
-    const logDoc = await createDocument(inbox+"log.ttl");
+    const logDoc = await this.$fc.createFile(inbox+"log.ttl");
     console.log(logDoc)
     await logDoc.save()*/
     // await solid.data[inbox+"log.ttl"].schema$message.set(namedNode(message.url))
@@ -182,7 +176,7 @@ export default {
 
 
 /*
-const messageDoc = await createDocument(message.url);
+const messageDoc = await this.$fc.createFile(message.url);
 let subj = messageDoc.addSubject()
 subj.addLiteral(schema.text, message.content)
 subj.addLiteral(rdfs.label, message.label)

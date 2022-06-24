@@ -36,11 +36,8 @@
 
 <script>
 // @ is an alias to /src
-import { createDocument, fetchDocument } from 'tripledoc';
 import { vcard, dct, foaf, ldp, rdfs, rdf} from 'rdf-namespaces'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
@@ -83,9 +80,9 @@ export default {
       // https://www.w3.org/TR/vocab-org/#org:purpose
       let groupDoc
       try{
-        groupDoc = await fetchDocument(fileUrl);
+        groupDoc = await this.$fc.readFile(fileUrl);
       }catch(e){
-        groupDoc = await createDocument(fileUrl);
+        groupDoc = await this.$fc.createFile(fileUrl);
       }
       let subj =   groupDoc.addSubject({identifier:"this"})
       subj.addLiteral(vcard.fn, name)
@@ -116,7 +113,7 @@ export default {
         try{
           let parent = this.group.parent+"index.ttl"
           subj.addNodeRef("http://www.w3.org/ns/org#subOrganizationOf", parent)
-          let parentDoc =    await fetchDocument(parent);
+          let parentDoc =    await this.$fc.readFile(parent);
           let pSubj = parentDoc.getSubject(parent+"#this")
           pSubj.addNodeRef("http://www.w3.org/ns/org#hasSubOrganization", fileUrl)
           await parentDoc.save();
@@ -131,7 +128,7 @@ export default {
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
 
       this.group = {}
-      this.folder = await fc.readFolder(url)
+      this.folder = await this.$fc.readFolder(url)
       console.log("FOLDER",this.folder)
       this.$store.commit('gouvernance/setGroups', this.folder)
 

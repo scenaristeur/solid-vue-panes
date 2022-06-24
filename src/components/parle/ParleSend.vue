@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { fetchDocument, createDocument } from 'tripledoc';
+
 import { sioc, dct, foaf } from 'rdf-namespaces'
 import ToastMixin from '@/mixins/ToastMixin'
 import ActivityMixin from '@/mixins/ActivityMixin'
@@ -87,9 +87,9 @@ export default {
           let chatDoc = {}
 
           try{
-            chatDoc = await fetchDocument(this.fileUrl);
+            chatDoc = await this.$fc.readFile(this.fileUrl);
           } catch(e){
-            chatDoc = await createDocument(this.fileUrl);
+            chatDoc = await this.$fc.createFile(this.fileUrl);
           }
 
           //        console.log(chatDoc)

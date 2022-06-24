@@ -52,9 +52,7 @@
 </template>
 
 <script>
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
+
 import profileMixin from '@/mixins/profileMixin'
 
 //read public access & agents access
@@ -154,7 +152,7 @@ export default {
 },
 methods:{
   async getMessages(){
-    this.inbox = await fc.readFolder(this.current_inbox_url)
+    this.inbox = await this.$fc.readFolder(this.current_inbox_url)
   },
   async updateInboxUrl(){
     return await this.getInbox(this.webId)

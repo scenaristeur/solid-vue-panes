@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { fetchDocument } from 'tripledoc';
+
 import { rdf} from 'rdf-namespaces'
 
 export default {
@@ -53,7 +53,7 @@ export default {
   methods: {
     async getData() {
       this.isNetwork = false
-      let dataDoc = await fetchDocument(this.url);
+      let dataDoc = await this.$fc.readFile(this.url);
       let url =  this.url.includes("#") ? this.url : this.url+"#this"
       //  console.log(url)
       this.subject = await dataDoc.getSubject(url)

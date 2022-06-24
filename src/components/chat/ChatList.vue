@@ -43,7 +43,7 @@
 <script>
 // @ is an alias to /src
 import infiniteScroll from 'vue-infinite-scroll'
-import { fetchDocument } from 'tripledoc';
+
 import { sioc, dct, foaf } from 'rdf-namespaces'
 
 //var count = 0;
@@ -118,7 +118,7 @@ export default {
 
       try{
 
-        const chatDoc = await fetchDocument(path);
+        const chatDoc = await this.$fc.readFile(path);
         let  subjects = chatDoc.findSubjects();
         subjects = subjects.filter( this.onlyUnique )
         //  //console.log(subjects)
@@ -252,7 +252,7 @@ async updateMessages(url, sens){
   //  this.showTop = true
   try{
 
-    const chatDoc = await fetchDocument(url);
+    const chatDoc = await this.$fc.readFile(url);
     let  subjects = chatDoc.findSubjects();
     subjects = subjects.filter( this.onlyUnique )
     //  console.log(subjects)

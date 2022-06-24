@@ -14,9 +14,6 @@
 <script>
 //import profileMixin from '@/mixins/profileMixin'
 
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
 
 export default {
   name: 'OrganizationNew',
@@ -34,7 +31,7 @@ export default {
     }
   },
   async created() {
-    this.folder = await fc.readFolder(this.config.folder)
+    this.folder = await this.$fc.readFolder(this.config.folder)
     console.log("FOLDER",this.folder)
     //  this.webId = this.$route.params.webId || this.$store.state.solid.webId
     //  this.updateFriends()
